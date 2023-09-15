@@ -1,0 +1,163 @@
+tblMessagesHistory
+PK	ID	INT	
+FK	MessageID	INT	
+FK	creatorID	INT		
+fatherMessage	INT		
+creationDate	DATE		
+editionDate	DATE		
+content	VARCHAR(100)		
+isReplied	BOOL		
+repliedBy	INT
+
+
+tblMessage	
+PK	ID	INT	
+FK	creatorID	INT		
+fatherMessage	VARCHAR(30)		
+creationDate	DATE		
+issue	VARCHAR(15)		
+content	VARCHAR(80)		
+isReplied	VARCHAR(80)		
+repliedBy	VARCHAR(25)
+
+
+tblRole	
+PK	ID	INT		
+Role	VARCHAR(50)
+
+
+tblRolePermission	
+PK	ID	INT	
+FK	roleID	INT	
+FK	permissionID	INT
+
+tblPermission	
+PK	ID	INT		
+permission	VARCHAR(50)
+
+
+tblShoppingCart	
+PK	ID	INT		
+quantity	INT	
+FK	userID	INT		
+totalAmount	DOUBLE
+
+
+
+tblUser	
+PK	ID	INT		
+DNI	VARCHAR(10)		
+email	VARCHAR(80)		
+password	VARCHAR(80)		
+firstName	VARCHAR(25)		
+lastName	VARCHAR(25)		
+birthday	DATE		
+birthPlace	VARCHAR(80)		
+billingAddress	VARCHAR(80)		
+gender	VARCHAR(10)	
+FK	role	INT		
+userName	VARCHAR(25)		
+profileImage	VARCHAR(25)
+
+
+
+tblCardUser	
+PK	ID	INT	
+FK	userID	INT	
+FK	cardID	INT		
+quantityCreditCards	INT		
+quantityDebitCards	INT
+tblCard	PK	ID	INT		
+balance	DOUBLE		
+type	VARCHAR(15)		
+number	VARCHAR(16)		
+name	VARCHAR(25)		
+expirationDate	VARCHAR(4)		
+CVC	VARCHAR(3)
+
+
+
+ShoppingCartSeats	
+PK	ID	INT	
+FK	shoppingCartID	INT	
+FK	seatID	INT		
+unitPrice	DOUBLE		
+promotionApplied	INT
+
+
+tblReservation	
+PK	ID	INT	
+FK	IDSeat	INT		
+reservationDate	DATE		
+expirationDate	DATE	
+FK	IDUser	INT
+
+
+tblOrder	
+PK	ID	INT		
+COD	VARCHAR(100)	
+FK	userID	INT	
+FK	shoppingCartID	INT	
+FK	cardID	INT		
+totalAmount	DOUBLE		
+Date	DATE		
+paymentDetails	VARCHAR(100)
+
+
+
+tblSeats	
+PK	ID	INT		
+state	ENUM		
+class	VARCHAR(50)	
+FK	flightID	INT	
+FK	passengerID	INT		
+letter	CHAR		 
+number	INT		
+hasExtraSpace	BOOL
+
+
+tblFlight	
+PK	ID	INT		
+image	VARCHAR(150)		
+flightDate	DATE		
+flightTime	VARCHAR(50)		
+origin	VARCHAR(100)		
+destination 	VARCHAR(100)		
+flightDuration	VARCHAR(50)		
+arrivalDate	DATE 		
+arrivalTime	VARCHAR(50)		
+costByPerson	DOUBLE		
+costByPersonOffer	DOUBLE		
+availableSeats	INT 		
+state	VARCHAR(50)		
+cancelationMessage	VARCHAR(150)		
+isInternational	BOOL
+
+
+tblOffer	
+PK	ID	INT		
+discount	DOUBLE		
+description	VARCHAR(150)		
+origin	VARCHAR(100)		
+destination	VARCHAR(100)		
+validDateRange	DATE
+
+
+tblPassenger	
+PK	ID	INT		 
+DNI	VARCHAR(15)		
+firstName	VARCHAR(15)		
+lastName	VARCHAR(15)		
+birthday	DATE		
+gender VARCHAR(10)		
+cellphoneNo	VARCHAR(11)		
+email	VARCHAR(50)		
+contactName	VARCHAR(100)		
+contactNo	VARCHAR(100)		
+didCheckIn	BOOL
+
+
+
+
+
+

@@ -1,0 +1,226 @@
+Notas
+1. El usuario tiene un carrito de compras A.
+2. Cuando el usuario agrega o quita productos lo hace
+con el carrito A. Cuando el usuario paga, en la factura queda
+la referencia a A.
+3. Después de la compra, el usuario consigue un nuevo
+carrito (uno no se lleva el carro de mercado a la casa).
+4. Es decir, que después de la compra, al cliente se le asigna
+un nuevo carrito de compras B, que queda listo para la
+siguiente vez que venga a mercar.
+
+-----------
+Repositorio de
+mensajes, para
+guardar todas las
+ediciones que se
+hagan a los
+mensajes en el
+tiempo
+
+-------------------
+En el contexto de la
+aplicación:
+* ShoppingCartSeats se refiere a la
+línea de compra, es decir, a los
+asientos que el cliente quiere
+comprar
+* RolePermission es una lista de
+permisos
+* CardUser es la billetera del
+cliente
+--------------------------------
+
+CLASES
+
+MessagesHistory
+-ID: Long
+-MessageID: Long
+-creatorID: Long
+-fatherMessage: Long
+-creationDate: Date
+-editionDate: Date
+-content: String
+-isReplied: Boolean
+-repliedBy: Long
++agregarMensaje()
+
+Message
+-ID: Long
+-creatorID: Long
+-fatherMessage: Long
+-creationDate: Date
+-issue: String
+-content: String
+-isReplied: Boolean
+-repliedBy: Long
++crearMensaje()
++editarMensaje()
++responderMensaje()
+
+Role
+-ID: Long
+-role: String
++agregarRole()
+
+RolePermission
+-ID: Long
+-roleID: Long
+-permissionID: Long
+-AgregarAsociación()
+
+Permission
+-ID: Long
+-permission: String
+-agregarPermiso()
+-quitarPermiso()
+
+ShoppingCart
+- ID: Long
+- quantity: Int
+- userID: Long
+- \totalAmount: Double
+-obtenerProducto()
+-obtenerCantidad()
+-eliminarProducto()
+-vaciarCarrito()
+-realizarPago()
+-calcularTotal()
+
+User
+-ID: Long
+-DNI: String
+-email: String
+-password: String
+-firstName: String
+-lastName: String
+-birthday: Date
+-birthPlace: String
+-billingAddress: String
+-gender : String
+-role: Long
+-userName: String
+-profileImage: Image
+-iniciarSesión()
+-cerrarSesión
+-editarAtributos()
+-crearAdministrador()
+-recuperarContraseña()
+-registrarUsuario()
+-borrarCuenta()
+-check-in()
+-suscribirseANoticias()
+
+
+CardUser
+-ID: Long
+-userID: Long
+-cardID: Long
+-quantityCreditCards: Integer
+-quantityDebitCards: Integer
+-agregarTarjeta()
+-eliminarTarjeta()
+
+
+Card
+- ID: Long
+-balance: Double
+-type: String
+-number: String
+-name: String
+-expirationDate: String
+-CVC: String
+-consultarSaldo()
+
+ShoppingCartSeats
+- ID: Long
+- shoppingCartID: Long
+-seatID: Long
+- unitPrice: Double
+- promotionApplied: Long
+-agregarAsociación()
+
+Reservation
+- ID: Long
+-IDUser: Long
+- listOfSeats: List<Seat>
+- reservationDate
+- expirationDate
+- cancelarReserva()
+- agregarReserva()
+
+Order
+-ID: Long
+-\COD: String
+- userID: Long
+-shoppingCartID: Long
+-cardID: Long
+-totalAmount: Double
+-Date: Date
+-paymentDetails: String
+-generarOrden()
+
+
+Seat
+- ID: Long
+- state: Enum
+- class: String
+- flightID: Long
+- passengerID: Long
+- letter: Char
+- number: Integer
+- hasExtraSpace: Boolean
+-obtenerClase()
+-obtenerEstado()
+-cambiarEstado()
+
+Flight
+-ID: Long
+-image: Image
+-flightDate : Date
+-flightTime: String
+-origin: String
+-destination : String
+-flightDuration: String
+-arrivalDate: Date
+-arrivalTime: String
+-costByPerson: Double
+-costByPersonOffer: Double
+-\availableSeats: Integer
+- state: String
+- cancelationMessage: String
+- isInternational: Boolean
+-crearvuelo()
+-cancelarVuelo()
+-reservarVuelo()
++buscarVuelo()
+-actualizarSillasDisponibles()
+-consultarHistorialVuelos()
+
+
+Offer
+- ID: Long
+-discount: Double
+-description: String
+-origin: String
+-destination: String
+-validDateRange: Date
+-crearPromoción()
+-aplicarPromoción()
+-eliminarPromoción()
+
+Passenger
+-ID
+- DNI: String
+-FirstName: String
+-lastName: String
+- birthday: Date
+- genero: String
+- cellphoneNo: String
+- email: String
+- contactName: String
+- contactNo: String
+- didCheckIn: Boolean
+-agregarPasajero()
+-eliminarPasajero()
+-check-in()
