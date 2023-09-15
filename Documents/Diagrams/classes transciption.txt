@@ -12,7 +12,7 @@ siguiente vez que venga a mercar.
 -----------
 Repositorio de 
 mensajes, para
-guardar todas las
+guardar todas las 
 ediciones que se
 hagan a los
 mensajes en el
