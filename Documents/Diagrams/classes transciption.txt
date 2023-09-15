@@ -10,7 +10,7 @@ un nuevo carrito de compras B, que queda listo para la
 siguiente vez que venga a mercar.
 
 -----------
-Repositorio de
+Repositorio de 
 mensajes, para
 guardar todas las
 ediciones que se
