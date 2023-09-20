@@ -75,7 +75,18 @@ name	VARCHAR(25)
 expirationDate	VARCHAR(4)		
 CVC	VARCHAR(3)
 
-
+ CREATE TABLE `tblCard` (
++ `ID` int NOT NULL AUTO_INCREMENT,
++ `balance` double,
++ `type` varchar(15),
++ `number` varchar(16),
++ `name` varchar(25),
++ `expirationDate` varchar(4),
++ `CVC` varchar(3),
++ PRIMARY KEY (`ID`)
++ ) ENGINE InnoDB,
++ CHARSET utf8mb4,
++ COLLATE utf8mb4_0900_ai_ci;
 
 ShoppingCartSeats	
 PK	ID	INT	
