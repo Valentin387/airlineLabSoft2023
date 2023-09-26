@@ -1,5 +1,5 @@
 tblMessagesHistory
-PK	ID	INT	
+PK	ID	INT
 FK	MessageID	INT	
 FK	creatorID	INT		
 fatherMessage	INT		
