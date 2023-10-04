@@ -60,7 +60,7 @@ public class JwtService {
         var u1 = userRepository.findByEmail(userDetails.getUsername()).
                 orElseThrow();
         // Add custom claims for role and permissions
-        Role userRole = roleRepository.findById( u1.getRole()).orElse(null);
+        Role userRole = roleRepository.findById((long) u1.getRole()).orElse(null);
 
         List<RolePermission> rolePermissions = rolePermissionRepository.findByRole(userRole);
 

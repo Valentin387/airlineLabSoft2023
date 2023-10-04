@@ -29,7 +29,7 @@ public class User implements UserDetails{
     private String birthPlace;
     private String billingAddress;
     private String gender;
-    private Long role;
+    private int role;
     private String userName;
     private String profileImage;
     private Boolean active;
@@ -61,7 +61,7 @@ public class User implements UserDetails{
         // Implement method to subscribe to news feed
     }
 
-    public Long getRole(){
+    public int getRole(){
         return role;
     }
 
@@ -73,7 +73,7 @@ public class User implements UserDetails{
 
     @Override
     public String getUsername() {
-        return userName;
+        return email;
     }
 
     @Override
