@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity(name = "tblUser")
-public class User {
+public class User implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
@@ -29,7 +29,7 @@ public class User {
     private String birthPlace;
     private String billingAddress;
     private String gender;
-    private Long role;
+    private int role;
     private String userName;
     private String profileImage;
     private Boolean active;
@@ -61,10 +61,10 @@ public class User {
         // Implement method to subscribe to news feed
     }
 
-    public Long getRole(){
+    public int getRole(){
         return role;
     }
-    /*
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -73,7 +73,7 @@ public class User {
 
     @Override
     public String getUsername() {
-        return userName;
+        return email;
     }
 
     @Override
@@ -100,5 +100,5 @@ public class User {
     public String getPassword() {
         return password;
     }
-    */
+
 }
