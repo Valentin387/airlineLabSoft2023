@@ -16,7 +16,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity(name = "tblUser")
-public class User implements UserDetails {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
@@ -64,6 +64,7 @@ public class User implements UserDetails {
     public Long getRole(){
         return role;
     }
+    /*
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -99,4 +100,5 @@ public class User implements UserDetails {
     public String getPassword() {
         return password;
     }
+    */
 }
