@@ -101,6 +101,8 @@ User
 -role: Long
 -userName: String
 -profileImage: Image
+-active: Boolean
+-subscribedToFeed: Boolean
 -iniciarSesión()
 -cerrarSesión
 -editarAtributos()

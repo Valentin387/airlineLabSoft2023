@@ -58,6 +58,8 @@ gender	VARCHAR(10)
 FK	role	INT		
 userName	VARCHAR(25)		
 profileImage	VARCHAR(25)
+active: BOOL
+subscribedToFeed: BOOL
 
 
 
