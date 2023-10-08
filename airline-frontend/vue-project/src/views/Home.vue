@@ -14,7 +14,7 @@
                 <div class="inputBox">
                     <span>Origen</span>
                     <select name="origen" placeholder = "¿Desde dónde vuelas?" value="">
-                        <option value="Pereira">Bogotá</option>
+                        <option value="Pereira">Pereira</option>
                         <option value="Bogotá">Bogotá</option>
                         <option value="Medellín">Medellín</option>
                         <option value="Cali">Cali</option>
