@@ -1,14 +1,23 @@
 
 <template>
-  <div class="app">
-   <!-- <sidebar />   --> 
-	<Home />
-	<router-view/>
-  </div>  
+	<div class="app">
+   		<!-- <sidebar />   --> 
+		
+		<barraHorizontal />
+		<Home />
+		<router-view/>
+	</div>  
 </template>
+
+
 <script setup>
-import Home from './views/Home.vue'
+import barraHorizontal from './components/barraHorizontal.vue'
+
 </script>
+
+
+
+	
 
 <!--<script setup>
 import Sidebar from './components/Sidebar.vue'
