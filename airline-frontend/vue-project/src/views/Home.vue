@@ -25,11 +25,11 @@
                 <div class="inputBox">
                     <span>Destino</span>
                     <select name="destino" placeholder = "¿A dónde vuelas?" value="">
-                        <option value="Pereira">Madrid</option>
-                        <option value="Bogotá">Londres</option>
-                        <option value="Medellín">New York</option>
-                        <option value="Cali">Buenos Aires</option>
-                        <option value="Cartagena">Miami</option>
+                        <option value="Madrid">Madrid</option>
+                        <option value="Londres">Londres</option>
+                        <option value="NewYork">New York</option>
+                        <option value="BuenosAires">Buenos Aires</option>
+                        <option value="Miami">Miami</option>
                     </select>
                  
                 </div>
@@ -133,6 +133,44 @@
             </div>
         </div>
     </section>
+    <section class="footer">
+        <div class="box-container">
+            <div class="box ">
+                <a href="#" class="logo"><i class="fas fa-paper-plane"></i>AirTravel</a>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur aperiam incidunt iusto doloribus voluptatibus molestias corrupti molestiae placeat at aliquam dicta</p>
+                <div class="compartir">
+                    <a href="#" class="fab fa-facebook-f"></a>
+                    <a href="#" class="fab fa-twitter"></a>
+                    <a href="#" class="fab fa-instagram"></a>
+                    <a href="#" class="fab fa-github"></a>
+                </div>
+            </div>
+
+            <div class="box">
+                <h3>Links</h3>
+                <a href="#home" class="links"><i class="fas fa-arrow-right"></i> home </a>
+                <a href="#about " class="links"><i class="fas fa-arrow-right"></i> about </a>
+                <a href="#destination" class="links"><i class="fas fa-arrow-right"></i> destination </a>
+                <a href="#contact" class="links"><i class="fas fa-arrow-right"></i> contact </a>
+
+            </div>
+            <div class="box">
+                <h3> Información de contacto </h3>
+                <p><i class="fas fa-map"></i>Pereira, Colombia</p>
+                <p><i class="fas fa-phone"></i>+57 123-456-7890</p>
+                <p><i class="fas fa-envelope"></i>AirTravel@gmail.com</p>
+            </div>
+            <div class="box">
+                <h3>Boletín informativo</h3>
+                <p>Suscribete para conocer las ultimas actualizaciones</p>
+                <form action = "">
+                    <input type="email" placeholder="Ingrese su correo" class="email" id="">
+                    <input type="submit" value="Suscribirse" class="btn">
+                </form>
+            </div>
+        </div>
+    </section>
+
 
 </template>
 
@@ -435,6 +473,53 @@ section{
     }
 }
 
+.footer{
+    .box-container{
+        @include grid(25rem);
+
+        .box{
+            padding: 1rem 0;
+
+            h3{
+                font-size: 2.2rem;
+                color:$white;
+                padding:1rem 0;
+
+            }
+
+            p{
+                font-size: 1.4rem;
+                color:$light-color;
+                padding:1rem 0;
+                line-height: 2;
+            }
+
+            .compartir{
+                padding-top:1rem;
+
+                a{
+                    height: 4.5rem;
+                    width: 4.5rem;
+                    line-height:4rem;
+                    font-size:2rem;
+                    border-radius:50%;
+                    font-size:1.7rem;
+                    border: $border;
+                    color:$blue;
+                    margin-right:.5rem;
+                    text-align:center ;
+
+                    &:hover{
+                        background:$blue;
+                        color:$black;
+                    }
+
+                }
+            }
+        }
+
+    }
+}
 @media (max-width: 768px){//Pagina en tamaño de tablet
   .home{ 
     margin-top: 10rem;
