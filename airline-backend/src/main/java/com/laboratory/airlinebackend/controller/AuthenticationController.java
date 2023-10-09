@@ -12,6 +12,7 @@ import com.laboratory.airlinebackend.model.User;
 import com.laboratory.airlinebackend.repository.RolePermissionRepository;
 import com.laboratory.airlinebackend.repository.RoleRepository;
 import com.laboratory.airlinebackend.repository.UserRepository;
+import io.jsonwebtoken.ExpiredJwtException;
 import lombok.RequiredArgsConstructor;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +61,13 @@ public class AuthenticationController {
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST) // Use an appropriate HTTP status code
                 .body("Email address is already taken."); // Provide an error message
+    }
+
+    @ExceptionHandler(ExpiredJwtException.class)
+    public ResponseEntity<String> handleExpiredJwtExceptionException(ExpiredJwtException ex) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST) // Use an appropriate HTTP status code
+                .body("Your JWT token has expired."); // Provide an error message
     }
 
 

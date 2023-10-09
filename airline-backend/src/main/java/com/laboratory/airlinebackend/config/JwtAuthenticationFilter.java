@@ -1,5 +1,6 @@
 package com.laboratory.airlinebackend.config;
 
+import com.laboratory.airlinebackend.controller.exceptions.ExpiredJwtException;
 import com.laboratory.airlinebackend.model.token.TokenRepository;
 import io.micrometer.common.lang.NonNull;
 import jakarta.servlet.FilterChain;
@@ -29,7 +30,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull HttpServletRequest request,
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
-    )throws ServletException, IOException {
+    )throws ServletException, IOException, ExpiredJwtException {
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
         final String userEmail;
