@@ -3,6 +3,7 @@ package com.laboratory.airlinebackend.controller;
 import com.laboratory.airlinebackend.controller.DTO.AuthenticationRequest;
 import com.laboratory.airlinebackend.controller.DTO.AuthenticationResponse;
 import com.laboratory.airlinebackend.controller.DTO.RegisterRequest;
+import com.laboratory.airlinebackend.controller.DTO.RegisterRequestAdmin;
 import com.laboratory.airlinebackend.controller.exceptions.EmailAlreadyTakenException;
 import com.laboratory.airlinebackend.controller.service.AuthenticationService;
 import com.laboratory.airlinebackend.model.Permission;
