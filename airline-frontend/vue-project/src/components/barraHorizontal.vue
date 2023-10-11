@@ -4,20 +4,21 @@
     
             <header class="header">
                 <div id="menu-btn" class="material-symbols-outlined" @click="toggle">menu</div>
-                <a href="#" class="logo"> <i class="fas fa-paper-plane"></i>AirTravel</a>      
+                <a data-aos= "zoom-in-left" data-aos-delay="150" href="#" class="logo"> <i class= "fa-solid fa-paper-plane"></i>AirTravel</a>      
                 <nav class="navbar"> 
-                    <a href="#home">home</a>
-                    <a href="#about">about</a>
-                    <a href="#destination">destination</a>
-                    <a href="#services">services</a>
-                    <a href="#gallery">gallery</a>
-                    <a href="#blogs">blogs</a>
+                    <a data-aos= "zoom-in-left" data-aos-delay="300" href="#home">Inicio</a>
+                    <a data-aos= "zoom-in-left" data-aos-delay="450" href="#check-in">Confirmar Check-in</a>
+                    <a data-aos= "zoom-in-left" data-aos-delay="600" href="#Ayuda">ayuda</a>
+                    <!--<a data-aos= "zoom-in-left" data-aos-delay="750" href="#destination"></a>
+                    <a data-aos= "zoom-in-left" data-aos-delay="900" href="#about"></a>
+                    <a data-aos= "zoom-in-left" data-aos-delay="1150" href="#blogs"></a> -->
                 </nav>
-                <a href="#book-form" class ="btn">Reservar</a>
+                <a data-aos= "zoom-in-left" data-aos-delay="600" href="#" class="carrito"><i class="material-symbols-outlined">shopping_cart</i></a>
+                <a data-aos= "zoom-in-left" data-aos-delay="600" href="#" class="usuario"><i class="material-symbols-outlined">person</i></a>
             </header>
         </main>
     </div>
-    
+     
 </template>
 
 <script>
@@ -52,14 +53,24 @@ export default {
 }
     $blue: #54b2f1; 
 	$black: #0d629b;
-	$white:#fff;
-    $verde:#cffcf1;
+	$verde: #00BD8E;
 	$light-color:#312c02;
 	$bg-color:#ffffff;
 	$black-bg:rgba(17, 17, 17, .7);
 	$border:.2rem solid $blue;
+
+    $azul-claro: #CFE0EB;
+    $gris:#F7F7F7;
+    $amarillo:#FFD700;
+    $azul: #0D629B;
+    $blanco: #FFFFFF;
+    $negro:#1A1320;
+    $accent:#0B97F4;
+    $secondary:#a7d6f6;
 	
 html{
+
+    
     /* 
     Estilo CSS para la vista Home.vue del proyecto Vue.js. 
     La propiedad font-size establece el tamaño de fuente base en 10px, lo que equivale a 62.5% del tamaño de fuente predeterminado del navegador. 
@@ -82,11 +93,11 @@ html{
     }
 
     &::-webkit-scrollbar-track{
-        background: $white;
+        background: $blanco;
     }
 
     &::-webkit-scrollbar-thumb{
-        background-color: $verde;
+        background-color: $azul;
     }
 
 }
@@ -94,7 +105,7 @@ html{
 
 
 body{  //FONDO DE LA PAGINA
-    background: $blue;
+    background: $blanco;
     overflow-x:hidden;
 }
 //BOTÓN DE "RESERVAR AHORA"
@@ -116,28 +127,13 @@ body{  //FONDO DE LA PAGINA
  * - &:hover: cuando el cursor está sobre el botón, el fondo cambia a $blue y el texto a $black.
  */
 
-.btn{
-    margin-top:1rem;
-    display:inline-block;
-    padding: 1rem 3rem; 
-    font-size: 1.7rem;
-    color: $blue;
-    border:$border; 
-    border-radius:5rem;
-    cursor: pointer;
-    background: none;
 
-    &:hover{
-        background: $blue;
-        color:$light-color;
-    }
-}
 //BARRA DE NAVEGACIÓN----------------------------------------------------------------
 .header{
     position:fixed;//La barra de navegación se fija en la parte superior de la página
     top:0; right: 0;left: 0;
     z-index: 1000;
-    background:$bg-color ;//Color de fondo de la barra de navegación
+    background:$secondary;//Color de fondo de la barra de navegación
     display:flex;
     align-items: center;
     justify-content: space-between;
@@ -145,16 +141,15 @@ body{  //FONDO DE LA PAGINA
 
     .navbar a{//Estilos para los enlaces de la barra de navegación
         font-size:1.7rem;
-        color:$light-color; //Color de letra de los enlaces
+        color:$negro; //Color de letra de los enlaces
         display: inline-block;//Los enlaces se muestran en una sola línea
         margin: 0 1rem;//Establece el margen del elemento en 0 en la parte superior e inferior, y 1rem en la izquierda y derecha.
         transition: 0.2s ease-out;
         &:hover, &.router-link-exact-active{
-            color:$blue ;//Al pasar el cursor sobre la letra del enlace, el color cambia a azul
+            color:$accent;//Al pasar el cursor sobre la letra del enlace, el color cambia a azul
+            background-color: transparent;//color de fondo al selleccionar el texto
         }
-        &:link{
-            text-decoration: none;
-        }
+       
         &.router-link-exact-active{
           border-right: 5px solid $blue;
         }
@@ -165,18 +160,36 @@ body{  //FONDO DE LA PAGINA
         
     }
 
+    .carrito{
+        color:$azul;
+;
+        background: transparent;
+
+    }
+    .usuario{
+        color:$azul;
+        background: transparent;
+    }
+
 }
 //LOGO----------------------------------------------------------------
 .logo{//Estilos para el logo de la barra de navegación
     font-size: 2.5rem;
-    color:$light-color;
+    color:$negro;
     font-weight: bolder;
     text-decoration: none;
+    background-color: transparent;
+    
 
     i{
-        color:$blue;
+        color:$accent;
         padding-right:.5rem;
-         text-decoration: none;
+        text-decoration: none;
+        background-color: transparent;
+        -webkit-text-stroke: 1px $azul;
+    }
+    &:hover, &.router-link-exact-active{
+        background-color: transparent;
     }
 
 }
@@ -184,7 +197,7 @@ body{  //FONDO DE LA PAGINA
 //BARRA RESPONSIVE ----------------------------------------------------------------
 #menu-btn {//BOTÓN DE TRES LINEAS PARA RESPONSIVE
     font-size: 2.5rem; // Tamaño de fuente de 2.5rem
-    color:$black; // Color de texto blanco
+    color:$negro; // Color de texto blanco
     cursor: pointer; // Cambia el cursor a un puntero al pasar sobre el botón
     display:none; // El botón se muestra en la página
     text-decoration: none;
