@@ -4,8 +4,7 @@
         <div class="content">
             <span>Descubre</span>
             <h3>tu próximo destino</h3>
-            <p>Encuentra las mejores ofertas en boletos de avión y comienza tu aventura</p>
-            <a href="#book-form" class="btn">Reservar</a>
+            <p>Encuentra las mejores ofertas en tiquetes de avión y comienza tu aventura</p>
         </div>
     </section>
     <section class="book-form" id="book-form">
@@ -51,26 +50,7 @@
                 <input type="submit" value="Buscar" class="btn">
         </form>
     </section>
-    <section class="about" id="about">
-
-        <div class="video-container">
-          
-         
-            <video class="video" src="../assets/londres.mp4" autoplay loop muted  ></video>
-            <div class="controls">      
-                    <span class="control-btn"  data-src = '../assets/newyork.mp4' ></span>
-                    <span class="control-btn" data-src ='../assets/miami.mp4'></span>
-                    <span class="control-btn"  data-src = '../assets/londres.mp4'></span>
-            </div>
-             
-        </div>
-        <div class="content">
-            <span>¿Por qué escogernos?</span>
-            <h3>Nature's Majesty Awaits You</h3>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.</p>
-            <a href="#" class="btn">Read More</a>
-        </div>
-    </section>
+   
     <section class="destination" id="destination">
         <div class="heading">
             <span>Nuestros destinos</span>
@@ -83,8 +63,8 @@
                 </div>  
                 <div class="content">
                     <h3>Miami </h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.</p>
-                    <a href="#" >Leer más <i class="material-symbols-outlined">arrow_forward_ios</i></a>
+                    <p>Miami es una ciudad en el sureste de Florida, conocida por su clima tropical, playas impresionantes y vida nocturna vibrante. Es un destino popular para aquellos que buscan diversión, compras y relajación bajo el sol de Florida.</p>
+                    <a href="#" >Ver vuelos <i class="material-symbols-outlined">arrow_forward_ios</i></a>
                 </div>
             </div>
             <div class="box">
@@ -93,8 +73,8 @@
                 </div>  
                 <div class="content">
                     <h3>Londres</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.</p>
-                    <a href="#" >Leer más <i class="material-symbols-outlined">arrow_forward_ios </i></a>
+                    <p>a capital del Reino Unido, Londres, es una metrópolis diversa que combina la historia y la modernidad. Ofrece una amplia gama de atracciones, desde el Palacio de Buckingham hasta el Museo Británico</p>
+                    <a href="#" >Ver vuelos <i class="material-symbols-outlined">arrow_forward_ios</i></a>
                 </div>
             </div>
 
@@ -104,8 +84,8 @@
                 </div>  
                 <div class="content">
                     <h3>New York </h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.</p>
-                    <a href="#" >Leer más <i class="material-symbols-outlined">arrow_forward_ios </i></a>
+                    <p>La Gran Manzana, Nueva York, es una de las ciudades más emblemáticas del mundo. Ofrece rascacielos imponentes, teatros de Broadway y una escena artística vibrante.</p>
+                    <a href="#" >Ver vuelos <i class="material-symbols-outlined">arrow_forward_ios</i></a>
                 </div>
             </div>
 
@@ -116,8 +96,8 @@
                 </div>  
                 <div class="content">
                     <h3>Madrid </h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.</p>
-                    <a href="#" >Leer más <i class="material-symbols-outlined">arrow_forward_ios </i></a>
+                    <p>Madrid, la capital de España, es conocida por su rica cultura, arte y vida nocturna. Puedes disfrutar de tapas en los bares locales, visitar el Museo del Prado y explorar la arquitectura impresionante.</p>
+                    <a href="#" >Ver vuelos <i class="material-symbols-outlined">arrow_forward_ios</i></a>
                 </div>
             </div>
 
@@ -127,17 +107,87 @@
                 </div>  
                 <div class="content">
                     <h3>Buenos Aires </h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, voluptatum.</p>
-                    <a href="#" >Leer más<i class="material-symbols-outlined">arrow_forward_ios </i></a>
+                    <p> La ciudad de Buenos Aires en Argentina es famosa por su pasión por el tango, su deliciosa comida y su arquitectura europea. Es una ciudad que combina un ambiente elegante con un toque de nostalgia.</p>
+                    <a href="#" >Ver vuelos <i class="material-symbols-outlined">arrow_forward_ios</i></a>
                 </div>
             </div>
+            <div class="box">
+                <div class="image">
+                    <img src="../assets/bogota.jpeg" alt="">
+                </div>  
+                <div class="content">
+                    <h3>Bogotá </h3>
+                    <p>La capital de Colombia, Bogotá, es una ciudad cosmopolita con una rica historia y una creciente escena de arte. El Museo del Oro y el centro histórico son puntos de referencia importantes.</p>
+                    <a href="#" >Ver vuelos <i class="material-symbols-outlined">arrow_forward_ios</i></a>
+                </div>
+            </div>
+            <div class="box">
+                <div class="image">
+                    <img src="../assets/medellin.jpg" alt="">
+                </div>  
+                <div class="content">
+                    <h3>Medellín</h3>
+                    <p>Conocida como "La Ciudad de la Eterna Primavera", Medellín es una de las ciudades más dinámicas de Colombia. Rodeada por colinas verdes, la ciudad disfruta de un clima templado durante todo el año. Medellín es famosa por su espíritu innovador.</p>
+                    <a href="#" >Ver vuelos <i class="material-symbols-outlined">arrow_forward_ios</i></a>
+                </div>
+            </div>
+            <div class="box">
+                <div class="image">
+                    <img src="../assets/pereira.jpg" alt="">
+                </div>  
+                <div class="content">
+                    <h3>Pereira</h3>
+                    <p>Pereira es una ciudad colombiana rodeada de paisajes montañosos y cafetales. Es un destino ideal para los amantes de la naturaleza y el café colombiano.</p>
+                    <a href="#" >Ver vuelos <i class="material-symbols-outlined">arrow_forward_ios</i></a>
+                </div>
+            </div>
+            <div class="box">
+                <div class="image">
+                    <img src="../assets/cali.jpg" alt="">
+                </div>  
+                <div class="content">
+                    <h3>Cali</h3>
+                    <p>Cali es famosa por ser la capital de la salsa en Colombia. La ciudad tiene una vibrante escena de baile y música, además de una cultura culinaria única</p>
+                    <a href="#" >Ver vuelos <i class="material-symbols-outlined">arrow_forward_ios</i></a>
+                </div>
+            </div>
+            <div class="box">
+                <div class="image">
+                    <img src="../assets/cartagena.jpeg" alt="">
+                </div>  
+                <div class="content">
+                    <h3>Cartagena</h3>
+                    <p>Cartagena, en la costa caribeña de Colombia, es conocida por su encanto histórico, arquitectura colonial y playas de aguas cristalinas. Es un lugar perfecto para sumergirse en la historia y la cultura.</p>
+                    <a href="#" >Ver vuelos <i class="material-symbols-outlined">arrow_forward_ios</i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+   
+    <section class="about" id="about">
+
+        <div class="video-container">
+          
+         
+            <video class="video" src="../assets/londres.mp4" autoplay loop muted  ></video>
+            <div class="controls">      
+                    <span class="control-btn"   ></span>
+                    <span class="control-btn" ></span>
+                    <span class="control-btn"  ></span>
+            </div>
+             
+        </div>
+        <div class="content">
+            <span>¿Por qué escogernos?</span>
+            <h3>Haz de cada viaje una aventura inolvidable</h3>
+            <p>Ofrecemos calidad y tarifas competitivas en tus boletos de avión. Nuestro compromiso con tu satisfacción es inquebrantable, y nuestra dedicación a hacer que tu viaje sea inolvidable te dejará deseando volver a volar con nosotros.</p>
         </div>
     </section>
     <section class="footer">
         <div class="box-container">
             <div class="box ">
                 <a href="#" class="logo"><i class="fas fa-paper-plane"></i>AirTravel</a>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur aperiam incidunt iusto doloribus voluptatibus molestias corrupti molestiae placeat at aliquam dicta</p>
+                <p> Elige más que un tiquete; elige una experiencia de viaje excepcional con nosotros.</p>
                 <div class="compartir">
                     <a href="#" class="fab fa-facebook-f"></a>
                     <a href="#" class="fab fa-twitter"></a>
@@ -148,17 +198,17 @@
 
             <div class="box">
                 <h3>Links</h3>
-                <a href="#home" class="links"><i class="fas fa-arrow-right"></i> home </a>
-                <a href="#about " class="links"><i class="fas fa-arrow-right"></i> about </a>
-                <a href="#destination" class="links"><i class="fas fa-arrow-right"></i> destination </a>
-                <a href="#contact" class="links"><i class="fas fa-arrow-right"></i> contact </a>
+                <a href="#home" class="links"><i class="material-symbols-outlined">chevron_right</i>Inicio</a>
+                    <a href="#check-in" class="links"><i class="material-symbols-outlined">chevron_right</i>Confirmar Check-in</a>
+                    <a href="#Ayuda" class="links"><i class="material-symbols-outlined">chevron_right</i>Ayuda</a>
+                    <a href="#contact" class="links"><i class="material-symbols-outlined">chevron_right</i> contactanos</a>
 
             </div>
             <div class="box">
                 <h3> Información de contacto </h3>
-                <p><i class="fas fa-map"></i>Pereira, Colombia</p>
-                <p><i class="fas fa-phone"></i>+57 123-456-7890</p>
-                <p><i class="fas fa-envelope"></i>AirTravel@gmail.com</p>
+                <p><i class="material-symbols-outlined">map</i>Pereira, Colombia</p>
+                <p><i class="material-symbols-outlined">call</i>+57 123-456-7890</p>
+                <p><i class="material-symbols-outlined">mail</i>airtravellabsoft@gmail.com</p>
             </div>
             <div class="box">
                 <h3>Boletín informativo</h3>
@@ -170,23 +220,30 @@
             </div>
         </div>
     </section>
-
-
+    <div class="credit">Creado por : <span> Valentín Valencia - Felipe Galindo - Evelyn Tabares - Brayan Torres</span> | all rights reserved</div>
+   
 </template>
-
+ 
 
 <style lang="scss" > 
-    $blue: #0d629b; 
-	$black: hwb(216 19% 56% / 0.7);
-	$white:#b8e4f5;
-	$light-color:#312c02;
-    $verde:#cffcf1;
-    $degradado: rgba(0, 0, 0, 0.5);
-	$bg-color:#ffffff;
-	$black-bg:rgba(102, 111, 96, 0.7);
-	$border:.2rem solid $blue;
-    $accent: #00BD8E;
+   
 
+	$light-color:#312c02;
+ 
+    $degradado: rgba(224, 209, 209, 0.11);
+	$black-bg:rgba(102, 111, 96, 0.7);
+
+    
+    $azul-claro: #CFE0EB;
+    $gris:#F7F7F7;
+    $verde: #00BD8E;
+    $azul: #0D629B;
+    $blanco: #FFFFFF;
+    $negro:#1A1320;
+    $accent:#0B97F4;
+    $secondary:#ceeafd;
+
+	
 
 @mixin grid($val){
     display:grid;
@@ -219,11 +276,11 @@ html{
     }
 
     &::-webkit-scrollbar-track{
-        background: $black;
+        background: $accent;
     }
 
     &::-webkit-scrollbar-thumb{
-        background-color: $bg-color;
+        background-color: $azul;
     }
 
 }
@@ -237,7 +294,7 @@ html{
     margin-top:9rem;
     width: 90vw;
     border-radius: 1rem;
-    background: linear-gradient($degradado, $black-bg), url(../assets/home1.jpg) no-repeat ;
+    background: linear-gradient($degradado, $light-color), url(../assets/home1.jpg) no-repeat ;
     background-size: cover;
     background-position:center;
     display:flex;
@@ -258,7 +315,7 @@ html{
             
             font-weight: bolder;
             color: transparent;
-            -webkit-text-stroke: .1rem $white;
+            -webkit-text-stroke: .1rem $blanco;
             // Esta línea establece el tamaño de fuente de un elemento al 4% del ancho de la ventana gráfica en el archivo Home.vue
             font-size: 4vw;
             display: block;
@@ -273,7 +330,7 @@ html{
             max-width:60rem;
             margin: 1rem auto;
             font-size:1.4rem ;
-            color: $white;
+            color: $blanco;
             line-height: 2;
 
         }
@@ -286,7 +343,7 @@ html{
     width: 80vw;
     margin: 0 auto;
     margin-top: -9rem;
-    background: $bg-color;
+    background: $azul;
     border-radius: 3rem;
     box-shadow:7 .7rem 1rem rgba(17,17,17,.3);
     padding: 3rem 2rem;
@@ -303,7 +360,7 @@ html{
             span{
                 font-size: 1.4rem;
                 padding: 2rem;
-                color: $light-color;
+                color: $blanco;
             }
 
             input, select{ 
@@ -312,11 +369,11 @@ html{
                 width: 100%;
                 padding: 1.2rem 1.4rem;
                 border-radius: 5rem;
-                border: $border;
+                border: $accent .3rem solid;
                 font-size: 1.6rem ;
                 color: $light-color;
                 text-transform: none;
-                background: none;
+                background: $blanco;
                 margin-top: 1rem;
                 
             }
@@ -326,14 +383,95 @@ html{
         .btn{
             flex: 1 1 15rem;
             align-content: center;
+            border: $accent .3rem solid;
+            
         }
     }
 
 }
+.btn{ //Botón de buscar vuelo
+    margin-top:1rem;
+    display:inline-block;
+    padding: 1rem 3rem; 
+    font-size: 1.7rem;
+    color: $accent;
+    border:$azul .2rem solid; 
+    border-radius:5rem;
+    cursor: pointer;
+    background: $blanco;
 
+    &:hover{
+        background: $accent;
+        color: $blanco;
+        
+    }
+}
+
+
+
+.destination .box-container{ //DESTINOS DE VUELO
+    @include grid (27rem);
+
+    .box{
+        border-radius: 1rem;
+        overflow:hidden;
+        background: $secondary;
+        &:hover img{
+            transform:scale(1.1);  
+        }
+        .image{
+            height: 20rem;
+            overflow: hidden;
+            width:100%;
+
+            img{
+                height: 100%;
+                width: 100%;
+                object-fit: cover;
+
+            }
+
+        }
+
+        .content{
+            padding:2rem;
+            text-align: center;
+
+            h3{
+                font-size:2.3rem;
+                color: $accent;
+            }
+            p{
+                padding:1rem 0;
+                font-size: 1.4rem;
+                color: $negro;
+                line-height: 2rem;
+
+            }
+
+            a{
+                font-size:1.7rem;
+                color:$verde;
+               
+                &:hover{
+                    padding-left: 1rem;
+                    background-color: transparent;
+                    color:$accent;
+     
+                }
+
+
+                i{
+                    padding-right: .5rem ;
+
+                }
+            }
+        }
+    }
+}
 .about{
     display: flex;
-    align-items:center;
+    align-items: right;
     flex-wrap:wrap;
     gap: 2rem;
     margin-top: 5rem;
@@ -360,7 +498,7 @@ html{
                 margin: .7rem;
 
                 &:hover{
-                    background: $blue;
+                    background: $azul;
 
                 }
 
@@ -374,12 +512,12 @@ html{
         margin-bottom: 5rem;
 
         span{
-            color: $bg-color;
+            color: $verde;
             font-size: 2rem;
         }
 
         h3{
-            color: $light-color;
+            color: $azul;
             font-size: 4rem;
             margin-top: .5rem;
         }
@@ -388,7 +526,7 @@ html{
         p{
             padding: 1rem 0;
             font-size:1.4rem ;
-            color: $light-color;
+            color: $negro;
             line-height: 2;
 
         }
@@ -406,72 +544,15 @@ section{
     margin-bottom: 2rem;
 
     span{
-        color: $bg-color;
+        color: $verde;
         font-size: 2rem;
     }
     h1{
         font-size: 4rem;
-        color:$light-color;
+        color:$azul;
     }
 }
 
-
-.destination .box-container{
-    @include grid (27rem);
-
-    .box{
-        border-radius: 1rem;
-        overflow:hidden;
-        background: $bg-color;
-        &:hover img{
-            transform:scale(1.1);  
-        }
-        .image{
-            height: 20rem;
-            overflow: hidden;
-            width:100%;
-
-            img{
-                height: 100%;
-                width: 100%;
-                object-fit: cover;
-
-            }
-
-        }
-
-        .content{
-            padding:2rem;
-            text-align: center;
-
-            h3{
-                font-size:2.3rem;
-                color: $blue;
-
-            }
-            p{
-                padding:1rem 0;
-                font-size: 1.4rem;
-                color: $light-color;
-                line-height: 2rem;
-            }
-
-            a{
-                font-size:1.7rem;
-                color:$accent;
-                &:hover{
-                    padding-left: 1rem;
-                }
-
-
-                i{
-                    padding-right: .5rem ;
-
-                }
-            }
-        }
-    }
-}
 
 .footer{
     .box-container{
@@ -482,16 +563,21 @@ section{
 
             h3{
                 font-size: 2.2rem;
-                color:$white;
+                color:$azul;
                 padding:1rem 0;
 
             }
 
             p{
                 font-size: 1.4rem;
-                color:$light-color;
+                color:$negro;
                 padding:1rem 0;
                 line-height: 2;
+                i{//Iconos de informacion de contacto
+                    padding-right:.5rem ;
+                    color:$accent;
+                }
+                
             }
 
             .compartir{
@@ -504,22 +590,73 @@ section{
                     font-size:2rem;
                     border-radius:50%;
                     font-size:1.7rem;
-                    border: $border;
-                    color:$blue;
-                    margin-right:.5rem;
+                    border: $accent .2rem solid;
+                    color:$negro;
+                    margin-right:1rem;
                     text-align:center ;
 
                     &:hover{
-                        background:$blue;
-                        color:$black;
+                        background:$azul;
+                        color:$blanco;
+                        border: $azul .2rem solid;
                     }
 
                 }
+            }
+            .links{
+                font-size: 1.4rem;
+                color: $negro;
+                padding: 1rem 0 ;
+                display: block;
+
+                &:hover{
+                    background-color: transparent;
+                    color:$verde;
+                    i{
+                     padding-right: 2rem;
+                     }
+                }
+
+                i{
+                    padding-right:.5rem ;
+                    color:$accent;
+                }
+            }
+            form .email{
+                width: 100%;
+                border-radius: 5rem;
+                border:$accent solid .1rem;
+                background: none;
+                font-size:1.5rem;
+                text-transform: none;
+                color:$negro;
+                margin-top: 1rem;
+                padding: 1.2rem 1.4rem;
+
+
             }
         }
 
     }
 }
+
+.credit{//Creditos 
+    background: $secondary;
+    text-align: center;
+    font-size: 2rem;
+    padding: 2rem 1rem;
+    color: $azul;
+    font-weight: bolder;
+    margin-top: 5rem;
+
+    span{ 
+        color: $negro;
+    }
+}
+
+
+
+
 @media (max-width: 768px){//Pagina en tamaño de tablet
   .home{ 
     margin-top: 10rem;
