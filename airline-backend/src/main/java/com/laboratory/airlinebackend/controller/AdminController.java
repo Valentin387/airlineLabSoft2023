@@ -26,7 +26,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AdminController {
 
-    private final AuthenticationService service;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
