@@ -6,6 +6,8 @@ import com.laboratory.airlinebackend.config.JwtService;
 import com.laboratory.airlinebackend.controller.DTO.AuthenticationRequest;
 import com.laboratory.airlinebackend.controller.DTO.AuthenticationResponse;
 import com.laboratory.airlinebackend.controller.DTO.RegisterRequest;
+import com.laboratory.airlinebackend.controller.DTO.RegisterRequestAdmin;
+import com.laboratory.airlinebackend.controller.exceptions.AdminNotFound;
 import com.laboratory.airlinebackend.controller.exceptions.EmailAlreadyTakenException;
 import com.laboratory.airlinebackend.model.User;
 import com.laboratory.airlinebackend.model.token.Token;
