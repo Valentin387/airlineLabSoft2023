@@ -123,8 +123,11 @@ public class AuthenticationController {
             user.setPassword(encodedPassword);
             userRepository.save(user);
 
-            //AuthenticationRequest request2=new AuthenticationRequest(email,encodedPassword);
-            return ResponseEntity.ok("Contraseña actualizada exitosamente");
+            var request2 = AuthenticationRequest.builder()
+                    .email(email)
+                    .password(newPassword)
+                    .build();
+            return ResponseEntity.ok(service.authenticate(request2));
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email " + email + " no encontrado");
         }
