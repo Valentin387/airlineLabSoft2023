@@ -5,7 +5,9 @@
 		
 		<barraHorizontal />
 		<Home />
+		<Login />
 		<router-view/>
+
 	</div>  
 </template>
 
