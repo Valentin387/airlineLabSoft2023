@@ -26,7 +26,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class AdminController {
 
-    private final AuthenticationService service;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
@@ -83,9 +82,5 @@ public class AdminController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Admin with ID " + adminId + " not found");
         }
     }
-
-
-
-
 
 }
