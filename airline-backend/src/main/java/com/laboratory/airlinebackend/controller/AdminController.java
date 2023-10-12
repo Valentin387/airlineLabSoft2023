@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/admin")
-//@CrossOrigin("http://localhost:5173")
+@CrossOrigin("http://localhost:5173")
 @RequiredArgsConstructor
 public class AdminController {
 
