@@ -2,15 +2,15 @@
 <template>
     <section class ="home" id="home">
         <div class="content">
-            <span>Descubre</span>
-            <h3>tu próximo destino</h3>
-            <p>Encuentra las mejores ofertas en tiquetes de avión y comienza tu aventura</p>
+            <span data-aos="fade-up" datas-aos-delay="150">Descubre</span>
+            <h3 data-aos="fade-up" datas-aos-delay="300">tu próximo destino</h3>
+            <p data-aos="fade-up" datas-aos-delay="450">Encuentra las mejores ofertas en tiquetes de avión y comienza tu aventura</p>
         </div>
     </section>
     <section class="book-form" id="book-form">
         <form action="">
               
-                <div class="inputBox">
+                <div  class="inputBox">
                     <span>Origen</span>
                     <select name="origen" placeholder = "¿Desde dónde vuelas?" value="">
                         <option value="Pereira">Pereira</option>
@@ -21,7 +21,7 @@
                     </select>
                 </div>
               
-                <div class="inputBox">
+                <div  class="inputBox">
                     <span>Destino</span>
                     <select name="destino" placeholder = "¿A dónde vuelas?" value="">
                         <option value="Madrid">Madrid</option>
@@ -32,7 +32,7 @@
                     </select>
                  
                 </div>
-                <div class="inputBox">
+                <div  class="inputBox">
                     <span>Fecha de salida</span>
                     <input type="date" value="">
                     
@@ -43,11 +43,11 @@
                     <input type="date" value="">
                 </div>
             
-                <div class="inputBox" id="numPasajeros">
+                <div  class="inputBox" id="numPasajeros">
                     <span>¿Cuántos?</span>
                     <input type="number" placeholder="Número de pasajeros" value="">
                 </div>
-                <input type="submit" value="Buscar" class="btn">
+                <input  data-aos="fade-up" datas-aos-delay="900" type="submit" value="Buscar" class="btn">
         </form>
     </section>
    
@@ -57,7 +57,7 @@
             <h1>Escoge el tuyo</h1>
         </div>
         <div class="box-container">
-            <div class="box">
+            <div class="box"  data-aos="fade-up" datas-aos-delay="150">
                 <div class="image">
                     <img src="../assets/miami.jpg" alt="">
                 </div>  
@@ -67,9 +67,9 @@
                     <a href="#" >Ver vuelos <i class="material-symbols-outlined">arrow_forward_ios</i></a>
                 </div>
             </div>
-            <div class="box">
+            <div class="box"  data-aos="fade-up" datas-aos-delay="150">
                 <div class="image">
-                    <img src="../assets/londres2.jpg" alt="">
+                    <img src="../assets/londres.jpg" alt="">
                 </div>  
                 <div class="content">
                     <h3>Londres</h3>
@@ -78,9 +78,9 @@
                 </div>
             </div>
 
-            <div class="box">
+            <div class="box"  data-aos="fade-up" datas-aos-delay="150">
                 <div class="image">
-                    <img src="../assets/newyork1.jpg" alt="">
+                    <img src="../assets/newyork.jpg" alt="">
                 </div>  
                 <div class="content">
                     <h3>New York </h3>
@@ -90,7 +90,7 @@
             </div>
 
 
-            <div class="box">
+            <div class="box"  data-aos="fade-up" datas-aos-delay="150">
                 <div class="image">
                     <img src="../assets/madrid.jpg" alt="">
                 </div>  
@@ -101,9 +101,9 @@
                 </div>
             </div>
 
-            <div class="box">
+            <div class="box"  data-aos="fade-up" datas-aos-delay="750">
                 <div class="image">
-                    <img src="../assets/buenosaires1.jpg" alt="">
+                    <img src="../assets/buenosaires.jpg" alt="">
                 </div>  
                 <div class="content">
                     <h3>Buenos Aires </h3>
@@ -111,7 +111,7 @@
                     <a href="#" >Ver vuelos <i class="material-symbols-outlined">arrow_forward_ios</i></a>
                 </div>
             </div>
-            <div class="box">
+            <div class="box"   data-aos="fade-up" datas-aos-delay="900">
                 <div class="image">
                     <img src="../assets/bogota.jpeg" alt="">
                 </div>  
@@ -121,7 +121,7 @@
                     <a href="#" >Ver vuelos <i class="material-symbols-outlined">arrow_forward_ios</i></a>
                 </div>
             </div>
-            <div class="box">
+            <div class="box"  data-aos="fade-up" datas-aos-delay="1050">
                 <div class="image">
                     <img src="../assets/medellin.jpg" alt="">
                 </div>  
@@ -131,7 +131,7 @@
                     <a href="#" >Ver vuelos <i class="material-symbols-outlined">arrow_forward_ios</i></a>
                 </div>
             </div>
-            <div class="box">
+            <div class="box"  data-aos="fade-up" datas-aos-delay="1150">
                 <div class="image">
                     <img src="../assets/pereira.jpg" alt="">
                 </div>  
@@ -141,7 +141,7 @@
                     <a href="#" >Ver vuelos <i class="material-symbols-outlined">arrow_forward_ios</i></a>
                 </div>
             </div>
-            <div class="box">
+            <div class="box"  data-aos="fade-up" datas-aos-delay="1300">
                 <div class="image">
                     <img src="../assets/cali.jpg" alt="">
                 </div>  
@@ -151,7 +151,7 @@
                     <a href="#" >Ver vuelos <i class="material-symbols-outlined">arrow_forward_ios</i></a>
                 </div>
             </div>
-            <div class="box">
+            <div class="box"  data-aos="fade-up" datas-aos-delay="1450">
                 <div class="image">
                     <img src="../assets/cartagena.jpeg" alt="">
                 </div>  
@@ -166,7 +166,7 @@
    
     <section class="about" id="about">
 
-        <div class="video-container">
+        <div class="video-container"  data-aos="fade-right" datas-aos-delay="300">
           
          
             <video class="video" src="../assets/londres.mp4" autoplay loop muted  ></video>
@@ -177,7 +177,7 @@
             </div>
              
         </div>
-        <div class="content">
+        <div class="content" data-aos="fade-left" datas-aos-delay="600">
             <span>¿Por qué escogernos?</span>
             <h3>Haz de cada viaje una aventura inolvidable</h3>
             <p>Ofrecemos calidad y tarifas competitivas en tus boletos de avión. Nuestro compromiso con tu satisfacción es inquebrantable, y nuestra dedicación a hacer que tu viaje sea inolvidable te dejará deseando volver a volar con nosotros.</p>
@@ -186,7 +186,7 @@
     <!--<section class="footer">-->
     <footer class="footer">
         <div class="box-container">
-            <div class="box">
+            <div class="box"  >
                 <h3 href="#" class="logo"><i class="fas fa-paper-plane"></i>AirTravel</h3>
                 <p> Elige más que un tiquete; elige una experiencia de viaje excepcional con nosotros.</p>
                 <div class="compartir">
@@ -296,7 +296,7 @@
         margin-top:9rem;
         width: 90vw;
         border-radius: 1rem;
-        background: linear-gradient($degradado, $bg), url(../assets/home1.jpg) no-repeat ;
+        background: linear-gradient($degradado, $bg), url(../assets/homelondres.jpg) no-repeat ;
         background-size: cover;
         background-position:center;
         display:flex;

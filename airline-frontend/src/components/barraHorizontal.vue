@@ -198,7 +198,7 @@ body{  //FONDO DE LA PAGINA
         padding-right:.5rem;
         text-decoration: none;
         background-color: transparent;
-        -webkit-text-stroke: 1.5px $azul;
+        
     }
     &:hover, &.router-link-exact-active{
         background-color: transparent;
@@ -235,7 +235,8 @@ body{  //FONDO DE LA PAGINA
         .navbar{
             position:absolute;
             top:99%; left: 0; right:0; 
-            background: $bg-color;
+            background: $azul;//Color de la barra al desplegarla con el botón de tres lineas 
+            display: flex;
             /*
              * El siguiente código establece un clip-path para un elemento con forma de polígono.
              * Inicialmente, el clip-path se establece en un rectángulo sin altura, lo que resulta en un elemento no visible.
@@ -260,6 +261,12 @@ body{  //FONDO DE LA PAGINA
     //Se muestra botón de tres lineas con menú
     html{
         font-size: 50%;
+    }
+    .header {
+        .carrito{
+            
+            margin: 0 -0.1rem; // Ajusta el margen derecho para separar el usuario del carrito de compras
+        }
     }
 }
 
