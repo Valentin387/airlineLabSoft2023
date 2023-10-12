@@ -11,16 +11,20 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auth")
-//@CrossOrigin("http://localhost:5173")
+@CrossOrigin("http://localhost:5173")
 @RequiredArgsConstructor
 public class AuthenticationController {
+
+    private final PasswordEncoder passwordEncoder;
 
     private final AuthenticationService service;
 
@@ -83,15 +87,63 @@ public class AuthenticationController {
         return ResponseEntity.ok(result);
     }
 
+    @PostMapping("/updatePassword")
+    public ResponseEntity<?> updatePassword(
+            @RequestBody AuthenticationRequest request
+    ){
+        String email = request.getEmail();
+        String newPassword = request.getPassword();
+
+        Optional<User> existingUser = userRepository.findByEmail(email);
+
+        if (existingUser.isPresent()) {
+            User user = existingUser.get();
+            String encodedPassword = passwordEncoder.encode(newPassword);
+            user.setPassword(encodedPassword);
+            userRepository.save(user);
+
+            return ResponseEntity.ok("Contraseña actualizada exitosamente");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email " + email + " no encontrado");
+        }
+    }
+
+    @PostMapping("/recoverPassword")
+    public ResponseEntity<?> recoverPassword(
+            @RequestBody AuthenticationRequest request
+    ){
+        String email = request.getEmail();
+        String newPassword = request.getPassword();
+
+        Optional<User> existingUser = userRepository.findByEmail(email);
+
+        if (existingUser.isPresent()) {
+            User user = existingUser.get();
+            String encodedPassword = passwordEncoder.encode(newPassword);
+            user.setPassword(encodedPassword);
+            userRepository.save(user);
+
+            var request2 = AuthenticationRequest.builder()
+                    .email(email)
+                    .password(newPassword)
+                    .build();
+            return ResponseEntity.ok(service.authenticate(request2));
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email " + email + " no encontrado");
+        }
+    }
+
     @PostMapping("/emailChecking/{userEmail}")
     public ResponseEntity<?> emailChecking(@PathVariable String userEmail){
+        String recoveryLink = "http://localhost:5173/auth/recoverPassword?email=" + userEmail;
+
         String body = "Estimado/a [Nombre del Usuario],\n" +
                 "\n" +
                 "Espero que este mensaje le encuentre bien.\n" +
                 "\n" +
                 "Hemos recibido una solicitud para restablecer la contraseña de su cuenta en nuestro sistema. Para proceder con la creación de una nueva contraseña y recuperar el acceso a su cuenta, le invitamos a hacer clic en el siguiente enlace:\n" +
                 "\n" +
-                "http://localhost:5173/auth/recoverPassword\n" +
+                recoveryLink + "\n" +
                 "\n" +
                 "Una vez que haya accedido al enlace, siga las instrucciones proporcionadas para establecer una nueva contraseña segura. Asegúrese de elegir una contraseña que sea única y que cumpla con nuestras políticas de seguridad.\n" +
                 "\n" +
@@ -101,7 +153,7 @@ public class AuthenticationController {
                 "\n" +
                 "Atentamente," +
                 "\n" +
-                "El equipo de AirTravelLabSoft";
+                "<strong>El equipo de AirTravelLabSoft</strong>";
         emailSenderService.sendEmail(userEmail,
                 "Recuperación de cuenta en AirTravelLabSoft", body);
         return ResponseEntity.ok("the Email was sent");
