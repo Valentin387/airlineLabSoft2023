@@ -69,6 +69,7 @@ public class JwtService {
                 .collect(Collectors.toList());
 
         assert userRole != null;
+        claims.put("ID", u1.getID());
         claims.put("role", userRole.getRole()); // This will include the user's roles
         claims.put("permissions", permissionNames); // Custom method to get permissions as a string or list
 
