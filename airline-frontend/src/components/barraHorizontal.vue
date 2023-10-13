@@ -13,8 +13,8 @@
                     <a data-aos= "zoom-in-left" data-aos-delay="900" href="#about"></a>
                     <a data-aos= "zoom-in-left" data-aos-delay="1150" href="#blogs"></a> -->
                 </nav>
-                <a data-aos= "zoom-in-left" data-aos-delay="600" href="#" class="carrito"><i class="material-symbols-outlined">shopping_cart</i></a>
-                <a data-aos= "zoom-in-left" data-aos-delay="600" href="#" class="usuario"><i class="material-symbols-outlined">person</i></a>
+                <a data-aos= "zoom-in-left" data-aos-delay="600" href="#" class="carrito" id="carrito"><i class="material-symbols-outlined">shopping_cart</i></a>
+                <a data-aos= "zoom-in-left" data-aos-delay="600" href="#" class="usuario" id="usuario"><i class="material-symbols-outlined">person</i></a>
             </header>
         </main>
     </div>
@@ -105,7 +105,7 @@ html{
 
 
 body{  //FONDO DE LA PAGINA
-    background: $blanco;
+    background: blanco;
     overflow-x:hidden;
 }
 //BOTÓN DE "RESERVAR AHORA"
@@ -129,51 +129,63 @@ body{  //FONDO DE LA PAGINA
 
 
 //BARRA DE NAVEGACIÓN----------------------------------------------------------------
+
 .header{
     position:fixed;//La barra de navegación se fija en la parte superior de la página
     top:0; right: 0;left: 0;
     z-index: 1000;
-    background:$secondary;//Color de fondo de la barra de navegación
+    background:$blue;//Color de fondo de la barra de navegación
     display:flex;
     align-items: center;
     justify-content: space-between;
-    padding: 1.5rem 9%;
+    padding: 1.5rem 10%;
+   
 
     .navbar a{//Estilos para los enlaces de la barra de navegación
         font-size:1.7rem;
-        color:$negro; //Color de letra de los enlaces
+        position: flex;
+        color:$blanco; //Color de letra de los enlaces
         display: inline-block;//Los enlaces se muestran en una sola línea
-        margin: 0 1rem;//Establece el margen del elemento en 0 en la parte superior e inferior, y 1rem en la izquierda y derecha.
+        margin: 0 5rem;//Establece el margen del elemento en 0 en la parte superior e inferior, y 1rem en la izquierda y derecha.
         transition: 0.2s ease-out;
         &:hover, &.router-link-exact-active{
-            color:$accent;//Al pasar el cursor sobre la letra del enlace, el color cambia a azul
+            color:$negro;//Al pasar el cursor sobre la letra del enlace, el color cambia a azul
             background-color: transparent;//color de fondo al selleccionar el texto
         }
        
         &.router-link-exact-active{
-          border-right: 5px solid $blue;
+          border-right: 5px solid $blanco;
         }
+
+    }
+    .navbar {
+        display: flex;
+        align-items: center;
+        justify-content: center; // Centra los enlaces en la barra de navegación
+        flex-grow: 1; // Hace que los enlaces ocupen todo el espacio disponible
     }
 
-    .btn {
-        margin-top: 0;
-        
-    }
-
-    .carrito{
-        color:$azul;
-;
+    .carrito, .usuario {
+        color:$blanco;
+        margin: 0 2rem; // Ajusta el margen derecho para separar el usuario del carrito de compras
         background: transparent;
 
+        &:hover, &.router-link-exact-active{
+         color:$negro;//Al pasar el cursor sobre la letra del enlace, el color cambia a azul
+         background-color: transparent;//color de fondo al selleccionar el texto
+        }
+
+        i{//ICONOS DE CARRITO Y USUARIO
+            font-size: 3rem;//Tamaño del icono de carrito y usuario
+        }
+       
     }
-    .usuario{
-        color:$azul;
-        background: transparent;
-    }
+   
 
 }
+
 //LOGO----------------------------------------------------------------
-.logo{//Estilos para el logo de la barra de navegación
+.logo{//NOMBRE DE LA EMPRESA : AirTravel
     font-size: 2.5rem;
     color:$negro;
     font-weight: bolder;
@@ -181,12 +193,12 @@ body{  //FONDO DE LA PAGINA
     background-color: transparent;
     
 
-    i{
-        color:$accent;
+    i{//LOGO DE AIRTRAVEL 
+        color:$blanco;
         padding-right:.5rem;
         text-decoration: none;
         background-color: transparent;
-        -webkit-text-stroke: 1px $azul;
+        
     }
     &:hover, &.router-link-exact-active{
         background-color: transparent;
@@ -202,6 +214,7 @@ body{  //FONDO DE LA PAGINA
     display:none; // El botón se muestra en la página
     text-decoration: none;
 }
+
 
 //media queries
 @media (max-width: 991px) {//pagina en tamaño de computador 
@@ -222,7 +235,8 @@ body{  //FONDO DE LA PAGINA
         .navbar{
             position:absolute;
             top:99%; left: 0; right:0; 
-            background: $bg-color;
+            background: $azul;//Color de la barra al desplegarla con el botón de tres lineas 
+            display: flex;
             /*
              * El siguiente código establece un clip-path para un elemento con forma de polígono.
              * Inicialmente, el clip-path se establece en un rectángulo sin altura, lo que resulta en un elemento no visible.
@@ -247,6 +261,12 @@ body{  //FONDO DE LA PAGINA
     //Se muestra botón de tres lineas con menú
     html{
         font-size: 50%;
+    }
+    .header {
+        .carrito{
+            
+            margin: 0 -0.1rem; // Ajusta el margen derecho para separar el usuario del carrito de compras
+        }
     }
 }
 

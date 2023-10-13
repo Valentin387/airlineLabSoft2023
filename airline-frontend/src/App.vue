@@ -2,18 +2,18 @@
 <template>
 	<div class="app">
    		<!-- <sidebar />   --> 
-		
-		<barraHorizontal />
-		<Home />
-		<Login />
 		<router-view/>
-
+		<barraHorizontal />
+		
+		
 	</div>  
 </template>
 
 
 <script setup>
+
 import barraHorizontal from './components/barraHorizontal.vue'
+
 
 </script>
 
