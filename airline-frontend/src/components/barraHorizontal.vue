@@ -37,18 +37,17 @@ export default {
 
 
 <style lang="scss"  > 
-@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;1,300&family=Poppins:wght@100;300;400;500;600&display=swap');
 
 
 * {//La regla * selecciona todos los elementos de la página y les aplica los estilos CSS
     border: 1px solid black;
-    font-family: 'Poppins', sans-serif;
+ 
     margin:0; padding:0;
     box-sizing: border-box;
     outline:none; 
     border:none;
     text-decoration: none;
-    text-transform: capitalize;
+    
     transition: all .2s linear; 
 }
     $blue: #54b2f1; 
