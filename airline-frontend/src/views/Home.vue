@@ -1,10 +1,10 @@
 
 <template>
-    <section class ="home" id="home">
+    <section class ="Home" id="home">
         <div class="content">
             <span data-aos="fade-up" datas-aos-delay="150">Descubre</span>
             <h3 data-aos="fade-up" datas-aos-delay="300">tu próximo destino</h3>
-            <p data-aos="fade-up" datas-aos-delay="450">Encuentra las mejores ofertas en tiquetes de avión y comienza tu aventura</p>
+            <p >Encuentra las mejores ofertas en tiquetes de avión y comienza tu aventura</p>
         </div>
     </section>
     <section class="book-form" id="book-form">
@@ -291,7 +291,7 @@
 
     
         
-    .home {  //Recuadro con imagen 
+    .Home {  //Recuadro con imagen 
         margin: 0 auto;
         margin-top:9rem;
         width: 90vw;
