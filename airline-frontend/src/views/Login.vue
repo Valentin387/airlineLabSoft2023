@@ -71,19 +71,6 @@ export default {
 
 <style lang="scss"  >
 
-
-
-
-
-    body {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-      
-    }
-
     .login-container {
         text-align: center;
         border: 1px solid #ccc;
