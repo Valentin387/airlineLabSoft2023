@@ -3,9 +3,11 @@
         <div class="login-container">
             <h1>Login</h1>
             <form id="login-form">
+            
                 <input type="email"  id="email" placeholder="Email" v-model="email" required>
                 <input type="password"  id="password" placeholder="Password" v-model="password" required>
                 <button @click="login" type="submit">Log In</button>
+       
             </form>
             <p id="error-message" class="error-message"></p>
         </div>
@@ -68,12 +70,18 @@ export default {
 </script>
 
 <style lang="scss"  >
+
+
+
+
+
     body {
         display: flex;
         justify-content: center;
         align-items: center;
         height: 100vh;
         margin: 0;
+      
     }
 
     .login-container {
@@ -82,6 +90,7 @@ export default {
         padding: 20px;
         max-width: 300px;
         background-color: #f9f9f9;
+        font-family: 'Open Sans', sans-serif;
     }
 
     h1 {
@@ -94,6 +103,7 @@ export default {
         padding: 10px;
         border: 1px solid #ccc;
         border-radius: 5px;
+        font-family: 'Open Sans', sans-serif;
     }
 
     button {
@@ -104,10 +114,12 @@ export default {
         border: none;
         border-radius: 5px;
         cursor: pointer;
+        font-family: 'Open Sans', sans-serif;
     }
 
     .error-message {
         color: red;
+        
     }
 
 </style>
