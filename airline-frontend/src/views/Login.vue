@@ -80,30 +80,30 @@ export default {
         font-family: 'Open Sans', sans-serif;
 
         
-    input {
-        width: 100%;
-        margin: 10px 0;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-        font-family: 'Open Sans', sans-serif;
-    }
+        input {
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: 'Open Sans', sans-serif;
+        }
 
-    button {
-        width: 100%;
-        padding: 10px;
-        background-color: #007bff;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        font-family: 'Open Sans', sans-serif;
-    }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Open Sans', sans-serif;
+        }
 
-    .error-message {
-        color: red;
-        
-    }
+        .error-message {
+            color: red;
+            
+        }
     }
 
 
