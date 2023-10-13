@@ -78,12 +78,8 @@ export default {
         max-width: 300px;
         background-color: #f9f9f9;
         font-family: 'Open Sans', sans-serif;
-    }
 
-    h1 {
-        margin: 0;
-    }
-
+        
     input {
         width: 100%;
         margin: 10px 0;
@@ -108,6 +104,10 @@ export default {
         color: red;
         
     }
+    }
+
+
+
 
 </style>
 
