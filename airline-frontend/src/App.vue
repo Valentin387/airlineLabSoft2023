@@ -2,28 +2,25 @@
 <template>
 	<div class="app">
    		<!-- <sidebar />   --> 
-		<router-view/>
+		
 		<barraHorizontal />
 		
-		
+		<router-view/>
+
 	</div>  
 </template>
 
 
 <script setup>
-
 import barraHorizontal from './components/barraHorizontal.vue'
 
-
-</script>
-
+</script >
 
 
 	
-
 <!--<script setup>
 import Sidebar from './components/Sidebar.vue'
-</script>
+</>
 
 <style lang="scss">
 :root {
