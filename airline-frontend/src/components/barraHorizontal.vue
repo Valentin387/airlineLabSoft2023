@@ -152,7 +152,7 @@
         cursor: pointer; // Cambia el cursor a un puntero al pasar sobre el botón
         display:none; // El botón se muestra en la página
         text-decoration: none;
-        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+        
     }
 
     @media (max-width: 768px){//Pagina en tamaño de tablet
