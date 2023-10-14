@@ -1,5 +1,6 @@
 package com.laboratory.airlinebackend.controller;
 
+import com.laboratory.airlinebackend.controller.service.EmailSenderService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import com.laboratory.airlinebackend.controller.DTO.AuthenticationRequest;
 import com.laboratory.airlinebackend.controller.DTO.AuthenticationResponse;
@@ -31,6 +32,9 @@ public class AdminController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private EmailSenderService emailSenderService;
+
     @GetMapping("/listAdmins")
     public ResponseEntity<?> getAllAdministrators() {
         List<User> admins = userRepository.findAll()
@@ -58,6 +62,28 @@ public class AdminController {
         }
 
         requestNewAdmin.generateRandomPassword();
+
+        var password = requestNewAdmin.getPassword();
+        var firstName = requestNewAdmin.getFirstName();
+
+        String body = "Estimado/a" + firstName +",\n" +
+                "\n" +
+                "Espero que este mensaje le encuentre bien.\n" +
+                "\n" +
+                "Hemos recibido una solicitud para autorizarlo como administrador y se la ha asignado la contraseña de su cuenta en nuestro sistema. Para proceder con la creación de una nueva contraseña temporal y garantizar el acceso adecuado a su cuenta como administrador.\n" +
+                "\n" +
+                "La contraseña temporal es la siguiente:\n" + password + "\n" +
+                "\n" +
+                "Una vez que haya accedido al enlace, siga las instrucciones proporcionadas para establecer una nueva contraseña segura. Asegúrese de elegir una contraseña que sea única y que cumpla con nuestras políticas de seguridad.\n" +
+                "\n" +
+                "Si el destinatario no es usted o no solicitó esta autorización, por favor póngase en contacto con nuestro equipo de soporte inmediatamente para investigar cualquier actividad no autorizada en su cuenta.\n" +
+                "\n" +
+                "Le agradecemos por confiar en nuestros servicios y estamos aquí para ayudarle en caso de cualquier duda o inquietud.\n" +
+                "\n" +
+                "Atentamente,\n" +
+                "<strong>El equipo de AirTravelLabSoft</strong>";
+
+        emailSenderService.sendEmail(email, "Contraseña temporal en AirTravelLabSoft", body);
 
         var user = User.builder()
                 .firstName(requestNewAdmin.getFirstName())
