@@ -3,7 +3,7 @@
     <section class ="Home" id="home">
         <div class="content">
             <span data-aos="fade-up" datas-aos-delay="150">Descubre</span>
-            <h3 data-aos="fade-up" datas-aos-delay="300">tu próximo destino</h3>
+            <h3 data-aos="fade-up" datas-aos-delay="300">Tu próximo destino</h3>
             <p >Encuentra las mejores ofertas en tiquetes de avión y comienza tu aventura</p>
         </div>
     </section>
@@ -73,7 +73,7 @@
                 </div>  
                 <div class="content">
                     <h3>Londres</h3>
-                    <p>a capital del Reino Unido, Londres, es una metrópolis diversa que combina la historia y la modernidad. Ofrece una amplia gama de atracciones, desde el Palacio de Buckingham hasta el Museo Británico</p>
+                    <p>La capital del Reino Unido, Londres, es una metrópolis diversa que combina la historia y la modernidad. Ofrece una amplia gama de atracciones, desde el Palacio de Buckingham hasta el Museo Británico</p>
                     <a href="#" >Ver vuelos <i class="material-symbols-outlined">arrow_forward_ios</i></a>
                 </div>
             </div>
@@ -568,10 +568,13 @@
             .box{
                 padding: 1rem 0;
                 background:$secondary;
-
+                .logo{
+                    color:$negro;
+                }
                 h3{
                     font-size: 2.2rem;
-                    color:$negro;
+                    color:$azul;
+                    font-weight: bolder;
                     padding:1rem 0;
 
                 }
