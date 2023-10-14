@@ -6,6 +6,7 @@
 		<barraHorizontal />
 		<Home />
 		<Login />
+		<SignUp />
 		<router-view/>
 
 	</div>  

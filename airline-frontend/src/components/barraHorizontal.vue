@@ -1,7 +1,6 @@
 <template>
     <div>
         <main class="barraHorizontal"> 
-    
             <header class="header">
                 <div id="menu-btn" class="material-symbols-outlined" @click="toggle">menu</div>
                 <a data-aos= "zoom-in-left" data-aos-delay="150" href="#" class="logo"> <i class= "fa-solid fa-paper-plane"></i>AirTravel</a>      
