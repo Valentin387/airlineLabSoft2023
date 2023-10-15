@@ -134,7 +134,7 @@
                     <h3>Bogotá </h3>
                     <p>La capital de Colombia, Bogotá, es una ciudad cosmopolita con una rica historia y una creciente escena de arte. El Museo del Oro y el centro histórico son puntos de referencia importantes.</p>
                     <a href="/Vuelos-Bogota" >Ver vuelos <i class="material-symbols-outlined">arrow_forward_ios</i></a>
-                    <h5>Desde <br> <span> $1.717.176 </span> </h5>
+                    <h5>Desde <br> <span> $417.176 </span> </h5>
                 </div>
             </div>
 
@@ -146,7 +146,7 @@
                     <h3>Medellín</h3>
                     <p>Conocida como "La Ciudad de la Eterna Primavera", Medellín es una de las ciudades más dinámicas de Colombia. Rodeada por colinas verdes, la ciudad disfruta de un clima templado durante todo el año. Medellín es famosa por su espíritu innovador.</p>
                     <a href="/Vuelos-Medellin" >Ver vuelos <i class="material-symbols-outlined">arrow_forward_ios</i></a>
-                    <h5>Desde <br> <span> $1.717.176 </span> </h5>
+                    <h5>Desde <br> <span> $417.176 </span> </h5>
                 </div>
             </div>
 
@@ -158,7 +158,7 @@
                     <h3>Pereira</h3>
                     <p>Pereira es una ciudad colombiana rodeada de paisajes montañosos y cafetales. Es un destino ideal para los amantes de la naturaleza y el café colombiano.</p>
                     <a href="/Vuelos-Pereira" >Ver vuelos <i class="material-symbols-outlined">arrow_forward_ios</i></a>
-                    <h5>Desde <br> <span> $1.717.176 </span> </h5>
+                    <h5>Desde <br> <span> $417.176 </span> </h5>
                 </div>
             </div>
 
@@ -170,7 +170,7 @@
                     <h3>Cali</h3>
                     <p>Cali es famosa por ser la capital de la salsa en Colombia. La ciudad tiene una vibrante escena de baile y música, además de una cultura culinaria única</p>
                     <a href="/Vuelos-Cali" >Ver vuelos <i class="material-symbols-outlined">arrow_forward_ios</i></a>
-                    <h5>Desde <br> <span> $1.717.176 </span> </h5>
+                    <h5>Desde <br> <span> $417.176 </span> </h5>
                 </div>
             </div>
 
@@ -182,7 +182,7 @@
                     <h3>Cartagena</h3>
                     <p>Cartagena, en la costa caribeña de Colombia, es conocida por su encanto histórico, arquitectura colonial y playas de aguas cristalinas. Es un lugar perfecto para sumergirse en la historia y la cultura.</p>
                     <a href="/Vuelos-Cartagena" >Ver vuelos <i class="material-symbols-outlined">arrow_forward_ios</i></a>
-                    <h5>Desde <br> <span> $1.717.176 </span> </h5>
+                    <h5>Desde <br> <span> $417.176 </span> </h5>
                 </div>
             </div>
 
