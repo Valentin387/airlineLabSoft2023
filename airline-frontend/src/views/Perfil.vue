@@ -174,7 +174,7 @@
      $blanco: #FFFFFF;
      $negro:#1A1320;
      $accent:#0B97F4;
-    $secondary:#ceeafd;
+     $secondary:#ceeafd;
    .container light-style flex-grow-1 container-p-y{
       background: #3B5998;
     }

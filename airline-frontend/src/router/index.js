@@ -3,7 +3,7 @@ import {createRouter,createWebHistory} from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import SingUp from '../views/SignUp.vue'
-import Style from '../views/Style.vue'
+import Perfil from '../views/Perfil.vue'
 
 const router = createRouter ({
 
@@ -27,8 +27,8 @@ const router = createRouter ({
         },
 
         {
-            path: '/Style',
-            component: Style
+            path: '/Perfil',
+            component: Perfil
         }
 
     ]
