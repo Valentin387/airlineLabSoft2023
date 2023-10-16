@@ -117,10 +117,7 @@
                     <button type="button" class="btn btn-primary">Guardar Cambios</button>&nbsp;
                     <button type-="button" class="btn btn-default">Cancelar</button>
                 </div>
-                <div style="margin-bottom: 20px;"></div>
-
-             
-                
+                <div style="margin-bottom: 20px;"></div> 
             </div>
             <footer class="footer">
                     <div class="box-container">
