@@ -114,9 +114,11 @@
                     
                 </div>
                 <div class="text-right mt-3 bt-3">
-                        <button type="button" class="btn btn-primary">Guardar Cambios</button>&nbsp;
-                        <button type="button" class="btn btn-default">Cancelar</button>
+                    <button type="button" class="btn btn-primary">Guardar Cambios</button>&nbsp;
+                    <button type-="button" class="btn btn-default">Cancelar</button>
                 </div>
+                <div style="margin-bottom: 20px;"></div>
+
              
                 
             </div>
@@ -282,14 +284,7 @@
         background: $gris;//FONDO DE LA CARD
         margin-top: 10rem;
         width:90vw;
-        margin-right: -10%;
-        
-        text-right mt-3 bt-3{
-            margin-bottom: 10rem;
-        }
-        
-        
-       
+        margin-right: -10%; 
     }
 
     .row-bordered {
