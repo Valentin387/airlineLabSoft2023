@@ -1,16 +1,12 @@
 package com.laboratory.airlinebackend.controller;
 
 import java.util.Optional;
-import com.laboratory.airlinebackend.controller.DTO.AuthenticationResponse;
 import com.laboratory.airlinebackend.controller.DTO.ChangeIdRootRequest;
-import com.laboratory.airlinebackend.controller.DTO.RegisterRequest;
-import com.laboratory.airlinebackend.controller.exceptions.EmailAlreadyTakenException;
 import com.laboratory.airlinebackend.controller.exceptions.RootIdChangeException;
 import com.laboratory.airlinebackend.model.User;
 import com.laboratory.airlinebackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
