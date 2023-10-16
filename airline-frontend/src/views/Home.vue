@@ -424,6 +424,7 @@
         &:hover{
             background: $accent;
             color: $blanco;
+            text-decoration-line: none;
             
         }
     }
@@ -455,6 +456,7 @@
             transition: transform 0.3s ease;
             &:hover img{
                 transform:scale(1.1);  
+                text-decoration-line: none;
             }
             .image{
                 height: 20rem;
@@ -514,6 +516,7 @@
                         padding-left: 1rem;
                         background-color: transparent;
                         color:$accent;
+                        text-decoration-line: none;
         
                     }
 
@@ -556,6 +559,7 @@
 
                     &:hover{
                         background: $azul;
+                        text-decoration-line: none;
 
                     }
 
@@ -654,6 +658,7 @@
                             background:$azul;
                             color:$blanco;
                             border: $azul .2rem solid;
+                            text-decoration-line: none;
                         }
 
                     }
@@ -669,6 +674,7 @@
                     &:hover{
                         background-color: transparent;
                         color:$verde;
+                        text-decoration: none;
                         i{
                         padding-right: 2rem;
                         }
@@ -782,10 +788,5 @@
             }
         }
     }
-
-  
-
-        
-
 
 </style>

@@ -73,6 +73,7 @@
         margin : auto;
         justify-content: space-between;
         padding: 1.5rem 4%;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
     
 
         .navbar a{//Estilos para los enlaces de la barra de navegación
@@ -88,10 +89,12 @@
             &:hover, &.router-link-exact-active{
                 color:$negro;//Al pasar el cursor sobre la letra del enlace, el color cambia a azul
                 background-color: transparent;//color de fondo al selleccionar el texto
+                text-decoration-line: none;
             }
         
             &.router-link-exact-active{
-            border-right: 5px solid $blanco;
+                border-right: 5px solid $blanco;
+                text-decoration-line: none;
             }
 
         }
@@ -111,6 +114,7 @@
             &:hover, &.router-link-exact-active{
             color:$negro;//Al pasar el cursor sobre la letra del enlace, el color cambia a azul
             background-color: transparent;//color de fondo al selleccionar el texto
+            text-decoration-line: none;
             }
 
             i{//ICONOS DE CARRITO Y USUARIO
@@ -130,7 +134,6 @@
         font-weight: bolder;
         text-decoration: none;
         background-color: transparent;
-       
         i{//LOGO DE AIRTRAVEL 
             color:$blanco;
             padding-right:.5rem;
@@ -141,6 +144,7 @@
         }
         &:hover, &.router-link-exact-active{
             background-color: transparent;
+            text-decoration-line: none;
         }
 
     }
@@ -183,6 +187,10 @@
                     display:block;
                 }
             }
+            .carrito {
+                position: absolute;
+                right: 6.5rem; // Ajusta el margen derecho según sea necesario
+            }
         }
     }
 
@@ -195,11 +203,16 @@
         .header {
             justify-content: space-between;
             padding: 1.5rem 1rem;
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
-            .carrito{
-                margin: 9 -15rem; // Ajusta el margen derecho para separar el usuario del carrito de compras
+           
+            .navbar {
+                position: absolute;
             }
-        }
+            .carrito {
+                position: absolute;
+                right: 6.5rem; // Ajusta el margen derecho según sea necesario
+            }
+    }
+        
     }
 
 </style>
