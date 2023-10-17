@@ -1,6 +1,5 @@
 package com.laboratory.airlinebackend.repository;
 
-import com.laboratory.airlinebackend.model.Permission;
 import com.laboratory.airlinebackend.model.Role;
 import com.laboratory.airlinebackend.model.RolePermission;
 import org.springframework.data.jpa.repository.JpaRepository;

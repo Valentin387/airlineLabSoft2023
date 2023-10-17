@@ -1,18 +1,15 @@
 package com.laboratory.airlinebackend.controller;
 
+
 import com.laboratory.airlinebackend.controller.DTO.UpdateProfileRequest;
 import com.laboratory.airlinebackend.model.User;
 import com.laboratory.airlinebackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 @RestController
 @RequestMapping("/api/user")
@@ -22,7 +19,35 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    @PutMapping("/profile/{id}")
+    @GetMapping("/profile/{id}")
+    public ResponseEntity<?> register(@PathVariable Long id){
+        Optional<User> userOptional = userRepository.findById(id);
+
+        if (userOptional.isPresent()) {
+            User existingUser = userOptional.get();
+
+            return ResponseEntity.ok(UpdateProfileRequest.builder()
+                    .email(existingUser.getEmail())
+                    .firstName(existingUser.getFirstName())
+                    .lastName(existingUser.getLastName())
+                    .birthday(existingUser.getBirthday())
+                    .birthPlace(existingUser.getBirthPlace())
+                    .billingAddress(existingUser.getBillingAddress())
+                    .gender(existingUser.getGender())
+                    .role(existingUser.getRole())
+                    .username(existingUser.getUsername())
+                    .profileImage(existingUser.getProfileImage())
+                    .active(existingUser.getActive())
+                    .subscribedToFeed(existingUser.getSubscribedToFeed())
+                    .build());
+        } else {
+            // Si no se encuentra el usuario, devuelve un error 404 (Not Found)
+            return ResponseEntity.notFound().build();
+        }
+
+    }
+
+    @PutMapping("/profileUpdate/{id}")
     public ResponseEntity<?> updateProfile(@PathVariable Long id, @RequestBody UpdateProfileRequest updatedUser) {
         Optional<User> userOptional = userRepository.findById(id);
 
@@ -38,7 +63,7 @@ public class UserController {
             existingUser.setBillingAddress(updatedUser.getBillingAddress());
             existingUser.setGender(updatedUser.getGender());
             existingUser.setRole(updatedUser.getRole());
-            existingUser.setUserName(updatedUser.getUsername());
+            existingUser.setUsername(updatedUser.getUsername());
             existingUser.setProfileImage(updatedUser.getProfileImage());
             existingUser.setActive(updatedUser.getActive());
             existingUser.setSubscribedToFeed(updatedUser.getSubscribedToFeed());
