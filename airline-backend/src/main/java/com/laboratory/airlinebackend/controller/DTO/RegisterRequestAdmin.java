@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.util.Random;
 import org.apache.commons.lang3.RandomStringUtils;
 
 @Data

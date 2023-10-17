@@ -2,11 +2,8 @@ package com.laboratory.airlinebackend.controller;
 
 import com.laboratory.airlinebackend.controller.service.EmailSenderService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import com.laboratory.airlinebackend.controller.DTO.AuthenticationRequest;
-import com.laboratory.airlinebackend.controller.DTO.AuthenticationResponse;
 import com.laboratory.airlinebackend.controller.DTO.RegisterRequestAdmin;
 import com.laboratory.airlinebackend.controller.exceptions.EmailAlreadyTakenException;
-import com.laboratory.airlinebackend.controller.service.AuthenticationService;
 import com.laboratory.airlinebackend.model.User;
 import com.laboratory.airlinebackend.repository.UserRepository;
 import org.springframework.http.HttpStatus;
@@ -81,7 +78,7 @@ public class AdminController {
                 "Le agradecemos por confiar en nuestros servicios y estamos aquí para ayudarle en caso de cualquier duda o inquietud.\n" +
                 "\n" +
                 "Atentamente,\n" +
-                "<strong>El equipo de AirTravelLabSoft</strong>";
+                "El equipo de AirTravelLabSoft";
 
         emailSenderService.sendEmail(email, "Contraseña temporal en AirTravelLabSoft", body);
 
