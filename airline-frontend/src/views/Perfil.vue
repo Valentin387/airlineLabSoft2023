@@ -175,9 +175,9 @@
      $negro:#1A1320;
      $accent:#0B97F4;
      $secondary:#ceeafd;
-   .container light-style flex-grow-1 container-p-y{
-      background: #3B5998;
-    }
+     .container light-style flex-grow-1 container-p-y{
+         background: #3B5998;
+        }
    @mixin grid($val){
         display:grid;
         grid-template-columns: repeat(auto-fit, minmax($val, 1fr));
@@ -247,9 +247,9 @@
     }
 
     .btn-outline-primary {
-        border-color: #26B4FF;
+        border-color: $accent;
         background: transparent;
-        color: #26B4FF;
+        color: $accent;
     }
 
 
@@ -259,26 +259,16 @@
     }
 
     .text-light {
-        color: #babbbc !important;
+        color:$azul!important;
     }
 
-    .btn-facebook {
-        border-color: rgba(0, 0, 0, 0);
-        background: #3B5998;
-        color: #fff;
-    }
-
-    .btn-instagram {
-        border-color: rgba(0, 0, 0, 0);
-        background: #000;
-        color: #fff;
-    }
+   
 
     .card{
         background-clip: padding-box;
-        box-shadow: 0 1px 4px rgba(24, 28, 33, 0.012);
+        box-shadow: 0 6px 6px rgba(6, 6, 6, 0.1);
         
-        background: $gris;//FONDO DE LA CARD
+        background: $secondary;//FONDO DE LA CARD
         margin-top: 10rem;
         width:90vw;
         margin-right: -10%; 
@@ -313,31 +303,17 @@
         border-color: rgba(24, 28, 33, 0.03) !important;
     }
 
-    .light-style .account-settings-links .list-group-item.active {
-        color: #4e5155 !important;
-    }
-
-    .material-style .account-settings-links .list-group-item {
-        padding     : 0.85rem 1.5rem;
-        border-color: rgba(24, 28, 33, 0.03) !important;
-    }
-
-    .material-style .account-settings-links .list-group-item.active {
-        color: #4e5155 !important;
-    }
-
-    .dark-style .account-settings-links .list-group-item {
-        padding     : 0.85rem 1.5rem;
-        border-color: rgba(255, 255, 255, 0.03) !important;
-    }
-
-    .dark-style .account-settings-links .list-group-item.active {
-        color: #fff !important;
-    }
 
     .light-style .account-settings-links .list-group-item.active {
-        color: #4E5155 !important;
-    }
+    color: #0c0c0c !important;
+    border: 1px solid #1363ae !important;
+    border-radius: 1px !important;
+    box-shadow: 0px 0px 5px rgba(19, 99, 174, 0.5) !important;
+    background-color: #f5f5f5 !important;
+    transition: all 0.3s ease-in-out !important;
+}
+
+
 
     .light-style .account-settings-links .list-group-item {
         padding     : 0.85rem 1.5rem;

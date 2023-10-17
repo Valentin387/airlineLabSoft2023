@@ -58,6 +58,8 @@
         
     body{  //FONDO DE LA PAGINA
         background: $blanco;
+       //background-image: linear-gradient(to top, #fcfeff 0%, #fbfeff 100%);
+
         overflow-x:hidden;
     }
     
