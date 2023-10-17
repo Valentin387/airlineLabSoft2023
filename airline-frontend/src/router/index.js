@@ -6,6 +6,10 @@ import SingUp from '../views/SignUp.vue'
 import Ad_Management from '../views/Ad_Management.vue'
 
 
+import Perfil from '../views/Perfil.vue'
+import CrearAdmin from '../views/CrearAdmin.vue'
+import CambioIdRoot from '../views/CambioIdRoot.vue'
+import EliminarAdmin from '../views/EliminarAdmin.vue'
 const router = createRouter ({
 
     history: createWebHistory(),
@@ -15,8 +19,8 @@ const router = createRouter ({
           
         },
         {
-            path: '/About',
-            component: () => import('../views/About.vue')   
+            path: '/Ayuda',
+            component: () => import('../views/Ayuda.vue')   
         },
         {
             path: '/Login',
@@ -29,6 +33,26 @@ const router = createRouter ({
         {
             path: '/Ad_Management',
             component: Ad_Management
+        },
+
+        {
+            path: '/Perfil',
+            component: Perfil
+        },
+
+        {
+            path: '/CrearAdmin',
+            component: CrearAdmin
+        },
+
+        {
+            path: '/CambioIdRoot',
+            component: CambioIdRoot
+        },
+
+        {
+            path: '/EliminarAdmin',
+            component:  EliminarAdmin
         }
 
     ]
