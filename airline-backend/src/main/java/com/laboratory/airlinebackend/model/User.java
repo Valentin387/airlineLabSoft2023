@@ -30,7 +30,7 @@ public class User implements UserDetails{
     private String billingAddress;
     private String gender;
     private int role;
-    private String username;
+    private String userName;
     private String profileImage;
     private Boolean active;
     private Boolean subscribedToFeed;
@@ -105,6 +105,4 @@ public class User implements UserDetails{
         this.password = password;
     }
 
-    public void setUsername(String username) {
-    }
 }

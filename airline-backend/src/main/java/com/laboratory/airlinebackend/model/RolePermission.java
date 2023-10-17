@@ -4,6 +4,7 @@ package com.laboratory.airlinebackend.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Date;
 
 @Getter
 @Setter

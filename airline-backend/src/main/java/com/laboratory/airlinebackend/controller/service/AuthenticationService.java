@@ -1,9 +1,13 @@
 package com.laboratory.airlinebackend.controller.service;
 
+
+
 import com.laboratory.airlinebackend.config.JwtService;
 import com.laboratory.airlinebackend.controller.DTO.AuthenticationRequest;
 import com.laboratory.airlinebackend.controller.DTO.AuthenticationResponse;
 import com.laboratory.airlinebackend.controller.DTO.RegisterRequest;
+import com.laboratory.airlinebackend.controller.DTO.RegisterRequestAdmin;
+import com.laboratory.airlinebackend.controller.exceptions.AdminNotFound;
 import com.laboratory.airlinebackend.controller.exceptions.EmailAlreadyTakenException;
 import com.laboratory.airlinebackend.model.User;
 import com.laboratory.airlinebackend.model.token.Token;
@@ -36,14 +40,6 @@ public class AuthenticationService {
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
                 .email(request.getEmail())
-                .username(request.getUsername())
-                .DNI(request.getDNI())
-                .birthday(request.getBirthday())
-                .birthPlace(request.getBirthPlace())
-                .billingAddress(request.getBillingAddress())
-                .gender(request.getGender())
-                .profileImage(request.getProfileImage())
-                .subscribedToFeed(request.getSubscribedToFeed())
                 .role(3)
                 .active(Boolean.TRUE)
                 .password(passwordEncoder.encode(request.getPassword()))
