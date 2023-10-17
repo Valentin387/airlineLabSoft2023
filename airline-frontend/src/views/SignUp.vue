@@ -17,14 +17,14 @@
             <input type="text" id="billing-address" placeholder="Dirección de Facturación" v-model="billingAddress" required>
             
             <!-- Documento -->
-            <select id="id-document" v-model="idDocument" style="margin-bottom: 10px; padding-bottom: 10px; margin-top: 10px;">
+            <select id="id-document" v-model="idDocument" style="margin-bottom: 20px; padding-bottom: 10px; margin-top: 10px;">
                 <option value="DNI">DNI</option>
                 <option value="CC">Cedula de ciudadania</option>
                 <option value="VISA">VISA</option>
             </select>
         
             <!-- Genero -->
-            <select id="gender" v-model="gender" style="margin-bottom: 10px;">
+            <select id="gender" v-model="gender" style="margin-bottom: 10px; padding-bottom: 10px;">
                 <option value="Masculino">Masculino</option>
                 <option value="Femenino">Femenino</option>
                 <option value="Otro">Otro</option>
@@ -60,8 +60,7 @@
         padding: 20px;
         background-color: #f2f2f2;
         border-radius: 10px;
-        display: inline-block;
-    
+    }
     
     .form-group {
         margin: 10px 0;
@@ -74,28 +73,16 @@
     }
     
     input, select {
-        width: 500px;
-        margin: 10px;
+        width: 100%;
         padding: 10px;
         border: 1px solid #ccc;
         border-radius: 5px;
     }
     
     .create-account {
-        width: 500px;
+        width: 100%;
         padding: 10px;
         background-color: #007bff;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-
-    .login{
-        width: 300px;
-        padding: 10px;
-        margin-top: 10px;
-        background-color: #7c7f83;
         color: #fff;
         border: none;
         border-radius: 5px;
@@ -114,67 +101,37 @@
         font-family: 'Courier New', Courier, monospace;
         font-size: small;
         text-align: center;
-        margin-top: 20px;
+        margin-top: 10px;
     }
-
-  }
 </style>
 
 <script>
-  /*import RegistrationService from "@/services/RegistrationService.js";*/
-
-  export default {
-    data() {
-      return {
-        fullName: "",
-        birthPlace: "",
-        birthDate: "",
-        billingAddress: "",
-        idDocument: "DNI",
-        gender: "Otro",
-        email: "",
-        username: "",
-        password: "",
-        profilePicture: null,
-        errorMessage: "",
-      };
+export default {
+  data() {
+    return {
+      fullName: "",
+      birthPlace: "",
+      birthDate: "",
+      billingAddress: "",
+      idDocument: "DNI",
+      gender: "Otro",
+      email: "",
+      username: "",
+      password: "",
+      profilePicture: null,
+    };
+  },
+  methods: {
+    createAccount(){  
     },
-    methods: {
-      createAccount() {
-        // Recopila todos los datos del formulario y crea un objeto con ellos
-        const accountData = {
-          fullName: this.fullName,
-          birthPlace: this.birthPlace,
-          birthDate: this.birthDate,
-          billingAddress: this.billingAddress,
-          idDocument: this.idDocument,
-          gender: this.gender,
-          email: this.email,
-          username: this.username,
-          password: this.password,
-        };
-        // Llama al servicio de registro para crear la cuenta
-        /*RegistrationService.createAccount(accountData)
-          .then((response) => {
-            if (response.status === 201) {
-              console.log("Cuenta creada exitosamente:", response.data);
-              this.$router.push('/login');
-            }
-          })
-          .catch((error) => {
-            console.error("Error al crear la cuenta:", error);
-            this.errorMessage = "Error al crear la cuenta. Por favor, inténtalo de nuevo.";
-          });*/
-      },
-      uploadProfilePicture(event) {
-        const file = event.target.files[0];
-        this.profilePicture = file;
-      },
-      redirectToLogin() {
-        console.log("Redirigiendo a la página de inicio de sesión");
-        this.$router.push('/login');
-      },
+    uploadProfilePicture(event) {
+      const file = event.target.files[0];
+      this.profilePicture = file;
     },
-  };
+    redirectToLogin() {
+      console.log("Redirecting to login page");
+      this.$router.push('/Login');
+    },
+  },
+};
 </script>
-
