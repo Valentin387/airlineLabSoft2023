@@ -153,7 +153,7 @@ public class AuthenticationController {
                 "\n" +
                 "Atentamente," +
                 "\n" +
-                "El equipo de AirTravelLabSoft";
+                "<strong>El equipo de AirTravelLabSoft</strong>";
         emailSenderService.sendEmail(userEmail,
                 "Recuperación de cuenta en AirTravelLabSoft", body);
         return ResponseEntity.ok("the Email was sent");
