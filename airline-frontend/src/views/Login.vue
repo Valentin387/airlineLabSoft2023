@@ -108,7 +108,7 @@
 </style>
 
 <script>
-import LoginService from "@/services/authenticationService/LoginService.js";
+import LoginService from "@/services/authentication/LoginService.js";
 
 export default {
     data() { 
