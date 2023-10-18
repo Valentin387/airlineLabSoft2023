@@ -122,7 +122,7 @@ export default {
     };
   },
   methods: {
-    createAccount(){  
+    createAccount(){ 
     },
     uploadProfilePicture(event) {
       const file = event.target.files[0];
