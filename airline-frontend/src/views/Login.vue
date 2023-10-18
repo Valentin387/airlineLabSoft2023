@@ -18,7 +18,7 @@
         </form>
         <p id="text2" class="text">o</p>
         <p id="error-message" class="error-message">{{ errorMessage }}</p>
-        <button id="register" class="register" @click="redirectToSignUp">Registrarse</button>
+        <button id="register" class="register" @click.prevent="redirectToSignUp">Registrarse</button>
     </div>
   </div>
 </template>

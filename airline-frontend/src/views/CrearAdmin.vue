@@ -1,21 +1,20 @@
 <template>
-    <body>
-        <div class="admin-container">
-            <div class="admin-info-container">
-                <hr>
-                <h1 class="title">Crear administrador</h1>
-                <form class="inputs-container">
-                    <hr>
-                    <p class="texto">Por favor ingrese Correo Electrónico y nombre del administrador</p>
-                    <input class="input-admin" type="text" placeholder="Correo Electrónico">
-                    <input class="input-admin" type="text" placeholder="Usuario">
-                    <button class="btn-admin">Confirmar Creación</button>
-                </form>
-            </div>
-                <img class="image-containerCrearAdmin" src="src/assets/CrearAdmin.svg" alt="">
-        </div>
-
-    </body>
+    <div class="admin-container">
+      <div class="admin-info-container">
+        <hr>
+        <h1 class="title">Crear administrador</h1>
+        <form @submit.prevent="newAdmin" class="inputs-container">
+          <hr>
+          <p class="texto">Por favor ingrese Correo Electrónico y nombre del administrador</p>
+          <input class="input-admin" type="email" id="email" placeholder="Email" v-model="email" required>
+          <input class="input-admin" id="usuario" type="text" placeholder="Usuario" v-model="firstName" required>
+          <input class="input-admin" id="password" type="password" placeholder="Password" v-model="password" required>
+          <button class="btn-admin" type="submit">Confirmar Creación</button>
+        </form>
+        <p id="error-message" class="error-message">{{ errorMessage }}</p>
+      </div>
+      <img class="image-containerCrearAdmin" src="src/assets/CrearAdmin.svg" alt="">
+    </div>
 </template>
 
 <style lang="scss">
@@ -202,3 +201,41 @@
     }
 
 </style>
+<script>
+import newAdminService from "@/services/adminService/newAdminService.js";
+
+export default {
+  data() {
+    return {
+      firstName: "",
+      email: "",
+      password: "",
+      errorMessage: "",
+    };
+  },
+  methods: {
+    async newAdmin() {
+      const { firstName, email, password } = this;
+
+      try {
+        const response = await newAdminService.newAdmin(firstName, email, password);
+
+        if (response.status === 200) {
+          console.log("Creation successful:", response.data);
+          this.$router.push('/');
+        }
+      } catch (error) {
+        if (error.response && error.response.status === 401) {
+          console.log("Login failed:", error.response.status, error);
+          this.errorMessage = error.response.data.message;
+        } else if (error.response && error.response.status === 403) {
+          console.log("User not found:", error.response.status, error);
+          this.errorMessage = error.response.data.message;
+        } else {
+          console.error("Something happened:", error);
+        }
+      }
+    },
+  },
+};
+</script>
