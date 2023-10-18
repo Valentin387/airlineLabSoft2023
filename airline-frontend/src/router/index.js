@@ -2,7 +2,8 @@
 import {createRouter,createWebHistory} from 'vue-router'
 import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
-import SingUp from '../views/SignUp.vue'
+import SignUp from '../views/SignUp.vue'
+import Ad_Management from '../views/Ad_Management.vue'
 import Perfil from '../views/Perfil.vue'
 import CrearAdmin from '../views/CrearAdmin.vue'
 import CambioIdRoot from '../views/CambioIdRoot.vue'
@@ -25,9 +26,12 @@ const router = createRouter ({
         },
         {
             path: '/SignUp',
-            component: SingUp
+            component: SignUp
         },
-
+        {
+            path: '/Ad_Management',
+            component: Ad_Management
+        },
         {
             path: '/Perfil',
             component: Perfil
