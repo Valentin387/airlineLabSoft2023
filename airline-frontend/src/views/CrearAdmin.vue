@@ -12,7 +12,7 @@
                     <button class="btn-admin">Confirmar Creación</button>
                 </form>
             </div>
-                <img class="image-container" src="src/assets/CrearAdmin.svg" alt="">
+                <img class="image-containerCrearAdmin" src="src/assets/CrearAdmin.svg" alt="">
         </div>
 
     </body>
@@ -69,7 +69,7 @@
         }
     }
 
-    .image-container {
+    .image-containerCrearAdmin {
         padding: 2rem;
         width: 50%;
         background-color: $azul;
