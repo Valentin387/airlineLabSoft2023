@@ -6,11 +6,11 @@
   <component name="ChangeListManager">
     <list default="true" id="2e0abf07-9820-4643-9f68-1385b5e1c1a4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/airline-frontend/src/services/authentication/LoginService.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/airline-frontend/src/services/authentication/emailCheckingService.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/airline-frontend/src/services/authentication/recoverPasswordService.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/airline-frontend/src/services/authentication/registerService.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/airline-frontend/src/services/authentication/updatePasswordService.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/airline-frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/airline-frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/airline-frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/airline-frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/airline-frontend/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/airline-frontend/src/router/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/airline-frontend/src/views/Login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/airline-frontend/src/views/Login.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/airline-frontend/src/views/Perfil.vue" beforeDir="false" afterPath="$PROJECT_DIR$/airline-frontend/src/views/Perfil.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,19 +57,19 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;front/services&quot;,
-    &quot;jdk.selected.JAVA_MODULE&quot;: &quot;21&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/torre/OneDrive/Documentos/airlineLabSoft2023&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.new.ui&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "front/bryanPerfil",
+    "jdk.selected.JAVA_MODULE": "21",
+    "last_opened_file_path": "C:/Users/torre/OneDrive/Documentos/airlineLabSoft2023",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "reference.settings.ide.settings.new.ui"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Maven.spring-boot:run">
     <configuration name="clean_install" type="MavenRunConfiguration" factoryName="Maven">
       <MavenSettings>

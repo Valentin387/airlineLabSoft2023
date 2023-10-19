@@ -481,58 +481,130 @@
 
 <script>
 import updateProfileService from "@/services/userService/updateProfileService.js";
+import viewProfileService from "@/services/userService/viewProfileService.js";
+
 
 export default {
     data() { 
       return {
-        id: "",
-        email: "",
-        firstName: "",
-        lastName: "",
-        birthday: "",
-        birthPlace: "",
-        billingAddress: "",
-        gender: "",
-        role: "",
-        username: "",
-        profileImage: "",
-        active: "",
-        subscribedToFeed: "",
-        errorMessage: "",
+        profile:{ 
+            id: "",
+            email: "",
+            firstName: "",
+            lastName: "",
+            birthday: "",
+            birthPlace: "",
+            billingAddress: "",
+            gender: "",
+            role: "",
+            username: "",
+            profileImage: "",
+            active: "",
+            subscribedToFeed: "",
+            errorMessage: "",
+        },
+        isEditing:{
+            id: "",
+            email: "",
+            firstName: "",
+            lastName: "",
+            birthday: "",
+            birthPlace: "",
+            billingAddress: "",
+            gender: "",
+            role: "",
+            username: "",
+            profileImage: "",
+            active: "",
+            subscribedToFeed: "",
+            errorMessage: "",
+        },
+        originalProfile: {}, // To store the original profile before editing
       };
     },
-  methods: {
-    updateProfile() {
-      const { id, email, firstName, lastName, birthday, birthPlace, billingAddress, gender, role, username, profileImage, active, subscribedToFeed } = this;
-      
-      // Call the LoginService.login method
-      updateProfileService.updateProfile(id, email, firstName, lastName, birthday, birthPlace, billingAddress, gender, role, username, profileImage, active, subscribedToFeed)
-        .then((response) => {
-          // Handle the successful login response here
-          if (response.status == 200){
-            console.log("Login successful:", response.data);
-            // You can redirect the user or perform other actions here.
-            this.$router.push('/');
+    created() {
+    // Get the user ID from the JWT token in sessionStorage
+        const token = window.sessionStorage.getItem('JWTtoken');
+        const tokenData = JSON.parse(atob(token.split('.')[1]));
+        const id = tokenData.ID;
+
+        // Fetch user data and populate the profile object
+        viewProfileService.viewProfile(id)
+        .then(response => {
+            this.profile = response.data;
+            if (response.status == 200){
+                console.log("User Profile", response.data);
+                // You can redirect the user or perform other actions here.
           }
         })
-        .catch((error) => {
-          // Handle login errors here
-          if (error.response.status == 401){
-            console.log("Login failed:", error.response.status, error);
-            this.errorMessage = error.response.data.message;
-          } 
-          if (error.response.status == 403){
-            console.log("User not found sorry:", error.response.status, error);
-            this.errorMessage = error.response.data.message;
-          }
-          else {
-            // You can redirect the user or perform other actions here.
-            console.error("Something happened:", error);
-          }
-          // Display an error message to the user or take appropriate action.
+        .catch(error => {
+            // Handle login errors here
+            if (error.response.status == 403){
+                console.log("User not found sorry:", error.response.status, error);
+                this.errorMessage = error.response.data.message;
+            }
+            else {
+                // You can redirect the user or perform other actions here.
+                console.error("Something happened:", error);
+            }
+            // Display an error message to the user or take appropriate action.
+                console.error('Error fetching user data:', error);
         });
-    },
-        
   },
+    methods: {
+        toggleEdit(field) {
+        this.isEditing[field] = !this.isEditing[field];
+        if (this.isEditing[field]) {
+            // Save the original value before editing
+            this.originalProfile[field] = this.profile[field];
+        } else {
+            // Restore the original value if editing is canceled
+            this.profile[field] = this.originalProfile[field];
+        }
+        },
+        saveChanges() {
+        const token = window.sessionStorage.getItem("JWTtoken");
+        const tokenData = JSON.parse(atob(token.split('.')[1]));
+
+        // Assuming the token contains a field named 'id' with the user's ID
+        const id = tokenData.ID;
+        // Here, you can implement the logic to save changes to the backend or perform any necessary actions.
+        // For now, we'll just disable editing.
+
+
+        updateProfileService.updateProfile(id, this.profile.email, this.profile.firstName, this.profile.lastName, this.profile.birthday, this.profile.birthPlace, this.profile.billingAddress, this.profile.gender, this.profile.role, this.profile.username, this.profile.profileImage, this.profile.active, this.profile.subscribedToFeed)
+            .then(response => {
+            // Handle success
+            if (response.status == 200){
+                console.log("User Profile updated!!", response.data);
+                // You can redirect the user or perform other actions here.
+            }
+            })
+            .catch(error => {
+                // Handle login errors here
+                if (error.response.status == 403){
+                    console.log("User not found sorry:", error.response.status, error);
+                    this.errorMessage = error.response.data.message;
+                }
+                else {
+                    // You can redirect the user or perform other actions here.
+                    console.error("Something happened:", error);
+                }
+                // Display an error message to the user or take appropriate action.
+                    console.error('Error fetching user data:', error);
+            });
+
+        Object.keys(this.isEditing).forEach((field) => {
+            this.isEditing[field] = false;
+        });
+        },
+        cancelChanges() {
+        // Cancel editing and revert changes to the original values
+            Object.keys(this.isEditing).forEach((field) => {
+                this.isEditing[field] = false;
+                this.profile[field] = this.originalProfile[field];
+            });
+        },
+    },     
 };
 </script>
