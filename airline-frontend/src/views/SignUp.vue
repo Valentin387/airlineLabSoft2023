@@ -1,8 +1,8 @@
 <template>
+  <div class="registration-box">
     <div class="registration-container">
       <h1>Crear Cuenta</h1>
       <form id="registration-form" @submit.prevent="createAccount">
-
         <div class="form-group">
             <!-- Nombre Completo -->
             <input type="text" id="firstName" placeholder="Nombre" v-model="firstName" required>
@@ -20,19 +20,9 @@
             <input type="text" id="billing-address" placeholder="Dirección de Facturación" v-model="billingAddress" required>
             
             <!-- Documento -->
-            <!--<select id="id-document" v-model="idDocument" style="margin-bottom: 10px; padding-bottom: 10px; margin-top: 10px;">
-                <option value="DNI">DNI</option>
-                <option value="CC">Cedula de ciudadania</option>
-                <option value="VISA">VISA</option>
-            </select> -->
             <input type="text" id="DNI" placeholder="Documento" v-model="DNI" required>
         
-            <!-- Genero 
-            <select id="gender" v-model="gender" style="margin-bottom: 10px; padding-bottom: 10px;">
-                <option value="Masculino">Masculino</option>
-                <option value="Femenino">Femenino</option>
-                <option value="Otro">Otro</option>
-            </select>-->
+            <!-- Genero -->
             <input type="text" id="gender" placeholder="Genero" v-model="gender" required>
             
             <!-- Email -->
@@ -54,20 +44,23 @@
         <p>¿Ya tienes una cuenta?</p>
         <button id="login" class="login" @click.prevent="redirectToLogin">Iniciar sesión</button>
     </div>
+  </div>
 </template>
   
 <style lang="scss">
   
-    .registration-container {
-        margin: 0 auto;
-        margin-top:9rem;//AGREGUÉ ESTO PARA QUE QUEDE BAJO LA BARRA HORIZONTAL
-        text-align: center;
-        max-width: 50%px;
-        padding: 20px;
-        background-color: #f2f2f2;
+    .registration-box {
+        width: 90vw;
+        margin: 2vw auto; /* Centrar horizontalmente */
+        margin-top: 10rem; /* Centrar verticalmente */
         border-radius: 10px;
+        display: flex;
+        justify-content: space-between;
+        overflow: hidden;
+
+        text-align: center;
     }
-    
+
     .form-group {
         margin: 10px 0;
         padding: 20px;
@@ -120,6 +113,38 @@
         text-align: center;
         margin-top: 30px;
     }
+
+
+
+    @media screen and (max-width: 1000px) {
+        .registration-box {
+            width: 70%;
+            margin-top: 10rem;
+        }
+        .registration-container {
+            width: 100%;
+            border-radius: 5px;
+        }
+    }
+
+    @media screen and (max-width: 650px) {
+        .registration-box {
+            width: 90%;
+        }
+    }
+
+    @media screen and (max-width: 500px) {
+        .registration-box{
+            height: 100%;
+            margin-top:10rem;
+        }
+
+        .registration-container {
+           .texto{
+                margin-top:5rem ;
+            }
+        }
+    }
 </style>
 
 <script>
@@ -144,22 +169,8 @@ export default {
   },
   methods: {
     createAccount() {
-      const { DNI, email, password, firstName, lastName, birthDate, birthPlace, billingAddress, gender,  username, profileImage, errorMessage } = this;
       // Recopila todos los datos del formulario y crea un objeto con ellos
-      /*const accountData = {
-        firstName: this.firstName,
-        lastName: this.lastName,
-        birthPlace: this.birthPlace,
-        birthDate: this.birthDate,
-        billingAddress: this.billingAddress,
-        DNI: this.DNI,
-        gender: this.gender,
-        email: this.email,
-        username: this.username,
-        password: this.password,
-        profileImage: this.profileImage,
-      };*/
-
+      const { DNI, email, password, firstName, lastName, birthDate, birthPlace, billingAddress, gender,  username, profileImage, errorMessage } = this;
       // Llama al servicio de registro para crear la cuenta
       registerService.register(DNI, email, password, firstName, lastName, birthDate, birthPlace, billingAddress, gender,  username, profileImage)
         .then((response) => {
@@ -183,10 +194,6 @@ export default {
             // You can redirect the user or perform other actions here.
             console.error("Something happened:", error);
           }
-          // Maneja errores de registro aquí
-          /*console.error("Error al crear la cuenta:", error);
-          // Muestra un mensaje de error al usuario u toma medidas apropiadas
-          this.errorMessage = "Error al crear la cuenta. Por favor, inténtalo de nuevo.";*/
         });
     },
     /*uploadProfilePicture(event) {
