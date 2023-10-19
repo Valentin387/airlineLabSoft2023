@@ -25,6 +25,6 @@ public class RegisterRequest {
     private String gender;
     private String username;
     private String profileImage;
-    private Boolean subscribedToFeed;
+    //private Boolean subscribedToFeed;
 
 }

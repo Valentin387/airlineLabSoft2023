@@ -1,19 +1,29 @@
 <template>
   <div class="admin-panel">
     <div class="sidebar">
-      <a data-aos= "zoom-in-left" data-aos-delay="150" href="#" class="logo"> <i class= "fa-solid fa-paper-plane"></i>AirTravel</a>
-      <div class="sidebar-item" @click="showProfile"><span class="material-symbols-outlined">person</span>Perfil</div>
-      <div class="sidebar-item" @click="showAdmins"><span class="material-symbols-outlined">lock</span>Gestionar administradores</div>
-      <div class="sidebar-item" @click="logout"><span class="material-symbols-outlined">logout</span>Cerrar sesión</div>
+      <a data-aos="zoom-in-left" data-aos-delay="150" href="#" class="logo">
+        <i class="fa-solid fa-paper-plane"></i>AirTravel
+      </a>
+      <div class="sidebar-item" @click="selectTab('profile', $event)">
+        <span class="material-symbols-outlined">person</span>Perfil
+      </div>
+      <div class="sidebar-item" @click="selectTab('admins', $event)">
+        <span class="material-symbols-outlined">lock</span>Gestionar administradores
+      </div>
+      <div class="sidebar-item" @click="logout">
+        <span class="material-symbols-outlined">logout</span>Cerrar sesión
+      </div>
     </div>
     <div class="content">
       <div v-if="selectedTab === 'profile'">
         <h2>Perfil</h2>
       </div>
-      <div v-else-if="selectedTab = 'admins'">
+      <div v-else-if="selectedTab === 'admins'">
         <h2>Administradores</h2>
         <div class="admins-content">
-          <button @click="showCreateAdminForm" class="create-admin-button" type="button">Crear Administrador</button>
+          <button @click="showCreateAdminForm" class="create-admin-button" type="button">
+            Crear Administrador
+          </button>
           <ul>
             <li v-for="admin in admins" :key="admin.id">
               {{ admin.name }} - {{ admin.title }} - {{ admin.createdAt }}
@@ -22,10 +32,18 @@
           </ul>
         </div>
       </div>
+      <div v-if="creatingAdmin" class="create-admin-box">
+        <h2 class="tittle-ad">Crear Administrador</h2>
+        <p class="text-ad">Por favor ingrese correo electronico y nombre del administrador</p>
+        <div class="create-admin-form">
+          <input type="text" v-model="newAdminName" placeholder="Nombre">
+          <input type="email" v-model="newAdminEmail" placeholder="Correo Electrónico">
+          <button @click="confirmAdminCreation" class="button-create-ad">Confirmar Creación</button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
-
 
 <style lang="scss">
   .admin-panel {
@@ -60,47 +78,76 @@
   .admins-content {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
+    justify-content: flex-end; // Alinea los elementos al final (derecha)
   }
 
   .create-admin-button {
-    width: 150px;
-    padding: 10px;
+    width: 180px;
+    padding: 5px;
     background-color: #5981b4;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    align-self: flex-end; 
+  }
+
+  .create-admin-box{
+    text-align: center;
+
+    .tittle-ad{
+      font-weight: bold;
+    }
+    .text-ad{
+      margin-top: 30px;
+    }
+
+    .button-create-ad{
+      width: 250px;
+      padding: 5px;
+      margin-top: 30px;
+      border-radius: 5px;
+      background-color: #5981b4;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
   }
 </style>
 
   
 <script>
-  export default {
-    data() {
-      return {
-        selectedTab: 'profile',
-        admins: [/* Lista de administradores */],
-      };
+export default {
+  data() {
+    return {
+      selectedTab: 'profile',
+      admins: [/* Lista de administradores */],
+      creatingAdmin: false,
+      newAdminName: '',
+      newAdminEmail: '',
+    };
+  },
+  methods: {
+    selectTab(tab, event) {
+      this.selectedTab = tab;
+      this.creatingAdmin = false; // Oculta el formulario al cambiar de pestaña
     },
-    methods: {
-      showProfile() {
-        this.selectedTab = 'profile';
-      },
-      showAdmins() {
-        this.selectedTab = 'admins';
-      },
-      logout() {
-        // Agregar la lógica para cerrar sesión
-      },
-      deleteAdmin(admin) {
-        // Agregar la lógica para eliminar un administrador
-      },
-      showCreateAdminForm() {
-        // Agregar la lógica para mostrar el formulario de creación de administradores
-      },
+
+    showCreateAdminForm() {
+      this.selectedTab = 'createAdmin'; // Cambiar a una pestaña especial para la creación
+      this.creatingAdmin = true;
     },
-  };
+
+    confirmAdminCreation() {
+      // Agregar lógica para crear un nuevo administrador aquí.
+      // Restablecer los valores y volver a la pestaña "Admins".
+      this.newAdminName = '';
+      this.newAdminEmail = '';
+      this.creatingAdmin = false;
+      this.selectedTab = 'admins';
+    },
+
+    // Otros métodos como logout, deleteAdmin, etc.
+  },
+};
 </script>
   
