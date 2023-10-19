@@ -43,7 +43,7 @@ public class AuthenticationService {
                 .billingAddress(request.getBillingAddress())
                 .gender(request.getGender())
                 .profileImage(request.getProfileImage())
-                .subscribedToFeed(request.getSubscribedToFeed())
+                .subscribedToFeed(Boolean.FALSE)
                 .role(3)
                 .active(Boolean.TRUE)
                 .password(passwordEncoder.encode(request.getPassword()))
