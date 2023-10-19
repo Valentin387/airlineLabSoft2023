@@ -1,5 +1,4 @@
 <template>
-    <body>
         <div class="ResetPassword-container">
             <img class="imageReset-container" alt="">
             <div class="ResetPassword">
@@ -8,15 +7,14 @@
                     <i class="material-icons larger-icon">account_circle</i> 
                 </h1> -->
                 <h1 class="title">Restablece la contraseña</h1>
-                <form class="inputs-container">
+                <form class="inputs-container" @submit.prevent="UpdateP">
                     <p class="texto">¡Gracias! por favor ingrese su nueva contraseña, y despues confirmela</p>
-                    <input type="password" id="password" placeholder="Nueva contraseña" required>
-                    <input type="password" id="password2" placeholder="Confirme su contraseña" required>
-                    <button class="btn-password">Guardar cambios</button>
+                    <input type="password" id="password" placeholder="Nueva contraseña" v-model="temporal" required>
+                    <input type="password" id="password2" placeholder="Confirme su contraseña" v-model="password" required>
+                    <button class="btn-password" type="submit" >Guardar cambios</button>
                 </form>
             </div>
         </div>
-    </body>
 </template>
 
 <style lang="scss">
@@ -207,3 +205,58 @@
     }
 
 </style>
+
+<script>
+import updatePasswordService from "@/services/authenticationService/updatePasswordService.js";
+
+export default {
+    data() { 
+      return {
+        email: "",
+        password: "",
+        temporal: "",
+      };
+    },
+    methods: {
+      UpdateP() {
+        let { email, password, temporal} = this;
+        
+        /*const token = window.sessionStorage.getItem('JWTtoken');
+        const tokenData = JSON.parse(atob(token.split('.')[1]));*/
+        email = this.$route.params.email
+
+        if(password == temporal){
+
+        // Call the LoginService.login method
+        updatePasswordService.updatePassword(email, password)
+          .then((response) => {
+            // Handle the successful login response here
+            if (response.status == 200){
+              console.log("New Password updated:", response.data);
+            }
+          })
+          .catch((error) => {
+            // Handle login errors here
+            if (error.response.status == 401){
+              console.log("New Password failed:", error.response.status, error);
+              this.errorMessage = error.response.data.message;
+            } 
+            if (error.response.status == 403){
+              console.log("User not found sorry:", error.response.status, error);
+              this.errorMessage = error.response.data.message;
+            }
+            else {
+              // You can redirect the user or perform other actions here.
+              console.error("Something happened:", error);
+            }
+            // Display an error message to the user or take appropriate action.
+          });
+
+        }else{
+            console.error("Contraseñas no coinciden");
+        }
+      },
+    }
+}
+
+</script>
