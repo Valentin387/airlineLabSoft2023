@@ -75,11 +75,19 @@
                                             <option>Prefiero no decirlo</option>  -->
                                     </div>
 
-                                    <div class="form-group">
+                                    <div class="form-group" >
                                         <div class="switch-button">
                                             <label class="form-label">Suscribirse al módulo de noticias</label>
                                             <!-- Checkbox -->
-                                            <input type="checkbox" name="switch-button" id="switch-label" class="switch-button__checkbox" v-model="profile.subscribedToFeed" required>
+                                            <input
+                                                type="checkbox"
+                                                name="switch-button"
+                                                id="switch-label"
+                                                class="switch-button__checkbox"
+                                                v-model="profile.subscribedToFeed"
+                                                @change="updateProfile"
+                                                required
+                                            />
                                             <!-- Botón -->
                                             <label for="switch-label" class="switch-button__label"></label>
                                         </div>
@@ -556,59 +564,70 @@ export default {
         });
   },
     methods: {
+
+        updateSubscribedToFeed() {
+            // Actualizar el valor de subscribedToFeed aquí cuando se cambie el botón deslizante
+            // Puedes establecerlo en true ya que se activa
+            this.profile.subscribedToFeed = true;
+
+            // Realizar una solicitud para actualizar el estado en la base de datos
+          
+        },
+       
         toggleEdit(field) {
-        this.isEditing[field] = !this.isEditing[field];
-        if (this.isEditing[field]) {
-            // Save the original value before editing
-            this.originalProfile[field] = this.profile[field];
-        } else {
-            // Restore the original value if editing is canceled
-            this.profile[field] = this.originalProfile[field];
-        }
-        },
-        saveChanges() {
-        const token = window.sessionStorage.getItem("JWTtoken");
-        const tokenData = JSON.parse(atob(token.split('.')[1]));
-
-        // Assuming the token contains a field named 'id' with the user's ID
-        const id = tokenData.ID;
-        // Here, you can implement the logic to save changes to the backend or perform any necessary actions.
-        // For now, we'll just disable editing.
-
-
-        updateProfileService.updateProfile(id, this.profile.email, this.profile.firstName, this.profile.lastName, this.profile.birthday, this.profile.birthPlace, this.profile.billingAddress, this.profile.gender, this.profile.role, this.profile.username, this.profile.profileImage, this.profile.active, this.profile.subscribedToFeed)
-            .then(response => {
-            // Handle success
-            if (response.status == 200){
-                console.log("User Profile updated!!", response.data);
-                // You can redirect the user or perform other actions here.
+            this.isEditing[field] = !this.isEditing[field];
+            if (this.isEditing[field]) {
+                // Save the original value before editing
+                this.originalProfile[field] = this.profile[field];
+            } else {
+                // Restore the original value if editing is canceled
+                this.profile[field] = this.originalProfile[field];
             }
-            })
-            .catch(error => {
-                // Handle login errors here
-                if (error.response.status == 403){
-                    console.log("User not found sorry:", error.response.status, error);
-                    this.errorMessage = error.response.data.message;
-                }
-                else {
-                    // You can redirect the user or perform other actions here.
-                    console.error("Something happened:", error);
-                }
-                // Display an error message to the user or take appropriate action.
-                    console.error('Error fetching user data:', error);
-            });
-
-        Object.keys(this.isEditing).forEach((field) => {
-            this.isEditing[field] = false;
-        });
         },
-        cancelChanges() {
-        // Cancel editing and revert changes to the original values
+        updateProfile() {
+            const token = window.sessionStorage.getItem("JWTtoken");
+            const tokenData = JSON.parse(atob(token.split('.')[1]));
+
+            // Assuming the token contains a field named 'id' with the user's ID
+            const id = tokenData.ID;
+            // Here, you can implement the logic to save changes to the backend or perform any necessary actions.
+            // For now, we'll just disable editing.
+
+
+            updateProfileService.updateProfile(id, this.profile.email, this.profile.firstName, this.profile.lastName, this.profile.birthday, this.profile.birthPlace, this.profile.billingAddress, this.profile.gender, this.profile.role, this.profile.username, this.profile.profileImage, this.profile.active, this.profile.subscribedToFeed)
+                .then(response => {
+                // Handle success
+                    if (response.status == 200){
+                        console.log("User Profile updated!!", response.data);
+                        this.$router.push('/');
+                        // You can redirect the user or perform other actions here.
+                    }
+                })
+                .catch(error => {
+                    // Handle login errors here
+                    if (error.response.status == 403){
+                        console.log("User not found sorry:", error.response.status, error);
+                        this.errorMessage = error.response.data.message;
+                    }
+                    else {
+                        // You can redirect the user or perform other actions here.
+                        console.error("Something happened:", error);
+                    }
+                    // Display an error message to the user or take appropriate action.
+                        console.error('Error fetching user data:', error);
+                });
+
             Object.keys(this.isEditing).forEach((field) => {
                 this.isEditing[field] = false;
-                this.profile[field] = this.originalProfile[field];
             });
         },
+            cancelChanges() {
+            // Cancel editing and revert changes to the original values
+                Object.keys(this.isEditing).forEach((field) => {
+                    this.isEditing[field] = false;
+                    this.profile[field] = this.originalProfile[field];
+                });
+            },
     },     
 };
 </script>
