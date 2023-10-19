@@ -221,9 +221,9 @@ export default {
       UpdateP() {
         let { email, password, temporal} = this;
         
-        const token = window.sessionStorage.getItem('JWTtoken');
-        const tokenData = JSON.parse(atob(token.split('.')[1]));
-        email = tokenData.sub;
+        /*const token = window.sessionStorage.getItem('JWTtoken');
+        const tokenData = JSON.parse(atob(token.split('.')[1]));*/
+        email = this.$route.params.email
 
         if(password == temporal){
 

@@ -108,12 +108,12 @@ public class AuthenticationController {
         }
     }
 
-    @PostMapping("/recoverPassword")
+    /*@PostMapping("/recoverPassword")
     public ResponseEntity<?> recoverPassword(
-            @RequestBody AuthenticationRequest request
+            @RequestBody String request
     ){
-        String email = request.getEmail();
-        String newPassword = request.getPassword();
+        String email = request;
+        //String newPassword = request.getPassword();
 
         Optional<User> existingUser = userRepository.findByEmail(email);
 
@@ -131,13 +131,13 @@ public class AuthenticationController {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email " + email + " no encontrado");
         }
-    }
+    }*/
 
     @PostMapping("/emailChecking/{userEmail}")
     public ResponseEntity<?> emailChecking(@PathVariable String userEmail){
-        String recoveryLink = "http://localhost:5173/auth/recoverPassword?email=" + userEmail;
+        String recoveryLink = "http://localhost:5173/ResetPassword/:" + userEmail;
 
-        String body = "Estimado/a [Nombre del Usuario],\n" +
+        String body = "Estimado/a usuario/a,\n" +
                 "\n" +
                 "Espero que este mensaje le encuentre bien.\n" +
                 "\n" +
