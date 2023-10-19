@@ -48,6 +48,7 @@
 <style lang="scss">
   .admin-panel {
     display: flex;
+    margin-top:9rem;
   }
 
   .sidebar {
@@ -116,6 +117,8 @@
 
   
 <script>
+import listAdminsService from "@/services/adminService/listAdminsService.js";
+
 export default {
   data() {
     return {
@@ -125,6 +128,34 @@ export default {
       newAdminName: '',
       newAdminEmail: '',
     };
+  },
+  created(){
+    listAdminsService.listAdmins()
+          .then((response) => {
+            // Handle the successful login response here
+            if (response.status == 200){
+              this.admins = response.data;
+              console.log(this.admins);
+              //console.log(admins);
+              console.log("Add management successful:", response.data);
+            }
+          })
+          .catch((error) => {
+            // Handle login errors here
+            if (error.response.status == 401){
+              console.log("Login failed:", error.response.status, error);
+              this.errorMessage = error.response.data.message;
+            } 
+            if (error.response.status == 403){
+              console.log("User not found sorry:", error.response.status, error);
+              this.errorMessage = error.response.data.message;
+            }
+            else {
+              // You can redirect the user or perform other actions here.
+              console.error("Something happened:", error);
+            }
+            // Display an error message to the user or take appropriate action.
+          });
   },
   methods: {
     selectTab(tab, event) {
