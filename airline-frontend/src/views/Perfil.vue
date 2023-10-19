@@ -30,17 +30,17 @@
                                 <div class="card-body">
                                     <div class="form-group ">
                                         <label class="form-label" >Usuario</label>
-                                        <input type="text" class="form-control "  v-model="username" required>
+                                        <input type="text" class="form-control "  v-model="profile.username" required>
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Nombre</label>
-                                        <input type="text" class="form-control"  v-model="firstName" required>
+                                        <input type="text" class="form-control"  v-model="profile.firstName" required>
                                         <label class="form-label">Apellido</label>
-                                        <input type="text" class="form-control" v-model="lastName" required>
+                                        <input type="text" class="form-control" v-model="profile.lastName" required>
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Correo Electrónico</label>
-                                        <input type="text" class="form-control mb-1"  v-model="email" required>
+                                        <input type="text" class="form-control mb-1"  v-model="profile.email" required>
                                        <!-- <div class="alert alert-warning mt-3">
                                             Tu correo no ha sido confirmado. Verifica tu bandeja de entrada.<br>
                                             <a href="javascript:void(0)">Reenviar confirmación</a>
@@ -50,20 +50,20 @@
 
                                     <div class="form-group">
                                         <label class="form-label">Fecha de Nacimiento</label>
-                                        <input type="text" class="form-control" v-model="birthday" required>
+                                        <input type="label" class="form-control" v-model="profile.birthday" required>
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Lugar de Nacimiento</label>
-                                        <input type="text" class="form-control"   v-model="birthPlace" required>
+                                        <input type="text" class="form-control"   v-model="profile.birthPlace" required>
                                     </div>
 
                                     <div class="form-group">
                                         <label class="form-label">Dirección de Facturación</label>
-                                        <input type="text" class="form-control" v-model="billingAddress" required>
+                                        <input type="text" class="form-control" v-model="profile.billingAddress" required>
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Género</label>
-                                        <select class="custom-select" v-model="gender" required>
+                                        <select class="custom-select" v-model="profile.gender" required>
                                             <option selected> </option>
                                             <option>Hombre</option>
                                             <option>Mujer</option>
@@ -75,7 +75,7 @@
                                         <div class="switch-button">
                                             <label class="form-label">Suscribirse al módulo de noticias</label>
                                             <!-- Checkbox -->
-                                            <input type="checkbox" name="switch-button" id="switch-label" class="switch-button__checkbox" v-model="subscribedToFeed" required>
+                                            <input type="checkbox" name="switch-button" id="switch-label" class="switch-button__checkbox" v-model="profile.subscribedToFeed" required>
                                             <!-- Botón -->
                                             <label for="switch-label" class="switch-button__label"></label>
                                         </div>
