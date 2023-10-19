@@ -30,17 +30,19 @@
                                 <div class="card-body">
                                     <div class="form-group ">
                                         <label class="form-label" >Usuario</label>
-                                        <input type="text" class="form-control "  v-model="profile.username" required>
+                                        <input type="text" class="form-control"  v-model="profile.username" required readonly>
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Nombre</label>
-                                        <input type="text" class="form-control"  v-model="profile.firstName" required>
+                                        <input type="text" class="form-control"  v-model="profile.firstName" required readonly>
+                                    </div>
+                                    <div class="form-group">
                                         <label class="form-label">Apellido</label>
-                                        <input type="text" class="form-control" v-model="profile.lastName" required>
+                                        <input type="text" class="form-control" v-model="profile.lastName" required readonly>
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Correo Electrónico</label>
-                                        <input type="text" class="form-control mb-1"  v-model="profile.email" required>
+                                        <input type="text" class="form-control mb-1"  v-model="profile.email" required readonly>
                                        <!-- <div class="alert alert-warning mt-3">
                                             Tu correo no ha sido confirmado. Verifica tu bandeja de entrada.<br>
                                             <a href="javascript:void(0)">Reenviar confirmación</a>
@@ -48,27 +50,29 @@
                                     </div>
 
 
-                                    <div class="form-group">
-                                        <label class="form-label">Fecha de Nacimiento</label>
-                                        <input type="label" class="form-control" v-model="profile.birthday" required>
-                                    </div>
+                                    <div class="form-group"> 
+                                        <label class="form-label">Fecha de Nacimiento</label> 
+                                        <input type="text" class="form-control" v-model="profile.birthday" required readonly> 
+                        
+                                    </div> 
                                     <div class="form-group">
                                         <label class="form-label">Lugar de Nacimiento</label>
-                                        <input type="text" class="form-control"   v-model="profile.birthPlace" required>
+                                        <input type="text" class="form-control" v-model="profile.birthPlace" required readonly>
                                     </div>
 
                                     <div class="form-group">
                                         <label class="form-label">Dirección de Facturación</label>
-                                        <input type="text" class="form-control" v-model="profile.billingAddress" required>
+                                        <input type="text" class="form-control" v-model="profile.billingAddress" required readonly>
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Género</label>
-                                        <select class="custom-select" v-model="profile.gender" required>
+                                        <input class="form-control" v-model="profile.gender" required readonly>
+                                          
+                                        <!--    <select class="custom-select" v-model="profile.gender" required readonly>
                                             <option selected> </option>
                                             <option>Hombre</option>
                                             <option>Mujer</option>
-                                            <option>Prefiero no decirlo</option>
-                                        </select>
+                                            <option>Prefiero no decirlo</option>  -->
                                     </div>
 
                                     <div class="form-group">
