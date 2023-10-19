@@ -10,8 +10,10 @@
       <div class="sidebar-item" @click="selectTab('admins', $event)">
         <span class="material-symbols-outlined">lock</span>Gestionar administradores
       </div>
-      <div class="sidebar-item" @click="logout">
-        <span class="material-symbols-outlined">logout</span>Cerrar sesión
+      <div class="logout-container">
+        <div class="sidebar-item" @click="logout">
+          <span class="material-symbols-outlined">logout</span>Cerrar sesión
+        </div>
       </div>
     </div>
     <div class="content">
@@ -21,16 +23,30 @@
       <div v-else-if="selectedTab === 'admins'">
         <h2>Administradores</h2>
         <div class="admins-content">
-          <button @click="showCreateAdminForm" class="create-admin-button" type="button">
-            Crear Administrador
-          </button>
           <ul>
             <li v-for="admin in admins" :key="admin.id">
-              {{ admin.name }} - {{ admin.title }} - {{ admin.createdAt }}
-              <span @click="deleteAdmin(admin)" class="delete-button">X</span>
+              <div class="admin-info-box">
+                <div class="admin-info">
+                  <div class="span-container">
+                    <div class="span-Name">
+                      <span class="span-firstName" v-if="admin.firstName">{{ admin.firstName }}</span>
+                      <span class="span-lastName" v-if="admin.lastName">{{ admin.lastName }}</span>
+                    </div>
+                    <div class="span-email">
+                      <span v-if="admin.email">{{ admin.email }}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="delete-button-container">
+                  <span @click="deleteAdmin(admin)" class="delete-button">x</span>
+                </div>
+              </div>
             </li>
           </ul>
         </div>
+        <button @click="showCreateAdminForm" class="create-admin-button" type="button">
+          Crear Administrador
+        </button>
       </div>
       <div v-if="creatingAdmin" class="create-admin-box">
         <h2 class="tittle-ad">Crear Administrador</h2>
@@ -47,25 +63,45 @@
 
 <style lang="scss">
   .admin-panel {
+    box-shadow: 3px 3px 6px rgba(1, 0.2, 1, 0.2);
+    /*display: flex;
+    margin-top: 9rem;*/
+    width: 90vw;
+    margin: 0 auto; /* Centrar horizontalmente */
+    margin-top: 10rem; /* Centrar verticalmente */
+    border-radius: 10px;
     display: flex;
+    justify-content: space-between;
+    overflow: hidden;
   }
 
   .sidebar {
     width: 270px;
     background-color: #ccc;
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
 
-    .sidebar-item {
-      cursor: pointer;
-      margin-bottom: 10px;
-      margin-top: 10px;
-      display: flex;
-      align-items: center; 
-      
-      span {
-        margin-right: 10px; 
-      }
+  .sidebar-items {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: auto; // Empuja los elementos hacia la parte superior
+  }
+
+  .sidebar-item {
+    cursor: pointer;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+
+    span {
+      margin-right: 10px;
     }
+  }
+
+  .logout-container {
+    margin-top: auto; // Empuja el elemento hacia la parte inferior
   }
 
   .content {
@@ -112,10 +148,66 @@
       cursor: pointer;
     }
   }
+
+  .admin-info-box {
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .span-firstName{
+    margin-right: 5px;
+  }
+
+  .admin-info {
+    flex: 1;
+  }
+
+  .delete-button-container {
+    flex: 0;
+    margin-left: 10px;
+  }
+
+
+  @media screen and (max-width: 1000px) {
+        .admin-panel {
+            width: 70%;
+            margin-top: 10rem;
+        }
+        .content {
+            width: 100%;
+            border-radius: 5px;
+        }
+    }
+
+    @media screen and (max-width: 650px) {
+        .admin-panel {
+            width: 90%;
+        }
+    }
+
+    @media screen and (max-width: 500px) {
+        .admin-panel {
+            height: 100%;
+            margin-top:10rem;
+        }
+
+        .content {
+           .texto{
+                margin-top:5rem ;
+            }  
+        }
+    }
 </style>
 
   
 <script>
+import listAdminsService from "@/services/adminService/listAdminsService.js";
+
 export default {
   data() {
     return {
@@ -125,6 +217,34 @@ export default {
       newAdminName: '',
       newAdminEmail: '',
     };
+  },
+  created(){
+    listAdminsService.listAdmins()
+          .then((response) => {
+            // Handle the successful login response here
+            if (response.status == 200){
+              this.admins = response.data;
+              console.log(this.admins);
+              //console.log(admins);
+              console.log("Add management successful:", response.data);
+            }
+          })
+          .catch((error) => {
+            // Handle login errors here
+            if (error.response.status == 401){
+              console.log("Login failed:", error.response.status, error);
+              this.errorMessage = error.response.data.message;
+            } 
+            if (error.response.status == 403){
+              console.log("User not found sorry:", error.response.status, error);
+              this.errorMessage = error.response.data.message;
+            }
+            else {
+              // You can redirect the user or perform other actions here.
+              console.error("Something happened:", error);
+            }
+            // Display an error message to the user or take appropriate action.
+          });
   },
   methods: {
     selectTab(tab, event) {

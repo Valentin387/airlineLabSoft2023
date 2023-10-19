@@ -8,11 +8,11 @@
                     <i class="material-icons larger-icon">account_circle</i> 
                 </h1> -->
                 <h1 class="title">Recupera tu contraseña</h1>
-                <form class="inputs-container">
+                <form class="inputs-container" @submit.prevent="RecoverP">
                     <p class="texto">Introduce tu correo electrónico y te enviaremos un enlace para que
                         vuelvas a entrar en tu cuenta</p>
-                    <input class="input-password" type="text" placeholder="Correo Electrónico">
-                    <button class="btn-password">Enviar enlace de acceso</button>
+                    <input class="input-password" type="text" placeholder="Correo Electrónico" v-model="email">
+                    <button class="btn-password" type="submit">Enviar enlace de acceso</button>
                 </form>
             </div>
         </div>
@@ -207,3 +207,46 @@
     }
 
 </style>
+
+<script>
+import emailCheckingService from "@/services/authenticationService/emailCheckingService.js";
+
+export default {
+    data() { 
+      return {
+        email: ""
+      };
+    },
+    methods: {
+      RecoverP() {
+        let { email} = this;
+
+        // Call the LoginService.login method
+        emailCheckingService.emailChecking(email)
+          .then((response) => {
+            // Handle the successful login response here
+            if (response.status == 200){
+              console.log("Recover password updated:", response.data);
+            }
+          })
+          .catch((error) => {
+            // Handle login errors here
+            if (error.response.status == 401){
+              console.log("New Password failed:", error.response.status, error);
+              this.errorMessage = error.response.data.message;
+            } 
+            if (error.response.status == 403){
+              console.log("User not found sorry:", error.response.status, error);
+              this.errorMessage = error.response.data.message;
+            }
+            else {
+              // You can redirect the user or perform other actions here.
+              console.error("Something happened:", error);
+            }
+            // Display an error message to the user or take appropriate action.
+          });
+       }
+      },
+}
+
+</script>

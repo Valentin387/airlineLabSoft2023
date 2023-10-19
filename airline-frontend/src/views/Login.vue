@@ -1,12 +1,12 @@
 <template>
   <div class="page-container">
     <div class="left-content">
-      <h1>Bienvenido a AirTravel</h1>
-      <p>Somos tu pasaporte hacia el mundo de la aviación. Con una amplia gama de destinos, ofertas irresistibles y un servicio excepcional, 
-        estamos aquí para hacer realidad tus sueños de viaje. 
-        Descubre vuelos asequibles, reserva con facilidad y despega hacia tus aventuras. 
-        En AirTravel, volamos alto para que tú también lo hagas. 
-        ¡Prepara tus maletas y comencemos a explorar el mundo juntos!</p>
+      <div class="left-content-inner">
+        <h1 class="tittle">Bienvenido a AirTravel</h1>
+        <div class="text-login">
+          <p>Somos tu pasaporte hacia el mundo de la aviación. Con una amplia gama de destinos, ofertas irresistibles y un servicio excepcional, estamos aquí para hacer realidad tus sueños de viaje. Descubre vuelos asequibles, reserva con facilidad y despega hacia tus aventuras. En AirTravel, volamos alto para que tú también lo hagas. ¡Prepara tus maletas y comencemos a explorar el mundo juntos!</p>
+        </div>
+      </div>
     </div>
     <div class="login-container">
         <h1>Iniciar Sesión</h1>
@@ -28,26 +28,33 @@
 
 <style lang="scss"  >
   .page-container {
+      height: 85vh;
+      box-shadow: 3px 3px 6px rgba(1, 0.2, 1, 0.2);
+
+      width: 90vw;
+      margin: 0 auto; /* Centrar horizontalmente */
+      margin-top: 10rem; /* Centrar verticalmente */
+      border-radius: 10px;
       display: flex;
-      justify-content: flex-end; /* Alinea login-container a la derecha */
-      align-items: center;
-      margin-top:9rem;//AGREGUÉ ESTO PARA QUE QUEDE BAJO LA BARRA HORIZONTAL
-      height: 100vh;
-      margin: 0;
+      justify-content: space-between;
+      overflow: hidden;
       
 
       .left-content {
         background-color: #f2f2f2; /* Fondo gris */
-        padding: 20px;
-        max-width: 50%; /* Ajusta el ancho según tus necesidades */
         text-align: center;
+        width: 50%;
+        box-sizing: border-box;
      }
 
 
     .login-container {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       text-align: center;
-      padding: 20px;
-      max-width: 50%;
+      padding-top: 3rem;
         
 
       h1 {
@@ -86,7 +93,7 @@
       }
 
       .register {
-        width: 60%;
+        width: 300px;
         padding: 10px;
         margin-top: 10px;
         background-color: #77797a;
@@ -94,6 +101,19 @@
         border: none;
         border-radius: 5px;
         cursor: pointer;
+      }
+
+      .left-content-inner {
+        margin-right: 40px; /* Agregar margen derecho de 40px entre el título y el texto */
+      }
+
+      .tittle {
+        margin-top: 20px;
+      }
+
+      .text-login {
+        margin-top: 80px;
+        text-align: center;
       }
 
       .text1{
@@ -113,6 +133,42 @@
           color: red;
       }
 
+    }
+
+    @media screen and (max-width: 1000px) {
+        .page-container {
+            width: 70%;
+            margin-top: 10rem;
+        }
+        .login-container {
+            width: 100%;
+            border-radius: 5px;
+        }
+        
+        .left-content {
+            display: none;
+        }  
+    }
+
+    @media screen and (max-width: 650px) {
+        .page-container {
+            width: 90%;
+        }
+    }
+
+    @media screen and (max-width: 500px) {
+        .page-container{
+            height: 100%;
+            margin-top:10rem;
+        }
+
+        .login-container {
+           .texto{
+                margin-top:5rem ;
+            }
+            
+            
+        }
     }
       
   }
