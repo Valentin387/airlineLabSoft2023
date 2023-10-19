@@ -30,26 +30,31 @@ const router = createRouter ({
         },
         {
             path: '/Ad_Management',
-            component: Ad_Management
+            component: Ad_Management,
+            meta: { requiresAuth: true }
         },
         {
             path: '/Perfil',
-            component: Perfil
+            component: Perfil,
+            meta: { requiresAuth: true }
         },
 
         {
             path: '/CrearAdmin',
-            component: CrearAdmin
+            component: CrearAdmin,
+            meta: { requiresAuth: true }
         },
 
         {
             path: '/CambioIdRoot',
-            component: CambioIdRoot
+            component: CambioIdRoot,
+            meta: { requiresAuth: true }
         },
 
         {
             path: '/EliminarAdmin',
-            component:  EliminarAdmin
+            component:  EliminarAdmin,
+            meta: { requiresAuth: true }
         }
 
     ]
@@ -68,7 +73,7 @@ const router = createRouter({
 
 
 
-router.beforeEach((to,from, next) => {//Antes de cada transición:  hacia donde voy se requiere autenticación 
+router.beforeEach((to, from, next) => {//Antes de cada transición:  hacia donde voy se requiere autenticación 
     if (to.meta.requiresAuth && window.sessionStorage.getItem('JWTtoken')==null) {  
         next({name: 'Login'})
     }else{

@@ -110,6 +110,7 @@
 <script>
 import LoginService from "@/services/authenticationService/LoginService.js";
 
+
 export default {
     data() { 
       return {
