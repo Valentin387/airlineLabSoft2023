@@ -503,7 +503,6 @@ import logoutService from "@/services/authenticationService/logoutService.js";
 
 import updateProfileService from "@/services/userService/updateProfileService.js";
 import viewProfileService from "@/services/userService/viewProfileService.js";
-import updatePasswordService from "@/services/authenticationService/updatePasswordService.js";
 
 export default {
     data() { 
@@ -675,47 +674,14 @@ export default {
                 this.isEditing[field] = false;
             });
         },
-            cancelChanges() {
-            // Cancel editing and revert changes to the original values
-                Object.keys(this.isEditing).forEach((field) => {
-                    this.isEditing[field] = false;
-                    this.profile[field] = this.originalProfile[field];
-                });
-            },
-
-        ///CAMBIO DE CONTRASEÑA INTENTO-------------------------
-        changePassword() {
-            // Agrega aquí la lógica para cambiar la contraseña
-            if (this.nuevapasswordassword !== this.confirmpassword) {
-                this.changePasswordError = 'Las contraseñas no coinciden.';
-                return;
-            }
-
-            // Llama a tu servicio para cambiar la contraseña
-            // Reemplaza esto con la llamada real a tu servicio
-            updatePasswordService.changePassword(this.profile.password, this.nuevapassword)
-            .then(response => {
-                // Actualiza la interfaz de usuario o maneja el éxito
-                this.resetPasswordForm();
-            })
-            .catch(error => {
-                // Maneja el error y muestra un mensaje de error apropiado
-                this.changePasswordError = 'Error al cambiar la contraseña. Verifica la contraseña actual.';
+        cancelChanges() {
+        // Cancel editing and revert changes to the original values
+            Object.keys(this.isEditing).forEach((field) => {
+                this.isEditing[field] = false;
+                this.profile[field] = this.originalProfile[field];
             });
         },
 
-        cancelPasswordChange() {
-            // Cancelar el cambio de contraseña y restablecer el formulario
-            this.resetPasswordForm();
-        },
-
-        resetPasswordForm() {
-            // Restablecer los campos y errores del formulario
-            this.profile.password = '';
-            this.nuevapassword = '';
-            this.confirmpassword = '';
-            this.changePasswordError = null;
-        },
     }, 
 };
 </script>
