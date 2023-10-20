@@ -10,8 +10,6 @@
                                 href="#account-general">Información Personal</a>
                             <a class="list-group-item list-group-item-action" data-toggle="list"
                                 href="#account-change-password">Cambiar Contraseña</a>
-                            <a class="list-group-item list-group-item-action" data-toggle="list"
-                                href="#account-info">Información Personal</a>
                             <button type="button" class="btn btn-primary"
                             @click="logout">Cerrar sesión </button>&nbsp;
                            
