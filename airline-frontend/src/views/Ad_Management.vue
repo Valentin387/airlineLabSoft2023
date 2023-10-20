@@ -438,10 +438,10 @@ export default {
           .catch((error) => {
             console.error("Error al eliminar al administrador:", error);
           });
-      }
+      },
   
 
-    logout(){
+      logout(){
             logoutService.logout().then((response) => {
           // Maneja la respuesta exitosa aquí
           if (response.status === 200) {
@@ -456,10 +456,10 @@ export default {
         // Remove the JWT token from the localStorage
         window.sessionStorage.removeItem("JWTtoken");
         this.$router.push("/Login");
-        },
+    }
+  }
 
     // Otros métodos como logout, deleteAdmin, etc.
-  },
-};
+}
 </script>
 
