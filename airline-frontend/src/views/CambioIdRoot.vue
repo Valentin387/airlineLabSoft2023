@@ -8,11 +8,12 @@
                     <i class="material-icons larger-icon">account_circle</i> 
                 </h1>
                 <h1 class="title">Cambiar Id Root</h1>
-                <form class="inputs-container">
+                <form   @submit.prevent="rootChangeID" class="inputs-container">
                     <p class="texto">Introduce tu nuevo Correo Electrónico</p>
-                    <input class="input-admin" type="text" placeholder="Correo Electrónico">
-                    <button class="btn-admin">Guardar Cambios</button>
+                    <input class="input-admin" type="email" placeholder="Correo Electrónico" v-model="email" required>
+                    <button class="btn-admin"  type="submit" >Guardar Cambios</button>
                 </form>
+                <p id="error-message" class="error-message">{{ errorMessage }}</p>
             </div>
               
         </div>
@@ -208,3 +209,46 @@
     }
 
 </style>
+
+<script>
+import rootChangeId from "@/services/rootService/rootChangeId.js";
+
+export default {
+    data() { 
+      return {
+            email: "",
+            errorMessage: "",
+        };
+    },
+    methods: {
+        rootChangeID() {
+            const {email} = this;
+            // Call the LoginService.login method
+            rootChangeId.rootChangeID( email)
+                .then((response) => {
+                // Handle the successful login response here
+                    if (response.status === 200) {
+                        console.log("Creation successful:", response.data);
+                        this.$router.push('/');
+                    }
+                })
+                .catch((error) => {
+                // Handle login errors here
+                    if (error.response.status == 401){
+                        console.log("Login failed:", error.response.status, error);
+                        this.errorMessage = error.response.data.message;
+                    } 
+                    if (error.response.status == 403){
+                        console.log("User not found sorry:", error.response.status, error);
+                        this.errorMessage = error.response.data.message;
+                    }
+                    else {
+                        // You can redirect the user or perform other actions here.
+                        console.error("Something happened:", error);
+                    }
+                    // Display an error message to the user or take appropriate action.
+                });
+            },
+    },
+};
+</script>
