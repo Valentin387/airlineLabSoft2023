@@ -162,7 +162,10 @@ public class AuthenticationController {
         return ResponseEntity.ok("the Email was sent");
     }
 
-
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout() {
+        return ResponseEntity.ok("Logout successful");
+    }
 
 
 }
