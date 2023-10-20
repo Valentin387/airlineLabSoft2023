@@ -51,7 +51,7 @@
 
                                     <div class="form-group"> 
                                         <label class="form-label">Fecha de Nacimiento</label> 
-                                        <input type="text" class="form-control" v-model="profile.birthday" required > 
+                                        <input type="date" class="form-control" v-model="profile.birthday" required > 
                         
                                     </div> 
                                     <div class="form-group">
