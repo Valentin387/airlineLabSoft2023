@@ -571,6 +571,23 @@ export default {
   },
     methods: {
 
+        logout(){
+            logoutService.logout().then((response) => {
+          // Maneja la respuesta exitosa aquí
+          if (response.status === 200) {
+            console.log("logout exitoso", response.data);
+            // Redirige al usuario o realiza otras acciones según tus necesidades
+          }
+        })
+        .catch((error) => {
+            console.error("Something happened:", error);
+          }
+        );
+        // Remove the JWT token from the localStorage
+        window.sessionStorage.removeItem("JWTtoken");
+        this.$router.push("/Login");
+        },
+
         updateSubscribedToFeed() {
             // Actualizar el valor de subscribedToFeed aquí cuando se cambie el botón deslizante
             // Puedes establecerlo en true ya que se activa
