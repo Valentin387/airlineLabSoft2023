@@ -222,7 +222,7 @@ export default {
 
         if (response.status === 200) {
           console.log("Creation successful:", response.data);
-          this.$router.push('/');
+          this.$router.push('/Ad_Management');
         }
       } catch (error) {
         if (error.response && error.response.status === 401) {
