@@ -7,7 +7,7 @@
                     <div class="col-md-2 pt-0">
                         <div class="list-group list-group-flush account-settings-links">
                             <a class="list-group-item list-group-item-action active" data-toggle="list"
-                                href="#account-general">General</a>
+                                href="#account-general">Información Personal</a>
                             <a class="list-group-item list-group-item-action" data-toggle="list"
                                 href="#account-change-password">Cambiar Contraseña</a>
                             <a class="list-group-item list-group-item-action" data-toggle="list"
@@ -19,14 +19,13 @@
                     </div>
                     <div class="col-md-9">
                         <div class="tab-content">
-                            <div class="tab-pane fade active show" id="account-general">
+                            <div  @submit.prevent="updateProfile" class="tab-pane fade active show" id="account-general">
                                 <div class="card-body media align-items-center">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" 
-                                        class="d-block ui-w-80">
+                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="d-block ui-w-80">
                                     <div class="media-body ml-3">
                                         <label class="btn btn-outline-primary">
                                             Foto de perfil
-                                            <input type="file" class="account-settings-fileinput">
+                                            <input type="file" class="account-settings-fileinput" >
                                         </label> &nbsp;
                                         <button type="button" class="btn btn-default md-btn-flat">Restablecer</button>
                                         <div class="text-light small mt-1">Permitido JPG, GIF or PNG. Tamaño máximo 800K</div>
@@ -35,33 +34,73 @@
                                 <hr class="border-light m-0">
                                 <div class="card-body">
                                     <div class="form-group ">
-                                        <label class="form-label">Usuario</label>
-                                        <input type="text" class="form-control " value="nmaxwell">
+                                        <label class="form-label" >Usuario</label>
+                                        <input type="text" class="form-control"  v-model="profile.username" required readonly>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">Nombre Completo</label>
-                                        <input type="text" class="form-control" value="Nelle Maxwell">
+                                        <label class="form-label">Nombre</label>
+                                        <input type="text" class="form-control"  v-model="profile.firstName" required readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Apellido</label>
+                                        <input type="text" class="form-control" v-model="profile.lastName" required readonly>
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Correo Electrónico</label>
-                                        <input type="text" class="form-control mb-1" value="nmaxwell@mail.com">
+                                        <input type="text" class="form-control mb-1"  v-model="profile.email" required readonly>
                                        <!-- <div class="alert alert-warning mt-3">
                                             Tu correo no ha sido confirmado. Verifica tu bandeja de entrada.<br>
                                             <a href="javascript:void(0)">Reenviar confirmación</a>
                                         </div> --> 
                                     </div>
+
+
+                                    <div class="form-group"> 
+                                        <label class="form-label">Fecha de Nacimiento</label> 
+                                        <input type="text" class="form-control" v-model="profile.birthday" required readonly> 
+                        
+                                    </div> 
                                     <div class="form-group">
+                                        <label class="form-label">Lugar de Nacimiento</label>
+                                        <input type="text" class="form-control" v-model="profile.birthPlace" required readonly>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label">Dirección de Facturación</label>
+                                        <input type="text" class="form-control" v-model="profile.billingAddress" required readonly>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Género</label>
+                                        <input class="form-control" v-model="profile.gender" required readonly>
+                                          
+                                        <!--    <select class="custom-select" v-model="profile.gender" required readonly>
+                                            <option selected> </option>
+                                            <option>Hombre</option>
+                                            <option>Mujer</option>
+                                            <option>Prefiero no decirlo</option>  -->
+                                    </div>
+
+                                    <div class="form-group" >
                                         <div class="switch-button">
                                             <label class="form-label">Suscribirse al módulo de noticias</label>
                                             <!-- Checkbox -->
-                                            <input type="checkbox" name="switch-button" id="switch-label" class="switch-button__checkbox">
+                                            <input
+                                                type="checkbox"
+                                                name="switch-button"
+                                                id="switch-label"
+                                                class="switch-button__checkbox"
+                                                v-model="profile.subscribedToFeed"
+                                                @change="updateProfile"
+                                                required
+                                            />
                                             <!-- Botón -->
                                             <label for="switch-label" class="switch-button__label"></label>
                                         </div>
                                     </div>
-                                   
-
-                                
+                                </div>
+                                <div class="text-right mt-3 bt-3">
+                                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>&nbsp;
+                                    <button type-="button" class="btn btn-default">Cancelar</button>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="account-change-password">
@@ -79,46 +118,16 @@
                                         <input type="password" class="form-control">
                                     </div>
                                 </div>
-                            </div>
-                            <div class="tab-pane fade" id="account-info">
-                                <div class="card-body pb-2">
-                                    
-                                    <div class="form-group">
-                                        <label class="form-label">Fecha de Nacimiento</label>
-                                        <input type="text" class="form-control" value="May 3, 1995">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Lugar de Nacimiento</label>
-                                        <input type="text" class="form-control" value="Melbourne, Australia">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">DNI</label>
-                                        <input type="text" class="form-control" value="1004759221">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Dirección de Facturación</label>
-                                        <input type="text" class="form-control" value="Calle 123 # 45-67, Barrio El Poblado, Medellín, Colombia.">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Género</label>
-                                        <select class="custom-select">
-                                            <option selected> </option>
-                                            <option>Hombre</option>
-                                            <option>Mujer</option>
-                                            <option>Otro</option>
-                                        </select>
-                                    </div>
+                                <div class="text-right mt-3 bt-3">
+                                    <button type="button" class="btn btn-primary">Guardar Cambios</button>&nbsp;
+                                    <button type-="button" class="btn btn-default">Cancelar</button>
                                 </div>
                             </div>
-                      
                         </div>
                     </div>
                     
                 </div>
-                <div class="text-right mt-3 bt-3">
-                    <button type="button" class="btn btn-primary">Guardar Cambios</button>&nbsp;
-                    <button type-="button" class="btn btn-default">Cancelar</button>
-                </div>
+               
                 <div style="margin-bottom: 20px;"></div> 
             </div>
             <footer class="footer">
@@ -161,9 +170,7 @@
             
         </div>
     <!------------------------------------------------FOOTER------------------------------------------->
-   
-  
-    
+
 </template>
 <style lang="scss">
      $light-color:#312c02;
@@ -491,30 +498,143 @@
 <script>
 import logoutService from "@/services/authenticationService/logoutService.js";
 
+<script>
+import updateProfileService from "@/services/userService/updateProfileService.js";
+import viewProfileService from "@/services/userService/viewProfileService.js";
+
+
 export default {
-
-    data(){
-        return null;
+    data() { 
+      return {
+        profile:{ 
+            id: "",
+            email: "",
+            firstName: "",
+            lastName: "",
+            birthday: "",
+            birthPlace: "",
+            billingAddress: "",
+            gender: "",
+            role: "",
+            username: "",
+            profileImage: "",
+            active: "",
+            subscribedToFeed: "",
+            errorMessage: "",
+        },
+        isEditing:{
+            id: "",
+            email: "",
+            firstName: "",
+            lastName: "",
+            birthday: "",
+            birthPlace: "",
+            billingAddress: "",
+            gender: "",
+            role: "",
+            username: "",
+            profileImage: "",
+            active: "",
+            subscribedToFeed: "",
+            errorMessage: "",
+        },
+        originalProfile: {}, // To store the original profile before editing
+      };
     },
+    created() {
+    // Get the user ID from the JWT token in sessionStorage
+        const token = window.sessionStorage.getItem('JWTtoken');
+        const tokenData = JSON.parse(atob(token.split('.')[1]));
+        const id = tokenData.ID;
 
-    methods:{
-        logout(){
-            logoutService.logout().then((response) => {
-          // Maneja la respuesta exitosa aquí
-          if (response.status === 200) {
-            console.log("logout exitoso", response.data);
-            // Redirige al usuario o realiza otras acciones según tus necesidades
+        // Fetch user data and populate the profile object
+        viewProfileService.viewProfile(id)
+        .then(response => {
+            this.profile = response.data;
+            if (response.status == 200){
+                console.log("User Profile", response.data);
+                // You can redirect the user or perform other actions here.
           }
         })
-        .catch((error) => {
-            console.error("Something happened:", error);
-          }
-        );
-        // Remove the JWT token from the localStorage
-        window.sessionStorage.removeItem("JWTtoken");
-        this.$router.push("/Login");
-    }
-    }
-}
+        .catch(error => {
+            // Handle login errors here
+            if (error.response.status == 403){
+                console.log("User not found sorry:", error.response.status, error);
+                this.errorMessage = error.response.data.message;
+            }
+            else {
+                // You can redirect the user or perform other actions here.
+                console.error("Something happened:", error);
+            }
+            // Display an error message to the user or take appropriate action.
+                console.error('Error fetching user data:', error);
+        });
+  },
+    methods: {
 
+        updateSubscribedToFeed() {
+            // Actualizar el valor de subscribedToFeed aquí cuando se cambie el botón deslizante
+            // Puedes establecerlo en true ya que se activa
+            this.profile.subscribedToFeed = true;
+
+            // Realizar una solicitud para actualizar el estado en la base de datos
+          
+        },
+       
+        toggleEdit(field) {
+            this.isEditing[field] = !this.isEditing[field];
+            if (this.isEditing[field]) {
+                // Save the original value before editing
+                this.originalProfile[field] = this.profile[field];
+            } else {
+                // Restore the original value if editing is canceled
+                this.profile[field] = this.originalProfile[field];
+            }
+        },
+        updateProfile() {
+            const token = window.sessionStorage.getItem("JWTtoken");
+            const tokenData = JSON.parse(atob(token.split('.')[1]));
+
+            // Assuming the token contains a field named 'id' with the user's ID
+            const id = tokenData.ID;
+            // Here, you can implement the logic to save changes to the backend or perform any necessary actions.
+            // For now, we'll just disable editing.
+
+
+            updateProfileService.updateProfile(id, this.profile.email, this.profile.firstName, this.profile.lastName, this.profile.birthday, this.profile.birthPlace, this.profile.billingAddress, this.profile.gender, this.profile.role, this.profile.username, this.profile.profileImage, this.profile.active, this.profile.subscribedToFeed)
+                .then(response => {
+                // Handle success
+                    if (response.status == 200){
+                        console.log("User Profile updated!!", response.data);
+                        this.$router.push('/');
+                        // You can redirect the user or perform other actions here.
+                    }
+                })
+                .catch(error => {
+                    // Handle login errors here
+                    if (error.response.status == 403){
+                        console.log("User not found sorry:", error.response.status, error);
+                        this.errorMessage = error.response.data.message;
+                    }
+                    else {
+                        // You can redirect the user or perform other actions here.
+                        console.error("Something happened:", error);
+                    }
+                    // Display an error message to the user or take appropriate action.
+                        console.error('Error fetching user data:', error);
+                });
+
+            Object.keys(this.isEditing).forEach((field) => {
+                this.isEditing[field] = false;
+            });
+        },
+            cancelChanges() {
+            // Cancel editing and revert changes to the original values
+                Object.keys(this.isEditing).forEach((field) => {
+                    this.isEditing[field] = false;
+                    this.profile[field] = this.originalProfile[field];
+                });
+            },
+    },     
+};
 </script>

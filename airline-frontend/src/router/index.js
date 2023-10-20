@@ -91,7 +91,7 @@ const router = createRouter({
 
 
 
-router.beforeEach((to,from, next) => {//Antes de cada transición:  hacia donde voy se requiere autenticación 
+router.beforeEach((to, from, next) => {//Antes de cada transición:  hacia donde voy se requiere autenticación 
     if (to.meta.requiresAuth && window.sessionStorage.getItem('JWTtoken')==null) {  
         next({name: 'Login'})
     }else{
