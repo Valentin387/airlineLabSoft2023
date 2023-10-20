@@ -498,7 +498,6 @@
 <script>
 import logoutService from "@/services/authenticationService/logoutService.js";
 
-<script>
 import updateProfileService from "@/services/userService/updateProfileService.js";
 import viewProfileService from "@/services/userService/viewProfileService.js";
 
