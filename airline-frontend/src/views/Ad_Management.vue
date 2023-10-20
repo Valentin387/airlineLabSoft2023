@@ -52,9 +52,12 @@
         <h2 class="tittle-ad">Crear Administrador</h2>
         <p class="text-ad">Por favor ingrese correo electronico y nombre del administrador</p>
         <div class="create-admin-form">
-          <input type="text" v-model="newAdminName" placeholder="Nombre">
-          <input type="email" v-model="newAdminEmail" placeholder="Correo Electrónico">
-          <button @click="confirmAdminCreation" class="button-create-ad">Confirmar Creación</button>
+          <input class="input-admin" type="text" v-model="newAdminName" placeholder="Nombre">
+          <input class = "input-admin" type="email" v-model="newAdminEmail" placeholder="Correo Electrónico">
+          <div>
+            <button @click="confirmAdminCreation" class="button-create-ad">Confirmar Creación</button>
+          </div>
+         
         </div>
       </div>
     </div>
@@ -62,6 +65,47 @@
 </template>
 
 <style lang="scss">
+  $light-color:#312c02;
+  $degradado: rgba(149, 168, 238, 0.11);
+  $bg:rgba(6, 31, 14, 0.947);
+  $azul-claro: #CFE0EB;
+  $gris:#F7F7F7;
+  $verde: #00BD8E;
+  $azul: #0D629B;
+  $blanco: #FFFFFF;
+  $negro:#1A1320;
+  $accent:#0B97F4;
+  $secondary:#ceeafd;
+  html{
+        /* 
+        Estilo CSS para la vista Home.vue del proyecto Vue.js. 
+        La propiedad font-size establece el tamaño de fuente base en 10px, lo que equivale a 62.5% del tamaño de fuente predeterminado del navegador. 
+        La propiedad overflow-x:hidden oculta el desplazamiento horizontal de la página. 
+        La propiedad scroll-behavior: smooth agrega un efecto de desplazamiento suave al hacer clic en los enlaces internos de la página. 
+        La propiedad scroll-padding-top establece la cantidad de espacio de relleno en la parte superior de la página para compensar la barra de navegación fija. 
+        */
+        font-size: 62.5%;
+        overflow-x:hidden;
+        scroll-behavior: smooth;
+        scroll-padding-top:9rem;
+
+        /* 
+        Estilos para la barra de desplazamiento en la vista Home.vue.
+        Se utiliza el selector de pseudo-elemento &:: para aplicar estilos a la barra de desplazamiento.
+        */
+        &::-webkit-scrollbar{
+            width:1rem;
+        }
+
+        &::-webkit-scrollbar-track{
+            background: $accent;
+        }
+
+        &::-webkit-scrollbar-thumb{
+            background-color: $azul;
+        }
+
+  }
   .admin-panel {
     box-shadow: 3px 3px 6px rgba(1, 0.2, 1, 0.2);
     /*display: flex;
@@ -77,7 +121,7 @@
 
   .sidebar {
     width: 270px;
-    background-color: #ccc;
+    background-color: $azul-claro;
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -172,6 +216,22 @@
     margin-left: 10px;
   }
 
+  .create-admin-form{
+    
+        
+      .input-admin {
+          width: 60%;
+          margin: 10px 0;
+          padding: 10px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+
+    }
+         
+    
+          
+
+  }
 
   @media screen and (max-width: 1000px) {
         .admin-panel {

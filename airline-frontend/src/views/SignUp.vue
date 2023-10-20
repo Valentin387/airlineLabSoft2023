@@ -1,7 +1,7 @@
 <template>
   <div class="registration-box">
     <div class="registration-container">
-      <h1>Crear Cuenta</h1>
+        <h1 class ="title">Crear Cuenta</h1>
       <form id="registration-form" @submit.prevent="createAccount">
         <div class="form-group">
             <!-- Nombre Completo -->
@@ -48,73 +48,128 @@
 </template>
   
 <style lang="scss">
+    $light-color:#312c02;
+    $degradado: rgba(149, 168, 238, 0.11);
+    $bg:rgba(6, 31, 14, 0.947);
+    $azul-claro: #CFE0EB;
+    $gris:#F7F7F7;
+    $verde: #00BD8E;
+    $azul: #0D629B;
+    $blanco: #FFFFFF;
+    $negro:#1A1320;
+    $accent:#0B97F4;
+    $secondary:#ceeafd;
+
+    html{
+        /* 
+        Estilo CSS para la vista Home.vue del proyecto Vue.js. 
+        La propiedad font-size establece el tamaño de fuente base en 10px, lo que equivale a 62.5% del tamaño de fuente predeterminado del navegador. 
+        La propiedad overflow-x:hidden oculta el desplazamiento horizontal de la página. 
+        La propiedad scroll-behavior: smooth agrega un efecto de desplazamiento suave al hacer clic en los enlaces internos de la página. 
+        La propiedad scroll-padding-top establece la cantidad de espacio de relleno en la parte superior de la página para compensar la barra de navegación fija. 
+        */
+        font-size: 62.5%;
+        overflow-x:hidden;
+        scroll-behavior: smooth;
+        scroll-padding-top:9rem;
+
+        /* 
+        Estilos para la barra de desplazamiento en la vista Home.vue.
+        Se utiliza el selector de pseudo-elemento &:: para aplicar estilos a la barra de desplazamiento.
+        */
+        &::-webkit-scrollbar{
+            width:1rem;
+        }
+
+        &::-webkit-scrollbar-track{
+            background: $accent;
+        }
+
+        &::-webkit-scrollbar-thumb{
+            background-color: $azul;
+        }
+
+    }
+
   
     .registration-box {
-        width: 90vw;
-        margin: 2vw auto; /* Centrar horizontalmente */
-        margin-top: 10rem; /* Centrar verticalmente */
-        border-radius: 10px;
-        display: flex;
-        justify-content: space-between;
-        overflow: hidden;
+      
+      width: 90vw; 
+      margin: 2vw auto; /* Centrar horizontalmente */ 
+      margin-top: 10rem; /* Centrar verticalmente */ 
+      border-radius: 10px; 
+      display: flex; 
+      justify-content: space-between; 
+      overflow: hidden; 
+      text-align: center; 
 
-        text-align: center;
-    }
 
-    .form-group {
+      .form-group {
         margin: 10px 0;
         padding: 20px;
-    }
-    
-    label {
-        display: block;
-        font-weight: bold;
-    }
-    
-    input, select {
-        width: 100%;
-        margin-top: 10px;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
-    
-    .create-account {
-        width: 100%;
-        padding: 7px;
-        background-color: #007bff;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-    
-    .login{
-        width: 50%;
-        padding: 7px;
-        background-color: #676d72;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
+      }
+
+      .title {
+        text-transform: capitalize;
+        font-size: 2.25rem;
+        font-weight: 600;
+        letter-spacing: 1px;
+        color: $azul;
+      }
+      
+      label {
+          display: block;
+          font-weight: bold;
+      }
+      
+      input, select {
+      
+          width: 70%;
+          margin: 10px 0;
+          padding: 10px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+      }
+      
+      .create-account {
+          width: 40%;
+          padding: 7px;
+          background-color: #007bff;
+          color: #fff;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+      }
+      
+      .login{
+          width: 30%;
+          padding: 7px;
+          background-color: #676d72;
+          color: #fff;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+      }
+
+      .login-link:hover {
+          text-decoration: underline;
+      }
+
+      .profile-picture {
+          width: 30px;
+      }
+
+      .text1{
+          font-family: 'Courier New', Courier, monospace;
+          font-size: small;
+          text-align: center;
+          margin-top: 30px;
+      }
+
+
     }
 
-    .login-link:hover {
-        text-decoration: underline;
-    }
-
-    .profile-picture {
-        width: 30px;
-    }
-
-    .text1{
-        font-family: 'Courier New', Courier, monospace;
-        font-size: small;
-        text-align: center;
-        margin-top: 30px;
-    }
-
-
+   
 
     @media screen and (max-width: 1000px) {
         .registration-box {
