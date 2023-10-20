@@ -1,5 +1,5 @@
 {
-  "name": "airline-frontend",
+  "name": "vue-project",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -8,11 +8,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "aos": "^3.0.0-beta.6",
+    "axios": "^1.5.1",
+    "jsonwebtoken": "^9.0.2",
     "vue": "^3.3.4",
-    "vue-router": "^4.2.4"
+    "vue-router": "^4.2.5"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.3.4",
+    "sass": "^1.69.3",
     "vite": "^4.4.9"
   }
 }
