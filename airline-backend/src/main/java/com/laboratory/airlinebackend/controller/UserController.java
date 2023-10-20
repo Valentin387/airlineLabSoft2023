@@ -35,7 +35,7 @@ public class UserController {
                     .billingAddress(existingUser.getBillingAddress())
                     .gender(existingUser.getGender())
                     .role(existingUser.getRole())
-                    .username(existingUser.getUsername())
+                    .username(existingUser.getRealUsername())
                     .profileImage(existingUser.getProfileImage())
                     .active(existingUser.getActive())
                     .subscribedToFeed(existingUser.getSubscribedToFeed())
