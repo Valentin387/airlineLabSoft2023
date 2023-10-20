@@ -2,14 +2,18 @@
   <div class="page-container">
     <div class="left-content">
       <div class="left-content-inner">
-        <h1 class="tittle">Bienvenido a AirTravel</h1>
-        <div class="text-login">
-          <p>Somos tu pasaporte hacia el mundo de la aviación. Con una amplia gama de destinos, ofertas irresistibles y un servicio excepcional, estamos aquí para hacer realidad tus sueños de viaje. Descubre vuelos asequibles, reserva con facilidad y despega hacia tus aventuras. En AirTravel, volamos alto para que tú también lo hagas. ¡Prepara tus maletas y comencemos a explorar el mundo juntos!</p>
-        </div>
+        <hr>
+          <h1 class="tittle">Bienvenido a AirTravel</h1>
+          <hr>
+          <div class="text-login">
+            <p>Somos tu pasaporte hacia el mundo de la aviación. Con una amplia gama de destinos, ofertas irresistibles y un servicio excepcional, estamos aquí para hacer realidad tus sueños de viaje. Descubre vuelos asequibles, reserva con facilidad y despega hacia tus aventuras. En AirTravel, volamos alto para que tú también lo hagas. ¡Prepara tus maletas y comencemos a explorar el mundo juntos!</p>
+          </div>
       </div>
     </div>
     <div class="login-container">
+      <hr>
         <h1>Iniciar Sesión</h1>
+        <hr><hr>
         <form @submit.prevent="login" id="login-form">
             <input type="email" id="email" placeholder="Email" v-model="email" required>
             <input type="password" id="password" placeholder="Password" v-model="password" required>
@@ -18,6 +22,7 @@
             </div>
             <button id="login" class="login" @click.prevent="login" type="submit">Iniciar Sesión</button>
         </form>
+        <hr>
         <p id="text2" class="text">o</p>
         <p id="error-message" class="error-message">{{ errorMessage }}</p>
         <button id="register" class="register" @click.prevent="redirectToSignUp">Registrarse</button>
@@ -27,6 +32,48 @@
 
 
 <style lang="scss"  >
+  $light-color:#312c02;
+  $degradado: rgba(149, 168, 238, 0.11);
+  $bg:rgba(6, 31, 14, 0.947);
+  $azul-claro: #CFE0EB;
+  $gris:#F7F7F7;
+  $verde: #00BD8E;
+  $azul: #0D629B;
+  $blanco: #FFFFFF;
+  $negro:#1A1320;
+  $accent:#0B97F4;
+  $secondary:#ceeafd;
+  html{
+        /* 
+        Estilo CSS para la vista Home.vue del proyecto Vue.js. 
+        La propiedad font-size establece el tamaño de fuente base en 10px, lo que equivale a 62.5% del tamaño de fuente predeterminado del navegador. 
+        La propiedad overflow-x:hidden oculta el desplazamiento horizontal de la página. 
+        La propiedad scroll-behavior: smooth agrega un efecto de desplazamiento suave al hacer clic en los enlaces internos de la página. 
+        La propiedad scroll-padding-top establece la cantidad de espacio de relleno en la parte superior de la página para compensar la barra de navegación fija. 
+        */
+        font-size: 62.5%;
+        overflow-x:hidden;
+        scroll-behavior: smooth;
+        scroll-padding-top:9rem;
+
+        /* 
+        Estilos para la barra de desplazamiento en la vista Home.vue.
+        Se utiliza el selector de pseudo-elemento &:: para aplicar estilos a la barra de desplazamiento.
+        */
+        &::-webkit-scrollbar{
+            width:1rem;
+        }
+
+        &::-webkit-scrollbar-track{
+            background: $accent;
+        }
+
+        &::-webkit-scrollbar-thumb{
+            background-color: $azul;
+        }
+
+  }
+
   .page-container {
       height: 85vh;
       box-shadow: 3px 3px 6px rgba(1, 0.2, 1, 0.2);
@@ -62,7 +109,8 @@
       }
 
       input {
-          width: 100%;
+          width: 80%;
+          margin-top: 10rem;
           margin: 10px 0;
           padding: 10px;
           border: 1px solid #ccc;
@@ -70,9 +118,9 @@
       }
 
       .login {
-        width: 100%;
+        width: 80%;
         padding: 10px;
-        margin-top: 40px;
+        margin-top: 45px;
         background-color: #007bff;
         color: #fff;
         border: none;
@@ -93,9 +141,9 @@
       }
 
       .register {
-        width: 300px;
+        width: 40%;
         padding: 10px;
-        margin-top: 10px;
+        
         background-color: #77797a;
         color: #fff;
         border: none;
@@ -111,9 +159,11 @@
         margin-top: 20px;
       }
 
-      .text-login {
+      .text-login p {
         margin-top: 80px;
         text-align: center;
+        margin: 10px 0;
+        
       }
 
       .text1{

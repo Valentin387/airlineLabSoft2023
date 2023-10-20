@@ -221,10 +221,19 @@ export default {
       UpdateP() {
         let { email, password, temporal} = this;
         
-        /*const token = window.sessionStorage.getItem('JWTtoken');
-        const tokenData = JSON.parse(atob(token.split('.')[1]));*/
-        email = this.$route.params.email
+        const token = window.sessionStorage.getItem('JWTtoken');
+        if (!token || token == null) {
+            const encodedEmail = this.$route.params.email;
+            const emailWithHyphens = decodeURIComponent(encodedEmail);
+            console.log("Decoded email:", emailWithHyphens);
+            email = emailWithHyphens.replaceAll("-", ".");
+            console.log("final email:", email);
 
+        }else{
+            const tokenData = JSON.parse(atob(token.split('.')[1]));
+            email = tokenData.sub;
+        }
+   
         if(password == temporal){
 
         // Call the LoginService.login method

@@ -8,22 +8,12 @@
                         <div class="list-group list-group-flush account-settings-links">
                             <a class="list-group-item list-group-item-action active" data-toggle="list"
                                 href="#account-general">Información Personal</a>
-                            <a class="list-group-item list-group-item-action" data-toggle="list"
-                                @click="redirectToUpdatePassword">Cambiar Contraseña</a>
-                            <a class="list-group-item list-group-item-action" data-toggle="list"
-                                @click="redirectToAdminManagement"
-                                v-if="hasCreateAdminPermission">Gestionar administradores</a>
-                                <a class="list-group-item list-group-item-action" data-toggle="list"
-                                @click="redirectToRootIDChange"
-                                v-if="isRoot">Editar id del root</a>
-                            <button type="button" class="btn btn-primary"
-                            @click="logout">Cerrar sesión </button>&nbsp;
-                           
+                         
                         </div>
                     </div>
                     <div class="col-md-9">
                         <div class="tab-content">
-                            <div   class="tab-pane fade active show" id="account-general">
+                            <div  @submit.prevent="updateProfile" class="tab-pane fade active show" id="account-general">
                                 <div class="card-body media align-items-center">
                                     <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="d-block ui-w-80">
                                     <div class="media-body ml-3">
@@ -39,19 +29,19 @@
                                 <div class="card-body">
                                     <div class="form-group ">
                                         <label class="form-label" >Usuario</label>
-                                        <input type="text" class="form-control"  v-model="profile.username" required readonly>
+                                        <input type="text" class="form-control"  v-model="profile.username" required >
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Nombre</label>
-                                        <input type="text" class="form-control"  v-model="profile.firstName" required readonly>
+                                        <input type="text" class="form-control"  v-model="profile.firstName" required >
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Apellido</label>
-                                        <input type="text" class="form-control" v-model="profile.lastName" required readonly>
+                                        <input type="text" class="form-control" v-model="profile.lastName" required >
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Correo Electrónico</label>
-                                        <input type="text" class="form-control mb-1"  v-model="profile.email" required readonly>
+                                        <input type="text" class="form-control mb-1"  v-model="profile.email" required >
                                        <!-- <div class="alert alert-warning mt-3">
                                             Tu correo no ha sido confirmado. Verifica tu bandeja de entrada.<br>
                                             <a href="javascript:void(0)">Reenviar confirmación</a>
@@ -61,21 +51,21 @@
 
                                     <div class="form-group"> 
                                         <label class="form-label">Fecha de Nacimiento</label> 
-                                        <input type="text" class="form-control" v-model="profile.birthday" required readonly> 
+                                        <input type="text" class="form-control" v-model="profile.birthday" required > 
                         
                                     </div> 
                                     <div class="form-group">
                                         <label class="form-label">Lugar de Nacimiento</label>
-                                        <input type="text" class="form-control" v-model="profile.birthPlace" required readonly>
+                                        <input type="text" class="form-control" v-model="profile.birthPlace" required >
                                     </div>
 
                                     <div class="form-group">
                                         <label class="form-label">Dirección de Facturación</label>
-                                        <input type="text" class="form-control" v-model="profile.billingAddress" required readonly>
+                                        <input type="text" class="form-control" v-model="profile.billingAddress" required >
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Género</label>
-                                        <input class="form-control" v-model="profile.gender" required readonly>
+                                        <input class="form-control" v-model="profile.gender" required >
                                           
                                         <!--    <select class="custom-select" v-model="profile.gender" required readonly>
                                             <option selected> </option>
@@ -94,7 +84,7 @@
                                                 id="switch-label"
                                                 class="switch-button__checkbox"
                                                 v-model="profile.subscribedToFeed"
-                                                disabled
+                                                @change="updateProfile"
                                                 required
                                             />
                                             <!-- Botón -->
@@ -103,27 +93,8 @@
                                     </div>
                                 </div>
                                 <div class="text-right mt-3 bt-3">
-                                    <button @click="updateProfile"  class="btn btn-primary">Editar</button>&nbsp;
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="account-change-password">
-                                <div class="card-body ">
-                                    <div class="form-group">
-                                        <label class="form-label">Contraseña Actual</label>
-                                        <input type="password" class="form-control" v-model="Uppassword.password" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Nueva Contraseña</label>
-                                        <input type="password" class="form-control" v-model="Uppassword.nuevapassword" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Confirme Su Contraseña</label>
-                                        <input type="password" class="form-control" v-model="Uppassword.confirmpassword" required>
-                                    </div>
-                                </div>
-                                <div class="text-right mt-3 bt-3">
-                                    <button type="button" @click="changePassword" class="btn btn-primary">Guardar Cambios</button>&nbsp;
-                                    <button type="button" @click="cancelPasswordChange" class="btn btn-default">Cancelar</button>
+                                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>&nbsp;
+                                    <button type-="button" @click="redirectToPerfil" class="btn btn-default">Cancelar</button>
                                 </div>
                             </div>
                         </div>
@@ -134,7 +105,7 @@
                 <div style="margin-bottom: 20px;"></div> 
             </div>
             <footer class="footer">
-                <div class="box-container">
+                    <div class="box-container">
                         <div class="box"  >
                             <h3 href="/" class="logo"><i class="fas fa-paper-plane"></i>AirTravel</h3>
                             <p> Elige más que un tiquete; elige una experiencia de viaje excepcional con nosotros.</p>
@@ -168,7 +139,7 @@
                                 <input type="submit" value="Suscribirse" class="btn">
                             </form>
                         </div>
-                </div>
+                    </div>
             </footer>
             
         </div>
@@ -498,17 +469,15 @@
     }
     
 </style>
-<script>
-import logoutService from "@/services/authenticationService/logoutService.js";
 
+<script>
 import updateProfileService from "@/services/userService/updateProfileService.js";
 import viewProfileService from "@/services/userService/viewProfileService.js";
+
 
 export default {
     data() { 
       return {
-        isRoot: false,
-        hasCreateAdminPermission: false,
         profile:{ 
             id: "",
             email: "",
@@ -520,7 +489,6 @@ export default {
             gender: "",
             role: "",
             username: "",
-            password: "",
             profileImage: "",
             active: "",
             subscribedToFeed: "",
@@ -537,18 +505,9 @@ export default {
             gender: "",
             role: "",
             username: "",
-            password: "",
             profileImage: "",
             active: "",
             subscribedToFeed: "",
-            errorMessage: "",
-        },
-        Uppassword:{ ////INTENTO DE INTEGRAR CONTRASEÑA
-            
-            email: "",
-            password: "",
-            nuevapassword: "",
-            confirmpassword: "",
             errorMessage: "",
         },
         originalProfile: {}, // To store the original profile before editing
@@ -559,13 +518,6 @@ export default {
         const token = window.sessionStorage.getItem('JWTtoken');
         const tokenData = JSON.parse(atob(token.split('.')[1]));
         const id = tokenData.ID;
-        if(tokenData.role == "root"){
-            this.isRoot = true;
-        }
-        const permissions = tokenData.permissions;
-        if(permissions.includes("create_admin")){
-            this.hasCreateAdminPermission = true;
-        }
 
         // Fetch user data and populate the profile object
         viewProfileService.viewProfile(id)
@@ -591,31 +543,9 @@ export default {
         });
   },
     methods: {
-        redirectToAdminManagement(){
-            this.$router.push('/Ad_Management');
-        },
-        redirectToUpdatePassword(){
-            this.$router.push('/ResetPassword');
-        },
-        redirectToRootIDChange(){
-            this.$router.push('/CambioIdRoot');
-        },
 
-        logout(){
-            logoutService.logout().then((response) => {
-          // Maneja la respuesta exitosa aquí
-          if (response.status === 200) {
-            console.log("logout exitoso", response.data);
-            // Redirige al usuario o realiza otras acciones según tus necesidades
-          }
-        })
-        .catch((error) => {
-            console.error("Something happened:", error);
-          }
-        );
-        // Remove the JWT token from the localStorage
-        window.sessionStorage.removeItem("JWTtoken");
-        this.$router.push("/Login");
+        redirectToPerfil(){
+            this.$router.push('/Perfil');
         },
 
         updateSubscribedToFeed() {
@@ -652,7 +582,6 @@ export default {
                 // Handle success
                     if (response.status == 200){
                         console.log("User Profile updated!!", response.data);
-                        this.$router.push('/EditarPerfil'); //CLICK EN EDITAR PERFIL
                         // You can redirect the user or perform other actions here.
                     }
                 })
@@ -674,14 +603,13 @@ export default {
                 this.isEditing[field] = false;
             });
         },
-        cancelChanges() {
-        // Cancel editing and revert changes to the original values
-            Object.keys(this.isEditing).forEach((field) => {
-                this.isEditing[field] = false;
-                this.profile[field] = this.originalProfile[field];
-            });
-        },
-
-    }, 
+            cancelChanges() {
+            // Cancel editing and revert changes to the original values
+                Object.keys(this.isEditing).forEach((field) => {
+                    this.isEditing[field] = false;
+                    this.profile[field] = this.originalProfile[field];
+                });
+            },
+    },     
 };
 </script>
