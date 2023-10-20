@@ -76,6 +76,10 @@ public class User implements UserDetails{
         return email;
     }
 
+    public String getRealUsername() {
+        return username;
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -105,6 +109,7 @@ public class User implements UserDetails{
         this.password = password;
     }
 
-    public void setUsername(String username) {
+    public void setRealUsername(String username) {
+        this.username = username;
     }
 }
