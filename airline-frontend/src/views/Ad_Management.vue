@@ -392,6 +392,9 @@ export default {
     showCreateAdminForm() {
       this.selectedTab = 'createAdmin'; // Cambiar a una pestaña especial para la creación
       this.creatingAdmin = true;
+
+      //por ahora, para la entrega el sprint 1. solo haré un redirect
+      this.$router.push('/CrearAdmin');
     },
 
     confirmAdminCreation() {
@@ -401,6 +404,7 @@ export default {
       this.newAdminEmail = '';
       this.creatingAdmin = false;
       this.selectedTab = 'admins';
+  
     },
     
     // Otros métodos como logout, deleteAdmin, etc.
