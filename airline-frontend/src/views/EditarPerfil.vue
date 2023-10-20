@@ -578,7 +578,6 @@ export default {
                 // Handle success
                     if (response.status == 200){
                         console.log("User Profile updated!!", response.data);
-                        this.$router.push('/');
                         // You can redirect the user or perform other actions here.
                     }
                 })

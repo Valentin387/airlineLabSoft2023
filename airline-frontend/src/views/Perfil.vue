@@ -9,9 +9,13 @@
                             <a class="list-group-item list-group-item-action active" data-toggle="list"
                                 href="#account-general">Información Personal</a>
                             <a class="list-group-item list-group-item-action" data-toggle="list"
-                                href="#account-change-password">Cambiar Contraseña</a>
+                                @click="redirectToUpdatePassword">Cambiar Contraseña</a>
                             <a class="list-group-item list-group-item-action" data-toggle="list"
-                                href="#account-info">Información Personal</a>
+                                @click="redirectToAdminManagement"
+                                v-if="hasCreateAdminPermission">Gestionar administradores</a>
+                                <a class="list-group-item list-group-item-action" data-toggle="list"
+                                @click="redirectToRootIDChange"
+                                v-if="isRoot">Editar id del root</a>
                             <button type="button" class="btn btn-primary"
                             @click="logout">Cerrar sesión </button>&nbsp;
                            
@@ -504,6 +508,8 @@ import updatePasswordService from "@/services/authenticationService/updatePasswo
 export default {
     data() { 
       return {
+        isRoot: false,
+        hasCreateAdminPermission: false,
         profile:{ 
             id: "",
             email: "",
@@ -554,6 +560,13 @@ export default {
         const token = window.sessionStorage.getItem('JWTtoken');
         const tokenData = JSON.parse(atob(token.split('.')[1]));
         const id = tokenData.ID;
+        if(tokenData.role == "root"){
+            this.isRoot = true;
+        }
+        const permissions = tokenData.permissions;
+        if(permissions.includes("create_admin")){
+            this.hasCreateAdminPermission = true;
+        }
 
         // Fetch user data and populate the profile object
         viewProfileService.viewProfile(id)
@@ -579,6 +592,15 @@ export default {
         });
   },
     methods: {
+        redirectToAdminManagement(){
+            this.$router.push('/Ad_Management');
+        },
+        redirectToUpdatePassword(){
+            this.$router.push('/ResetPassword');
+        },
+        redirectToRootIDChange(){
+            this.$router.push('/CambioIdRoot');
+        },
 
         logout(){
             logoutService.logout().then((response) => {
