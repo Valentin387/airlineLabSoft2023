@@ -61,7 +61,7 @@
 
                                     <div class="form-group"> 
                                         <label class="form-label">Fecha de Nacimiento</label> 
-                                        <input type="text" class="form-control" v-model="profile.birthday" required readonly> 
+                                        <input type="text" class="form-control" v-model="formattedBirthday" required readonly> 
                         
                                     </div> 
                                     <div class="form-group">
@@ -500,7 +500,7 @@
 </style>
 <script>
 import logoutService from "@/services/authenticationService/logoutService.js";
-
+import { format } from 'date-fns'; // Importa la función de formato de date-fns
 import updateProfileService from "@/services/userService/updateProfileService.js";
 import viewProfileService from "@/services/userService/viewProfileService.js";
 
@@ -554,8 +554,16 @@ export default {
         originalProfile: {}, // To store the original profile before editing
       };
     },
+    computed: {
+        formattedBirthday() {
+        // Formatea la fecha en un formato legible (por ejemplo, 'dd/MM/yyyy')
+        return this.profile.birthday ? format(new Date(this.profile.birthday), 'dd/MM/yyyy') : '';
+        },
+    },
     created() {
-    // Get the user ID from the JWT token in sessionStorage
+        // Create a Date object from the Unix timestamp
+        
+            // Get the user ID from the JWT token in sessionStorage
         const token = window.sessionStorage.getItem('JWTtoken');
         const tokenData = JSON.parse(atob(token.split('.')[1]));
         const id = tokenData.ID;
