@@ -63,6 +63,11 @@ const router = createRouter ({
         {
             path: '/ResetPassword/:email',
             component: ResetPassword
+        },
+
+        {
+            path: '/ResetPassword',
+            component: ResetPassword
         }
 
     ]
