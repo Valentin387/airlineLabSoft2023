@@ -38,7 +38,27 @@
                   </div>
                 </div>
                 <div class="delete-button-container">
-                  <span @click="deleteAdmin(admin)" class="delete-button">x</span>
+                  <i class='bx bx-x'   @click="toggleCardContainer" ></i> 
+                </div>
+                <div class="card_containerAdmin" :class="{ active: cardContainerAdmin }">
+                  <div class="cardAdmin">
+                    <img class="card_img" src="../assets/londres.jpg" alt="">
+                    <div class="card_contentAdmin">
+                      <h1>Eliminar administrador</h1>
+                      <p>¿Está seguro de que desea eliminar este administrador?</p>
+                      <div class="group_btns">
+                        <button class="buttonAdmin" @click="cancelDelete">
+                          Cancelar
+                        </button>
+                        <button class="buttonAdmin" @click="confirmDelete(admin.id)">
+                          Continuar
+                        </button>
+                      </div>
+                    </div>
+                    <p class="close_btnAdmin" @click="toggleCardContainer">
+                      <i class='bx bx-x'></i>
+                    </p>
+                  </div>
                 </div>
               </div>
             </li>
@@ -48,64 +68,35 @@
           Crear Administrador
         </button>
       </div>
+      
       <div v-if="creatingAdmin" class="create-admin-box">
         <h2 class="tittle-ad">Crear Administrador</h2>
         <p class="text-ad">Por favor ingrese correo electronico y nombre del administrador</p>
         <div class="create-admin-form">
           <input class="input-admin" type="text" v-model="newAdminName" placeholder="Nombre">
           <input class = "input-admin" type="email" v-model="newAdminEmail" placeholder="Correo Electrónico">
-          <div>
-            <button @click="confirmAdminCreation" class="button-create-ad">Confirmar Creación</button>
-          </div>
-         
+          <div></div>
+          <button @click="confirmAdminCreation" class="button-create-ad">Confirmar Creación</button>
         </div>
       </div>
     </div>
   </div>
 </template>
 
+
+
 <style lang="scss">
-  $light-color:#312c02;
-  $degradado: rgba(149, 168, 238, 0.11);
-  $bg:rgba(6, 31, 14, 0.947);
-  $azul-claro: #CFE0EB;
-  $gris:#F7F7F7;
-  $verde: #00BD8E;
-  $azul: #0D629B;
-  $blanco: #FFFFFF;
-  $negro:#1A1320;
-  $accent:#0B97F4;
-  $secondary:#ceeafd;
-  html{
-        /* 
-        Estilo CSS para la vista Home.vue del proyecto Vue.js. 
-        La propiedad font-size establece el tamaño de fuente base en 10px, lo que equivale a 62.5% del tamaño de fuente predeterminado del navegador. 
-        La propiedad overflow-x:hidden oculta el desplazamiento horizontal de la página. 
-        La propiedad scroll-behavior: smooth agrega un efecto de desplazamiento suave al hacer clic en los enlaces internos de la página. 
-        La propiedad scroll-padding-top establece la cantidad de espacio de relleno en la parte superior de la página para compensar la barra de navegación fija. 
-        */
-        font-size: 62.5%;
-        overflow-x:hidden;
-        scroll-behavior: smooth;
-        scroll-padding-top:9rem;
-
-        /* 
-        Estilos para la barra de desplazamiento en la vista Home.vue.
-        Se utiliza el selector de pseudo-elemento &:: para aplicar estilos a la barra de desplazamiento.
-        */
-        &::-webkit-scrollbar{
-            width:1rem;
-        }
-
-        &::-webkit-scrollbar-track{
-            background: $accent;
-        }
-
-        &::-webkit-scrollbar-thumb{
-            background-color: $azul;
-        }
-
-  }
+    $light-color:#312c02;
+    $degradado: rgba(149, 168, 238, 0.11);
+    $bg:rgba(6, 31, 14, 0.947);
+    $azul-claro: #CFE0EB;
+    $gris:#F7F7F7;
+    $verde: #00BD8E;
+    $azul: #0D629B;
+    $blanco: #FFFFFF;
+    $negro:#1A1320;
+    $accent:#0B97F4;
+    $secondary:#ceeafd;
   .admin-panel {
     box-shadow: 3px 3px 6px rgba(1, 0.2, 1, 0.2);
     /*display: flex;
@@ -121,7 +112,7 @@
 
   .sidebar {
     width: 270px;
-    background-color: $azul-claro;
+    background-color: $secondary;
     padding: 20px;
     display: flex;
     flex-direction: column;
@@ -214,6 +205,8 @@
   .delete-button-container {
     flex: 0;
     margin-left: 10px;
+    cursor: pointer;
+    color: red;
   }
 
   .create-admin-form{
@@ -226,12 +219,85 @@
           border: 1px solid #ccc;
           border-radius: 5px;
 
-    }
-         
-    
-          
+    }  
 
   }
+  ///ELIMINAR ADMIN 
+  .card_containerAdmin{
+      visibility: hidden;
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgb(0,0,0,0.2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+    }
+
+    .card_containerAdmin.active{
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .cardAdmin{
+        
+        width: 360px;
+        background-color: $blanco;
+        padding: 40px 25px;
+        border-radius:8px;
+        text-align: center;
+        position:relative;
+    }
+
+    .card_img{
+        width: 100px;
+        margin-bottom: 10px;
+    }
+
+    .card_contentAdmin h1{
+        font-size: 28px;
+        margin-bottom: 10px;
+    }
+    .card_contentAdmin p{
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+    .group_btns{
+       margin-bottom: 10px;
+    }
+    .buttonAdmin{
+        width: 90px;
+        height: 35px;
+        border:$azul .2rem solid; 
+        border-radius:5rem;
+        cursor: pointer;
+        margin-top:1rem;
+        background-color: $blanco;
+        font-size: 12px;
+    }
+    .buttonAdmin:nth-child(1){
+        background-color: $azul;
+        color: $blanco;
+        margin-right: 10px;
+    }
+
+    .close_btnAdmin{
+        position: absolute;
+        top:5%;
+        right: 5%;
+        font-size: 30px;
+        cursor: pointer;
+    }
+
+    .bx .bx-x{
+      cursor: pointer;
+      background-color:$accent;
+
+    }
 
   @media screen and (max-width: 1000px) {
         .admin-panel {
@@ -268,18 +334,24 @@
 <script>
 import listAdminsService from "@/services/adminService/listAdminsService.js";
 import logoutService from "@/services/authenticationService/logoutService.js";
+import deleteAdminService from "@/services/adminService/deleteAdminService.js";
 
 export default {
   data() {
     return {
+      
+      id: "",
+      
       selectedTab: 'profile',
       admins: [/* Lista de administradores */],
       creatingAdmin: false,
       newAdminName: '',
       newAdminEmail: '',
+      cardContainerAdmin: false,
     };
   },
   created(){
+    this.loadAdmins();
     listAdminsService.listAdmins()
           .then((response) => {
             // Handle the successful login response here
@@ -330,6 +402,44 @@ export default {
       this.creatingAdmin = false;
       this.selectedTab = 'admins';
     },
+    
+    // Otros métodos como logout, deleteAdmin, etc.
+    toggleCardContainer() {
+      this.cardContainerAdmin = !this.cardContainerAdmin;
+    },
+    cancelDelete() {
+      // Aquí puedes implementar la lógica para cancelar la eliminación
+      this.toggleCardContainer(); // Oculta la ventana emergente
+    },
+   
+    //INTENTO
+    loadAdmins() {
+      listAdminsService.listAdmins()
+        .then((response) => {
+          if (response.status === 200) {
+            this.admins = response.data;
+            console.log(this.admins);
+          }
+        })
+        .catch((error) => {
+          console.error("Something happened:", error);
+        });
+    },
+   
+      confirmDelete(adminId) {
+        deleteAdminService.deleteAdmin(adminId)
+          .then((response) => {
+            if (response.status === 200) {
+              console.log("Administrador eliminado:", adminId);
+              this.loadAdmins(); // Vuelve a cargar la lista de administradores
+              this.toggleCardContainer(); // Oculta la ventana emergente
+            }
+          })
+          .catch((error) => {
+            console.error("Error al eliminar al administrador:", error);
+          });
+      }
+  
 
     logout(){
             logoutService.logout().then((response) => {
@@ -352,4 +462,4 @@ export default {
   },
 };
 </script>
-  
+
