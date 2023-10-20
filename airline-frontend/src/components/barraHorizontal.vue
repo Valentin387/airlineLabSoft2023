@@ -21,6 +21,12 @@
 <script>
 
     export default {
+
+        data() {
+            return {
+                token: window.sessionStorage.getItem('JWTtoken'),
+            };
+        },
         methods: {
             toggle() {
             let navbar = document.querySelector(".navbar");
