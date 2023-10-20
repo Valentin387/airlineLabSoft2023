@@ -12,6 +12,8 @@
                                 href="#account-change-password">Cambiar Contraseña</a>
                             <a class="list-group-item list-group-item-action" data-toggle="list"
                                 href="#account-info">Información Personal</a>
+                            <button type="button" class="btn btn-primary"
+                            @click="logout">Cerrar sesión </button>&nbsp;
                            
                         </div>
                     </div>
@@ -103,7 +105,7 @@
                                             <option selected> </option>
                                             <option>Hombre</option>
                                             <option>Mujer</option>
-                                            <option>Prefiero no decirlo</option>
+                                            <option>Otro</option>
                                         </select>
                                     </div>
                                 </div>
@@ -486,3 +488,33 @@
     }
     
 </style>
+<script>
+import logoutService from "@/services/authenticationService/logoutService.js";
+
+export default {
+
+    data(){
+        return null;
+    },
+
+    methods:{
+        logout(){
+            logoutService.logout().then((response) => {
+          // Maneja la respuesta exitosa aquí
+          if (response.status === 200) {
+            console.log("logout exitoso", response.data);
+            // Redirige al usuario o realiza otras acciones según tus necesidades
+          }
+        })
+        .catch((error) => {
+            console.error("Something happened:", error);
+          }
+        );
+        // Remove the JWT token from the localStorage
+        window.sessionStorage.removeItem("JWTtoken");
+        this.$router.push("/Login");
+    }
+    }
+}
+
+</script>

@@ -33,26 +33,31 @@ const router = createRouter ({
         },
         {
             path: '/Ad_Management',
-            component: Ad_Management
+            component: Ad_Management,
+            meta: { requiresAuth: true }
         },
         {
             path: '/Perfil',
-            component: Perfil
+            component: Perfil,
+            meta: { requiresAuth: true }
         },
 
         {
             path: '/CrearAdmin',
-            component: CrearAdmin
+            component: CrearAdmin,
+            meta: { requiresAuth: true }
         },
 
         {
             path: '/CambioIdRoot',
-            component: CambioIdRoot
+            component: CambioIdRoot,
+            meta: { requiresAuth: true }
         },
 
         {
             path: '/EliminarAdmin',
-            component:  EliminarAdmin
+            component:  EliminarAdmin,
+            meta: { requiresAuth: true }
         },
 
         {
