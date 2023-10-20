@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -135,7 +136,9 @@ public class AuthenticationController {
 
     @PostMapping("/emailChecking/{userEmail}")
     public ResponseEntity<?> emailChecking(@PathVariable String userEmail){
-        String recoveryLink = "http://localhost:5173/ResetPassword/:" + userEmail;
+        String emailWithHyphens = userEmail.replace(".", "-");
+        String encodedEmail = UriUtils.encode(emailWithHyphens, "UTF-8");
+        String recoveryLink = "http://localhost:5173/ResetPassword/" + encodedEmail;
 
         String body = "Estimado/a usuario/a,\n" +
                 "\n" +
