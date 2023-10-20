@@ -8,6 +8,7 @@ import Perfil from '../views/Perfil.vue'
 import CrearAdmin from '../views/CrearAdmin.vue'
 import CambioIdRoot from '../views/CambioIdRoot.vue'
 import EliminarAdmin from '../views/EliminarAdmin.vue'
+import EditarPerfil from '../views/EditarPerfil.vue'
 const router = createRouter ({
 
     history: createWebHistory(),
@@ -55,6 +56,13 @@ const router = createRouter ({
             path: '/EliminarAdmin',
             component:  EliminarAdmin,
             meta: { requiresAuth: true }
+        },
+
+        {
+            path: '/EditarPerfil',
+            component:  EditarPerfil,
+            meta: { requiresAuth: true }
+           
         }
 
     ]
