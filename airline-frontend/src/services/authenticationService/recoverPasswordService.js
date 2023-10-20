@@ -1,4 +1,4 @@
-import axiosInstance from '../axiosInstance.js';
+/*import axiosInstance from '../axiosInstance.js';
 
               
 
@@ -7,4 +7,4 @@ const recoverPassword = (email, password) => {
   return axiosInstance.post(`auth/recoverPassword`, credentials);
 };
 
-export default { recoverPassword };
+export default { recoverPassword };*/

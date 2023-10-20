@@ -4,14 +4,14 @@
     
             <header class="header">
                 <div id="menu-btn" class="material-symbols-outlined" @click="toggle">menu</div>
-                <a data-aos= "zoom-in-left" data-aos-delay="150" href="/" class="logo"> <i class= "fa-solid fa-paper-plane"></i>AirTravel</a>      
+                <a data-aos= "zoom-in-left" data-aos-delay="150" @click="redirectToPaginaPrincipal" class="logo"> <i class= "fa-solid fa-paper-plane"></i>AirTravel</a>      
                 <nav class="navbar"> <!-- LINKS DE NAVEGACIÓN-->
                     <a data-aos="zoom-in-left" data-aos-delay="300" href="/">Inicio</a>
-                    <a data-aos= "zoom-in-left" data-aos-delay="450" href="/Check-In">Confirmar Check-in</a>
-                    <a data-aos= "zoom-in-left" data-aos-delay="600" href="/Ayuda">ayuda</a>
+                    <a data-aos= "zoom-in-left" data-aos-delay="450" @click="redirectToCheckIn">Confirmar Check-in</a>
+                    <a data-aos= "zoom-in-left" data-aos-delay="600" @click="redirectToAyuda">ayuda</a>
                 </nav>
-                <a data-aos= "zoom-in-left" data-aos-delay="600" href="/Carrito" class="carrito" id="carrito"><i class="material-symbols-outlined">shopping_cart</i></a>
-                <a data-aos= "zoom-in-left" data-aos-delay="600" href="/Login" class="usuario" id="usuario"><i class="material-symbols-outlined">person</i></a>
+                <a data-aos= "zoom-in-left" data-aos-delay="600" @click="redirectToCarrito" class="carrito" id="carrito"><i class="material-symbols-outlined">shopping_cart</i></a>
+                <a data-aos= "zoom-in-left" data-aos-delay="600" @click="redirectToProfile" class="usuario" id="usuario"><i class="material-symbols-outlined">person</i></a>
             </header>
         </main>
     </div>
@@ -21,10 +21,36 @@
 <script>
 
     export default {
+
+        data() {
+            return {
+                token: window.sessionStorage.getItem('JWTtoken'),
+            };
+        },
         methods: {
             toggle() {
             let navbar = document.querySelector(".navbar");
             navbar.classList.toggle("active");
+            },
+            redirectToPaginaPrincipal() {
+                this.$router.push("/");
+            },
+            redirectToCheckIn() {
+                this.$router.push("/Check-In");
+            },
+            redirectToAyuda() {
+                this.$router.push("/Ayuda");
+            },
+            redirectToCarrito() {
+                this.$router.push("/Carrito");
+            },
+            redirectToProfile() {
+                const token = window.sessionStorage.getItem('JWTtoken');
+                if (token && token != null){
+                    this.$router.push("/Perfil");
+                }else{
+                    this.$router.push("/Login");
+                }
             },
         },
     };

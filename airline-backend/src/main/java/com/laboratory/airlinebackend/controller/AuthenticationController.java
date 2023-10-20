@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -108,12 +109,12 @@ public class AuthenticationController {
         }
     }
 
-    @PostMapping("/recoverPassword")
+    /*@PostMapping("/recoverPassword")
     public ResponseEntity<?> recoverPassword(
-            @RequestBody AuthenticationRequest request
+            @RequestBody String request
     ){
-        String email = request.getEmail();
-        String newPassword = request.getPassword();
+        String email = request;
+        //String newPassword = request.getPassword();
 
         Optional<User> existingUser = userRepository.findByEmail(email);
 
@@ -131,13 +132,15 @@ public class AuthenticationController {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email " + email + " no encontrado");
         }
-    }
+    }*/
 
     @PostMapping("/emailChecking/{userEmail}")
     public ResponseEntity<?> emailChecking(@PathVariable String userEmail){
-        String recoveryLink = "http://localhost:5173/auth/recoverPassword?email=" + userEmail;
+        String emailWithHyphens = userEmail.replace(".", "-");
+        String encodedEmail = UriUtils.encode(emailWithHyphens, "UTF-8");
+        String recoveryLink = "http://localhost:5173/ResetPassword/" + encodedEmail;
 
-        String body = "Estimado/a [Nombre del Usuario],\n" +
+        String body = "Estimado/a usuario/a,\n" +
                 "\n" +
                 "Espero que este mensaje le encuentre bien.\n" +
                 "\n" +
@@ -159,7 +162,10 @@ public class AuthenticationController {
         return ResponseEntity.ok("the Email was sent");
     }
 
-
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout() {
+        return ResponseEntity.ok("Logout successful");
+    }
 
 
 }

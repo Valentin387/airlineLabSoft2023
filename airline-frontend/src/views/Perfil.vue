@@ -10,6 +10,11 @@
                                 href="#account-general">Información Personal</a>
                             <a class="list-group-item list-group-item-action" data-toggle="list"
                                 href="#account-change-password">Cambiar Contraseña</a>
+                            <a class="list-group-item list-group-item-action" data-toggle="list"
+                                href="#account-info">Información Personal</a>
+                            <button type="button" class="btn btn-primary"
+                            @click="logout">Cerrar sesión </button>&nbsp;
+                           
                         </div>
                     </div>
                     <div class="col-md-9">
@@ -489,8 +494,9 @@
     }
     
 </style>
-
 <script>
+import logoutService from "@/services/authenticationService/logoutService.js";
+
 import updateProfileService from "@/services/userService/updateProfileService.js";
 import viewProfileService from "@/services/userService/viewProfileService.js";
 import updatePasswordService from "@/services/authenticationService/updatePasswordService.js";
@@ -574,7 +580,31 @@ export default {
   },
     methods: {
 
-    
+        logout(){
+            logoutService.logout().then((response) => {
+          // Maneja la respuesta exitosa aquí
+          if (response.status === 200) {
+            console.log("logout exitoso", response.data);
+            // Redirige al usuario o realiza otras acciones según tus necesidades
+          }
+        })
+        .catch((error) => {
+            console.error("Something happened:", error);
+          }
+        );
+        // Remove the JWT token from the localStorage
+        window.sessionStorage.removeItem("JWTtoken");
+        this.$router.push("/Login");
+        },
+
+        updateSubscribedToFeed() {
+            // Actualizar el valor de subscribedToFeed aquí cuando se cambie el botón deslizante
+            // Puedes establecerlo en true ya que se activa
+            this.profile.subscribedToFeed = true;
+
+            // Realizar una solicitud para actualizar el estado en la base de datos
+          
+        },
        
         toggleEdit(field) {
             this.isEditing[field] = !this.isEditing[field];
