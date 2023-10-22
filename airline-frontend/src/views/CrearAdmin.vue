@@ -8,7 +8,7 @@
           <p class="texto">Por favor ingrese Correo Electrónico y nombre del administrador</p>
           <input class="input-admin" type="email" id="email" placeholder="Email" v-model="email" required>
           <input class="input-admin" id="usuario" type="text" placeholder="Usuario" v-model="firstName" required>
-          <input class="input-admin" id="password" type="password" placeholder="Password" v-model="password" required>
+          <!-- <input class="input-admin" id="password" type="password" placeholder="Password" v-model="password" required> -->
           <button class="btn-admin" type="submit">Confirmar Creación</button>
         </form>
         <p id="error-message" class="error-message">{{ errorMessage }}</p>
@@ -222,7 +222,7 @@ export default {
 
         if (response.status === 200) {
           console.log("Creation successful:", response.data);
-          this.$router.push('/');
+          this.$router.push('/Ad_Management');
         }
       } catch (error) {
         if (error.response && error.response.status === 401) {

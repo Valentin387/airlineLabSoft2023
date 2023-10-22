@@ -51,7 +51,7 @@
 
                                     <div class="form-group"> 
                                         <label class="form-label">Fecha de Nacimiento</label> 
-                                        <input type="text" class="form-control" v-model="profile.birthday" required > 
+                                        <input type="date" class="form-control" v-model="profile.birthday" required > 
                         
                                     </div> 
                                     <div class="form-group">
@@ -94,7 +94,7 @@
                                 </div>
                                 <div class="text-right mt-3 bt-3">
                                     <button type="submit" class="btn btn-primary">Guardar Cambios</button>&nbsp;
-                                    <button type-="button" class="btn btn-default">Cancelar</button>
+                                    <button type-="button" @click="redirectToPerfil" class="btn btn-default">Cancelar</button>
                                 </div>
                             </div>
                         </div>
@@ -544,6 +544,10 @@ export default {
   },
     methods: {
 
+        redirectToPerfil(){
+            this.$router.push('/Perfil');
+        },
+
         updateSubscribedToFeed() {
             // Actualizar el valor de subscribedToFeed aquí cuando se cambie el botón deslizante
             // Puedes establecerlo en true ya que se activa
@@ -578,7 +582,6 @@ export default {
                 // Handle success
                     if (response.status == 200){
                         console.log("User Profile updated!!", response.data);
-                        this.$router.push('/');
                         // You can redirect the user or perform other actions here.
                     }
                 })

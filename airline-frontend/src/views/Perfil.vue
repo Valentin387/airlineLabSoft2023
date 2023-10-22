@@ -9,7 +9,13 @@
                             <a class="list-group-item list-group-item-action active" data-toggle="list"
                                 href="#account-general">Información Personal</a>
                             <a class="list-group-item list-group-item-action" data-toggle="list"
-                                href="#account-change-password">Cambiar Contraseña</a>
+                                @click="redirectToUpdatePassword">Cambiar Contraseña</a>
+                            <a class="list-group-item list-group-item-action" data-toggle="list"
+                                @click="redirectToAdminManagement"
+                                v-if="hasCreateAdminPermission">Gestionar administradores</a>
+                                <a class="list-group-item list-group-item-action" data-toggle="list"
+                                @click="redirectToRootIDChange"
+                                v-if="isRoot">Editar id del root</a>
                             <button type="button" class="btn btn-primary"
                             @click="logout">Cerrar sesión </button>&nbsp;
                            
@@ -55,7 +61,7 @@
 
                                     <div class="form-group"> 
                                         <label class="form-label">Fecha de Nacimiento</label> 
-                                        <input type="text" class="form-control" v-model="profile.birthday" required readonly> 
+                                        <input type="text" class="form-control" v-model="formattedBirthday" required readonly> 
                         
                                     </div> 
                                     <div class="form-group">
@@ -494,14 +500,15 @@
 </style>
 <script>
 import logoutService from "@/services/authenticationService/logoutService.js";
-
+import { format } from 'date-fns'; // Importa la función de formato de date-fns
 import updateProfileService from "@/services/userService/updateProfileService.js";
 import viewProfileService from "@/services/userService/viewProfileService.js";
-import updatePasswordService from "@/services/authenticationService/updatePasswordService.js";
 
 export default {
     data() { 
       return {
+        isRoot: false,
+        hasCreateAdminPermission: false,
         profile:{ 
             id: "",
             email: "",
@@ -547,11 +554,26 @@ export default {
         originalProfile: {}, // To store the original profile before editing
       };
     },
+    computed: {
+        formattedBirthday() {
+        // Formatea la fecha en un formato legible (por ejemplo, 'dd/MM/yyyy')
+        return this.profile.birthday ? format(new Date(this.profile.birthday), 'dd/MM/yyyy') : '';
+        },
+    },
     created() {
-    // Get the user ID from the JWT token in sessionStorage
+        // Create a Date object from the Unix timestamp
+        
+            // Get the user ID from the JWT token in sessionStorage
         const token = window.sessionStorage.getItem('JWTtoken');
         const tokenData = JSON.parse(atob(token.split('.')[1]));
         const id = tokenData.ID;
+        if(tokenData.role == "root"){
+            this.isRoot = true;
+        }
+        const permissions = tokenData.permissions;
+        if(permissions.includes("create_admin")){
+            this.hasCreateAdminPermission = true;
+        }
 
         // Fetch user data and populate the profile object
         viewProfileService.viewProfile(id)
@@ -577,6 +599,15 @@ export default {
         });
   },
     methods: {
+        redirectToAdminManagement(){
+            this.$router.push('/Ad_Management');
+        },
+        redirectToUpdatePassword(){
+            this.$router.push('/ResetPassword');
+        },
+        redirectToRootIDChange(){
+            this.$router.push('/CambioIdRoot');
+        },
 
         logout(){
             logoutService.logout().then((response) => {
@@ -651,47 +682,14 @@ export default {
                 this.isEditing[field] = false;
             });
         },
-            cancelChanges() {
-            // Cancel editing and revert changes to the original values
-                Object.keys(this.isEditing).forEach((field) => {
-                    this.isEditing[field] = false;
-                    this.profile[field] = this.originalProfile[field];
-                });
-            },
-
-        ///CAMBIO DE CONTRASEÑA INTENTO-------------------------
-        changePassword() {
-            // Agrega aquí la lógica para cambiar la contraseña
-            if (this.nuevapasswordassword !== this.confirmpassword) {
-                this.changePasswordError = 'Las contraseñas no coinciden.';
-                return;
-            }
-
-            // Llama a tu servicio para cambiar la contraseña
-            // Reemplaza esto con la llamada real a tu servicio
-            updatePasswordService.changePassword(this.profile.password, this.nuevapassword)
-            .then(response => {
-                // Actualiza la interfaz de usuario o maneja el éxito
-                this.resetPasswordForm();
-            })
-            .catch(error => {
-                // Maneja el error y muestra un mensaje de error apropiado
-                this.changePasswordError = 'Error al cambiar la contraseña. Verifica la contraseña actual.';
+        cancelChanges() {
+        // Cancel editing and revert changes to the original values
+            Object.keys(this.isEditing).forEach((field) => {
+                this.isEditing[field] = false;
+                this.profile[field] = this.originalProfile[field];
             });
         },
 
-        cancelPasswordChange() {
-            // Cancelar el cambio de contraseña y restablecer el formulario
-            this.resetPasswordForm();
-        },
-
-        resetPasswordForm() {
-            // Restablecer los campos y errores del formulario
-            this.profile.password = '';
-            this.nuevapassword = '';
-            this.confirmpassword = '';
-            this.changePasswordError = null;
-        },
     }, 
 };
 </script>

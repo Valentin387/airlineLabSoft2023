@@ -7,7 +7,6 @@ import Ad_Management from '../views/Ad_Management.vue'
 import Perfil from '../views/Perfil.vue'
 import CrearAdmin from '../views/CrearAdmin.vue'
 import CambioIdRoot from '../views/CambioIdRoot.vue'
-import EliminarAdmin from '../views/EliminarAdmin.vue'
 import EditarPerfil from '../views/EditarPerfil.vue'
 import RecoverPassword from '../views/RecoverPassword.vue'
 import ResetPassword from '../views/ResetPassword.vue'
@@ -56,19 +55,6 @@ const router = createRouter ({
         },
 
         {
-            path: '/EliminarAdmin',
-            component:  EliminarAdmin,
-            meta: { requiresAuth: true }
-        },
-
-        {
-            path: '/EditarPerfil',
-            component:  EditarPerfil,
-            meta: { requiresAuth: true }
-           
-        },
-
-        {
             path: '/RecoverPassword',
             component:  RecoverPassword
         },
@@ -81,6 +67,13 @@ const router = createRouter ({
         {
             path: '/ResetPassword',
             component: ResetPassword
+        },
+
+        {
+            path: '/EditarPerfil',
+            component:  EditarPerfil,
+            meta: { requiresAuth: true }
+           
         }
 
     ]

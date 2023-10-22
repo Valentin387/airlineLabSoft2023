@@ -241,6 +241,7 @@ export default {
           .then((response) => {
             // Handle the successful login response here
             if (response.status == 200){
+              confirm("Contraseña actualizada correctamente");
               console.log("New Password updated:", response.data);
             }
           })

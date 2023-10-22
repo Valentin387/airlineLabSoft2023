@@ -109,31 +109,6 @@ public class AuthenticationController {
         }
     }
 
-    /*@PostMapping("/recoverPassword")
-    public ResponseEntity<?> recoverPassword(
-            @RequestBody String request
-    ){
-        String email = request;
-        //String newPassword = request.getPassword();
-
-        Optional<User> existingUser = userRepository.findByEmail(email);
-
-        if (existingUser.isPresent()) {
-            User user = existingUser.get();
-            String encodedPassword = passwordEncoder.encode(newPassword);
-            user.setPassword(encodedPassword);
-            userRepository.save(user);
-
-            var request2 = AuthenticationRequest.builder()
-                    .email(email)
-                    .password(newPassword)
-                    .build();
-            return ResponseEntity.ok(service.authenticate(request2));
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Email " + email + " no encontrado");
-        }
-    }*/
-
     @PostMapping("/emailChecking/{userEmail}")
     public ResponseEntity<?> emailChecking(@PathVariable String userEmail){
         String emailWithHyphens = userEmail.replace(".", "-");

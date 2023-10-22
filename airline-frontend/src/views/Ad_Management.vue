@@ -4,7 +4,7 @@
       <a data-aos="zoom-in-left" data-aos-delay="150" href="#" class="logo">
         <i class="fa-solid fa-paper-plane"></i>AirTravel
       </a>
-      <div class="sidebar-item" @click="selectTab('profile', $event)">
+      <div class="sidebar-item" @click="redirectToPerfil">
         <span class="material-symbols-outlined">person</span>Perfil
       </div>
       <div class="sidebar-item" @click="selectTab('admins', $event)">
@@ -333,6 +333,7 @@
   
 <script>
 import listAdminsService from "@/services/adminService/listAdminsService.js";
+import logoutService from "@/services/authenticationService/logoutService.js";
 import deleteAdminService from "@/services/adminService/deleteAdminService.js";
 
 export default {
@@ -379,6 +380,10 @@ export default {
           });
   },
   methods: {
+    redirectToPerfil(){
+      this.$router.push('/Perfil');
+    },
+
     selectTab(tab, event) {
       this.selectedTab = tab;
       this.creatingAdmin = false; // Oculta el formulario al cambiar de pestaña
@@ -387,6 +392,9 @@ export default {
     showCreateAdminForm() {
       this.selectedTab = 'createAdmin'; // Cambiar a una pestaña especial para la creación
       this.creatingAdmin = true;
+
+      //por ahora, para la entrega el sprint 1. solo haré un redirect
+      this.$router.push('/CrearAdmin');
     },
 
     confirmAdminCreation() {
@@ -396,6 +404,7 @@ export default {
       this.newAdminEmail = '';
       this.creatingAdmin = false;
       this.selectedTab = 'admins';
+  
     },
     
     // Otros métodos como logout, deleteAdmin, etc.
@@ -433,10 +442,28 @@ export default {
           .catch((error) => {
             console.error("Error al eliminar al administrador:", error);
           });
-      }
+      },
   
 
-  },
-};
+      logout(){
+            logoutService.logout().then((response) => {
+          // Maneja la respuesta exitosa aquí
+          if (response.status === 200) {
+            console.log("logout exitoso", response.data);
+            // Redirige al usuario o realiza otras acciones según tus necesidades
+          }
+        })
+        .catch((error) => {
+            console.error("Something happened:", error);
+          }
+        );
+        // Remove the JWT token from the localStorage
+        window.sessionStorage.removeItem("JWTtoken");
+        this.$router.push("/Login");
+    }
+  }
+
+    // Otros métodos como logout, deleteAdmin, etc.
+}
 </script>
 
