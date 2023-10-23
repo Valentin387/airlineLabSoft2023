@@ -14,6 +14,7 @@
         <p id="error-message" class="error-message">{{ errorMessage }}</p>
       </div>
       <img class="image-containerCrearAdmin" src="src/assets/CrearAdmin.svg" alt="">
+      <error-modal :show-error="showErrorMessage" :error-message="errorMessage" @close="showErrorMessage = false" />
     </div>
 </template>
 
@@ -203,6 +204,7 @@
 </style>
 <script>
 import newAdminService from "@/services/adminService/newAdminService.js";
+import errorModal from "@/components/ErrorModal.vue";
 
 export default {
   data() {
@@ -211,6 +213,7 @@ export default {
       email: "",
       password: "",
       errorMessage: "",
+      showErrorMessage: false,
     };
   },
   methods: {
@@ -224,18 +227,25 @@ export default {
           console.log("Creation successful:", response.data);
           this.$router.push('/Ad_Management');
         }
-      } catch (error) {
+      } catch (error)  {
         if (error.response && error.response.status === 401) {
           console.log("Login failed:", error.response.status, error);
-          this.errorMessage = error.response.data.message;
+          this.errorMessage = error.response.data.message || "Login failed";
+          this.showErrorMessage = true;
         } else if (error.response && error.response.status === 403) {
           console.log("User not found:", error.response.status, error);
-          this.errorMessage = error.response.data.message;
+          this.errorMessage = error.response.data.message || "User not found";
+          this.showErrorMessage = true;
         } else {
-          console.error("Something happened:", error);
+          console.error("Email already exist", error);
+          this.errorMessage = error.response.data.message || "Email already exist";
+          this.showErrorMessage = true;
         }
       }
     },
+  },
+  components: {
+    errorModal,
   },
 };
 </script>

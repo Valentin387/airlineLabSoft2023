@@ -80,6 +80,7 @@
         </div>
       </div>
     </div>
+    <error-modal :show-error="showErrorMessage" :error-message="errorMessage" @close="showErrorMessage = false" />
   </div>
 </template>
 
@@ -335,6 +336,7 @@
 import listAdminsService from "@/services/adminService/listAdminsService.js";
 import logoutService from "@/services/authenticationService/logoutService.js";
 import deleteAdminService from "@/services/adminService/deleteAdminService.js";
+import errorModal from "@/components/ErrorModal.vue";
 
 export default {
   data() {
@@ -348,6 +350,8 @@ export default {
       newAdminName: '',
       newAdminEmail: '',
       cardContainerAdmin: false,
+      errorMessage: "",
+      showErrorMessage: false,
     };
   },
   created(){
@@ -365,16 +369,20 @@ export default {
           .catch((error) => {
             // Handle login errors here
             if (error.response.status == 401){
-              console.log("Login failed:", error.response.status, error);
-              this.errorMessage = error.response.data.message;
+              console.log("authorized personnel only:", error.response.status, error);
+              this.errorMessage = error.response.data.message || "authorized personnel only";
+              this.showErrorMessage = true;
             } 
             if (error.response.status == 403){
               console.log("User not found sorry:", error.response.status, error);
-              this.errorMessage = error.response.data.message;
+              this.errorMessage = error.response.data.message || "User not found";
+              this.showErrorMessage = true;
             }
             else {
               // You can redirect the user or perform other actions here.
               console.error("Something happened:", error);
+              this.errorMessage = error.response.data.message || "Something happened";
+              this.showErrorMessage = true;
             }
             // Display an error message to the user or take appropriate action.
           });
@@ -427,6 +435,8 @@ export default {
         })
         .catch((error) => {
           console.error("Something happened:", error);
+          this.errorMessage = error.response.data.message || "Something happened";
+          this.showErrorMessage = true;
         });
     },
    
@@ -441,6 +451,8 @@ export default {
           })
           .catch((error) => {
             console.error("Error al eliminar al administrador:", error);
+            this.errorMessage = error.response.data.message || "Error al eliminar al administrador";
+            this.showErrorMessage = true;
           });
       },
   
@@ -455,14 +467,18 @@ export default {
         })
         .catch((error) => {
             console.error("Something happened:", error);
+            this.errorMessage = error.response.data.message || "Something happened";
+            this.showErrorMessage = true;
           }
         );
         // Remove the JWT token from the localStorage
         window.sessionStorage.removeItem("JWTtoken");
         this.$router.push("/Login");
-    }
-  }
-
+    },
+  },
+  components: {
+        errorModal,
+  },
     // Otros métodos como logout, deleteAdmin, etc.
 }
 </script>
