@@ -28,6 +28,7 @@ public class UserController {
 
             return ResponseEntity.ok(UpdateProfileRequest.builder()
                     .email(existingUser.getEmail())
+                    .DNI(existingUser.getDNI())
                     .firstName(existingUser.getFirstName())
                     .lastName(existingUser.getLastName())
                     .birthday(existingUser.getBirthday())
@@ -57,6 +58,7 @@ public class UserController {
             // Actualiza los datos del usuario
             existingUser.setEmail(updatedUser.getEmail());
             existingUser.setFirstName(updatedUser.getFirstName());
+            existingUser.setDNI(updatedUser.getDNI());
             existingUser.setLastName(updatedUser.getLastName());
             existingUser.setBirthday(updatedUser.getBirthday());
             existingUser.setBirthPlace(updatedUser.getBirthPlace());

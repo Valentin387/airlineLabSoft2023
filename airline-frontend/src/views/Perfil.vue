@@ -512,6 +512,7 @@ export default {
         profile:{ 
             id: "",
             email: "",
+            DNI: "",
             firstName: "",
             lastName: "",
             birthday: "",
@@ -529,6 +530,7 @@ export default {
         isEditing:{
             id: "",
             email: "",
+            DNI: "",
             firstName: "",
             lastName: "",
             birthday: "",
@@ -655,7 +657,7 @@ export default {
             // For now, we'll just disable editing.
 
 
-            updateProfileService.updateProfile(id, this.profile.email, this.profile.firstName, this.profile.lastName, this.profile.birthday, this.profile.birthPlace, this.profile.billingAddress, this.profile.gender, this.profile.role, this.profile.username, this.profile.profileImage, this.profile.active, this.profile.subscribedToFeed)
+            updateProfileService.updateProfile(id, this.profile.email, this.profile.DNI, this.profile.firstName, this.profile.lastName, this.profile.birthday, this.profile.birthPlace, this.profile.billingAddress, this.profile.gender, this.profile.role, this.profile.username, this.profile.profileImage, this.profile.active, this.profile.subscribedToFeed)
                 .then(response => {
                 // Handle success
                     if (response.status == 200){
