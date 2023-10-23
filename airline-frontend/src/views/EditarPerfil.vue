@@ -51,8 +51,7 @@
 
                                     <div class="form-group"> 
                                         <label class="form-label">Fecha de Nacimiento</label> 
-                                        <input type="date" class="form-control" v-model="profile.birthday" required > 
-                        
+                                        <input type="date" class="form-control" v-model="formattedBirthday" required > 
                                     </div> 
                                     <div class="form-group">
                                         <label class="form-label">Lugar de Nacimiento</label>
@@ -62,6 +61,10 @@
                                     <div class="form-group">
                                         <label class="form-label">Dirección de Facturación</label>
                                         <input type="text" class="form-control" v-model="profile.billingAddress" required >
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">DNI</label>
+                                        <input type="text" class="form-control" v-model="profile.DNI" required >
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Género</label>
@@ -84,7 +87,7 @@
                                                 id="switch-label"
                                                 class="switch-button__checkbox"
                                                 v-model="profile.subscribedToFeed"
-                                                @change="updateProfile"
+                                             
                                                 required
                                             />
                                             <!-- Botón -->
@@ -93,7 +96,7 @@
                                     </div>
                                 </div>
                                 <div class="text-right mt-3 bt-3">
-                                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>&nbsp;
+                                    <button type="submit" class="btn btn-primary"  @click="updateProfile" required>Guardar Cambios</button>&nbsp;
                                     <button type-="button" @click="redirectToPerfil" class="btn btn-default">Cancelar</button>
                                 </div>
                             </div>
@@ -473,7 +476,7 @@
 <script>
 import updateProfileService from "@/services/userService/updateProfileService.js";
 import viewProfileService from "@/services/userService/viewProfileService.js";
-
+import { format } from 'date-fns'; // Importa la función de formato de date-fns
 
 export default {
     data() { 
@@ -491,6 +494,7 @@ export default {
             username: "",
             profileImage: "",
             active: "",
+            DNI: "",
             subscribedToFeed: "",
             errorMessage: "",
         },
@@ -507,11 +511,18 @@ export default {
             username: "",
             profileImage: "",
             active: "",
+            DNI: "",
             subscribedToFeed: "",
             errorMessage: "",
         },
         originalProfile: {}, // To store the original profile before editing
       };
+    },
+    computed: {
+        formattedBirthday() {
+        // Formatea la fecha en un formato legible (por ejemplo, 'dd/MM/yyyy')
+        return this.profile.birthday ? format(new Date(this.profile.birthday), 'yyyy-MM-dd') : '';
+        },
     },
     created() {
     // Get the user ID from the JWT token in sessionStorage
@@ -525,6 +536,8 @@ export default {
             this.profile = response.data;
             if (response.status == 200){
                 console.log("User Profile", response.data);
+                // Formatea la fecha de nacimiento antes de asignarla a formattedBirthday
+                this.formattedBirthday = this.formatBirthday(this.profile.birthday);
                 // You can redirect the user or perform other actions here.
           }
         })
@@ -554,7 +567,6 @@ export default {
             this.profile.subscribedToFeed = true;
 
             // Realizar una solicitud para actualizar el estado en la base de datos
-          
         },
        
         toggleEdit(field) {
@@ -577,10 +589,11 @@ export default {
             // For now, we'll just disable editing.
 
 
-            updateProfileService.updateProfile(id, this.profile.email, this.profile.firstName, this.profile.lastName, this.profile.birthday, this.profile.birthPlace, this.profile.billingAddress, this.profile.gender, this.profile.role, this.profile.username, this.profile.profileImage, this.profile.active, this.profile.subscribedToFeed)
+            updateProfileService.updateProfile(id, this.profile.email, this.profile.firstName, this.profile.lastName, this.profile.birthday, this.profile.birthPlace, this.profile.billingAddress, this.profile.gender, this.profile.role, this.profile.username, this.profile.profileImage, this.profile.active,this.profile.DNI, this.profile.subscribedToFeed)
                 .then(response => {
                 // Handle success
                     if (response.status == 200){
+                   
                         console.log("User Profile updated!!", response.data);
                         // You can redirect the user or perform other actions here.
                     }

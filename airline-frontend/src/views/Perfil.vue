@@ -62,7 +62,6 @@
                                     <div class="form-group"> 
                                         <label class="form-label">Fecha de Nacimiento</label> 
                                         <input type="text" class="form-control" v-model="formattedBirthday" required readonly> 
-                        
                                     </div> 
                                     <div class="form-group">
                                         <label class="form-label">Lugar de Nacimiento</label>
@@ -74,14 +73,12 @@
                                         <input type="text" class="form-control" v-model="profile.billingAddress" required readonly>
                                     </div>
                                     <div class="form-group">
+                                        <label class="form-label">DNI</label>
+                                        <input type="number" class="form-control" v-model="profile.DNI" required >
+                                    </div>
+                                    <div class="form-group">
                                         <label class="form-label">Género</label>
                                         <input class="form-control" v-model="profile.gender" required readonly>
-                                          
-                                        <!--    <select class="custom-select" v-model="profile.gender" required readonly>
-                                            <option selected> </option>
-                                            <option>Hombre</option>
-                                            <option>Mujer</option>
-                                            <option>Prefiero no decirlo</option>  -->
                                     </div>
 
                                     <div class="form-group" >
@@ -104,26 +101,6 @@
                                 </div>
                                 <div class="text-right mt-3 bt-3">
                                     <button @click="updateProfile"  class="btn btn-primary">Editar</button>&nbsp;
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="account-change-password">
-                                <div class="card-body ">
-                                    <div class="form-group">
-                                        <label class="form-label">Contraseña Actual</label>
-                                        <input type="password" class="form-control" v-model="Uppassword.password" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Nueva Contraseña</label>
-                                        <input type="password" class="form-control" v-model="Uppassword.nuevapassword" required>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Confirme Su Contraseña</label>
-                                        <input type="password" class="form-control" v-model="Uppassword.confirmpassword" required>
-                                    </div>
-                                </div>
-                                <div class="text-right mt-3 bt-3">
-                                    <button type="button" @click="changePassword" class="btn btn-primary">Guardar Cambios</button>&nbsp;
-                                    <button type="button" @click="cancelPasswordChange" class="btn btn-default">Cancelar</button>
                                 </div>
                             </div>
                         </div>
@@ -523,6 +500,7 @@ export default {
             password: "",
             profileImage: "",
             active: "",
+            DNI: "",
             subscribedToFeed: "",
             errorMessage: "",
         },
@@ -540,24 +518,18 @@ export default {
             password: "",
             profileImage: "",
             active: "",
+            DNI: "",
             subscribedToFeed: "",
             errorMessage: "",
         },
-        Uppassword:{ ////INTENTO DE INTEGRAR CONTRASEÑA
-            
-            email: "",
-            password: "",
-            nuevapassword: "",
-            confirmpassword: "",
-            errorMessage: "",
-        },
+      
         originalProfile: {}, // To store the original profile before editing
       };
     },
     computed: {
         formattedBirthday() {
         // Formatea la fecha en un formato legible (por ejemplo, 'dd/MM/yyyy')
-        return this.profile.birthday ? format(new Date(this.profile.birthday), 'dd/MM/yyyy') : '';
+        return this.profile.birthday ? format(new Date(this.profile.birthday), 'yyyy-MM-dd') : '';
         },
     },
     created() {
@@ -626,14 +598,6 @@ export default {
         this.$router.push("/Login");
         },
 
-        updateSubscribedToFeed() {
-            // Actualizar el valor de subscribedToFeed aquí cuando se cambie el botón deslizante
-            // Puedes establecerlo en true ya que se activa
-            this.profile.subscribedToFeed = true;
-
-            // Realizar una solicitud para actualizar el estado en la base de datos
-          
-        },
        
         toggleEdit(field) {
             this.isEditing[field] = !this.isEditing[field];
@@ -655,11 +619,11 @@ export default {
             // For now, we'll just disable editing.
 
 
-            updateProfileService.updateProfile(id, this.profile.email, this.profile.firstName, this.profile.lastName, this.profile.birthday, this.profile.birthPlace, this.profile.billingAddress, this.profile.gender, this.profile.role, this.profile.username, this.profile.profileImage, this.profile.active, this.profile.subscribedToFeed)
+            updateProfileService.updateProfile(id, this.profile.email, this.profile.firstName, this.profile.lastName, this.profile.birthday, this.profile.birthPlace, this.profile.billingAddress, this.profile.gender, this.profile.role, this.profile.username, this.profile.profileImage, this.profile.active,this.profile.DNI, this.profile.subscribedToFeed)
                 .then(response => {
                 // Handle success
                     if (response.status == 200){
-                        console.log("User Profile updated!!", response.data);
+                        console.log("User Profile!!", response.data);
                         this.$router.push('/EditarPerfil'); //CLICK EN EDITAR PERFIL
                         // You can redirect the user or perform other actions here.
                     }
