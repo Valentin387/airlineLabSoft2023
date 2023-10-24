@@ -74,7 +74,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">DNI</label>
-                                        <input type="text" class="form-control" v-model="profile.DNI" required  readonly >
+                                        <input type="text" class="form-control" v-model="profile.dni" required  readonly >
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Género</label>
@@ -489,7 +489,7 @@ export default {
         profile:{ 
             id: "",
             email: "",
-            DNI: "",
+            dni: "",
             firstName: "",
             lastName: "",
             birthday: "",
@@ -507,7 +507,7 @@ export default {
         isEditing:{
             id: "",
             email: "",
-            DNI: "",
+            dni: "",
             firstName: "",
             lastName: "",
             birthday: "",
