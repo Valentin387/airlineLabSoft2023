@@ -1,7 +1,7 @@
 import axiosInstance from '../axiosInstance.js';
 
 
-const register = (DNI,
+const register = ( DNI,
                   email,
                   password,
                   firstName,

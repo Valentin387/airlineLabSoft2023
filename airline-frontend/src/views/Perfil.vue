@@ -74,7 +74,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">DNI</label>
-                                        <input type="number" class="form-control" v-model="profile.DNI" required >
+                                        <input type="text" class="form-control" v-model="profile.DNI" required  readonly >
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Género</label>
@@ -501,7 +501,6 @@ export default {
             password: "",
             profileImage: "",
             active: "",
-            DNI: "",
             subscribedToFeed: "",
             errorMessage: "",
         },
@@ -520,7 +519,6 @@ export default {
             password: "",
             profileImage: "",
             active: "",
-            DNI: "",
             subscribedToFeed: "",
             errorMessage: "",
         },
