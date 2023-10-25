@@ -1,46 +1,55 @@
 <template>
   <div class="registration-box">
+    <spinner :showSpinner="showSpinner"></spinner>
     <div class="registration-container">
         <h1 class ="title">Crear Cuenta</h1>
       <form id="registration-form" @submit.prevent="createAccount">
         <div class="form-group">
-            <!-- Nombre Completo -->
-            <input type="text" id="firstName" placeholder="Nombre" v-model="firstName" required>
+          <!-- Nombre Completo -->
+          <input type="text" id="firstName" placeholder="Nombre" v-model="firstName" required>
+          <p v-if="!isValidFirstName">El nombre no es válido</p>
+          
+          <!-- Apellido -->
+          <input type="text" id="lastName" placeholder="Apellido" v-model="lastName" required>
+          <p v-if="lastName.length > 25">El apellido no puede tener más de 25 caracteres</p>
 
-            <!-- Nombre Completo -->
-            <input type="text" id="lastName" placeholder="Apellido" v-model="lastName" required>
-            
-            <!-- Documento -->
-            <input type="text" id="birth-place" placeholder="Lugar de Nacimiento" v-model="birthPlace" required>
-            
-            <!-- Fecha de Nacimiento -->
-            <input type="date" id="birth-date" v-model="birthDate" required>
-            
-            <!-- Direccion de Facturacion -->
-            <input type="text" id="billing-address" placeholder="Dirección de Facturación" v-model="billingAddress" required>
-            
-            <!-- Documento -->
-            <input type="text" id="DNI" placeholder="Documento" v-model="DNI" required>
-        
-            <!-- Genero -->
-            <input type="text" id="gender" placeholder="Genero" v-model="gender" required>
-            
-            <!-- Email -->
-            <input type="email" id="email" placeholder="Correo Electrónico" v-model="email" required>
-        
-            <!-- Usuario -->
-            <input type="text" id="username" placeholder="Usuario" v-model="username" required>
+          <!-- Lugar de Nacimiento -->
+          <input type="text" id="birth-place" placeholder="Lugar de Nacimiento" v-model="birthPlace" required>
 
-            <!-- Contraseña -->
-            <input type="password" id="password" placeholder="Contraseña" v-model="password" required>
-            
-            <!-- Foto de Perfil -->
-            <!-- <input type="file" id="profile-picture" accept="image/*" @change="uploadProfilePicture" required> -->
+          <!-- Fecha de Nacimiento -->
+          <input type="date" id="birth-date" v-model="birthDate" required>
+
+          <!-- Direccion de Facturacion -->
+          <input type="text" id="billing-address" placeholder="Dirección de Facturación" v-model="billingAddress" required>
+
+          <!-- DNI -->
+          <input type="text" id="DNI" placeholder="Documento" v-model="DNI" required>
+          <p v-if="DNI.length > 10">El DNI no puede tener más de 10 caracteres</p>
+
+          <!-- Género -->
+          <select id="gender" placeholder="Género" v-model="gender">
+            <option value="male">Masculino</option>
+            <option value="female">Femenino</option>
+            <option value="Other">Otro</option>
+          </select>
+
+          <!-- Email -->
+          <input type="email" id="email" placeholder="Correo Electrónico" v-model="email" required>
+          <p v-if="email.length > 80">El correo electrónico no puede tener más de 30 caracteres</p>
+
+          <!-- Usuario -->
+          <input type="text" id="username" placeholder="Usuario" v-model="username" required>
+          <p v-if="username.length > 25">El usuario no puede tener más de 25 caracteres</p>
+
+          <!-- Contraseña -->
+          <input type="password" id="password" placeholder="Contraseña" v-model="password" required>
+          <p v-if="password.length < 8 || password.length > 30">La contraseña debe tener entre 8 y 30 caracteres</p>
         </div>
   
         <button id="create-account" class="create-account" @submit.prevent="createAccount" type="submit">Crear Cuenta</button>
         </form>
         <p id="text1">o</p>
+        <error-modal :show-error="showErrorMessage" :error-message="errorMessage" @close="showErrorMessage = false" />
         <p>¿Ya tienes una cuenta?</p>
         <button id="login" class="login" @click.prevent="redirectToLogin">Iniciar sesión</button>
     </div>
@@ -204,8 +213,14 @@
 
 <script>
 import registerService from "@/services/authenticationService/registerService.js";
+import errorModal from "@/components/ErrorModal.vue";
+import spinner from "@/components/spinner.vue";
 
 export default {
+  components: {
+    errorModal,
+    spinner,
+  },
   data() {
     return {
       firstName: "",
@@ -219,37 +234,66 @@ export default {
       username: "",
       password: "",
       profileImage: "Soy una imagen",
-      errorMessage: ""
+      errorMessage: "",
+      showErrorMessage: false,
+      isValidFirstName: true,
+      showSpinner: false,
     };
   },
   methods: {
     createAccount() {
+      this.showSpinner = true;
+      if (this.password.length < 8 || this.password.length > 30) {
+        console.log("La contraseña no esta dentro del limite");
+        this.errorMessage =  "La contraseña debe ser menor a 30 y mayor a 8 carácteres";
+        this.showErrorMessage = true;
+        this.showSpinner = false;
+        return;
+      }
+      if (isNaN(this.firstName) && this.firstName.length <= 25) {
+        this.isValidFirstName = true;
+
       // Recopila todos los datos del formulario y crea un objeto con ellos
       const { DNI, email, password, firstName, lastName, birthDate, birthPlace, billingAddress, gender,  username, profileImage, errorMessage } = this;
       // Llama al servicio de registro para crear la cuenta
       registerService.register(DNI, email, password, firstName, lastName, birthDate, birthPlace, billingAddress, gender,  username, profileImage)
         .then((response) => {
+          this.showSpinner = false;
           // Maneja la respuesta exitosa aquí
           if (response.status === 200) {
             console.log("Cuenta creada exitosamente:", response.data);
+            const token = response.data.token;
+            window.sessionStorage.setItem("JWTtoken", token);
             // Redirige al usuario o realiza otras acciones según tus necesidades
-            this.$router.push('/login');
+            this.$router.push('/');
           }
         })
         .catch((error) => {
+          this.showSpinner = false;
           if (error.response.status == 401){
             console.log("Login failed:", error.response.status, error);
-            this.errorMessage = error.response.data.message;
+            this.errorMessage =  "Signup failed.Error 401";
+            this.showErrorMessage = true;
           } 
           if (error.response.status == 403){
             console.log("User not found sorry:", error.response.status, error);
-            this.errorMessage = error.response.data.message;
+            this.errorMessage =  "Signup failed.Error 403";
+            this.showErrorMessage = true;
           }
           else {
             // You can redirect the user or perform other actions here.
+            this.errorMessage = "Algo pasó, vuelve a intentatlo más tarde";
+            this.showErrorMessage = true;
             console.error("Something happened:", error);
           }
         });
+
+      } else {
+        console.log("El nombre no puede ser un numero o no esta dentro del limite");
+        this.isValidFirstName = false;
+        this.errorMessage =  "El nombre no puede ser un numero o no esta dentro del limite";
+        this.showErrorMessage = true;
+      }
     },
     /*uploadProfilePicture(event) {
       const file = event.target.files[0];

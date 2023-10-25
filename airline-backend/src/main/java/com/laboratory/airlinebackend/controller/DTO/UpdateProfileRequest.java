@@ -13,6 +13,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class UpdateProfileRequest {
     private String email;
+    private String DNI;
     private String firstName;
     private String lastName;
     private Date birthday;
