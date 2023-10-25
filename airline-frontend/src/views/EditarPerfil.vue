@@ -21,7 +21,7 @@
                                             Foto de perfil
                                             <input type="file" class="account-settings-fileinput" >
                                         </label> &nbsp;
-                                        <button type="button" class="btn btn-default md-btn-flat">Restablecer</button>
+                                        
                                         <div class="text-light small mt-1">Permitido JPG, GIF or PNG. Tamaño máximo 800K</div>
                                     </div>
                                 </div>
@@ -30,18 +30,22 @@
                                     <div class="form-group ">
                                         <label class="form-label" >Usuario</label>
                                         <input type="text" class="form-control"  v-model="profile.username" required >
+                                        <p v-if="profile.username.length > 25">El usuario no puede tener más de 25 caracteres</p>
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Nombre</label>
                                         <input type="text" class="form-control"  v-model="profile.firstName" required >
+                                        <p v-if="!isValidFirstName">El nombre no es válido</p>
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Apellido</label>
                                         <input type="text" class="form-control" v-model="profile.lastName" required >
+                                        <p v-if="profile.lastName.length > 25">El apellido no puede tener más de 25 caracteres</p>
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Correo Electrónico</label>
-                                        <input type="text" class="form-control mb-1"  v-model="profile.email" required >
+                                        <input type="email" class="form-control mb-1"  v-model="profile.email" required >
+                                        <p v-if="profile.email.length > 80">El correo electrónico no puede tener más de 30 caracteres</p>
                                        <!-- <div class="alert alert-warning mt-3">
                                             Tu correo no ha sido confirmado. Verifica tu bandeja de entrada.<br>
                                             <a href="javascript:void(0)">Reenviar confirmación</a>
@@ -65,10 +69,15 @@
                                     <div class="form-group">
                                         <label class="form-label">DNI</label>
                                         <input type="text" class="form-control" v-model="profile.dni" required >
+                                        <p v-if="profile.dni.length > 10">El DNI no puede tener más de 10 caracteres</p>
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">Género</label>
-                                        <input class="form-control" v-model="profile.gender" required >
+                                        <label class="form-label">Género</label> <br>
+                                        <select id="gender" placeholder="Género" v-model="profile.gender">
+                                            <option value="male">Masculino</option>
+                                            <option value="female">Femenino</option>
+                                            <option value="Other">Otro</option>
+                                        </select>
                                           
                                         <!--    <select class="custom-select" v-model="profile.gender" required readonly>
                                             <option selected> </option>
@@ -96,7 +105,7 @@
                                 </div>
                                 <div class="text-right mt-3 bt-3">
                                     <button type="submit" class="btn btn-primary"  @click="updateProfile" required>Guardar Cambios</button>&nbsp;
-                                    <button type="button" @click="redirectToPerfil" class="btn btn-default">Cancelar</button>
+                                    <button type="button" @click="redirectToPerfil" class="btn btn-default">Volver al perfil</button>
                                 </div>
                             </div>
                         </div>
@@ -519,6 +528,7 @@ export default {
         originalProfile: {}, // To store the original profile before editing
         errorMessage: "",
         showErrorMessage: false,
+        isValidFirstName: true,
       };
     },
     computed: {

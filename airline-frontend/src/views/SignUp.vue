@@ -26,7 +26,7 @@
           <p v-if="DNI.length > 10">El DNI no puede tener más de 10 caracteres</p>
 
           <!-- Género -->
-          <select id="gender" placeholder="Genero" v-model="gender">
+          <select id="gender" placeholder="Género" v-model="gender">
             <option value="male">Masculino</option>
             <option value="female">Femenino</option>
             <option value="Other">Otro</option>
