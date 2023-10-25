@@ -32,7 +32,6 @@
                                             Foto de perfil
                                             <input type="file" class="account-settings-fileinput" >
                                         </label> &nbsp;
-                                        <button type="button" class="btn btn-default md-btn-flat">Restablecer</button>
                                         <div class="text-light small mt-1">Permitido JPG, GIF or PNG. Tamaño máximo 800K</div>
                                     </div>
                                 </div>
