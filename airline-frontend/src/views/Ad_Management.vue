@@ -481,6 +481,7 @@ export default {
   },
   components: {
         errorModal,
+        spinner,
   },
     // Otros métodos como logout, deleteAdmin, etc.
 }
