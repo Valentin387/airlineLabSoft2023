@@ -341,10 +341,7 @@ import errorModal from "@/components/ErrorModal.vue";
 export default {
   data() {
     return {
-      
-      id: "",
-      
-      selectedTab: 'profile',
+      selectedTab: 'admins',
       admins: [/* Lista de administradores */],
       creatingAdmin: false,
       newAdminName: '',
