@@ -448,6 +448,7 @@ export default {
           .then((response) => {
             if (response.status === 200) {
               console.log("Administrador eliminado:", adminId);
+              confirm("Administrador eliminado:", adminId);
               this.loadAdmins(); // Vuelve a cargar la lista de administradores
               this.toggleCardContainer(); // Oculta la ventana emergente
             }
