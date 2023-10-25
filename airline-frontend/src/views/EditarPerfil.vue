@@ -143,7 +143,7 @@
                         </div>
                     </div>
             </footer>
-            
+            <error-modal :show-error="showErrorMessage" :error-message="errorMessage" @close="showErrorMessage = false" />
         </div>
     <!------------------------------------------------FOOTER------------------------------------------->
 
@@ -475,6 +475,7 @@
 <script>
 import updateProfileService from "@/services/userService/updateProfileService.js";
 import viewProfileService from "@/services/userService/viewProfileService.js";
+import errorModal from "@/components/ErrorModal.vue";
 
 
 export default {
@@ -515,6 +516,8 @@ export default {
             errorMessage: "",
         },
         originalProfile: {}, // To store the original profile before editing
+        errorMessage: "",
+        showErrorMessage: false,
       };
     },
   
@@ -538,14 +541,19 @@ export default {
             // Handle login errors here
             if (error.response.status == 403){
                 console.log("User not found sorry:", error.response.status, error);
-                this.errorMessage = error.response.data.message;
+                this.errorMessage = error.response.data.message || "User not found";
+                this.showErrorMessage = true;
             }
             else {
                 // You can redirect the user or perform other actions here.
                 console.error("Something happened:", error);
+                this.errorMessage = error.response.data.message || "Something happened";
+                this.showErrorMessage = true;
             }
             // Display an error message to the user or take appropriate action.
                 console.error('Error fetching user data:', error);
+                this.errorMessage = error.response.data.message || "Error fetching user data";
+                this.showErrorMessage = true;
         });
   },
     methods: {
@@ -595,14 +603,19 @@ export default {
                     // Handle login errors here
                     if (error.response.status == 403){
                         console.log("User not found sorry:", error.response.status, error);
-                        this.errorMessage = error.response.data.message;
+                        this.errorMessage = error.response.data.message || "User not found";
+                        this.showErrorMessage = true;
                     }
                     else {
                         // You can redirect the user or perform other actions here.
                         console.error("Something happened:", error);
+                        this.errorMessage = error.response.data.message || "Something happened";
+                        this.showErrorMessage = true;
                     }
                     // Display an error message to the user or take appropriate action.
                         console.error('Error fetching user data:', error);
+                        this.errorMessage = error.response.data.message || "Error fetching user data";
+                        this.showErrorMessage = true;
                 });
 
             
@@ -613,7 +626,10 @@ export default {
                     this.isEditing[field] = false;
                     this.profile[field] = this.originalProfile[field];
                 });
-        },
-    },     
+            },
+    }, 
+    components: {
+        errorModal,
+  },     
 };
 </script>

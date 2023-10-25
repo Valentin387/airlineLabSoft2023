@@ -6,7 +6,14 @@
   <component name="ChangeListManager">
     <list default="true" id="2e0abf07-9820-4643-9f68-1385b5e1c1a4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/airline-backend/src/main/java/com/laboratory/airlinebackend/controller/AuthenticationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/airline-backend/src/main/java/com/laboratory/airlinebackend/controller/AuthenticationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/airline-frontend/src/views/CambioIdRoot.vue" beforeDir="false" afterPath="$PROJECT_DIR$/airline-frontend/src/views/CambioIdRoot.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/airline-frontend/src/views/CrearAdmin.vue" beforeDir="false" afterPath="$PROJECT_DIR$/airline-frontend/src/views/CrearAdmin.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/airline-frontend/src/views/EditarPerfil.vue" beforeDir="false" afterPath="$PROJECT_DIR$/airline-frontend/src/views/EditarPerfil.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/airline-frontend/src/views/Login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/airline-frontend/src/views/Login.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/airline-frontend/src/views/Perfil.vue" beforeDir="false" afterPath="$PROJECT_DIR$/airline-frontend/src/views/Perfil.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/airline-frontend/src/views/RecoverPassword.vue" beforeDir="false" afterPath="$PROJECT_DIR$/airline-frontend/src/views/RecoverPassword.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/airline-frontend/src/views/ResetPassword.vue" beforeDir="false" afterPath="$PROJECT_DIR$/airline-frontend/src/views/ResetPassword.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,7 +64,7 @@
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;front/bryanPerfil&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;hotfix/ventanasEmergentes&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;21&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/torre/OneDrive/Documentos/airlineLabSoft2023&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,

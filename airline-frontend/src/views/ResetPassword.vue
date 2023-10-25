@@ -14,6 +14,7 @@
                     <button class="btn-password" type="submit" >Guardar cambios</button>
                 </form>
             </div>
+            <error-modal :show-error="showErrorMessage" :error-message="errorMessage" @close="showErrorMessage = false" />
         </div>
 </template>
 
@@ -208,6 +209,7 @@
 
 <script>
 import updatePasswordService from "@/services/authenticationService/updatePasswordService.js";
+import errorModal from "@/components/ErrorModal.vue";
 
 export default {
     data() { 
@@ -215,6 +217,8 @@ export default {
         email: "",
         password: "",
         temporal: "",
+        errorMessage: "",
+        showErrorMessage: false,
       };
     },
     methods: {
@@ -249,24 +253,33 @@ export default {
             // Handle login errors here
             if (error.response.status == 401){
               console.log("New Password failed:", error.response.status, error);
-              this.errorMessage = error.response.data.message;
+              this.errorMessage = error.response.data.message || "New Password failed";
+              this.showErrorMessage = true;
             } 
             if (error.response.status == 403){
               console.log("User not found sorry:", error.response.status, error);
-              this.errorMessage = error.response.data.message;
+              this.errorMessage = error.response.data.message || "User not found sorry";
+              this.showErrorMessage = true;
             }
             else {
               // You can redirect the user or perform other actions here.
-              console.error("Something happened:", error);
+              this.errorMessage = error.response.data.message || "Something happened:" + error;
+              this.showErrorMessage = true;
+            //   console.error("Something happened:", error);
             }
             // Display an error message to the user or take appropriate action.
           });
 
         }else{
-            console.error("Contraseñas no coinciden");
+            // console.error("Contraseñas no coinciden");
+            this.errorMessage = "Contraseñas no coinciden";
+            this.showErrorMessage = true;
         }
       },
-    }
-}
+    },
+    components: {
+        errorModal,
+    },
+};
 
 </script>
