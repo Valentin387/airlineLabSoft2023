@@ -20,7 +20,7 @@
             <div class="box-recovery-password">
               <button id="recovery-password" class="recovery-password" @click.prevent="redirectToRecoverPassword">¿Olvidaste tu contraseña?</button>
             </div>
-            <button id="login" class="login" @click.prevent="login" type="submit">Iniciar Sesión</button>
+            <button id="login" class="login"  type="submit">Iniciar Sesión</button>
         </form>
 
 

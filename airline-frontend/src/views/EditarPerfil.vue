@@ -51,7 +51,7 @@
 
                                     <div class="form-group"> 
                                         <label class="form-label">Fecha de Nacimiento</label> 
-                                        <input type="date" class="form-control" v-model="profile.birthday" required > 
+                                        <input type="date" class="form-control" v-model="formattedBirthday" required > 
                                     </div> 
                                     <div class="form-group">
                                         <label class="form-label">Lugar de Nacimiento</label>
@@ -474,6 +474,7 @@
 
 <script>
 import updateProfileService from "@/services/userService/updateProfileService.js";
+import { format } from 'date-fns'; // Importa la función de formato de date-fns
 import viewProfileService from "@/services/userService/viewProfileService.js";
 import errorModal from "@/components/ErrorModal.vue";
 
@@ -519,6 +520,12 @@ export default {
         errorMessage: "",
         showErrorMessage: false,
       };
+    },
+    computed: {
+        formattedBirthday() {
+        // Formatea la fecha en un formato legible (por ejemplo, 'dd/MM/yyyy')
+        return this.profile.birthday ? format(new Date(this.profile.birthday), 'yyyy-MM-dd') : '';
+        },
     },
   
     created() {
