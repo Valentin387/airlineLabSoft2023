@@ -1,6 +1,7 @@
 <template>
     <body>
         <div class="recoverPassword-container">
+            <spinner :showSpinner="showSpinner"></spinner>
             <img class="imageRecover-container" alt="">
             <div class="recoverPassword">
                 <hr>
@@ -11,7 +12,8 @@
                 <form class="inputs-container" @submit.prevent="RecoverP">
                     <p class="texto">Introduce tu correo electrónico y te enviaremos un enlace para que
                         vuelvas a entrar en tu cuenta</p>
-                    <input class="input-password" type="text" placeholder="Correo Electrónico" v-model="email">
+                    <input class="input-password" type="email" placeholder="Correo Electrónico" v-model="email">
+                    <p v-if="email.length > 80">El correo electrónico no puede tener más de 30 caracteres</p>
                     <button class="btn-password" type="submit">Enviar enlace de acceso</button>
                 </form>
             </div>
@@ -212,6 +214,7 @@
 <script>
 import emailCheckingService from "@/services/authenticationService/emailCheckingService.js";
 import errorModal from "@/components/ErrorModal.vue";
+import spinner from "@/components/spinner.vue";
 
 export default {
     data() { 
@@ -219,21 +222,32 @@ export default {
         email: "",
         errorMessage: "",
         showErrorMessage: false,
+        showSpinner: false, // Initialize as hidden
       };
     },
     methods: {
       RecoverP() {
+        this.showSpinner = true;
+        if (this.email.length > 80) {
+            console.log("El email debe tener entre 8 y 80 carácteres");
+            this.showSpinner = false;
+            return;
+        }
+
         let { email} = this;
 
         // Call the LoginService.login method
         emailCheckingService.emailChecking(email)
           .then((response) => {
+            this.showSpinner = false;
             // Handle the successful login response here
             if (response.status == 200){
+              confirm(response.data);
               console.log("Recover password updated:", response.data);
             }
           })
           .catch((error) => {
+            this.showSpinner = false;
             // Handle login errors here
             if (error.response.status == 401){
               console.log("New Password failed:", error.response.status, error);
@@ -257,6 +271,7 @@ export default {
       },
       components: {
         errorModal,
+        spinner,
     },
 }
 

@@ -1,5 +1,6 @@
 <template>
   <div class="page-container">
+    <spinner :showSpinner="showSpinner"></spinner>
     <div class="left-content">
       <div class="left-content-inner">
         <hr>
@@ -20,7 +21,7 @@
             <div class="box-recovery-password">
               <button id="recovery-password" class="recovery-password" @click.prevent="redirectToRecoverPassword">¿Olvidaste tu contraseña?</button>
             </div>
-            <button id="login" class="login" @click.prevent="login" type="submit">Iniciar Sesión</button>
+            <button id="login" class="login"  type="submit">Iniciar Sesión</button>
         </form>
 
 
@@ -233,6 +234,7 @@
 <script>
 import LoginService from "@/services/authenticationService/LoginService.js";
 import errorModal from "@/components/ErrorModal.vue";
+import spinner from "@/components/spinner.vue";
 
 export default {
     data() { 
@@ -241,10 +243,12 @@ export default {
         password: "",
         errorMessage: "",
         showErrorMessage: false,
+        showSpinner: false, // Initialize as hidden
       };
     },
   methods: {
       login() {
+        this.showSpinner = true; // Initialize as hidden
         const { email, password } = this;
         
         // Call the LoginService.login method
@@ -252,6 +256,7 @@ export default {
           .then((response) => {
             // Handle the successful login response here
             if (response.status == 200){
+              this.showSpinner = false;
               // Extract the JWT token from the response data
               const token = response.data.token;
               // Save the JWT token in the localStorage
@@ -263,21 +268,22 @@ export default {
             }
           })
           .catch((error) => {
+            this.showSpinner = false;
             // Handle login errors here
             if (error.response.status == 401){
               console.log("Login failed:", error.response.status, error);
-              this.errorMessage = error.response.data.message || "Login failed";
+              this.errorMessage = "Login failed";
               this.showErrorMessage = true;
             } 
             if (error.response.status == 403){
               console.log("User not found sorry:", error.response.status, error);
-              this.errorMessage = error.response.data.message || "User not found sorry";
+              this.errorMessage = "User not found sorry";
               this.showErrorMessage = true;
             }
             else {
               // You can redirect the user or perform other actions here.
               console.error("Something happened:", error);
-              this.errorMessage = error.response.data.message || "Something happened";
+              this.errorMessage = "Something happened";
               this.showErrorMessage = true;
             }
             // Display an error message to the user or take appropriate action.
@@ -295,6 +301,7 @@ export default {
   },
   components: {
     errorModal,
+    spinner,
   },
 };
 </script>
