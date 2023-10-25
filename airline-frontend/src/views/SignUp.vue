@@ -233,7 +233,7 @@ export default {
       email: "",
       username: "",
       password: "",
-      profileImage: "Soy una imagen",
+      profileImage: "",
       errorMessage: "",
       showErrorMessage: false,
       isValidFirstName: true,
