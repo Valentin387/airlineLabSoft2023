@@ -250,7 +250,7 @@ export default {
       // Recopila todos los datos del formulario y crea un objeto con ellos
       const { DNI, email, password, firstName, lastName, birthDate, birthPlace, billingAddress, gender,  username, profileImage, errorMessage } = this;
       // Llama al servicio de registro para crear la cuenta
-      registerService.register(DNI, email, password, firstName, lastName, birthDate, birthPlace, billingAddress, gender,  username, profileImage, errorMessage)
+      registerService.register(DNI, email, password, firstName, lastName, birthDate, birthPlace, billingAddress, gender,  username, profileImage)
         .then((response) => {
           // Maneja la respuesta exitosa aquí
           if (response.status === 200) {
@@ -264,17 +264,17 @@ export default {
         .catch((error) => {
           if (error.response.status == 401){
             console.log("Login failed:", error.response.status, error);
-            this.errorMessage = error.response.data.message || "Signup failed.Error 401";
+            this.errorMessage =  "Signup failed.Error 401";
             this.showErrorMessage = true;
           } 
           if (error.response.status == 403){
             console.log("User not found sorry:", error.response.status, error);
-            this.errorMessage = error.response.data.message || "Signup failed.Error 403";
+            this.errorMessage =  "Signup failed.Error 403";
             this.showErrorMessage = true;
           }
           else {
             // You can redirect the user or perform other actions here.
-            this.errorMessage = error.response.data.message || "Algo pasó, vuelve a intentatlo más tarde";
+            this.errorMessage = "Algo pasó, vuelve a intentatlo más tarde";
             this.showErrorMessage = true;
             console.error("Something happened:", error);
           }
@@ -283,7 +283,7 @@ export default {
       } else {
         console.log("El nombre no puede ser un numero o no esta dentro del limite");
         this.isValidFirstName = false;
-        this.errorMessage = error.response.data.message || "El nombre no puede ser un numero o no esta dentro del limite";
+        this.errorMessage =  "El nombre no puede ser un numero o no esta dentro del limite";
         this.showErrorMessage = true;
       }
     },

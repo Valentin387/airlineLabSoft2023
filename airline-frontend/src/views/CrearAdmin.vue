@@ -230,11 +230,11 @@ export default {
       } catch (error)  {
         if (error.response && error.response.status === 401) {
           console.log("Login failed:", error.response.status, error);
-          this.errorMessage = error.response.data.message || "Login failed";
+          this.errorMessage =  "Login failed. Error 401";
           this.showErrorMessage = true;
         } else if (error.response && error.response.status === 403) {
           console.log("User not found:", error.response.status, error);
-          this.errorMessage = error.response.data.message || "User not found";
+          this.errorMessage = "User not found";
           this.showErrorMessage = true;
         } else {
           console.error("Email already exist", error);

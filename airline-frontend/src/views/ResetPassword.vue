@@ -228,6 +228,8 @@ export default {
 
         if (this.password.length < 8 || this.password.length > 80) {
             console.log("La contraseña no esta dentro del limite");
+            this.errorMessage =  "La contraseña debe ser menor a 30 y mayor a 8 carácteres";
+            this.showErrorMessage = true;
             return;
         }
 
@@ -261,17 +263,17 @@ export default {
             // Handle login errors here
             if (error.response.status == 401){
               console.log("New Password failed:", error.response.status, error);
-              this.errorMessage = error.response.data.message || "New Password failed";
+              this.errorMessage =  "New Password failed";
               this.showErrorMessage = true;
             } 
             if (error.response.status == 403){
               console.log("User not found sorry:", error.response.status, error);
-              this.errorMessage = error.response.data.message || "User not found sorry";
+              this.errorMessage =  "User not found sorry";
               this.showErrorMessage = true;
             }
             else {
               // You can redirect the user or perform other actions here.
-              this.errorMessage = error.response.data.message || "Something happened:" + error;
+              this.errorMessage = "Something happened:" + error;
               this.showErrorMessage = true;
             //   console.error("Something happened:", error);
             }

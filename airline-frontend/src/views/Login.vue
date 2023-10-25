@@ -266,18 +266,18 @@ export default {
             // Handle login errors here
             if (error.response.status == 401){
               console.log("Login failed:", error.response.status, error);
-              this.errorMessage = error.response.data.message || "Login failed";
+              this.errorMessage = "Login failed";
               this.showErrorMessage = true;
             } 
             if (error.response.status == 403){
               console.log("User not found sorry:", error.response.status, error);
-              this.errorMessage = error.response.data.message || "User not found sorry";
+              this.errorMessage = "User not found sorry";
               this.showErrorMessage = true;
             }
             else {
               // You can redirect the user or perform other actions here.
               console.error("Something happened:", error);
-              this.errorMessage = error.response.data.message || "Something happened";
+              this.errorMessage = "Something happened";
               this.showErrorMessage = true;
             }
             // Display an error message to the user or take appropriate action.
