@@ -34,7 +34,7 @@
 
           <!-- Email -->
           <input type="email" id="email" placeholder="Correo Electrónico" v-model="email" required>
-          <p v-if="email.length > 30">El correo electrónico no puede tener más de 30 caracteres</p>
+          <p v-if="email.length > 80">El correo electrónico no puede tener más de 30 caracteres</p>
 
           <!-- Usuario -->
           <input type="text" id="username" placeholder="Usuario" v-model="username" required>

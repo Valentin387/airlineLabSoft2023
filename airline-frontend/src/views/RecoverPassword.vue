@@ -11,7 +11,8 @@
                 <form class="inputs-container" @submit.prevent="RecoverP">
                     <p class="texto">Introduce tu correo electrónico y te enviaremos un enlace para que
                         vuelvas a entrar en tu cuenta</p>
-                    <input class="input-password" type="text" placeholder="Correo Electrónico" v-model="email">
+                    <input class="input-password" type="email" placeholder="Correo Electrónico" v-model="email">
+                    <p v-if="email.length > 80">El correo electrónico no puede tener más de 30 caracteres</p>
                     <button class="btn-password" type="submit">Enviar enlace de acceso</button>
                 </form>
             </div>
@@ -223,6 +224,12 @@ export default {
     },
     methods: {
       RecoverP() {
+
+        if (this.email.length > 80) {
+            console.log("El email no puede superar 8 carácteres");
+            return;
+        }
+
         let { email} = this;
 
         // Call the LoginService.login method

@@ -10,7 +10,9 @@
                 <form class="inputs-container" @submit.prevent="UpdateP">
                     <p class="texto">¡Gracias! por favor ingrese su nueva contraseña, y despues confirmela</p>
                     <input type="password" id="password" placeholder="Nueva contraseña" v-model="temporal" required>
+                    <p v-if="password.length < 8 || password.length > 80">La contraseña debe tener entre 8 y 30 caracteres</p>
                     <input type="password" id="password2" placeholder="Confirme su contraseña" v-model="password" required>
+                    <p v-if="temporal!=password">Los campos no coinciden</p>
                     <button class="btn-password" type="submit" >Guardar cambios</button>
                 </form>
             </div>
@@ -223,8 +225,14 @@ export default {
     },
     methods: {
       UpdateP() {
+
+        if (this.password.length < 8 || this.password.length > 80) {
+            console.log("La contraseña no esta dentro del limite");
+            return;
+        }
+
         let { email, password, temporal} = this;
-        
+
         const token = window.sessionStorage.getItem('JWTtoken');
         if (!token || token == null) {
             const encodedEmail = this.$route.params.email;
