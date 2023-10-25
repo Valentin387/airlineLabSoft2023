@@ -584,6 +584,7 @@ export default {
             this.selectedAvatar = avatar;
             // Aquí puedes guardar el avatar seleccionado en tu perfil
             this.profile.profileImage = avatar;
+            console.log("Avatar seleccionado:", avatar);
             this.showGallery = false;
         },
 
@@ -610,6 +611,7 @@ export default {
             }
         },
         updateProfile() {
+            this.showSpinner = true;
             //this.showSpinner = true;
             const token = window.sessionStorage.getItem("JWTtoken");
             const tokenData = JSON.parse(atob(token.split('.')[1]));
@@ -625,7 +627,7 @@ export default {
                     this.showSpinner = false;
                 // Handle success
                     if (response.status == 200){
-
+                        confirm("User Profile updated");
                         console.log("User Profile updated!!", response.data);
                         // You can redirect the user or perform other actions here.
                     }
