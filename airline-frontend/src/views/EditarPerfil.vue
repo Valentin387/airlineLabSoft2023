@@ -2,6 +2,7 @@
  
 
         <div class="container light-style flex-grow-1 container-p-y">
+            <spinner :showSpinner="showSpinner"></spinner>
             <div class="card card-large">
                 <div class="row no-gutters row-bordered row-border-light">
                     <div class="col-md-2 pt-0">
@@ -486,11 +487,12 @@ import updateProfileService from "@/services/userService/updateProfileService.js
 import { format } from 'date-fns'; // Importa la función de formato de date-fns
 import viewProfileService from "@/services/userService/viewProfileService.js";
 import errorModal from "@/components/ErrorModal.vue";
-
+import spinner from "@/components/spinner.vue";
 
 export default {
     data() { 
       return {
+        showSpinner: false, // Initialize as hidden
         profile:{ 
             id: "",
             email: "",
@@ -539,6 +541,7 @@ export default {
     },
   
     created() {
+        this.showSpinner = true;
     // Get the user ID from the JWT token in sessionStorage
         const token = window.sessionStorage.getItem('JWTtoken');
         const tokenData = JSON.parse(atob(token.split('.')[1]));
@@ -547,6 +550,7 @@ export default {
         // Fetch user data and populate the profile object
         viewProfileService.viewProfile(id)
         .then(response => {
+            this.showSpinner = false;
             this.profile = response.data;
             if (response.status == 200){
                 console.log("User Profile", response.data);
@@ -555,6 +559,7 @@ export default {
           }
         })
         .catch(error => {
+            this.showSpinner = false;
             // Handle login errors here
             if (error.response.status == 403){
                 console.log("User not found sorry:", error.response.status, error);
@@ -598,6 +603,7 @@ export default {
             }
         },
         updateProfile() {
+            this.showSpinner = true;
             const token = window.sessionStorage.getItem("JWTtoken");
             const tokenData = JSON.parse(atob(token.split('.')[1]));
 
@@ -609,6 +615,7 @@ export default {
 
             updateProfileService.updateProfile(id, this.profile.email, this.profile.dni, this.profile.firstName, this.profile.lastName, this.profile.birthday, this.profile.birthPlace, this.profile.billingAddress, this.profile.gender, this.profile.role, this.profile.username, this.profile.profileImage, this.profile.active, this.profile.subscribedToFeed)
                 .then(response => {
+                    this.showSpinner = false;
                 // Handle success
                     if (response.status == 200){
 
@@ -617,6 +624,7 @@ export default {
                     }
                 })
                 .catch(error => {
+                    this.showSpinner = false;
                     // Handle login errors here
                     if (error.response.status == 403){
                         console.log("User not found sorry:", error.response.status, error);
@@ -647,6 +655,7 @@ export default {
     }, 
     components: {
         errorModal,
+        spinner,
   },     
 };
 </script>

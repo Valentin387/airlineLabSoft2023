@@ -1,5 +1,6 @@
 <template>
         <div class="ResetPassword-container">
+            <spinner :showSpinner="showSpinner"></spinner>
             <img class="imageReset-container" alt="">
             <div class="ResetPassword">
                 <hr>
@@ -212,6 +213,7 @@
 <script>
 import updatePasswordService from "@/services/authenticationService/updatePasswordService.js";
 import errorModal from "@/components/ErrorModal.vue";
+import spinner from "@/components/spinner.vue";
 
 export default {
     data() { 
@@ -221,15 +223,18 @@ export default {
         temporal: "",
         errorMessage: "",
         showErrorMessage: false,
+        showSpinner: false, // Initialize as hidden
       };
     },
     methods: {
       UpdateP() {
+        this.showSpinner = true;
 
         if (this.password.length < 8 || this.password.length > 80) {
             console.log("La contraseña no esta dentro del limite");
             this.errorMessage =  "La contraseña debe ser menor a 30 y mayor a 8 carácteres";
             this.showErrorMessage = true;
+            this.showSpinner = false;
             return;
         }
 
@@ -253,6 +258,7 @@ export default {
         // Call the LoginService.login method
         updatePasswordService.updatePassword(email, password)
           .then((response) => {
+            this.showSpinner = false;
             // Handle the successful login response here
             if (response.status == 200){
               confirm("Contraseña actualizada correctamente");
@@ -260,6 +266,7 @@ export default {
             }
           })
           .catch((error) => {
+            this.showSpinner = false;
             // Handle login errors here
             if (error.response.status == 401){
               console.log("New Password failed:", error.response.status, error);
@@ -284,11 +291,13 @@ export default {
             // console.error("Contraseñas no coinciden");
             this.errorMessage = "Contraseñas no coinciden";
             this.showErrorMessage = true;
+            this.showSpinner = false;
         }
       },
     },
     components: {
         errorModal,
+        spinner,
     },
 };
 

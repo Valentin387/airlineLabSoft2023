@@ -1,5 +1,6 @@
 <template>
   <div class="admin-panel">
+    <spinner :showSpinner="showSpinner"></spinner>
     <div class="sidebar">
       <a data-aos="zoom-in-left" data-aos-delay="150" href="#" class="logo">
         <i class="fa-solid fa-paper-plane"></i>AirTravel
@@ -337,6 +338,7 @@ import listAdminsService from "@/services/adminService/listAdminsService.js";
 import logoutService from "@/services/authenticationService/logoutService.js";
 import deleteAdminService from "@/services/adminService/deleteAdminService.js";
 import errorModal from "@/components/ErrorModal.vue";
+import spinner from "@/components/spinner.vue";
 
 export default {
   data() {
@@ -349,12 +351,15 @@ export default {
       cardContainerAdmin: false,
       errorMessage: "",
       showErrorMessage: false,
+      showSpinner: false, // Initialize as hidden
     };
   },
   created(){
     this.loadAdmins();
+    this.showSpinner = true;
     listAdminsService.listAdmins()
           .then((response) => {
+            this.showSpinner = false;
             // Handle the successful login response here
             if (response.status == 200){
               this.admins = response.data;
@@ -364,6 +369,7 @@ export default {
             }
           })
           .catch((error) => {
+            this.showSpinner = false;
             // Handle login errors here
             if (error.response.status == 401){
               console.log("authorized personnel only:", error.response.status, error);

@@ -1,6 +1,7 @@
 <template>
     <body>
         <div class="admin-container">
+            <spinner :showSpinner="showSpinner"></spinner>
             <img class="image-container" alt="">
             <div class="admin-info-container">
                 <hr>
@@ -213,6 +214,7 @@
 <script>
 import rootChangeId from "@/services/rootService/rootChangeId.js";
 import errorModal from "@/components/ErrorModal.vue";
+import spinner from "@/components/spinner.vue";
 
 export default {
     data() { 
@@ -220,14 +222,17 @@ export default {
             email: "",
             errorMessage: "",
             showErrorMessage: false,
+            showSpinner: false, // Initialize as hidden
         };
     },
     methods: {
         rootChangeID() {
+            this.showSpinner = true;
             const {email} = this;
             // Call the LoginService.login method
             rootChangeId.rootChangeID( email)
                 .then((response) => {
+                    this.showSpinner = false;
                 // Handle the successful login response here
                     if (response.status === 200) {
                         console.log("Creation successful:", response.data);
@@ -235,6 +240,7 @@ export default {
                     }
                 })
                 .catch((error) => {
+                    this.showSpinner = false;
                 // Handle login errors here
                     if (error.response.status == 401){
                         console.log("authorized personnel only:", error.response.status, error);
@@ -258,6 +264,7 @@ export default {
     },
     components: {
         errorModal,
+        spinner,
   },
 };
 </script>

@@ -1,5 +1,6 @@
 <template>
     <section class="EliminarAdmin">
+        <spinner :showSpinner="showSpinner"></spinner>
         <button class="card_buttonAdmin">Eliminar administrador</button>
         <div class="card_containerAdmin">
             <div class="cardAdmin">
@@ -19,15 +20,23 @@
   
 </template>
 <script>
+    import spinner from "@/components/spinner.vue";
+
     export default {
     data() {
         return {
-        cardContainerActive: false
+        cardContainerActive: false,
+        showSpinner: false, // Initialize as hidden
         };
+    },
+    components: {
+        spinner,
     },
     methods: {
         toggleCardContainer() {
+        this.showSpinner = true;
         this.cardContainerActive = !this.cardContainerActive;
+        this.showSpinner = false;
         }
     }
     };

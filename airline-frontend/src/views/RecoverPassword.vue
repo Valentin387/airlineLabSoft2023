@@ -1,6 +1,7 @@
 <template>
     <body>
         <div class="recoverPassword-container">
+            <spinner :showSpinner="showSpinner"></spinner>
             <img class="imageRecover-container" alt="">
             <div class="recoverPassword">
                 <hr>
@@ -213,6 +214,7 @@
 <script>
 import emailCheckingService from "@/services/authenticationService/emailCheckingService.js";
 import errorModal from "@/components/ErrorModal.vue";
+import spinner from "@/components/spinner.vue";
 
 export default {
     data() { 
@@ -220,13 +222,15 @@ export default {
         email: "",
         errorMessage: "",
         showErrorMessage: false,
+        showSpinner: false, // Initialize as hidden
       };
     },
     methods: {
       RecoverP() {
-
+        this.showSpinner = true;
         if (this.email.length > 80) {
             console.log("El email no puede superar 8 carácteres");
+            this.showSpinner = false;
             return;
         }
 
@@ -235,12 +239,14 @@ export default {
         // Call the LoginService.login method
         emailCheckingService.emailChecking(email)
           .then((response) => {
+            this.showSpinner = false;
             // Handle the successful login response here
             if (response.status == 200){
               console.log("Recover password updated:", response.data);
             }
           })
           .catch((error) => {
+            this.showSpinner = false;
             // Handle login errors here
             if (error.response.status == 401){
               console.log("New Password failed:", error.response.status, error);
@@ -264,6 +270,7 @@ export default {
       },
       components: {
         errorModal,
+        spinner,
     },
 }
 

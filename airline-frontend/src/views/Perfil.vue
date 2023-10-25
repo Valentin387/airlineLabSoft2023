@@ -2,6 +2,7 @@
  
 
         <div class="container light-style flex-grow-1 container-p-y">
+            <spinner :showSpinner="showSpinner"></spinner>
             <div class="card card-large">
                 <div class="row no-gutters row-bordered row-border-light">
                     <div class="col-md-2 pt-0">
@@ -481,12 +482,14 @@ import { format } from 'date-fns'; // Importa la función de formato de date-fns
 import updateProfileService from "@/services/userService/updateProfileService.js";
 import viewProfileService from "@/services/userService/viewProfileService.js";
 import errorModal from "@/components/ErrorModal.vue";
+import spinner from "@/components/spinner.vue";
 
 export default {
     data() { 
       return {
         isRoot: false,
         hasCreateAdminPermission: false,
+        showSpinner: false, // Initialize as hidden
         profile:{ 
             id: "",
             email: "",
@@ -534,6 +537,7 @@ export default {
         },
     },
     created() {
+        this.showSpinner = true;
         // Create a Date object from the Unix timestamp
         
             // Get the user ID from the JWT token in sessionStorage
@@ -553,11 +557,13 @@ export default {
         .then(response => {
             this.profile = response.data;
             if (response.status == 200){
+                this.showSpinner = false;
                 console.log("User Profile", response.data);
                 // You can redirect the user or perform other actions here.
           }
         })
         .catch(error => {
+            this.showSpinner = false;
             // Handle login errors here
             if (error.response.status == 403){
                 console.log("User not found sorry:", error.response.status, error);
@@ -588,7 +594,9 @@ export default {
         },
 
         logout(){
+            this.showSpinner = true;
             logoutService.logout().then((response) => {
+                this.showSpinner = false;
           // Maneja la respuesta exitosa aquí
           if (response.status === 200) {
             console.log("logout exitoso", response.data);
@@ -596,6 +604,7 @@ export default {
           }
         })
         .catch((error) => {
+            this.showSpinner = false;
             console.error("Something happened:", error);
             this.errorMessage = error.response.data.message || "Something happened";
             this.showErrorMessage = true;
@@ -618,6 +627,7 @@ export default {
             }
         },
         updateProfile() {
+            this.showSpinner = true;
             const token = window.sessionStorage.getItem("JWTtoken");
             const tokenData = JSON.parse(atob(token.split('.')[1]));
 
@@ -629,6 +639,7 @@ export default {
 
             updateProfileService.updateProfile(id, this.profile.email, this.profile.dni, this.profile.firstName, this.profile.lastName, this.profile.birthday, this.profile.birthPlace, this.profile.billingAddress, this.profile.gender, this.profile.role, this.profile.username, this.profile.profileImage, this.profile.active, this.profile.subscribedToFeed)
                 .then(response => {
+                    this.showSpinner = false;
                 // Handle success
                     if (response.status == 200){
                         console.log("User Profile!!", response.data);
@@ -637,6 +648,7 @@ export default {
                     }
                 })
                 .catch(error => {
+                    this.showSpinner = false;
                     // Handle login errors here
                     if (error.response.status == 403){
                         console.log("User not found sorry:", error.response.status, error);
@@ -660,16 +672,19 @@ export default {
             });
         },
         cancelChanges() {
+            this.showSpinner = true;
         // Cancel editing and revert changes to the original values
             Object.keys(this.isEditing).forEach((field) => {
                 this.isEditing[field] = false;
                 this.profile[field] = this.originalProfile[field];
             });
+            this.showSpinner = false;
         },
 
     },
     components: {
         errorModal,
+        spinner,
   }, 
 };
 </script>

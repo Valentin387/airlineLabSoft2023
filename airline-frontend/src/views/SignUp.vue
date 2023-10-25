@@ -1,5 +1,6 @@
 <template>
   <div class="registration-box">
+    <spinner :showSpinner="showSpinner"></spinner>
     <div class="registration-container">
         <h1 class ="title">Crear Cuenta</h1>
       <form id="registration-form" @submit.prevent="createAccount">
@@ -213,10 +214,12 @@
 <script>
 import registerService from "@/services/authenticationService/registerService.js";
 import errorModal from "@/components/ErrorModal.vue";
+import spinner from "@/components/spinner.vue";
 
 export default {
   components: {
     errorModal,
+    spinner,
   },
   data() {
     return {
@@ -233,15 +236,18 @@ export default {
       profileImage: "Soy una imagen",
       errorMessage: "",
       showErrorMessage: false,
-      isValidFirstName: true
+      isValidFirstName: true,
+      showSpinner: false,
     };
   },
   methods: {
     createAccount() {
+      this.showSpinner = true;
       if (this.password.length < 8 || this.password.length > 30) {
         console.log("La contraseña no esta dentro del limite");
         this.errorMessage =  "La contraseña debe ser menor a 30 y mayor a 8 carácteres";
         this.showErrorMessage = true;
+        this.showSpinner = false;
         return;
       }
       if (isNaN(this.firstName) && this.firstName.length <= 25) {
@@ -252,6 +258,7 @@ export default {
       // Llama al servicio de registro para crear la cuenta
       registerService.register(DNI, email, password, firstName, lastName, birthDate, birthPlace, billingAddress, gender,  username, profileImage)
         .then((response) => {
+          this.showSpinner = false;
           // Maneja la respuesta exitosa aquí
           if (response.status === 200) {
             console.log("Cuenta creada exitosamente:", response.data);
@@ -262,6 +269,7 @@ export default {
           }
         })
         .catch((error) => {
+          this.showSpinner = false;
           if (error.response.status == 401){
             console.log("Login failed:", error.response.status, error);
             this.errorMessage =  "Signup failed.Error 401";
