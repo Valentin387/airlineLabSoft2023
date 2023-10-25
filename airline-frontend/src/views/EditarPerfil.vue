@@ -2,6 +2,7 @@
  
 
         <div class="container light-style flex-grow-1 container-p-y">
+            <spinner :showSpinner="showSpinner"></spinner>
             <div class="card card-large">
                 <div class="row no-gutters row-bordered row-border-light">
                     <div class="col-md-2 pt-0">
@@ -13,7 +14,7 @@
                     </div>
                     <div class="col-md-9">
                         <div class="tab-content">
-                            <div  @submit.prevent="updateProfile" class="tab-pane fade active show" id="account-general">
+                            <div  @submit="updateProfile" class="tab-pane fade active show" id="account-general">
                                 <div class="card-body media align-items-center">
                                     <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="d-block ui-w-80">
                                     <div class="media-body ml-3">
@@ -21,7 +22,7 @@
                                             Foto de perfil
                                             <input type="file" class="account-settings-fileinput" >
                                         </label> &nbsp;
-                                        <button type="button" class="btn btn-default md-btn-flat">Restablecer</button>
+                                        
                                         <div class="text-light small mt-1">Permitido JPG, GIF or PNG. Tamaño máximo 800K</div>
                                     </div>
                                 </div>
@@ -30,18 +31,22 @@
                                     <div class="form-group ">
                                         <label class="form-label" >Usuario</label>
                                         <input type="text" class="form-control"  v-model="profile.username" required >
+                                        <!--<p v-if="profile.username.length > 25">El usuario no puede tener más de 25 caracteres</p>-->
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Nombre</label>
                                         <input type="text" class="form-control"  v-model="profile.firstName" required >
+                                        <!--<p v-if="!isValidFirstName">El nombre no es válido</p>-->
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Apellido</label>
                                         <input type="text" class="form-control" v-model="profile.lastName" required >
+                                        <!--<p v-if="profile.lastName.length > 25">El apellido no puede tener más de 25 caracteres</p>-->
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Correo Electrónico</label>
-                                        <input type="text" class="form-control mb-1"  v-model="profile.email" required >
+                                        <input type="email" class="form-control mb-1"  v-model="profile.email" required >
+                                        <!--<p v-if="profile.email.length > 80">El correo electrónico no puede tener más de 30 caracteres</p>-->
                                        <!-- <div class="alert alert-warning mt-3">
                                             Tu correo no ha sido confirmado. Verifica tu bandeja de entrada.<br>
                                             <a href="javascript:void(0)">Reenviar confirmación</a>
@@ -51,8 +56,7 @@
 
                                     <div class="form-group"> 
                                         <label class="form-label">Fecha de Nacimiento</label> 
-                                        <input type="text" class="form-control" v-model="profile.birthday" required > 
-                        
+                                        <input type="date" class="form-control" v-model="formattedBirthday" required > 
                                     </div> 
                                     <div class="form-group">
                                         <label class="form-label">Lugar de Nacimiento</label>
@@ -64,8 +68,17 @@
                                         <input type="text" class="form-control" v-model="profile.billingAddress" required >
                                     </div>
                                     <div class="form-group">
-                                        <label class="form-label">Género</label>
-                                        <input class="form-control" v-model="profile.gender" required >
+                                        <label class="form-label">DNI</label>
+                                        <input type="text" class="form-control" v-model="profile.dni" required >
+                                        <!--<p v-if="profile.dni.length!=null && profile.dni.length> 10">El DNI no puede tener más de 10 caracteres</p>-->
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">Género</label> <br>
+                                        <select id="gender" placeholder="Género" v-model="profile.gender">
+                                            <option value="male">Masculino</option>
+                                            <option value="female">Femenino</option>
+                                            <option value="Other">Otro</option>
+                                        </select>
                                           
                                         <!--    <select class="custom-select" v-model="profile.gender" required readonly>
                                             <option selected> </option>
@@ -84,7 +97,6 @@
                                                 id="switch-label"
                                                 class="switch-button__checkbox"
                                                 v-model="profile.subscribedToFeed"
-                                                @change="updateProfile"
                                                 required
                                             />
                                             <!-- Botón -->
@@ -93,8 +105,8 @@
                                     </div>
                                 </div>
                                 <div class="text-right mt-3 bt-3">
-                                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>&nbsp;
-                                    <button type-="button" @click="redirectToPerfil" class="btn btn-default">Cancelar</button>
+                                    <button type="submit" class="btn btn-primary"  @click="updateProfile" required>Guardar Cambios</button>&nbsp;
+                                    <button type="button" @click="redirectToPerfil" class="btn btn-default">Volver al perfil</button>
                                 </div>
                             </div>
                         </div>
@@ -141,7 +153,7 @@
                         </div>
                     </div>
             </footer>
-            
+            <error-modal :show-error="showErrorMessage" :error-message="errorMessage" @close="showErrorMessage = false" />
         </div>
     <!------------------------------------------------FOOTER------------------------------------------->
 
@@ -472,15 +484,19 @@
 
 <script>
 import updateProfileService from "@/services/userService/updateProfileService.js";
+import { format } from 'date-fns'; // Importa la función de formato de date-fns
 import viewProfileService from "@/services/userService/viewProfileService.js";
-
+import errorModal from "@/components/ErrorModal.vue";
+import spinner from "@/components/spinner.vue";
 
 export default {
     data() { 
       return {
+        showSpinner: false, // Initialize as hidden
         profile:{ 
             id: "",
             email: "",
+            dni: "",
             firstName: "",
             lastName: "",
             birthday: "",
@@ -495,25 +511,37 @@ export default {
             errorMessage: "",
         },
         isEditing:{
-            id: "",
-            email: "",
-            firstName: "",
-            lastName: "",
-            birthday: "",
-            birthPlace: "",
-            billingAddress: "",
-            gender: "",
-            role: "",
-            username: "",
-            profileImage: "",
+            id: "0",
+            email: "0",
+            dni: "0",
+            firstName: "0",
+            lastName: "0",
+            birthday: "0",
+            birthPlace: "0",
+            billingAddress: "0",
+            gender: "0",
+            role: "0",
+            username: "0",
+            profileImage: "0",
             active: "",
-            subscribedToFeed: "",
+            subscribedToFeed: "0",
             errorMessage: "",
         },
         originalProfile: {}, // To store the original profile before editing
+        errorMessage: "",
+        showErrorMessage: false,
+        isValidFirstName: true,
       };
     },
+    computed: {
+        formattedBirthday() {
+        // Formatea la fecha en un formato legible (por ejemplo, 'dd/MM/yyyy')
+        return this.profile.birthday ? format(new Date(this.profile.birthday), 'yyyy-MM-dd') : '';
+        },
+    },
+  
     created() {
+        this.showSpinner = true;
     // Get the user ID from the JWT token in sessionStorage
         const token = window.sessionStorage.getItem('JWTtoken');
         const tokenData = JSON.parse(atob(token.split('.')[1]));
@@ -524,22 +552,30 @@ export default {
         .then(response => {
             this.profile = response.data;
             if (response.status == 200){
+                this.showSpinner = false;
                 console.log("User Profile", response.data);
+                
                 // You can redirect the user or perform other actions here.
           }
         })
         .catch(error => {
+            this.showSpinner = false;
             // Handle login errors here
             if (error.response.status == 403){
                 console.log("User not found sorry:", error.response.status, error);
-                this.errorMessage = error.response.data.message;
+                this.errorMessage = error.response.data.message || "User not found";
+                this.showErrorMessage = true;
             }
             else {
                 // You can redirect the user or perform other actions here.
                 console.error("Something happened:", error);
+                this.errorMessage = error.response.data.message || "Something happened";
+                this.showErrorMessage = true;
             }
             // Display an error message to the user or take appropriate action.
                 console.error('Error fetching user data:', error);
+                this.errorMessage = error.response.data.message || "Error fetching user data";
+                this.showErrorMessage = true;
         });
   },
     methods: {
@@ -554,7 +590,6 @@ export default {
             this.profile.subscribedToFeed = true;
 
             // Realizar una solicitud para actualizar el estado en la base de datos
-          
         },
        
         toggleEdit(field) {
@@ -568,6 +603,7 @@ export default {
             }
         },
         updateProfile() {
+            //this.showSpinner = true;
             const token = window.sessionStorage.getItem("JWTtoken");
             const tokenData = JSON.parse(atob(token.split('.')[1]));
 
@@ -577,39 +613,49 @@ export default {
             // For now, we'll just disable editing.
 
 
-            updateProfileService.updateProfile(id, this.profile.email, this.profile.firstName, this.profile.lastName, this.profile.birthday, this.profile.birthPlace, this.profile.billingAddress, this.profile.gender, this.profile.role, this.profile.username, this.profile.profileImage, this.profile.active, this.profile.subscribedToFeed)
+            updateProfileService.updateProfile(id, this.profile.email, this.profile.dni, this.profile.firstName, this.profile.lastName, this.profile.birthday, this.profile.birthPlace, this.profile.billingAddress, this.profile.gender, this.profile.role, this.profile.username, this.profile.profileImage, this.profile.active, this.profile.subscribedToFeed)
                 .then(response => {
+                    this.showSpinner = false;
                 // Handle success
                     if (response.status == 200){
+
                         console.log("User Profile updated!!", response.data);
                         // You can redirect the user or perform other actions here.
                     }
                 })
                 .catch(error => {
+                    this.showSpinner = false;
                     // Handle login errors here
                     if (error.response.status == 403){
                         console.log("User not found sorry:", error.response.status, error);
-                        this.errorMessage = error.response.data.message;
+                        this.errorMessage = error.response.data.message || "User not found";
+                        this.showErrorMessage = true;
                     }
                     else {
                         // You can redirect the user or perform other actions here.
                         console.error("Something happened:", error);
+                        this.errorMessage = error.response.data.message || "Something happened";
+                        this.showErrorMessage = true;
                     }
                     // Display an error message to the user or take appropriate action.
                         console.error('Error fetching user data:', error);
+                        this.errorMessage = error.response.data.message || "Error fetching user data";
+                        this.showErrorMessage = true;
                 });
 
-            Object.keys(this.isEditing).forEach((field) => {
-                this.isEditing[field] = false;
-            });
+            
         },
-            cancelChanges() {
+        cancelChanges() {
             // Cancel editing and revert changes to the original values
                 Object.keys(this.isEditing).forEach((field) => {
                     this.isEditing[field] = false;
                     this.profile[field] = this.originalProfile[field];
                 });
             },
-    },     
+    }, 
+    components: {
+        errorModal,
+        spinner,
+  },     
 };
 </script>

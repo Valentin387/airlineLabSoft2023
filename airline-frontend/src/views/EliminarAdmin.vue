@@ -1,54 +1,46 @@
 <template>
     <section class="EliminarAdmin">
-      <button class="card_buttonAdmin" @click="toggleCardContainer">
-        Eliminar administrador
-      </button>
-      <div class="card_containerAdmin" :class="{ active: cardContainerAdmin }">
-        <div class="cardAdmin">
-          <img class="card_img" src="../assets/londres.jpg" alt="">
-          <div class="card_contentAdmin">
-            <h1>Eliminar administrador</h1>
-            <p>¿Está seguro de que desea eliminar este administrador?</p>
-            <div class="group_btns">
-              <button class="buttonAdmin" @click="cancelDelete">
-                Cancelar
-              </button>
-              <button class="buttonAdmin" @click="confirmDelete">
-                Continuar
-              </button>
+        <spinner :showSpinner="showSpinner"></spinner>
+        <button class="card_buttonAdmin">Eliminar administrador</button>
+        <div class="card_containerAdmin">
+            <div class="cardAdmin">
+                <img class="card_img" src="../assets/londres.jpg" alt="">
+                <div class="card_contentAdmin">
+                    <h1>Eliminar administrador</h1>
+                    <p>¿Está seguro de que desea eliminar este administrador?</p>
+                    <div class="group_btns">
+                        <button class="buttonAdmin" >Cancelar</button>
+                        <button class="buttonAdmin" >Continuar</button>
+                    </div>
+                </div>
+                <p class="close_btnAdmin"><i class='bx bx-x'></i></p>
             </div>
-          </div>
-          <p class="close_btnAdmin" @click="toggleCardContainer">
-            <i class='bx bx-x'></i>
-          </p>
         </div>
-      </div>
-    </section>
-  </template>
+   </section>
   
-  <script>
-  export default {
+</template>
+<script>
+    import spinner from "@/components/spinner.vue";
+
+    export default {
     data() {
-      return {
-        cardContainerAdmin: false,
-      };
+        return {
+        cardContainerActive: false,
+        showSpinner: false, // Initialize as hidden
+        };
+    },
+    components: {
+        spinner,
     },
     methods: {
-      toggleCardContainer() {
-        this.cardContainerAdmin = !this.cardContainerAdmin;
-      },
-      cancelDelete() {
-        // Aquí puedes implementar la lógica para cancelar la eliminación
-        this.toggleCardContainer(); // Oculta la ventana emergente
-      },
-      confirmDelete() {
-        // Aquí puedes implementar la lógica para confirmar la eliminación
-        this.toggleCardContainer(); // Oculta la ventana emergente
-      },
-    },
-  };
+        toggleCardContainer() {
+        this.showSpinner = true;
+        this.cardContainerActive = !this.cardContainerActive;
+        this.showSpinner = false;
+        }
+    }
+    };
 </script>
-  
 <style lang="scss">
     @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
    /*  *{
