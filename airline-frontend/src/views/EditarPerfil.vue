@@ -13,7 +13,7 @@
                     </div>
                     <div class="col-md-9">
                         <div class="tab-content">
-                            <div  @submit.prevent="updateProfile" class="tab-pane fade active show" id="account-general">
+                            <div  @submit="updateProfile" class="tab-pane fade active show" id="account-general">
                                 <div class="card-body media align-items-center">
                                     <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="d-block ui-w-80">
                                     <div class="media-body ml-3">
@@ -52,7 +52,6 @@
                                     <div class="form-group"> 
                                         <label class="form-label">Fecha de Nacimiento</label> 
                                         <input type="date" class="form-control" v-model="profile.birthday" required > 
-                        
                                     </div> 
                                     <div class="form-group">
                                         <label class="form-label">Lugar de Nacimiento</label>
@@ -62,6 +61,10 @@
                                     <div class="form-group">
                                         <label class="form-label">Dirección de Facturación</label>
                                         <input type="text" class="form-control" v-model="profile.billingAddress" required >
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="form-label">DNI</label>
+                                        <input type="text" class="form-control" v-model="profile.dni" required >
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Género</label>
@@ -84,7 +87,6 @@
                                                 id="switch-label"
                                                 class="switch-button__checkbox"
                                                 v-model="profile.subscribedToFeed"
-                                                @change="updateProfile"
                                                 required
                                             />
                                             <!-- Botón -->
@@ -93,8 +95,8 @@
                                     </div>
                                 </div>
                                 <div class="text-right mt-3 bt-3">
-                                    <button type="submit" class="btn btn-primary">Guardar Cambios</button>&nbsp;
-                                    <button type-="button" @click="redirectToPerfil" class="btn btn-default">Cancelar</button>
+                                    <button type="submit" class="btn btn-primary"  @click="updateProfile" required>Guardar Cambios</button>&nbsp;
+                                    <button type="button" @click="redirectToPerfil" class="btn btn-default">Cancelar</button>
                                 </div>
                             </div>
                         </div>
@@ -481,7 +483,7 @@ export default {
         profile:{ 
             id: "",
             email: "",
-            DNI: "",
+            dni: "",
             firstName: "",
             lastName: "",
             birthday: "",
@@ -498,7 +500,7 @@ export default {
         isEditing:{
             id: "",
             email: "",
-            DNI: "",
+            dni: "",
             firstName: "",
             lastName: "",
             birthday: "",
@@ -515,6 +517,7 @@ export default {
         originalProfile: {}, // To store the original profile before editing
       };
     },
+  
     created() {
     // Get the user ID from the JWT token in sessionStorage
         const token = window.sessionStorage.getItem('JWTtoken');
@@ -527,6 +530,7 @@ export default {
             this.profile = response.data;
             if (response.status == 200){
                 console.log("User Profile", response.data);
+                
                 // You can redirect the user or perform other actions here.
           }
         })
@@ -556,7 +560,6 @@ export default {
             this.profile.subscribedToFeed = true;
 
             // Realizar una solicitud para actualizar el estado en la base de datos
-          
         },
        
         toggleEdit(field) {
@@ -579,10 +582,11 @@ export default {
             // For now, we'll just disable editing.
 
 
-            updateProfileService.updateProfile(id, this.profile.email, this.prifile.DNI, this.profile.firstName, this.profile.lastName, this.profile.birthday, this.profile.birthPlace, this.profile.billingAddress, this.profile.gender, this.profile.role, this.profile.username, this.profile.profileImage, this.profile.active, this.profile.subscribedToFeed)
+            updateProfileService.updateProfile(id, this.profile.email, this.profile.dni, this.profile.firstName, this.profile.lastName, this.profile.birthday, this.profile.birthPlace, this.profile.billingAddress, this.profile.gender, this.profile.role, this.profile.username, this.profile.profileImage, this.profile.active, this.profile.subscribedToFeed)
                 .then(response => {
                 // Handle success
                     if (response.status == 200){
+
                         console.log("User Profile updated!!", response.data);
                         // You can redirect the user or perform other actions here.
                     }
@@ -601,17 +605,15 @@ export default {
                         console.error('Error fetching user data:', error);
                 });
 
-            Object.keys(this.isEditing).forEach((field) => {
-                this.isEditing[field] = false;
-            });
+            
         },
-            cancelChanges() {
+        cancelChanges() {
             // Cancel editing and revert changes to the original values
                 Object.keys(this.isEditing).forEach((field) => {
                     this.isEditing[field] = false;
                     this.profile[field] = this.originalProfile[field];
                 });
-            },
+        },
     },     
 };
 </script>
