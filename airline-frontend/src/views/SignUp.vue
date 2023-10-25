@@ -232,8 +232,10 @@ export default {
           // Maneja la respuesta exitosa aquí
           if (response.status === 200) {
             console.log("Cuenta creada exitosamente:", response.data);
+            const token = response.data.token;
+            window.sessionStorage.setItem("JWTtoken", token);
             // Redirige al usuario o realiza otras acciones según tus necesidades
-            this.$router.push('/login');
+            this.$router.push('/');
           }
         })
         .catch((error) => {
