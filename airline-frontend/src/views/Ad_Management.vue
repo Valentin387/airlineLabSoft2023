@@ -355,8 +355,8 @@ export default {
     };
   },
   created(){
-    this.loadAdmins();
     this.showSpinner = true;
+    this.loadAdmins();
     listAdminsService.listAdmins()
           .then((response) => {
             this.showSpinner = false;

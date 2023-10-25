@@ -229,7 +229,7 @@ export default {
       RecoverP() {
         this.showSpinner = true;
         if (this.email.length > 80) {
-            console.log("El email no puede superar 8 carácteres");
+            console.log("El email debe tener entre 8 y 80 carácteres");
             this.showSpinner = false;
             return;
         }
@@ -242,6 +242,7 @@ export default {
             this.showSpinner = false;
             // Handle the successful login response here
             if (response.status == 200){
+              confirm(response.data);
               console.log("Recover password updated:", response.data);
             }
           })
