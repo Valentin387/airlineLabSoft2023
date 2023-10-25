@@ -1,7 +1,7 @@
 import axiosInstance from '../axiosInstance.js';
 
 
-const register = (DNI,
+const register = (dni,
                   email,
                   password,
                   firstName,
@@ -13,7 +13,8 @@ const register = (DNI,
                   username,
                   profileImage,
                   subscribedToFeed) => {
-  const credentials = { DNI,
+  const credentials = { 
+                  dni,
                   email,
                   password,
                   firstName,
