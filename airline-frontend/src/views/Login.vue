@@ -1,5 +1,6 @@
 <template>
   <div class="page-container">
+    <spinner :showSpinner="showSpinner"></spinner>
     <div class="left-content">
       <div class="left-content-inner">
         <hr>
@@ -233,6 +234,7 @@
 <script>
 import LoginService from "@/services/authenticationService/LoginService.js";
 import errorModal from "@/components/ErrorModal.vue";
+import spinner from "@/components/spinner.vue";
 
 export default {
     data() { 
@@ -241,10 +243,12 @@ export default {
         password: "",
         errorMessage: "",
         showErrorMessage: false,
+        showSpinner: false, // Initialize as hidden
       };
     },
   methods: {
       login() {
+        this.showSpinner = true; // Initialize as hidden
         const { email, password } = this;
         
         // Call the LoginService.login method
@@ -252,6 +256,7 @@ export default {
           .then((response) => {
             // Handle the successful login response here
             if (response.status == 200){
+              this.showSpinner = false;
               // Extract the JWT token from the response data
               const token = response.data.token;
               // Save the JWT token in the localStorage
@@ -263,6 +268,7 @@ export default {
             }
           })
           .catch((error) => {
+            this.showSpinner = false;
             // Handle login errors here
             if (error.response.status == 401){
               console.log("Login failed:", error.response.status, error);
@@ -295,6 +301,7 @@ export default {
   },
   components: {
     errorModal,
+    spinner,
   },
 };
 </script>
