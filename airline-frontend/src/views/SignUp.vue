@@ -48,6 +48,7 @@
         <button id="create-account" class="create-account" @submit.prevent="createAccount" type="submit">Crear Cuenta</button>
         </form>
         <p id="text1">o</p>
+        <error-modal :show-error="showErrorMessage" :error-message="errorMessage" @close="showErrorMessage = false" />
         <p>¿Ya tienes una cuenta?</p>
         <button id="login" class="login" @click.prevent="redirectToLogin">Iniciar sesión</button>
     </div>
@@ -211,8 +212,12 @@
 
 <script>
 import registerService from "@/services/authenticationService/registerService.js";
+import errorModal from "@/components/ErrorModal.vue";
 
 export default {
+  components: {
+    errorModal,
+  },
   data() {
     return {
       firstName: "",
@@ -227,6 +232,7 @@ export default {
       password: "",
       profileImage: "Soy una imagen",
       errorMessage: "",
+      showErrorMessage: false,
       isValidFirstName: true
     };
   },
@@ -234,6 +240,9 @@ export default {
     createAccount() {
       if (this.password.length < 8 || this.password.length > 30) {
         console.log("La contraseña no esta dentro del limite");
+        this.errorMessage =  "La contraseña debe ser menor a 30 y mayor a 8 carácteres";
+        this.showErrorMessage = true;
+        return;
       }
       if (isNaN(this.firstName) && this.firstName.length <= 25) {
         this.isValidFirstName = true;
@@ -255,14 +264,18 @@ export default {
         .catch((error) => {
           if (error.response.status == 401){
             console.log("Login failed:", error.response.status, error);
-            this.errorMessage = error.response.data.message;
+            this.errorMessage = error.response.data.message || "Signup failed.Error 401";
+            this.showErrorMessage = true;
           } 
           if (error.response.status == 403){
             console.log("User not found sorry:", error.response.status, error);
-            this.errorMessage = error.response.data.message;
+            this.errorMessage = error.response.data.message || "Signup failed.Error 403";
+            this.showErrorMessage = true;
           }
           else {
             // You can redirect the user or perform other actions here.
+            this.errorMessage = error.response.data.message || "Algo pasó, vuelve a intentatlo más tarde";
+            this.showErrorMessage = true;
             console.error("Something happened:", error);
           }
         });
@@ -270,6 +283,8 @@ export default {
       } else {
         console.log("El nombre no puede ser un numero o no esta dentro del limite");
         this.isValidFirstName = false;
+        this.errorMessage = error.response.data.message || "El nombre no puede ser un numero o no esta dentro del limite";
+        this.showErrorMessage = true;
       }
     },
     /*uploadProfilePicture(event) {
