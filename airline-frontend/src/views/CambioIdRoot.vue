@@ -1,6 +1,7 @@
 <template>
     <body>
         <div class="admin-container">
+            <spinner :showSpinner="showSpinner"></spinner>
             <img class="image-container" alt="">
             <div class="admin-info-container">
                 <hr>
@@ -13,9 +14,9 @@
                     <input class="input-admin" type="email" placeholder="Correo Electrónico" v-model="email" required>
                     <button class="btn-admin"  type="submit" >Guardar Cambios</button>
                 </form>
-                <p id="error-message" class="error-message">{{ errorMessage }}</p>
+                <!-- <p id="error-message" class="error-message">{{ errorMessage }}</p> -->
             </div>
-              
+            <error-modal :show-error="showErrorMessage" :error-message="errorMessage" @close="showErrorMessage = false" />
         </div>
 
     </body>
@@ -212,20 +213,26 @@
 
 <script>
 import rootChangeId from "@/services/rootService/rootChangeId.js";
+import errorModal from "@/components/ErrorModal.vue";
+import spinner from "@/components/spinner.vue";
 
 export default {
     data() { 
       return {
             email: "",
             errorMessage: "",
+            showErrorMessage: false,
+            showSpinner: false, // Initialize as hidden
         };
     },
     methods: {
         rootChangeID() {
+            this.showSpinner = true;
             const {email} = this;
             // Call the LoginService.login method
             rootChangeId.rootChangeID( email)
                 .then((response) => {
+                    this.showSpinner = false;
                 // Handle the successful login response here
                     if (response.status === 200) {
                         console.log("Creation successful:", response.data);
@@ -233,22 +240,31 @@ export default {
                     }
                 })
                 .catch((error) => {
+                    this.showSpinner = false;
                 // Handle login errors here
                     if (error.response.status == 401){
-                        console.log("Login failed:", error.response.status, error);
-                        this.errorMessage = error.response.data.message;
+                        console.log("authorized personnel only:", error.response.status, error);
+                        this.errorMessage = error.response.data.message || "authorized personnel only";
+                        this.showErrorMessage = true;
                     } 
                     if (error.response.status == 403){
                         console.log("User not found sorry:", error.response.status, error);
-                        this.errorMessage = error.response.data.message;
+                        this.errorMessage = error.response.data.message || "User not found";
+                        this.showErrorMessage = true;
                     }
                     else {
                         // You can redirect the user or perform other actions here.
-                        console.error("Something happened:", error);
+                        console.error("Email already exist:", error);
+                        this.errorMessage = error.response.data.message || "Email already exist";
+                        this.showErrorMessage = true;
                     }
                     // Display an error message to the user or take appropriate action.
                 });
             },
     },
+    components: {
+        errorModal,
+        spinner,
+  },
 };
 </script>

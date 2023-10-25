@@ -1,5 +1,6 @@
 <template>
     <div class="admin-container">
+      <spinner :showSpinner="showSpinner"></spinner>
       <div class="admin-info-container">
         <hr>
         <h1 class="title">Crear administrador</h1>
@@ -14,6 +15,7 @@
         <p id="error-message" class="error-message">{{ errorMessage }}</p>
       </div>
       <img class="image-containerCrearAdmin" src="src/assets/CrearAdmin.svg" alt="">
+      <error-modal :show-error="showErrorMessage" :error-message="errorMessage" @close="showErrorMessage = false" />
     </div>
 </template>
 
@@ -203,6 +205,8 @@
 </style>
 <script>
 import newAdminService from "@/services/adminService/newAdminService.js";
+import errorModal from "@/components/ErrorModal.vue";
+import spinner from "@/components/spinner.vue";
 
 export default {
   data() {
@@ -211,31 +215,44 @@ export default {
       email: "",
       password: "",
       errorMessage: "",
+      showErrorMessage: false,
+      showSpinner: false, // Initialize as hidden
     };
   },
   methods: {
     async newAdmin() {
+      this.showSpinner = true;
       const { firstName, email, password } = this;
 
       try {
         const response = await newAdminService.newAdmin(firstName, email, password);
 
         if (response.status === 200) {
+          this.showSpinner = false;
           console.log("Creation successful:", response.data);
           this.$router.push('/Ad_Management');
         }
-      } catch (error) {
+      } catch (error)  {
+        this.showSpinner = false;
         if (error.response && error.response.status === 401) {
           console.log("Login failed:", error.response.status, error);
-          this.errorMessage = error.response.data.message;
+          this.errorMessage =  "Login failed. Error 401";
+          this.showErrorMessage = true;
         } else if (error.response && error.response.status === 403) {
           console.log("User not found:", error.response.status, error);
-          this.errorMessage = error.response.data.message;
+          this.errorMessage = "User not found";
+          this.showErrorMessage = true;
         } else {
-          console.error("Something happened:", error);
+          console.error("Email already exist", error);
+          this.errorMessage = error.response.data.message || "Email already exist";
+          this.showErrorMessage = true;
         }
       }
     },
+  },
+  components: {
+    errorModal,
+    spinner,
   },
 };
 </script>

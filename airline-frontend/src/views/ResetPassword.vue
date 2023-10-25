@@ -1,5 +1,6 @@
 <template>
         <div class="ResetPassword-container">
+            <spinner :showSpinner="showSpinner"></spinner>
             <img class="imageReset-container" alt="">
             <div class="ResetPassword">
                 <hr>
@@ -10,10 +11,13 @@
                 <form class="inputs-container" @submit.prevent="UpdateP">
                     <p class="texto">¡Gracias! por favor ingrese su nueva contraseña, y despues confirmela</p>
                     <input type="password" id="password" placeholder="Nueva contraseña" v-model="temporal" required>
+                    <p v-if="password.length < 8 || password.length > 80">La contraseña debe tener entre 8 y 30 caracteres</p>
                     <input type="password" id="password2" placeholder="Confirme su contraseña" v-model="password" required>
+                    <p v-if="temporal!=password">Los campos no coinciden</p>
                     <button class="btn-password" type="submit" >Guardar cambios</button>
                 </form>
             </div>
+            <error-modal :show-error="showErrorMessage" :error-message="errorMessage" @close="showErrorMessage = false" />
         </div>
 </template>
 
@@ -208,6 +212,8 @@
 
 <script>
 import updatePasswordService from "@/services/authenticationService/updatePasswordService.js";
+import errorModal from "@/components/ErrorModal.vue";
+import spinner from "@/components/spinner.vue";
 
 export default {
     data() { 
@@ -215,12 +221,25 @@ export default {
         email: "",
         password: "",
         temporal: "",
+        errorMessage: "",
+        showErrorMessage: false,
+        showSpinner: false, // Initialize as hidden
       };
     },
     methods: {
       UpdateP() {
+        this.showSpinner = true;
+
+        if (this.password.length < 8 || this.password.length > 80) {
+            console.log("La contraseña no esta dentro del limite");
+            this.errorMessage =  "La contraseña debe ser menor a 30 y mayor a 8 carácteres";
+            this.showErrorMessage = true;
+            this.showSpinner = false;
+            return;
+        }
+
         let { email, password, temporal} = this;
-        
+
         const token = window.sessionStorage.getItem('JWTtoken');
         if (!token || token == null) {
             const encodedEmail = this.$route.params.email;
@@ -239,6 +258,7 @@ export default {
         // Call the LoginService.login method
         updatePasswordService.updatePassword(email, password)
           .then((response) => {
+            this.showSpinner = false;
             // Handle the successful login response here
             if (response.status == 200){
               confirm("Contraseña actualizada correctamente");
@@ -246,27 +266,39 @@ export default {
             }
           })
           .catch((error) => {
+            this.showSpinner = false;
             // Handle login errors here
             if (error.response.status == 401){
               console.log("New Password failed:", error.response.status, error);
-              this.errorMessage = error.response.data.message;
+              this.errorMessage =  "New Password failed";
+              this.showErrorMessage = true;
             } 
             if (error.response.status == 403){
               console.log("User not found sorry:", error.response.status, error);
-              this.errorMessage = error.response.data.message;
+              this.errorMessage =  "User not found sorry";
+              this.showErrorMessage = true;
             }
             else {
               // You can redirect the user or perform other actions here.
-              console.error("Something happened:", error);
+              this.errorMessage = "Something happened:" + error;
+              this.showErrorMessage = true;
+            //   console.error("Something happened:", error);
             }
             // Display an error message to the user or take appropriate action.
           });
 
         }else{
-            console.error("Contraseñas no coinciden");
+            // console.error("Contraseñas no coinciden");
+            this.errorMessage = "Contraseñas no coinciden";
+            this.showErrorMessage = true;
+            this.showSpinner = false;
         }
       },
-    }
-}
+    },
+    components: {
+        errorModal,
+        spinner,
+    },
+};
 
 </script>
