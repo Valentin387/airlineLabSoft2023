@@ -31,22 +31,22 @@
                                     <div class="form-group ">
                                         <label class="form-label" >Usuario</label>
                                         <input type="text" class="form-control"  v-model="profile.username" required >
-                                        <p v-if="profile.username.length > 25">El usuario no puede tener más de 25 caracteres</p>
+                                        <!--<p v-if="profile.username.length > 25">El usuario no puede tener más de 25 caracteres</p>-->
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Nombre</label>
                                         <input type="text" class="form-control"  v-model="profile.firstName" required >
-                                        <p v-if="!isValidFirstName">El nombre no es válido</p>
+                                        <!--<p v-if="!isValidFirstName">El nombre no es válido</p>-->
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Apellido</label>
                                         <input type="text" class="form-control" v-model="profile.lastName" required >
-                                        <p v-if="profile.lastName.length > 25">El apellido no puede tener más de 25 caracteres</p>
+                                        <!--<p v-if="profile.lastName.length > 25">El apellido no puede tener más de 25 caracteres</p>-->
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Correo Electrónico</label>
                                         <input type="email" class="form-control mb-1"  v-model="profile.email" required >
-                                        <p v-if="profile.email.length > 80">El correo electrónico no puede tener más de 30 caracteres</p>
+                                        <!--<p v-if="profile.email.length > 80">El correo electrónico no puede tener más de 30 caracteres</p>-->
                                        <!-- <div class="alert alert-warning mt-3">
                                             Tu correo no ha sido confirmado. Verifica tu bandeja de entrada.<br>
                                             <a href="javascript:void(0)">Reenviar confirmación</a>
@@ -70,7 +70,7 @@
                                     <div class="form-group">
                                         <label class="form-label">DNI</label>
                                         <input type="text" class="form-control" v-model="profile.dni" required >
-                                        <p v-if="profile.dni.length > 10">El DNI no puede tener más de 10 caracteres</p>
+                                        <!--<p v-if="profile.dni.length!=null && profile.dni.length> 10">El DNI no puede tener más de 10 caracteres</p>-->
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label">Género</label> <br>
@@ -511,20 +511,20 @@ export default {
             errorMessage: "",
         },
         isEditing:{
-            id: "",
-            email: "",
-            dni: "",
-            firstName: "",
-            lastName: "",
-            birthday: "",
-            birthPlace: "",
-            billingAddress: "",
-            gender: "",
-            role: "",
-            username: "",
-            profileImage: "",
+            id: "0",
+            email: "0",
+            dni: "0",
+            firstName: "0",
+            lastName: "0",
+            birthday: "0",
+            birthPlace: "0",
+            billingAddress: "0",
+            gender: "0",
+            role: "0",
+            username: "0",
+            profileImage: "0",
             active: "",
-            subscribedToFeed: "",
+            subscribedToFeed: "0",
             errorMessage: "",
         },
         originalProfile: {}, // To store the original profile before editing
@@ -550,9 +550,9 @@ export default {
         // Fetch user data and populate the profile object
         viewProfileService.viewProfile(id)
         .then(response => {
-            this.showSpinner = false;
             this.profile = response.data;
             if (response.status == 200){
+                this.showSpinner = false;
                 console.log("User Profile", response.data);
                 
                 // You can redirect the user or perform other actions here.
@@ -603,7 +603,7 @@ export default {
             }
         },
         updateProfile() {
-            this.showSpinner = true;
+            //this.showSpinner = true;
             const token = window.sessionStorage.getItem("JWTtoken");
             const tokenData = JSON.parse(atob(token.split('.')[1]));
 

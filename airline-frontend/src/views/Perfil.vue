@@ -627,7 +627,6 @@ export default {
             }
         },
         updateProfile() {
-            this.showSpinner = true;
             const token = window.sessionStorage.getItem("JWTtoken");
             const tokenData = JSON.parse(atob(token.split('.')[1]));
 
@@ -639,7 +638,7 @@ export default {
 
             updateProfileService.updateProfile(id, this.profile.email, this.profile.dni, this.profile.firstName, this.profile.lastName, this.profile.birthday, this.profile.birthPlace, this.profile.billingAddress, this.profile.gender, this.profile.role, this.profile.username, this.profile.profileImage, this.profile.active, this.profile.subscribedToFeed)
                 .then(response => {
-                    this.showSpinner = false;
+      
                 // Handle success
                     if (response.status == 200){
                         console.log("User Profile!!", response.data);
@@ -648,7 +647,7 @@ export default {
                     }
                 })
                 .catch(error => {
-                    this.showSpinner = false;
+
                     // Handle login errors here
                     if (error.response.status == 403){
                         console.log("User not found sorry:", error.response.status, error);
