@@ -229,6 +229,7 @@ export default {
 
         if (response.status === 200) {
           this.showSpinner = false;
+          confirm("Administrador creado exitosamente");
           console.log("Creation successful:", response.data);
           this.$router.push('/Ad_Management');
         }

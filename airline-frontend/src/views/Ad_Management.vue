@@ -355,8 +355,8 @@ export default {
     };
   },
   created(){
-    this.loadAdmins();
     this.showSpinner = true;
+    this.loadAdmins();
     listAdminsService.listAdmins()
           .then((response) => {
             this.showSpinner = false;
@@ -448,6 +448,7 @@ export default {
           .then((response) => {
             if (response.status === 200) {
               console.log("Administrador eliminado:", adminId);
+              confirm("Administrador eliminado:", adminId);
               this.loadAdmins(); // Vuelve a cargar la lista de administradores
               this.toggleCardContainer(); // Oculta la ventana emergente
             }
@@ -481,6 +482,7 @@ export default {
   },
   components: {
         errorModal,
+        spinner,
   },
     // Otros métodos como logout, deleteAdmin, etc.
 }

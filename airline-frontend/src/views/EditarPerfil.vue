@@ -500,20 +500,20 @@ export default {
             errorMessage: "",
         },
         isEditing:{
-            id: "",
-            email: "",
-            dni: "",
-            firstName: "",
-            lastName: "",
-            birthday: "",
-            birthPlace: "",
-            billingAddress: "",
-            gender: "",
-            role: "",
-            username: "",
-            profileImage: "",
+            id: "0",
+            email: "0",
+            dni: "0",
+            firstName: "0",
+            lastName: "0",
+            birthday: "0",
+            birthPlace: "0",
+            billingAddress: "0",
+            gender: "0",
+            role: "0",
+            username: "0",
+            profileImage: "0",
             active: "",
-            subscribedToFeed: "",
+            subscribedToFeed: "0",
             errorMessage: "",
         },
         showGallery: false,
@@ -548,9 +548,9 @@ export default {
         // Fetch user data and populate the profile object
         viewProfileService.viewProfile(id)
         .then(response => {
-            this.showSpinner = false;
             this.profile = response.data;
             if (response.status == 200){
+                this.showSpinner = false;
                 console.log("User Profile", response.data);
                 
                 // You can redirect the user or perform other actions here.
@@ -610,7 +610,7 @@ export default {
             }
         },
         updateProfile() {
-            this.showSpinner = true;
+            //this.showSpinner = true;
             const token = window.sessionStorage.getItem("JWTtoken");
             const tokenData = JSON.parse(atob(token.split('.')[1]));
 
