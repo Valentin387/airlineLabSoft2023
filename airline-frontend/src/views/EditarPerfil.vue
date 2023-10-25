@@ -1,162 +1,140 @@
 <template>
- 
-
-        <div class="container light-style flex-grow-1 container-p-y">
-            <spinner :showSpinner="showSpinner"></spinner>
-            <div class="card card-large">
-                <div class="row no-gutters row-bordered row-border-light">
-                    <div class="col-md-2 pt-0">
-                        <div class="list-group list-group-flush account-settings-links">
-                            <a class="list-group-item list-group-item-action active" data-toggle="list"
-                                href="#account-general">Información Personal</a>
-                         
-                        </div>
-                    </div>
-                    <div class="col-md-9">
-                        <div class="tab-content">
-                            <div  @submit="updateProfile" class="tab-pane fade active show" id="account-general">
-                                <div class="card-body media align-items-center">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="d-block ui-w-80">
-                                    <div class="media-body ml-3">
-                                        <label class="btn btn-outline-primary">
-                                            Foto de perfil
-                                            <input type="file" class="account-settings-fileinput" >
-                                        </label> &nbsp;
-                                        
-                                        <div class="text-light small mt-1">Permitido JPG, GIF or PNG. Tamaño máximo 800K</div>
-                                    </div>
-                                </div>
-                                <hr class="border-light m-0">
-                                <div class="card-body">
-                                    <div class="form-group ">
-                                        <label class="form-label" >Usuario</label>
-                                        <input type="text" class="form-control"  v-model="profile.username" required >
-                                        <p v-if="profile.username.length > 25">El usuario no puede tener más de 25 caracteres</p>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Nombre</label>
-                                        <input type="text" class="form-control"  v-model="profile.firstName" required >
-                                        <p v-if="!isValidFirstName">El nombre no es válido</p>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Apellido</label>
-                                        <input type="text" class="form-control" v-model="profile.lastName" required >
-                                        <p v-if="profile.lastName.length > 25">El apellido no puede tener más de 25 caracteres</p>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Correo Electrónico</label>
-                                        <input type="email" class="form-control mb-1"  v-model="profile.email" required >
-                                        <p v-if="profile.email.length > 80">El correo electrónico no puede tener más de 30 caracteres</p>
-                                       <!-- <div class="alert alert-warning mt-3">
-                                            Tu correo no ha sido confirmado. Verifica tu bandeja de entrada.<br>
-                                            <a href="javascript:void(0)">Reenviar confirmación</a>
-                                        </div> --> 
-                                    </div>
-
-
-                                    <div class="form-group"> 
-                                        <label class="form-label">Fecha de Nacimiento</label> 
-                                        <input type="date" class="form-control" v-model="formattedBirthday" required > 
-                                    </div> 
-                                    <div class="form-group">
-                                        <label class="form-label">Lugar de Nacimiento</label>
-                                        <input type="text" class="form-control" v-model="profile.birthPlace" required >
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label class="form-label">Dirección de Facturación</label>
-                                        <input type="text" class="form-control" v-model="profile.billingAddress" required >
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">DNI</label>
-                                        <input type="text" class="form-control" v-model="profile.dni" required >
-                                        <p v-if="profile.dni.length > 10">El DNI no puede tener más de 10 caracteres</p>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label">Género</label> <br>
-                                        <select id="gender" placeholder="Género" v-model="profile.gender">
-                                            <option value="male">Masculino</option>
-                                            <option value="female">Femenino</option>
-                                            <option value="Other">Otro</option>
-                                        </select>
-                                          
-                                        <!--    <select class="custom-select" v-model="profile.gender" required readonly>
-                                            <option selected> </option>
-                                            <option>Hombre</option>
-                                            <option>Mujer</option>
-                                            <option>Prefiero no decirlo</option>  -->
-                                    </div>
-
-                                    <div class="form-group" >
-                                        <div class="switch-button">
-                                            <label class="form-label">Suscribirse al módulo de noticias</label>
-                                            <!-- Checkbox -->
-                                            <input
-                                                type="checkbox"
-                                                name="switch-button"
-                                                id="switch-label"
-                                                class="switch-button__checkbox"
-                                                v-model="profile.subscribedToFeed"
-                                                required
-                                            />
-                                            <!-- Botón -->
-                                            <label for="switch-label" class="switch-button__label"></label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="text-right mt-3 bt-3">
-                                    <button type="submit" class="btn btn-primary"  @click="updateProfile" required>Guardar Cambios</button>&nbsp;
-                                    <button type="button" @click="redirectToPerfil" class="btn btn-default">Volver al perfil</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
-               
-                <div style="margin-bottom: 20px;"></div> 
-            </div>
-            <footer class="footer">
-                    <div class="box-container">
-                        <div class="box"  >
-                            <h3 href="/" class="logo"><i class="fas fa-paper-plane"></i>AirTravel</h3>
-                            <p> Elige más que un tiquete; elige una experiencia de viaje excepcional con nosotros.</p>
-                            <div class="compartir">
-                                <a href="#" class="fab fa-facebook-f"></a>
-                                <a href="#" class="fab fa-twitter"></a>
-                                <a href="#" class="fab fa-instagram"></a>
-                                <a href="#" class="fab fa-github"></a>
-                            </div>
-                        </div>
-
-                        <div class="box">
-                            <h3>Links</h3>
-                            <a href="/" class="links"><i class="material-symbols-outlined">chevron_right</i>Inicio</a>
-                            <a href="/Check-In" class="links"><i class="material-symbols-outlined">chevron_right</i>Confirmar Check-in</a>
-                            <a href="/Ayuda" class="links"><i class="material-symbols-outlined">chevron_right</i>Ayuda</a>
-                                <a href="/Contactanos" class="links"><i class="material-symbols-outlined">chevron_right</i> contáctanos</a>
-
-                        </div>
-                        <div class="box">
-                            <h3> Información de contacto </h3>
-                            <p><i class="material-symbols-outlined">map</i>Pereira, Colombia</p>
-                            <p><i class="material-symbols-outlined">call</i>+57 123-456-7890</p>
-                            <p><i class="material-symbols-outlined">mail</i>airtravellabsoft@gmail.com</p>
-                        </div>
-                        <div class="box">
-                            <h3>Boletín informativo</h3>
-                            <p>Suscríbete para conocer las últimas actualizaciones</p>
-                            <form action = "">
-                                <input type="email" placeholder="Ingrese su correo" class="email" id="">
-                                <input type="submit" value="Suscribirse" class="btn">
-                            </form>
-                        </div>
-                    </div>
-            </footer>
-            <error-modal :show-error="showErrorMessage" :error-message="errorMessage" @close="showErrorMessage = false" />
+  <div class="container light-style flex-grow-1 container-p-y">
+    <spinner :showSpinner="showSpinner"></spinner>
+    <div class="card card-large">
+      <div class="row no-gutters row-bordered row-border-light">
+        <div class="col-md-2 pt-0">
+          <div class="list-group list-group-flush account-settings-links">
+            <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account-general">Información Personal</a>
+          </div>
         </div>
-    <!------------------------------------------------FOOTER------------------------------------------->
-
+        <div class="col-md-9">
+          <div class="tab-content">
+            <div @submit="updateProfile" class="tab-pane fade active show" id="account-general">
+              <div class="card-body media align-items-center">
+                <img :src="profile.profileImage" required alt="Imagen de perfil" width="100" height="100">
+                <div class="media-body ml-3">
+                  <button @click="showAvatarGallery" class="btn btn-outline-primary">Cambiar Foto de perfil</button>
+                  <div v-if="showGallery" class="avatar-gallery">
+                    <img
+                      v-for="(avatar, index) in avatarOptions"
+                      :key="index"
+                      :src="avatar"
+                      @click="selectAvatar(avatar)"
+                      alt="Avatar"
+                    />
+                  </div>
+                </div>
+              </div>
+              <hr class="border-light m-0">
+              <div class="card-body">
+                <div class="form-group">
+                  <label class="form-label">Usuario</label>
+                  <input type="text" class="form-control" v-model="profile.username" required>
+                  <p v-if="profile.username.length > 25">El usuario no puede tener más de 25 caracteres</p>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Nombre</label>
+                  <input type="text" class="form-control" v-model="profile.firstName" required>
+                  <p v-if="!isValidFirstName">El nombre no es válido</p>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Apellido</label>
+                  <input type="text" class="form-control" v-model="profile.lastName" required>
+                  <p v-if="profile.lastName.length > 25">El apellido no puede tener más de 25 caracteres</p>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Correo Electrónico</label>
+                  <input type="email" class="form-control" v-model="profile.email" required>
+                  <p v-if="profile.email.length > 80">El correo electrónico no puede tener más de 30 caracteres</p>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Fecha de Nacimiento</label>
+                  <input type="date" class="form-control" v-model="profile.birthday" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Lugar de Nacimiento</label>
+                  <input type="text" class="form-control" v-model="profile.birthPlace" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Dirección de Facturación</label>
+                  <input type="text" class="form-control" v-model="profile.billingAddress" required>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">DNI</label>
+                  <input type="text" class="form-control" v-model="profile.dni" required>
+                  <p v-if="profile.dni.length > 10">El DNI no puede tener más de 10 caracteres</p>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Género</label>
+                  <select id="gender" placeholder="Género" v-model="profile.gender">
+                    <option value="male">Masculino</option>
+                    <option value="female">Femenino</option>
+                    <option value="Other">Otro</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <div class="switch-button">
+                    <label class="form-label">Suscribirse al módulo de noticias</label>
+                    <input
+                      type="checkbox"
+                      name="switch-button"
+                      id="switch-label"
+                      class="switch-button__checkbox"
+                      v-model="profile.subscribedToFeed"
+                      required
+                    />
+                    <label for="switch-label" class="switch-button__label"></label>
+                  </div>
+                </div>
+              </div>
+              <div class="text-right mt-3 bt-3">
+                <button type="submit" class="btn btn-primary" @click="updateProfile" required>Guardar Cambios</button>&nbsp;
+                <button type="button" @click="redirectToPerfil" class="btn btn-default">Volver al perfil</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div style="margin-bottom: 20px;"></div>
+    </div>
+    <footer class="footer">
+      <div class="box-container">
+        <div class="box">
+          <h3 href="/" class="logo"><i class="fas fa-paper-plane"></i>AirTravel</h3>
+          <p>Elige más que un tiquete; elige una experiencia de viaje excepcional con nosotros.</p>
+          <div class="compartir">
+            <a href="#" class="fab fa-facebook-f"></a>
+            <a href="#" class="fab fa-twitter"></a>
+            <a href="#" class="fab fa-instagram"></a>
+            <a href="#" class="fab fa-github"></a>
+          </div>
+        </div>
+        <div class="box">
+          <h3>Links</h3>
+          <a href="/" class="links"><i class="material-symbols-outlined">chevron_right</i>Inicio</a>
+          <a href="/Check-In" class="links"><i class="material-symbols-outlined">chevron_right</i>Confirmar Check-in</a>
+          <a href="/Ayuda" class="links"><i class="material-symbols-outlined">chevron_right</i>Ayuda</a>
+          <a href="/Contactanos" class="links"><i class="material-symbols-outlined">chevron_right</i> contáctanos</a>
+        </div>
+        <div class="box">
+          <h3> Información de contacto </h3>
+          <p><i class="material-symbols-outlined">map</i>Pereira, Colombia</p>
+          <p><i class="material-symbols-outlined">call</i>+57 123-456-7890</p>
+          <p><i class="material-symbols-outlined">mail</i>airtravellabsoft@gmail.com</p>
+        </div>
+        <div class="box">
+          <h3>Boletín informativo</h3>
+          <p>Suscríbete para conocer las últimas actualizaciones</p>
+          <form action="">
+            <input type="email" placeholder="Ingrese su correo" class="email" id="">
+            <input type="submit" value="Suscribirse" class="btn">
+          </form>
+        </div>
+      </div>
+    </footer>
+    <error-modal :show-error="showErrorMessage" :error-message="errorMessage" @close="showErrorMessage = false" />
+  </div>
 </template>
 <style lang="scss">
      $light-color:#312c02;
@@ -479,6 +457,17 @@
 
         }
     }
+    .avatar-gallery {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .avatar-gallery img {
+        width: 100px;
+        height: 100px;
+        margin: 5px;
+        cursor: pointer;
+    }
     
 </style>
 
@@ -527,6 +516,15 @@ export default {
             subscribedToFeed: "",
             errorMessage: "",
         },
+        showGallery: false,
+        selectedAvatar: null,
+        avatarOptions: [
+            "https://bootdey.com/img/Content/avatar/avatar1.png",
+            "https://bootdey.com/img/Content/avatar/avatar2.png",
+            "https://bootdey.com/img/Content/avatar/avatar3.png",
+            "https://bootdey.com/img/Content/avatar/avatar4.png"
+            // Agrega más URLs de avatares según sea necesario
+        ],
         originalProfile: {}, // To store the original profile before editing
         errorMessage: "",
         showErrorMessage: false,
@@ -579,6 +577,15 @@ export default {
         });
   },
     methods: {
+        showAvatarGallery() {
+         this.showGallery = true;
+        },
+        selectAvatar(avatar) {
+            this.selectedAvatar = avatar;
+            // Aquí puedes guardar el avatar seleccionado en tu perfil
+            this.profile.profileImage = avatar;
+            this.showGallery = false;
+        },
 
         redirectToPerfil(){
             this.$router.push('/Perfil');

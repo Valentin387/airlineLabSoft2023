@@ -26,15 +26,7 @@
                         <div class="tab-content">
                             <div   class="tab-pane fade active show" id="account-general">
                                 <div class="card-body media align-items-center">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="d-block ui-w-80">
-                                    <div class="media-body ml-3">
-                                        <label class="btn btn-outline-primary">
-                                            Foto de perfil
-                                            <input type="file" class="account-settings-fileinput" >
-                                        </label> &nbsp;
-                                        <button type="button" class="btn btn-default md-btn-flat">Restablecer</button>
-                                        <div class="text-light small mt-1">Permitido JPG, GIF or PNG. Tamaño máximo 800K</div>
-                                    </div>
+                                    <img :src="profile.profileImage" alt="Imagen de perfil" width="100" height="100">
                                 </div>
                                 <hr class="border-light m-0">
                                 <div class="card-body">
