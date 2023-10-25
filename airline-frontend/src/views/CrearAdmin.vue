@@ -32,7 +32,36 @@
      $negro:#1A1320;
      $accent:#0B97F4;
      $secondary:#ceeafd;
-  
+     html{
+        /* 
+        Estilo CSS para la vista Home.vue del proyecto Vue.js. 
+        La propiedad font-size establece el tamaño de fuente base en 10px, lo que equivale a 62.5% del tamaño de fuente predeterminado del navegador. 
+        La propiedad overflow-x:hidden oculta el desplazamiento horizontal de la página. 
+        La propiedad scroll-behavior: smooth agrega un efecto de desplazamiento suave al hacer clic en los enlaces internos de la página. 
+        La propiedad scroll-padding-top establece la cantidad de espacio de relleno en la parte superior de la página para compensar la barra de navegación fija. 
+        */
+        font-size: 62.5%;
+        overflow-x:hidden;
+        scroll-behavior: smooth;
+        scroll-padding-top:9rem;
+
+        /* 
+        Estilos para la barra de desplazamiento en la vista Home.vue.
+        Se utiliza el selector de pseudo-elemento &:: para aplicar estilos a la barra de desplazamiento.
+        */
+        &::-webkit-scrollbar{
+            width:1rem;
+        }
+
+        &::-webkit-scrollbar-track{
+            background: $accent;
+        }
+
+        &::-webkit-scrollbar-thumb{
+            background-color: $azul;
+        }
+
+      }
 
     .admin-container {
         height: 85vh;
