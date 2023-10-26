@@ -2,6 +2,7 @@
   <div class="page-container">
     <spinner :showSpinner="showSpinner"></spinner>
     <div class="left-content">
+      <img class="imageReset-container" alt="">
       <div class="left-content-inner">
         <hr>
           <h1 class="tittle">Bienvenido a AirTravel</h1>
@@ -9,7 +10,9 @@
           <div class="text-login">
             <p>Somos tu pasaporte hacia el mundo de la aviación. Con una amplia gama de destinos, ofertas irresistibles y un servicio excepcional, estamos aquí para hacer realidad tus sueños de viaje. Descubre vuelos asequibles, reserva con facilidad y despega hacia tus aventuras. En AirTravel, volamos alto para que tú también lo hagas. ¡Prepara tus maletas y comencemos a explorar el mundo juntos!</p>
           </div>
+          
       </div>
+     
     </div>
     <div class="login-container">
       <hr>
@@ -39,7 +42,7 @@
 
 <style lang="scss"  >
   $light-color:#312c02;
-  $degradado: rgba(149, 168, 238, 0.11);
+  $degradado: rgba(33, 36, 36, 0.552);
   $bg:rgba(6, 31, 14, 0.947);
   $azul-claro: #CFE0EB;
   $gris:#F7F7F7;
@@ -94,12 +97,16 @@
       
 
       .left-content {
-        background-color: #f2f2f2; /* Fondo gris */
+       /* Fondo gris */
+       padding: 4rem;
         text-align: center;
+        color: #ccc;
+        text-shadow: #000000;
         width: 50%;
+        background: linear-gradient( $bg, $degradado), url("src/assets/buenosaires.jpg") no-repeat center/cover;
         box-sizing: border-box;
-     }
-
+      }
+     
 
     .login-container {
       width: 50%;
@@ -108,7 +115,7 @@
       align-items: center;
       text-align: center;
       padding-top: 3rem;
-        
+      background-color: $azul-claro; 
 
       h1 {
         margin: 0;
@@ -139,7 +146,7 @@
         
         .recovery-password{
           font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-          background-color: #fff;
+          background-color: transparent;
           position: absolute;
           top: 0;
           right: 0; 

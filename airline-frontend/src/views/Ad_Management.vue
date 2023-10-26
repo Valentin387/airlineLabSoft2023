@@ -1,6 +1,7 @@
 <template>
+  <spinner :showSpinner="showSpinner"></spinner>
   <div class="admin-panel">
-    <spinner :showSpinner="showSpinner"></spinner>
+    
     <div class="sidebar">
       <a data-aos="zoom-in-left" data-aos-delay="150" href="#" class="logo">
         <i class="fa-solid fa-paper-plane"></i>AirTravel

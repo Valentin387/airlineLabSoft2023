@@ -9,6 +9,7 @@
                 </h1> -->
                 <h1 class="title">Restablece la contraseña</h1>
                 <form class="inputs-container" @submit.prevent="UpdateP">
+                    <hr><hr><hr><hr><hr>
                     <p class="texto">¡Gracias! por favor ingrese su nueva contraseña, y despues confirmela</p>
                     <input type="password" id="password" placeholder="Nueva contraseña" v-model="temporal" required>
                     <p v-if="password.length < 8 || password.length > 80">La contraseña debe tener entre 8 y 30 caracteres</p>
@@ -124,15 +125,15 @@
 
     
 
-    .input-password {
-          width: 100%;
+    
+    input {
+          width: 80%;
+          margin-top: 10rem;
           margin: 10px 0;
           padding: 10px;
           border: 1px solid #ccc;
           border-radius: 5px;
-
-    }
-
+      }
   
 
     .input-password:hover {
@@ -163,6 +164,7 @@
 
     .inputs-container p {
         margin: 0;
+    
         .span {
             color: $accent;
             font-weight: 600;
