@@ -282,7 +282,7 @@ export default {
           }
           else {
             // You can redirect the user or perform other actions here.
-            this.errorMessage = "Algo pasó, vuelve a intentatlo más tarde";
+            this.errorMessage = "Algo pasó, vuelve a intentatlo más tarde, cierra sesión y vuelve a intentarlo";
             this.showErrorMessage = true;
             console.error("Something happened:", error);
           }

@@ -291,7 +291,7 @@ export default {
             }
             else {
               // You can redirect the user or perform other actions here.
-              this.errorMessage = "Something happened:" + error;
+              this.errorMessage = "Something happened, try to logout and login again.";
               this.showErrorMessage = true;
             //   console.error("Something happened:", error);
             }

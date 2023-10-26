@@ -83,6 +83,8 @@
       </div>
     </div>
     <error-modal :show-error="showErrorMessage" :error-message="errorMessage" @close="showErrorMessage = false" />
+    <success-modal :show-note="showSuccessMessage" :success-message="successMessage" @close="showSuccessMessage = false" />
+
   </div>
 </template>
 
@@ -340,6 +342,7 @@ import logoutService from "@/services/authenticationService/logoutService.js";
 import deleteAdminService from "@/services/adminService/deleteAdminService.js";
 import errorModal from "@/components/ErrorModal.vue";
 import spinner from "@/components/spinner.vue";
+import successModal from "@/components/successModal.vue";
 
 export default {
   data() {
@@ -353,6 +356,8 @@ export default {
       errorMessage: "",
       showErrorMessage: false,
       showSpinner: false, // Initialize as hidden
+      successMessage: "",
+      showSuccessMessage: false,
     };
   },
   created(){
@@ -367,6 +372,9 @@ export default {
               console.log(this.admins);
               //console.log(admins);
               console.log("Add management successful:", response.data);
+              //this.successMessage =  "";
+              //this.showSuccessMessage = true;
+              this.showSpinner = false;
             }
           })
           .catch((error) => {
@@ -472,7 +480,7 @@ export default {
         })
         .catch((error) => {
             console.error("Something happened:", error);
-            this.errorMessage = error.response.data.message || "Something happened";
+            this.errorMessage = error.response.data.message || "Something happened, try to logout and login again please";
             this.showErrorMessage = true;
           }
         );
@@ -484,6 +492,7 @@ export default {
   components: {
         errorModal,
         spinner,
+        successModal,
   },
     // Otros métodos como logout, deleteAdmin, etc.
 }

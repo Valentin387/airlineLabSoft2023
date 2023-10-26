@@ -137,6 +137,7 @@
       </div>
     </footer>
     <error-modal :show-error="showErrorMessage" :error-message="errorMessage" @close="showErrorMessage = false" />
+    <success-modal :show-note="showSuccessMessage" :success-message="successMessage" @close="showSuccessMessage = false" />
   </div>
 </template>
 <style lang="scss">
@@ -513,6 +514,7 @@ import { format } from 'date-fns'; // Importa la función de formato de date-fns
 import viewProfileService from "@/services/userService/viewProfileService.js";
 import errorModal from "@/components/ErrorModal.vue";
 import spinner from "@/components/spinner.vue";
+import successModal from "@/components/successModal.vue";
 
 export default {
     data() { 
@@ -565,6 +567,8 @@ export default {
         errorMessage: "",
         showErrorMessage: false,
         isValidFirstName: true,
+        successMessage: "",
+        showSuccessMessage: false,
       };
     },
     computed: {
@@ -660,11 +664,15 @@ export default {
 
             updateProfileService.updateProfile(id, this.profile.email, this.profile.dni, this.profile.firstName, this.profile.lastName, this.profile.birthday, this.profile.birthPlace, this.profile.billingAddress, this.profile.gender, this.profile.role, this.profile.username, this.profile.profileImage, this.profile.active, this.profile.subscribedToFeed)
                 .then(response => {
-                    this.showSpinner = false;
                 // Handle success
                     if (response.status == 200){
-                        confirm("User Profile updated");
+                        //confirm("User Profile updated");
+                        //delete "password" value in response.data
+                        delete response.data.password;
                         console.log("User Profile updated!!", response.data);
+                        this.successMessage =  "User Profile updated!!";
+                        this.showSuccessMessage = true;
+                        this.showSpinner = false;
                         // You can redirect the user or perform other actions here.
                     }
                 })
@@ -683,8 +691,8 @@ export default {
                         this.showErrorMessage = true;
                     }
                     // Display an error message to the user or take appropriate action.
-                        console.error('Error fetching user data:', error);
-                        this.errorMessage = error.response.data.message || "Error fetching user data";
+                        console.error('Error fetching user data, logout and login again please:', error);
+                        this.errorMessage = error.response.data.message || "Error fetching user data, logout and login again please";
                         this.showErrorMessage = true;
                 });
 
@@ -701,6 +709,7 @@ export default {
     components: {
         errorModal,
         spinner,
+        successModal,
   },     
 };
 </script>

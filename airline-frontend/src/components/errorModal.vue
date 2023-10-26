@@ -34,7 +34,7 @@
 .close-button {
   margin-top: 10px;
   padding: 10px 20px;
-  background-color: #0B97F4;
+  background-color: #ed1212;
   color: white;
   border: none;
   border-radius: 5px;

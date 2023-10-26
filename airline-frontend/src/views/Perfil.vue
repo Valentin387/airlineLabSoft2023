@@ -684,7 +684,7 @@ export default {
                     }
                     // Display an error message to the user or take appropriate action.
                         console.error('Error fetching user data:', error);
-                        this.errorMessage = error.response.data.message || "Error fetching user data";
+                        this.errorMessage = error.response.data.message || "Error fetching user data, logout and login again";
                         this.showErrorMessage = true;
                 });
 
