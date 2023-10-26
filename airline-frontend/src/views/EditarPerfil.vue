@@ -670,7 +670,7 @@ export default {
                         //delete "password" value in response.data
                         delete response.data.password;
                         console.log("User Profile updated!!", response.data);
-                        this.successMessage =  "User Profile updated!!";
+                        this.successMessage =  "Datos actualizados correctamente, si cambiaste tu email, te pedimos que vuelvas a iniciar sesión por favor";
                         this.showSuccessMessage = true;
                         this.showSpinner = false;
                         // You can redirect the user or perform other actions here.

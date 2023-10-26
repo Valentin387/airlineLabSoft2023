@@ -240,7 +240,7 @@ export default {
                 // Handle the successful login response here
                     if (response.status === 200) {
                         console.log("Creation successful:", response.data);
-                        this.successMessage =  "";
+                        this.successMessage =  "Se ha actualizado el email, por cuestiones de seguridad, cierra sesión y vuelve a iniciarla con el nuevo email";
                         this.showSuccessMessage = true;
                         this.showSpinner = false;
                         this.$router.push('/');

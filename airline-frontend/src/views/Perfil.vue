@@ -600,7 +600,7 @@ export default {
             }
             // Display an error message to the user or take appropriate action.
                 console.error('Error fetching user data:', error);
-                this.errorMessage = error.response.data.message || "Error fetching user data";
+                this.errorMessage = error.response.data.message || "Error en el fetching, por favor cierre sesión y vuelva a iniciarla";
                 this.showErrorMessage = true;
         });
   },
