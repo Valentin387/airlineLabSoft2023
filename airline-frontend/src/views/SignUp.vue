@@ -285,7 +285,7 @@ export default {
     showAvatarGallery() {
          this.showGallery = true;
     },
-    
+
     selectAvatar(avatar) {
         this.selectedAvatar = avatar;
         // Aquí puedes guardar el avatar seleccionado en tu perfil
@@ -335,7 +335,7 @@ export default {
           }
           else {
             // You can redirect the user or perform other actions here.
-            this.errorMessage = "Algo pasó, vuelve a intentatlo más tarde, cierra sesión y vuelve a intentarlo";
+            this.errorMessage = "Error en el registro, revisa los campos, si el error persiste, cierra sesión y vuelve a iniciar sesión por favor";
             this.showErrorMessage = true;
             console.error("Something happened:", error);
           }

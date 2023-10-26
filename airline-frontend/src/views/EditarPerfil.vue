@@ -692,7 +692,7 @@ export default {
                     }
                     // Display an error message to the user or take appropriate action.
                         console.error('Error fetching user data, logout and login again please:', error);
-                        this.errorMessage = error.response.data.message || "Error fetching user data, logout and login again please";
+                        this.errorMessage = error.response.data.message || "Error en la actualización, revisa los campos, si el error persiste, cierra sesión y vuelve a iniciar sesión por favor";
                         this.showErrorMessage = true;
                 });
 
