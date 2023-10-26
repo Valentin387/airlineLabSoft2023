@@ -18,7 +18,9 @@
                     <button class="btn-password" type="submit" >Guardar cambios</button>
                 </form>
             </div>
+            
             <error-modal :show-error="showErrorMessage" :error-message="errorMessage" @close="showErrorMessage = false" />
+            <success-modal :show-note="showSuccessMessage" :success-message="successMessage" @close="showSuccessMessage = false" />
         </div>
 </template>
 
@@ -216,6 +218,7 @@
 import updatePasswordService from "@/services/authenticationService/updatePasswordService.js";
 import errorModal from "@/components/ErrorModal.vue";
 import spinner from "@/components/spinner.vue";
+import successModal from "@/components/successModal.vue";
 
 export default {
     data() { 
@@ -226,6 +229,8 @@ export default {
         errorMessage: "",
         showErrorMessage: false,
         showSpinner: false, // Initialize as hidden
+        successMessage: "",
+        showSuccessMessage: false,
       };
     },
     methods: {
@@ -260,10 +265,14 @@ export default {
         // Call the LoginService.login method
         updatePasswordService.updatePassword(email, password)
           .then((response) => {
-            this.showSpinner = false;
+            this.showSpinner = true;
             // Handle the successful login response here
             if (response.status == 200){
-              confirm("Contraseña actualizada correctamente");
+              //confirm("Contraseña actualizada correctamente");
+              this.successMessage =  "Contraseña actualizada correctamente";
+              this.showSuccessMessage = true;
+              this.showSpinner = false;
+
               console.log("New Password updated:", response.data);
             }
           })
@@ -300,6 +309,7 @@ export default {
     components: {
         errorModal,
         spinner,
+        successModal,
     },
 };
 
