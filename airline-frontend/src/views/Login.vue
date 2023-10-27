@@ -22,7 +22,7 @@
             <input type="email" id="email" placeholder="Email" v-model="email" required>
             <input type="password" id="password" placeholder="Password" v-model="password" required>
             <div class="box-recovery-password">
-              <button id="recovery-password" class="recovery-password" @click.prevent="redirectToRecoverPassword">¿Olvidaste tu contraseña?</button>
+              <button id="recovery-password" type="button" class="recovery-password" @click.prevent="redirectToRecoverPassword">¿Olvidaste tu contraseña?</button>
             </div>
             <button id="login" class="login"  type="submit">Iniciar Sesión</button>
         </form>

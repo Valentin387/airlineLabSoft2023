@@ -52,7 +52,8 @@
                 <div class="form-group">
                   <label class="form-label">Fecha de Nacimiento</label>
                   <input type="label" class="form-control" v-model="formattedBirthday" required readonly>
-                  <input type="date" class="form-control" v-model="profile.birthday" required>
+                  <input type="date" class="form-control" v-model="profile.birthday" @input="validateBirthdate" required>
+                  <p v-if="!isValidBirthday">{{ birthdateError }}</p>
                   
                 </div>
                 <div class="form-group">
@@ -137,6 +138,7 @@
       </div>
     </footer>
     <error-modal :show-error="showErrorMessage" :error-message="errorMessage" @close="showErrorMessage = false" />
+    <success-modal :show-note="showSuccessMessage" :success-message="successMessage" @close="showSuccessMessage = false" />
   </div>
 </template>
 <style lang="scss">
@@ -513,6 +515,8 @@ import { format } from 'date-fns'; // Importa la función de formato de date-fns
 import viewProfileService from "@/services/userService/viewProfileService.js";
 import errorModal from "@/components/ErrorModal.vue";
 import spinner from "@/components/spinner.vue";
+import successModal from "@/components/successModal.vue";
+import { is } from "date-fns/locale";
 
 export default {
     data() { 
@@ -565,6 +569,10 @@ export default {
         errorMessage: "",
         showErrorMessage: false,
         isValidFirstName: true,
+        isValidBirthday: true,
+        birthdateError: "",
+        successMessage: "",
+        showSuccessMessage: false,
       };
     },
     computed: {
@@ -608,11 +616,34 @@ export default {
             }
             // Display an error message to the user or take appropriate action.
                 console.error('Error fetching user data:', error);
-                this.errorMessage = error.response.data.message || "Error fetching user data";
+                this.errorMessage = error.response.data.message || "Error. Sesión expirada, cierra sesión y vuelve a iniciar sesión por favor";
                 this.showErrorMessage = true;
         });
   },
     methods: {
+        validateBirthdate() {
+          const userBirthdate = this.profile.birthday;
+          const currentDate = new Date();
+          const currentDateString = currentDate.toISOString().split('T')[0];
+          const eighteenYearsAgo = new Date();
+          // Subtract 18 years from the current date
+          eighteenYearsAgo.setFullYear(currentDate.getFullYear() - 18);
+          const eighteenYearsAgoString = eighteenYearsAgo.toISOString().split('T')[0];
+
+          if (userBirthdate > currentDateString) {
+            //console.log("¡Ten cuidado McFly!, no puedes nacer en el futuro");
+            this.birthdateError = "¡Ten cuidado McFly!, no puedes nacer en el futuro";
+            this.isValidBirthday = false;
+          } 
+          else if (userBirthdate > eighteenYearsAgoString){
+            this.birthdateError = "¡Ten cuidado McFly!, debes ser mayor de edad para registrarte";
+            this.isValidBirthday = false;
+          } else{
+            this.birthdateError = '';
+            this.isValidBirthday = true;
+          }
+        },
+
         showAvatarGallery() {
          this.showGallery = true;
         },
@@ -647,6 +678,12 @@ export default {
             }
         },
         updateProfile() {
+
+          if(!this.isValidFirstName || !this.isValidBirthday){
+            this.errorMessage = "Datos no válidos, revisa que hayas llenado correctamente todos los campos";
+                this.showErrorMessage = true;
+                return;
+            }
             this.showSpinner = true;
             //this.showSpinner = true;
             const token = window.sessionStorage.getItem("JWTtoken");
@@ -660,11 +697,15 @@ export default {
 
             updateProfileService.updateProfile(id, this.profile.email, this.profile.dni, this.profile.firstName, this.profile.lastName, this.profile.birthday, this.profile.birthPlace, this.profile.billingAddress, this.profile.gender, this.profile.role, this.profile.username, this.profile.profileImage, this.profile.active, this.profile.subscribedToFeed)
                 .then(response => {
-                    this.showSpinner = false;
                 // Handle success
                     if (response.status == 200){
-                        confirm("User Profile updated");
+                        //confirm("User Profile updated");
+                        //delete "password" value in response.data
+                        delete response.data.password;
                         console.log("User Profile updated!!", response.data);
+                        this.successMessage =  "Datos actualizados correctamente, si cambiaste tu email, te pedimos que vuelvas a iniciar sesión por favor";
+                        this.showSuccessMessage = true;
+                        this.showSpinner = false;
                         // You can redirect the user or perform other actions here.
                     }
                 })
@@ -683,8 +724,8 @@ export default {
                         this.showErrorMessage = true;
                     }
                     // Display an error message to the user or take appropriate action.
-                        console.error('Error fetching user data:', error);
-                        this.errorMessage = error.response.data.message || "Error fetching user data";
+                        console.error('Error fetching user data, logout and login again please:', error);
+                        this.errorMessage = error.response.data.message || "Error en la actualización, revisa los campos, si el error persiste, cierra sesión y vuelve a iniciar sesión por favor";
                         this.showErrorMessage = true;
                 });
 
@@ -701,6 +742,7 @@ export default {
     components: {
         errorModal,
         spinner,
+        successModal,
   },     
 };
 </script>

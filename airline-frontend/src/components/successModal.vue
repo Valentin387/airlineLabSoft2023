@@ -1,14 +1,14 @@
 <template>
-    <div v-if="showError" class="error-modal">
-      <div class="error-content">
-        <p>{{ errorMessage }}</p>
+    <div v-if="showNote" class="success-modal">
+      <div class="success-content">
+        <p>{{ successMessage }}</p>
         <button @click="closeModal" class="close-button">Cerrar</button>
       </div>
     </div>
 </template>
 
 <style scoped>
-.error-modal {
+.success-modal {
   position: fixed;
   top: 0;
   left: 0;
@@ -21,7 +21,7 @@
   z-index: 1000; /* Asegúrate de que esté en la parte superior */
 }
 
-.error-content {
+.success-content {
   background-color: white;
   padding: 20px;
   border: 1px solid #ccc;
@@ -34,7 +34,7 @@
 .close-button {
   margin-top: 10px;
   padding: 10px 20px;
-  background-color: #ed1212;
+  background-color: #0B97F4;
   color: white;
   border: none;
   border-radius: 5px;
@@ -49,8 +49,8 @@
 <script>
   export default {
     props: {
-      showError: Boolean,
-      errorMessage: String,
+      showNote: Boolean,
+      successMessage: String,
     },
     methods: {
       closeModal() {
