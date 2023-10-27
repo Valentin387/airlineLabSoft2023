@@ -1,6 +1,7 @@
 <template>
+  <spinner :showSpinner="showSpinner"></spinner>
   <div class="container light-style flex-grow-1 container-p-y">
-    <spinner :showSpinner="showSpinner"></spinner>
+    
     <div class="card card-large">
       <div class="row no-gutters row-bordered row-border-light">
         <div class="col-md-2 pt-0">
@@ -31,7 +32,7 @@
                 <div class="form-group">
                   <label class="form-label">Usuario</label>
                   <input type="text" class="form-control" v-model="profile.username" required>
-                  <p v-if="profile.username.length > 25">El usuario no puede tener más de 25 caracteres</p>
+                  <!-- <p v-if="profile.username.length > 25">El usuario no puede tener más de 25 caracteres</p> -->
                 </div>
                 <div class="form-group">
                   <label class="form-label">Nombre</label>
@@ -41,16 +42,19 @@
                 <div class="form-group">
                   <label class="form-label">Apellido</label>
                   <input type="text" class="form-control" v-model="profile.lastName" required>
-                  <p v-if="profile.lastName.length > 25">El apellido no puede tener más de 25 caracteres</p>
+                  <p v-if="!profile.lastName || profile.lastName.length > 25">El apellido no puede tener más de 25 caracteres</p>
                 </div>
                 <div class="form-group">
                   <label class="form-label">Correo Electrónico</label>
                   <input type="email" class="form-control" v-model="profile.email" required>
-                  <p v-if="profile.email.length > 80">El correo electrónico no puede tener más de 30 caracteres</p>
+                  <p v-if="!profile.email || profile.email.length > 80">El correo electrónico no puede tener más de 30 caracteres</p>
                 </div>
                 <div class="form-group">
                   <label class="form-label">Fecha de Nacimiento</label>
-                  <input type="date" class="form-control" v-model="profile.birthday" required>
+                  <input type="label" class="form-control" v-model="formattedBirthday" required readonly>
+                  <input type="date" class="form-control" v-model="profile.birthday" @input="validateBirthdate" required>
+                  <p v-if="!isValidBirthday">{{ birthdateError }}</p>
+                  
                 </div>
                 <div class="form-group">
                   <label class="form-label">Lugar de Nacimiento</label>
@@ -63,11 +67,11 @@
                 <div class="form-group">
                   <label class="form-label">DNI</label>
                   <input type="text" class="form-control" v-model="profile.dni" required>
-                  <p v-if="profile.dni.length > 10">El DNI no puede tener más de 10 caracteres</p>
+                  <p v-if="!profile.dni || profile.dni.length > 10">El DNI no puede tener más de 10 caracteres</p>
                 </div>
                 <div class="form-group">
                   <label class="form-label">Género</label>
-                  <select id="gender" placeholder="Género" v-model="profile.gender">
+                  <select  class="form-control" id="gender" placeholder="Género" v-model="profile.gender">
                     <option value="male">Masculino</option>
                     <option value="female">Femenino</option>
                     <option value="Other">Otro</option>
@@ -90,7 +94,7 @@
               </div>
               <div class="text-right mt-3 bt-3">
                 <button type="submit" class="btn btn-primary" @click="updateProfile" required>Guardar Cambios</button>&nbsp;
-                <button type="button" @click="redirectToPerfil" class="btn btn-default">Volver al perfil</button>
+                <button type="button" @click="redirectToPerfil" class="btn btn-outline-primary">Volver al perfil</button>
               </div>
             </div>
           </div>
@@ -134,6 +138,7 @@
       </div>
     </footer>
     <error-modal :show-error="showErrorMessage" :error-message="errorMessage" @close="showErrorMessage = false" />
+    <success-modal :show-note="showSuccessMessage" :success-message="successMessage" @close="showSuccessMessage = false" />
   </div>
 </template>
 <style lang="scss">
@@ -148,6 +153,36 @@
      $negro:#1A1320;
      $accent:#0B97F4;
      $secondary:#ceeafd;
+     html{
+        /* 
+        Estilo CSS para la vista Home.vue del proyecto Vue.js. 
+        La propiedad font-size establece el tamaño de fuente base en 10px, lo que equivale a 62.5% del tamaño de fuente predeterminado del navegador. 
+        La propiedad overflow-x:hidden oculta el desplazamiento horizontal de la página. 
+        La propiedad scroll-behavior: smooth agrega un efecto de desplazamiento suave al hacer clic en los enlaces internos de la página. 
+        La propiedad scroll-padding-top establece la cantidad de espacio de relleno en la parte superior de la página para compensar la barra de navegación fija. 
+        */
+        font-size: 62.5%;
+        overflow-x:hidden;
+        scroll-behavior: smooth;
+        scroll-padding-top:9rem;
+
+        /* 
+        Estilos para la barra de desplazamiento en la vista Home.vue.
+        Se utiliza el selector de pseudo-elemento &:: para aplicar estilos a la barra de desplazamiento.
+        */
+        &::-webkit-scrollbar{
+            width:1rem;
+        }
+
+        &::-webkit-scrollbar-track{
+            background: $accent;
+        }
+
+        &::-webkit-scrollbar-thumb{
+            background-color: $azul;
+        }
+
+      }
      .container light-style flex-grow-1 container-p-y{
          background: #3B5998;
         }
@@ -306,6 +341,9 @@
         }
         option{
             font-size: 1.5rem; /* Aumenta el tamaño de los campos de entrada según tus preferencias */
+        }
+        select{
+          font-size: 1.5rem;
         }
     }
     
@@ -477,6 +515,8 @@ import { format } from 'date-fns'; // Importa la función de formato de date-fns
 import viewProfileService from "@/services/userService/viewProfileService.js";
 import errorModal from "@/components/ErrorModal.vue";
 import spinner from "@/components/spinner.vue";
+import successModal from "@/components/successModal.vue";
+import { is } from "date-fns/locale";
 
 export default {
     data() { 
@@ -522,13 +562,17 @@ export default {
             "https://bootdey.com/img/Content/avatar/avatar1.png",
             "https://bootdey.com/img/Content/avatar/avatar2.png",
             "https://bootdey.com/img/Content/avatar/avatar3.png",
-            "https://bootdey.com/img/Content/avatar/avatar4.png"
+            "https://bootdey.com/img/Content/avatar/avatar8.png",
             // Agrega más URLs de avatares según sea necesario
         ],
         originalProfile: {}, // To store the original profile before editing
         errorMessage: "",
         showErrorMessage: false,
         isValidFirstName: true,
+        isValidBirthday: true,
+        birthdateError: "",
+        successMessage: "",
+        showSuccessMessage: false,
       };
     },
     computed: {
@@ -572,11 +616,34 @@ export default {
             }
             // Display an error message to the user or take appropriate action.
                 console.error('Error fetching user data:', error);
-                this.errorMessage = error.response.data.message || "Error fetching user data";
+                this.errorMessage = error.response.data.message || "Error. Sesión expirada, cierra sesión y vuelve a iniciar sesión por favor";
                 this.showErrorMessage = true;
         });
   },
     methods: {
+        validateBirthdate() {
+          const userBirthdate = this.profile.birthday;
+          const currentDate = new Date();
+          const currentDateString = currentDate.toISOString().split('T')[0];
+          const eighteenYearsAgo = new Date();
+          // Subtract 18 years from the current date
+          eighteenYearsAgo.setFullYear(currentDate.getFullYear() - 18);
+          const eighteenYearsAgoString = eighteenYearsAgo.toISOString().split('T')[0];
+
+          if (userBirthdate > currentDateString) {
+            //console.log("¡Ten cuidado McFly!, no puedes nacer en el futuro");
+            this.birthdateError = "¡Ten cuidado McFly!, no puedes nacer en el futuro";
+            this.isValidBirthday = false;
+          } 
+          else if (userBirthdate > eighteenYearsAgoString){
+            this.birthdateError = "¡Ten cuidado McFly!, debes ser mayor de edad para registrarte";
+            this.isValidBirthday = false;
+          } else{
+            this.birthdateError = '';
+            this.isValidBirthday = true;
+          }
+        },
+
         showAvatarGallery() {
          this.showGallery = true;
         },
@@ -611,6 +678,12 @@ export default {
             }
         },
         updateProfile() {
+
+          if(!this.isValidFirstName || !this.isValidBirthday){
+            this.errorMessage = "Datos no válidos, revisa que hayas llenado correctamente todos los campos";
+                this.showErrorMessage = true;
+                return;
+            }
             this.showSpinner = true;
             //this.showSpinner = true;
             const token = window.sessionStorage.getItem("JWTtoken");
@@ -624,11 +697,15 @@ export default {
 
             updateProfileService.updateProfile(id, this.profile.email, this.profile.dni, this.profile.firstName, this.profile.lastName, this.profile.birthday, this.profile.birthPlace, this.profile.billingAddress, this.profile.gender, this.profile.role, this.profile.username, this.profile.profileImage, this.profile.active, this.profile.subscribedToFeed)
                 .then(response => {
-                    this.showSpinner = false;
                 // Handle success
                     if (response.status == 200){
-                        confirm("User Profile updated");
+                        //confirm("User Profile updated");
+                        //delete "password" value in response.data
+                        delete response.data.password;
                         console.log("User Profile updated!!", response.data);
+                        this.successMessage =  "Datos actualizados correctamente, si cambiaste tu email, te pedimos que vuelvas a iniciar sesión por favor";
+                        this.showSuccessMessage = true;
+                        this.showSpinner = false;
                         // You can redirect the user or perform other actions here.
                     }
                 })
@@ -647,8 +724,8 @@ export default {
                         this.showErrorMessage = true;
                     }
                     // Display an error message to the user or take appropriate action.
-                        console.error('Error fetching user data:', error);
-                        this.errorMessage = error.response.data.message || "Error fetching user data";
+                        console.error('Error fetching user data, logout and login again please:', error);
+                        this.errorMessage = error.response.data.message || "Error en la actualización, revisa los campos, si el error persiste, cierra sesión y vuelve a iniciar sesión por favor";
                         this.showErrorMessage = true;
                 });
 
@@ -665,6 +742,7 @@ export default {
     components: {
         errorModal,
         spinner,
+        successModal,
   },     
 };
 </script>
