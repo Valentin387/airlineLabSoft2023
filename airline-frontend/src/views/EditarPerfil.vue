@@ -516,6 +516,7 @@ import viewProfileService from "@/services/userService/viewProfileService.js";
 import errorModal from "@/components/ErrorModal.vue";
 import spinner from "@/components/spinner.vue";
 import successModal from "@/components/successModal.vue";
+import { is } from "date-fns/locale";
 
 export default {
     data() { 
@@ -572,7 +573,6 @@ export default {
         birthdateError: "",
         successMessage: "",
         showSuccessMessage: false,
-        fetchedBirthday: "",
       };
     },
     computed: {
@@ -678,6 +678,12 @@ export default {
             }
         },
         updateProfile() {
+
+          if(!this.isValidFirstName || !this.isValidBirthday){
+            this.errorMessage = "Datos no válidos, revisa que hayas llenado correctamente todos los campos";
+                this.showErrorMessage = true;
+                return;
+            }
             this.showSpinner = true;
             //this.showSpinner = true;
             const token = window.sessionStorage.getItem("JWTtoken");

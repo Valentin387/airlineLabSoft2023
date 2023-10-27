@@ -34,7 +34,8 @@
             <input type="text" id="birth-place" placeholder="Lugar de Nacimiento" v-model="birthPlace" required>
 
             <!-- Fecha de Nacimiento -->
-            <input type="date" id="birth-date" v-model="birthDate" required>
+            <input type="date" class="birth-place" v-model="birthDate" @input="validateBirthdate" required>
+             <p v-if="!isValidBirthday">{{ birthdateError }}</p>
 
             <!-- Direccion de Facturacion -->
             <input type="text" id="billing-address" placeholder="Dirección de Facturación" v-model="billingAddress" required>
@@ -254,6 +255,9 @@ export default {
   },
   data() {
     return {
+      isValidBirthday: true,
+      birthdateError: "",
+
       firstName: "",
       lastName: "",
       birthPlace: "",
@@ -281,7 +285,31 @@ export default {
         ],
     };
   },
+
   methods: {
+
+    validateBirthdate() {
+      const userBirthdate = this.birthDate;
+      const currentDate = new Date();
+      const currentDateString = currentDate.toISOString().split('T')[0];
+      const eighteenYearsAgo = new Date();
+      // Subtract 18 years from the current date
+      eighteenYearsAgo.setFullYear(currentDate.getFullYear() - 18);
+      const eighteenYearsAgoString = eighteenYearsAgo.toISOString().split('T')[0];
+
+      if (userBirthdate > currentDateString) {
+        //console.log("¡Ten cuidado McFly!, no puedes nacer en el futuro");
+        this.birthdateError = "¡Ten cuidado McFly!, no puedes nacer en el futuro";
+        this.isValidBirthday = false;
+      } 
+      else if (userBirthdate > eighteenYearsAgoString){
+        this.birthdateError = "¡Ten cuidado McFly!, debes ser mayor de edad para registrarte";
+        this.isValidBirthday = false;
+      } else{
+        this.birthdateError = '';
+        this.isValidBirthday = true;
+      }
+    },
     showAvatarGallery() {
          this.showGallery = true;
     },
@@ -303,6 +331,13 @@ export default {
         this.showSpinner = false;
         return;
       }
+
+      if(!this.isValidFirstName || !this.isValidBirthday){
+        this.errorMessage = "Datos no válidos, revisa que hayas llenado correctamente todos los campos";
+        this.showErrorMessage = true;
+        return;
+      }
+
       if (isNaN(this.firstName) && this.firstName.length <= 25) {
         this.isValidFirstName = true;
 
