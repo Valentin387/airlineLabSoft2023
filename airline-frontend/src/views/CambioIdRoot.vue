@@ -17,9 +17,13 @@
                 <!-- <p id="error-message" class="error-message">{{ errorMessage }}</p> -->
             </div>
             <error-modal :show-error="showErrorMessage" :error-message="errorMessage" @close="showErrorMessage = false" />
+            <success-modal :show-note="showSuccessMessage" :success-message="successMessage" @close="showSuccessMessage = false" />
         </div>
 
     </body>
+    <!------------------------------------------------FOOTER------------------------------------------->
+    <Footer></Footer>
+
 </template>
 
 <style lang="scss">
@@ -215,6 +219,8 @@
 import rootChangeId from "@/services/rootService/rootChangeId.js";
 import errorModal from "@/components/ErrorModal.vue";
 import spinner from "@/components/spinner.vue";
+import successModal from "@/components/successModal.vue";
+import Footer from '@/components/footer.vue';
 
 export default {
     data() { 
@@ -223,6 +229,8 @@ export default {
             errorMessage: "",
             showErrorMessage: false,
             showSpinner: false, // Initialize as hidden
+            successMessage: "",
+            showSuccessMessage: false,
         };
     },
     methods: {
@@ -236,6 +244,9 @@ export default {
                 // Handle the successful login response here
                     if (response.status === 200) {
                         console.log("Creation successful:", response.data);
+                        this.successMessage =  "Se ha actualizado el email, por cuestiones de seguridad, cierra sesión y vuelve a iniciarla con el nuevo email";
+                        this.showSuccessMessage = true;
+                        this.showSpinner = false;
                         this.$router.push('/');
                     }
                 })
@@ -265,6 +276,8 @@ export default {
     components: {
         errorModal,
         spinner,
+        successModal,
+        Footer,
   },
 };
 </script>
