@@ -86,6 +86,8 @@
     <success-modal :show-note="showSuccessMessage" :success-message="successMessage" @close="showSuccessMessage = false" />
 
   </div>
+  <!------------------------------------------------FOOTER------------------------------------------->
+  <Footer></Footer>
 </template>
 
 
@@ -343,6 +345,7 @@ import deleteAdminService from "@/services/adminService/deleteAdminService.js";
 import errorModal from "@/components/ErrorModal.vue";
 import spinner from "@/components/spinner.vue";
 import successModal from "@/components/successModal.vue";
+import Footer from '@/components/footer.vue';
 
 export default {
   data() {
@@ -493,6 +496,7 @@ export default {
         errorModal,
         spinner,
         successModal,
+        Footer,
   },
     // Otros métodos como logout, deleteAdmin, etc.
 }

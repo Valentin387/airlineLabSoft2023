@@ -208,46 +208,7 @@
         </div>
     </section>
     <!------------------------------------------------FOOTER------------------------------------------->
-    <footer class="footer">
-        <div class="box-container">
-            <div class="box"  >
-                <h3 href="/" class="logo"><i class="fas fa-paper-plane"></i>AirTravel</h3>
-                <p> Elige más que un tiquete; elige una experiencia de viaje excepcional con nosotros.</p>
-                <div class="compartir">
-                    <a href="#" class="fab fa-facebook-f"></a>
-                    <a href="#" class="fab fa-twitter"></a>
-                    <a href="#" class="fab fa-instagram"></a>
-                    <a href="#" class="fab fa-github"></a>
-                </div>
-            </div>
-
-            <div class="box">
-                <h3>Links</h3>
-                <a href="/" class="links"><i class="material-symbols-outlined">chevron_right</i>Inicio</a>
-                <a href="/Check-In" class="links"><i class="material-symbols-outlined">chevron_right</i>Confirmar Check-in</a>
-                <a href="/Ayuda" class="links"><i class="material-symbols-outlined">chevron_right</i>Ayuda</a>
-                    <a href="/Contactanos" class="links"><i class="material-symbols-outlined">chevron_right</i> contáctanos</a>
-
-            </div>
-            <div class="box">
-                <h3> Información de contacto </h3>
-                <p><i class="material-symbols-outlined">map</i>Pereira, Colombia</p>
-                <p><i class="material-symbols-outlined">call</i>+57 123-456-7890</p>
-                <p><i class="material-symbols-outlined">mail</i>airtravellabsoft@gmail.com</p>
-            </div>
-            <div class="box">
-                <h3>Boletín informativo</h3>
-                <p>Suscríbete para conocer las últimas actualizaciones</p>
-                <form action = "">
-                    <input type="email" placeholder="Ingrese su correo" class="email" id="">
-                    <input type="submit" value="Suscribirse" class="btn">
-                </form>
-            </div>
-        </div>
-    </footer>
-    <!-----------------------------------------------Creditos de la pagina------------------------------------------>
-    <div class="credit">Creado por : <span> Valentín Valencia - Felipe Galindo - Evelyn Tabares - Brayan Torres</span> | All rights reserved</div>
-   
+    <Footer></Footer>
 </template>
  
 
@@ -790,3 +751,14 @@
     }
 
 </style>
+
+<script>
+// Import the Footer component
+import Footer from '@/components/footer.vue';
+
+export default {
+  components: {
+    Footer,
+  },
+};
+</script>
