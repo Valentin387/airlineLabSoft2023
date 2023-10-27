@@ -73,6 +73,8 @@
         <button id="login" class="login" @click.prevent="redirectToLogin">Iniciar sesión</button>
     </div>
   </div>
+  <!------------------------------------------------FOOTER------------------------------------------->
+  <Footer></Footer>
 </template>
   
 <style lang="scss">
@@ -247,11 +249,13 @@
 import registerService from "@/services/authenticationService/registerService.js";
 import errorModal from "@/components/ErrorModal.vue";
 import spinner from "@/components/spinner.vue";
+import Footer from '@/components/footer.vue';
 
 export default {
   components: {
     errorModal,
     spinner,
+    Footer,
   },
   data() {
     return {

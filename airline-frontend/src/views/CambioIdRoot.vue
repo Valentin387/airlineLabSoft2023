@@ -21,6 +21,9 @@
         </div>
 
     </body>
+    <!------------------------------------------------FOOTER------------------------------------------->
+    <Footer></Footer>
+
 </template>
 
 <style lang="scss">
@@ -217,6 +220,7 @@ import rootChangeId from "@/services/rootService/rootChangeId.js";
 import errorModal from "@/components/ErrorModal.vue";
 import spinner from "@/components/spinner.vue";
 import successModal from "@/components/successModal.vue";
+import Footer from '@/components/footer.vue';
 
 export default {
     data() { 
@@ -273,6 +277,7 @@ export default {
         errorModal,
         spinner,
         successModal,
+        Footer,
   },
 };
 </script>

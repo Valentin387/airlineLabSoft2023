@@ -37,6 +37,9 @@
         <button id="register" class="register" @click.prevent="redirectToSignUp">Registrarse</button>
     </div>
   </div>
+  <!------------------------------------------------FOOTER------------------------------------------->
+  <Footer></Footer>
+
 </template>
 
 
@@ -242,6 +245,7 @@
 import LoginService from "@/services/authenticationService/LoginService.js";
 import errorModal from "@/components/ErrorModal.vue";
 import spinner from "@/components/spinner.vue";
+import Footer from '@/components/footer.vue';
 
 export default {
     data() { 
@@ -309,6 +313,7 @@ export default {
   components: {
     errorModal,
     spinner,
+    Footer,
   },
 };
 </script>
