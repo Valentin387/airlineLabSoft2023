@@ -92,6 +92,11 @@
                   </div>
                 </div>
               </div>
+              <div>
+                <div class="text-left mt-3 bt-3">
+                    <button type="button" class="btn btn-primary" @click="deleteAccount" required>Borrar cuenta</button>&nbsp;
+                </div>
+              </div>
               <div class="text-right mt-3 bt-3">
                 <button type="submit" class="btn btn-primary" @click="updateProfile" required>Guardar Cambios</button>&nbsp;
                 <button type="button" @click="redirectToPerfil" class="btn btn-outline-primary">Volver al perfil</button>
@@ -494,6 +499,7 @@
 import updateProfileService from "@/services/userService/updateProfileService.js";
 import { format } from 'date-fns'; // Importa la función de formato de date-fns
 import viewProfileService from "@/services/userService/viewProfileService.js";
+import deleteUserService from "@/services/userService/deleteUserService.js";
 import errorModal from "@/components/ErrorModal.vue";
 import spinner from "@/components/spinner.vue";
 import successModal from "@/components/successModal.vue";
@@ -624,6 +630,34 @@ export default {
             this.birthdateError = '';
             this.isValidBirthday = true;
           }
+        },
+
+        deleteAccount(){
+            this.showSpinner = true;
+            // Get the user ID from the JWT token in sessionStorage
+            const token = window.sessionStorage.getItem('JWTtoken');
+            const tokenData = JSON.parse(atob(token.split('.')[1]));
+            const id = tokenData.ID;
+
+            deleteUserService.deleteUser(id).then(response => {
+                if (response.status == 200){
+                    console.log("User Profile deleted!!", response.data);
+                    this.successMessage =  "Cuenta eliminada correctamente";
+                    this.showSuccessMessage = true;
+                    this.showSpinner = false;
+                    this.$router.push('/Login');
+                    // You can redirect the user or perform other actions here.
+                }
+            }).catch(error => {
+            this.showSpinner = false;
+            // Handle login errors here
+            if (error == 403){
+                console.log("User not found sorry:", error.response.status, error);
+                this.errorMessage = error || "User not found";
+                this.showErrorMessage = true;
+            }
+     
+            });
         },
 
         showAvatarGallery() {
