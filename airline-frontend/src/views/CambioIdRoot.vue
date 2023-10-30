@@ -259,14 +259,14 @@ export default {
                         this.showErrorMessage = true;
                     } 
                     if (error.response.status == 403){
-                        console.log("User not found sorry:", error.response.status, error);
-                        this.errorMessage = error.response.data.message || "User not found";
+                        console.log("email already exists:", error.response.status, error);
+                        this.errorMessage = error.response.data.message || "Email already exists";
                         this.showErrorMessage = true;
                     }
                     else {
                         // You can redirect the user or perform other actions here.
-                        console.error("Email already exist:", error);
-                        this.errorMessage = error.response.data.message || "Email already exist";
+                        console.error("Email already exists:", error);
+                        this.errorMessage = error.response.data.message || "Email already exists";
                         this.showErrorMessage = true;
                     }
                     // Display an error message to the user or take appropriate action.

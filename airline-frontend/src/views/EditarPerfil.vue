@@ -462,6 +462,20 @@
 
         }
     }
+    .credit{//Autores de la pagina
+        background: $secondary;
+        text-align: center;
+        font-size: 2rem;
+        padding: 2rem 1rem;
+        color: $verde;
+        font-weight: bolder;
+        margin-top: 5rem;
+
+        span{ 
+            color: $negro;
+        }
+    }
+    
     .avatar-gallery {
         display: flex;
         flex-wrap: wrap;
