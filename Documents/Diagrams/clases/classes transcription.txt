@@ -78,7 +78,6 @@ Permission
 ShoppingCart
 - ID: Long
 - quantity: Int
-- userID: Long
 - \totalAmount: Double
 -obtenerProducto()
 -obtenerCantidad()
@@ -103,6 +102,8 @@ User
 -profileImage: Image
 -active: Boolean
 -subscribedToFeed: Boolean
+-shoppingCartID: Long
+
 -iniciarSesión()
 -cerrarSesión
 -editarAtributos()

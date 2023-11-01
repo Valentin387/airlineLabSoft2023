@@ -38,8 +38,7 @@ permission	VARCHAR(50)
 
 tblShoppingCart	
 PK	ID	INT		
-quantity	INT	
-FK	userID	INT		
+quantity	INT			
 totalAmount	DOUBLE
 
 
@@ -60,6 +59,7 @@ userName	VARCHAR(25)
 profileImage	VARCHAR(25)
 active: BOOL
 subscribedToFeed: BOOL
+FK	shoppingCartID: INT
 
 
 

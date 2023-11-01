@@ -80,5 +80,22 @@ public class UserController {
         }
     }
 
+    @DeleteMapping ("/profileDelete/{id}")
+    public ResponseEntity<?> deleteProfile(@PathVariable Long id) {
+        Optional<User> userOptional = userRepository.findById(id);
+
+        if (userOptional.isPresent()) {
+            User existingUser = userOptional.get();
+
+            // Elimina el usuario de la base de datos
+            userRepository.delete(existingUser);
+
+            return ResponseEntity.ok("User deleted successfully");
+        } else {
+            // Si no se encuentra el usuario, devuelve un error 404 (Not Found)
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }
 

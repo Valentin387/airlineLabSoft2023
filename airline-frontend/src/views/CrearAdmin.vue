@@ -18,6 +18,9 @@
       <error-modal :show-error="showErrorMessage" :error-message="errorMessage" @close="showErrorMessage = false" />
       <success-modal :show-note="showSuccessMessage" :success-message="successMessage" @close="showSuccessMessage = false" />
     </div>
+    <!------------------------------------------------FOOTER------------------------------------------->
+    <Footer></Footer>
+
 </template>
 
 <style lang="scss">
@@ -238,6 +241,7 @@ import newAdminService from "@/services/adminService/newAdminService.js";
 import errorModal from "@/components/ErrorModal.vue";
 import spinner from "@/components/spinner.vue";
 import successModal from "@/components/successModal.vue";
+import Footer from '@/components/footer.vue';
 
 export default {
   data() {
@@ -290,6 +294,7 @@ export default {
     errorModal,
     spinner,
     successModal,
+    Footer,
   },
 };
 </script>
