@@ -456,11 +456,23 @@ export default {
     },
    
       confirmDelete(adminId) {
+
+        const token = window.sessionStorage.getItem('JWTtoken');
+        const tokenData = JSON.parse(atob(token.split('.')[1]));
+        const permissions = tokenData.permissions;
+        if(!permissions.includes("delete_admin")){
+            this.errorMessage = "no tienes los permisos suficientes para borrar a un administrador";
+            this.showErrorMessage = true;
+            return;
+        }
+
         deleteAdminService.deleteAdmin(adminId)
           .then((response) => {
             if (response.status === 200) {
               console.log("Administrador eliminado:", adminId);
-              confirm("Administrador eliminado:", adminId);
+              //confirm("Administrador eliminado:", adminId);
+              this.successMessage = "Administrador eliminado";
+              this.showSuccessMessage = true;
               this.loadAdmins(); // Vuelve a cargar la lista de administradores
               this.toggleCardContainer(); // Oculta la ventana emergente
             }
