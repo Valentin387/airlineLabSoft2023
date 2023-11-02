@@ -52,7 +52,8 @@
                 <div class="form-group">
                   <label class="form-label">Fecha de Nacimiento</label>
                   <input type="label" class="form-control" v-model="formattedBirthday" required readonly>
-                  <input type="date" class="form-control" v-model="profile.birthday" required>
+                  <input type="date" class="form-control" v-model="profile.birthday" @input="validateBirthdate" required>
+                  <p v-if="!isValidBirthday">{{ birthdateError }}</p>
                   
                 </div>
                 <div class="form-group">
@@ -91,6 +92,11 @@
                   </div>
                 </div>
               </div>
+              <div>
+                <div class="text-left mt-3 bt-3">
+                    <button type="button" class="btn btn-primary" @click="deleteAccount" required>Borrar cuenta</button>&nbsp;
+                </div>
+              </div>
               <div class="text-right mt-3 bt-3">
                 <button type="submit" class="btn btn-primary" @click="updateProfile" required>Guardar Cambios</button>&nbsp;
                 <button type="button" @click="redirectToPerfil" class="btn btn-outline-primary">Volver al perfil</button>
@@ -101,42 +107,10 @@
       </div>
       <div style="margin-bottom: 20px;"></div>
     </div>
-    <footer class="footer">
-      <div class="box-container">
-        <div class="box">
-          <h3 href="/" class="logo"><i class="fas fa-paper-plane"></i>AirTravel</h3>
-          <p>Elige más que un tiquete; elige una experiencia de viaje excepcional con nosotros.</p>
-          <div class="compartir">
-            <a href="#" class="fab fa-facebook-f"></a>
-            <a href="#" class="fab fa-twitter"></a>
-            <a href="#" class="fab fa-instagram"></a>
-            <a href="#" class="fab fa-github"></a>
-          </div>
-        </div>
-        <div class="box">
-          <h3>Links</h3>
-          <a href="/" class="links"><i class="material-symbols-outlined">chevron_right</i>Inicio</a>
-          <a href="/Check-In" class="links"><i class="material-symbols-outlined">chevron_right</i>Confirmar Check-in</a>
-          <a href="/Ayuda" class="links"><i class="material-symbols-outlined">chevron_right</i>Ayuda</a>
-          <a href="/Contactanos" class="links"><i class="material-symbols-outlined">chevron_right</i> contáctanos</a>
-        </div>
-        <div class="box">
-          <h3> Información de contacto </h3>
-          <p><i class="material-symbols-outlined">map</i>Pereira, Colombia</p>
-          <p><i class="material-symbols-outlined">call</i>+57 123-456-7890</p>
-          <p><i class="material-symbols-outlined">mail</i>airtravellabsoft@gmail.com</p>
-        </div>
-        <div class="box">
-          <h3>Boletín informativo</h3>
-          <p>Suscríbete para conocer las últimas actualizaciones</p>
-          <form action="">
-            <input type="email" placeholder="Ingrese su correo" class="email" id="">
-            <input type="submit" value="Suscribirse" class="btn">
-          </form>
-        </div>
-      </div>
-    </footer>
+<!------------------------------------------------FOOTER------------------------------------------->
+    <Footer></Footer>
     <error-modal :show-error="showErrorMessage" :error-message="errorMessage" @close="showErrorMessage = false" />
+    <success-modal :show-note="showSuccessMessage" :success-message="successMessage" @close="showSuccessMessage = false" />
   </div>
 </template>
 <style lang="scss">
@@ -493,6 +467,20 @@
 
         }
     }
+    .credit{//Autores de la pagina
+        background: $secondary;
+        text-align: center;
+        font-size: 2rem;
+        padding: 2rem 1rem;
+        color: $verde;
+        font-weight: bolder;
+        margin-top: 5rem;
+
+        span{ 
+            color: $negro;
+        }
+    }
+    
     .avatar-gallery {
         display: flex;
         flex-wrap: wrap;
@@ -511,8 +499,12 @@
 import updateProfileService from "@/services/userService/updateProfileService.js";
 import { format } from 'date-fns'; // Importa la función de formato de date-fns
 import viewProfileService from "@/services/userService/viewProfileService.js";
+import deleteUserService from "@/services/userService/deleteUserService.js";
 import errorModal from "@/components/ErrorModal.vue";
 import spinner from "@/components/spinner.vue";
+import successModal from "@/components/successModal.vue";
+import { is } from "date-fns/locale";
+import Footer from '@/components/footer.vue';
 
 export default {
     data() { 
@@ -565,6 +557,10 @@ export default {
         errorMessage: "",
         showErrorMessage: false,
         isValidFirstName: true,
+        isValidBirthday: true,
+        birthdateError: "",
+        successMessage: "",
+        showSuccessMessage: false,
       };
     },
     computed: {
@@ -608,11 +604,62 @@ export default {
             }
             // Display an error message to the user or take appropriate action.
                 console.error('Error fetching user data:', error);
-                this.errorMessage = error.response.data.message || "Error fetching user data";
+                this.errorMessage = error.response.data.message || "Error. Sesión expirada, cierra sesión y vuelve a iniciar sesión por favor";
                 this.showErrorMessage = true;
         });
   },
     methods: {
+        validateBirthdate() {
+          const userBirthdate = this.profile.birthday;
+          const currentDate = new Date();
+          const currentDateString = currentDate.toISOString().split('T')[0];
+          const eighteenYearsAgo = new Date();
+          // Subtract 18 years from the current date
+          eighteenYearsAgo.setFullYear(currentDate.getFullYear() - 18);
+          const eighteenYearsAgoString = eighteenYearsAgo.toISOString().split('T')[0];
+
+          if (userBirthdate > currentDateString) {
+            //console.log("¡Ten cuidado McFly!, no puedes nacer en el futuro");
+            this.birthdateError = "¡Ten cuidado McFly!, no puedes nacer en el futuro";
+            this.isValidBirthday = false;
+          } 
+          else if (userBirthdate > eighteenYearsAgoString){
+            this.birthdateError = "¡Ten cuidado McFly!, debes ser mayor de edad para registrarte";
+            this.isValidBirthday = false;
+          } else{
+            this.birthdateError = '';
+            this.isValidBirthday = true;
+          }
+        },
+
+        deleteAccount(){
+            this.showSpinner = true;
+            // Get the user ID from the JWT token in sessionStorage
+            const token = window.sessionStorage.getItem('JWTtoken');
+            const tokenData = JSON.parse(atob(token.split('.')[1]));
+            const id = tokenData.ID;
+
+            deleteUserService.deleteUser(id).then(response => {
+                if (response.status == 200){
+                    console.log("User Profile deleted!!", response.data);
+                    this.successMessage =  "Cuenta eliminada correctamente";
+                    this.showSuccessMessage = true;
+                    this.showSpinner = false;
+                    this.$router.push('/Login');
+                    // You can redirect the user or perform other actions here.
+                }
+            }).catch(error => {
+            this.showSpinner = false;
+            // Handle login errors here
+            if (error == 403){
+                console.log("User not found sorry:", error.response.status, error);
+                this.errorMessage = error || "User not found";
+                this.showErrorMessage = true;
+            }
+     
+            });
+        },
+
         showAvatarGallery() {
          this.showGallery = true;
         },
@@ -647,6 +694,12 @@ export default {
             }
         },
         updateProfile() {
+
+          if(!this.isValidFirstName || !this.isValidBirthday){
+            this.errorMessage = "Datos no válidos, revisa que hayas llenado correctamente todos los campos";
+                this.showErrorMessage = true;
+                return;
+            }
             this.showSpinner = true;
             //this.showSpinner = true;
             const token = window.sessionStorage.getItem("JWTtoken");
@@ -660,11 +713,15 @@ export default {
 
             updateProfileService.updateProfile(id, this.profile.email, this.profile.dni, this.profile.firstName, this.profile.lastName, this.profile.birthday, this.profile.birthPlace, this.profile.billingAddress, this.profile.gender, this.profile.role, this.profile.username, this.profile.profileImage, this.profile.active, this.profile.subscribedToFeed)
                 .then(response => {
-                    this.showSpinner = false;
                 // Handle success
                     if (response.status == 200){
-                        confirm("User Profile updated");
+                        //confirm("User Profile updated");
+                        //delete "password" value in response.data
+                        delete response.data.password;
                         console.log("User Profile updated!!", response.data);
+                        this.successMessage =  "Datos actualizados correctamente, si cambiaste tu email, te pedimos que vuelvas a iniciar sesión por favor";
+                        this.showSuccessMessage = true;
+                        this.showSpinner = false;
                         // You can redirect the user or perform other actions here.
                     }
                 })
@@ -683,8 +740,8 @@ export default {
                         this.showErrorMessage = true;
                     }
                     // Display an error message to the user or take appropriate action.
-                        console.error('Error fetching user data:', error);
-                        this.errorMessage = error.response.data.message || "Error fetching user data";
+                        console.error('Error fetching user data, logout and login again please:', error);
+                        this.errorMessage = error.response.data.message || "Error en la actualización, revisa los campos, si el error persiste, cierra sesión y vuelve a iniciar sesión por favor";
                         this.showErrorMessage = true;
                 });
 
@@ -701,6 +758,8 @@ export default {
     components: {
         errorModal,
         spinner,
+        Footer,
+        successModal,
   },     
 };
 </script>

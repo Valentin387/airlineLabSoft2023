@@ -17,9 +17,12 @@
                     <button class="btn-password" type="submit">Enviar enlace de acceso</button>
                 </form>
             </div>
+            <success-modal :show-note="showSuccessMessage" :success-message="successMessage" @close="showSuccessMessage = false" />
             <error-modal :show-error="showErrorMessage" :error-message="errorMessage" @close="showErrorMessage = false" />
         </div>
     </body>
+    <!------------------------------------------------FOOTER------------------------------------------->
+    <Footer></Footer>
 </template>
 
 <style lang="scss">
@@ -215,6 +218,8 @@
 import emailCheckingService from "@/services/authenticationService/emailCheckingService.js";
 import errorModal from "@/components/ErrorModal.vue";
 import spinner from "@/components/spinner.vue";
+import successModal from "@/components/successModal.vue";
+import Footer from '@/components/footer.vue';
 
 export default {
     data() { 
@@ -223,6 +228,8 @@ export default {
         errorMessage: "",
         showErrorMessage: false,
         showSpinner: false, // Initialize as hidden
+        successMessage: "",
+        showSuccessMessage: false,
       };
     },
     methods: {
@@ -242,8 +249,10 @@ export default {
             this.showSpinner = false;
             // Handle the successful login response here
             if (response.status == 200){
-              confirm(response.data);
-              console.log("Recover password updated:", response.data);
+                //confirm(response.data);
+                this.successMessage =  response.data;
+                this.showSuccessMessage = true;
+                this.showSpinner = false;
             }
           })
           .catch((error) => {
@@ -262,7 +271,7 @@ export default {
             else {
               // You can redirect the user or perform other actions here.
               console.error("Something happened:", error);
-              this.errorMessage = error.response.data.message || "Something happened";
+              this.errorMessage = error.response.data.message || "Something happened, logout and login again";
               this.showErrorMessage = true;
             }
             // Display an error message to the user or take appropriate action.
@@ -272,6 +281,8 @@ export default {
       components: {
         errorModal,
         spinner,
+        successModal,
+        Footer,
     },
 }
 

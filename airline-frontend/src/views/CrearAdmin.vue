@@ -16,7 +16,11 @@
       </div>
       <img class="image-containerCrearAdmin" src="src/assets/CrearAdmin.svg" alt="">
       <error-modal :show-error="showErrorMessage" :error-message="errorMessage" @close="showErrorMessage = false" />
+      <success-modal :show-note="showSuccessMessage" :success-message="successMessage" @close="showSuccessMessage = false" />
     </div>
+    <!------------------------------------------------FOOTER------------------------------------------->
+    <Footer></Footer>
+
 </template>
 
 <style lang="scss">
@@ -236,6 +240,8 @@
 import newAdminService from "@/services/adminService/newAdminService.js";
 import errorModal from "@/components/ErrorModal.vue";
 import spinner from "@/components/spinner.vue";
+import successModal from "@/components/successModal.vue";
+import Footer from '@/components/footer.vue';
 
 export default {
   data() {
@@ -246,6 +252,8 @@ export default {
       errorMessage: "",
       showErrorMessage: false,
       showSpinner: false, // Initialize as hidden
+      successMessage: "",
+      showSuccessMessage: false,
     };
   },
   methods: {
@@ -257,8 +265,10 @@ export default {
         const response = await newAdminService.newAdmin(firstName, email, password);
 
         if (response.status === 200) {
+          //confirm("Administrador creado exitosamente");
+          this.successMessage =  "Administrador creado exitosamente, correo enviado con contraseña temporal";
+          this.showSuccessMessage = true;
           this.showSpinner = false;
-          confirm("Administrador creado exitosamente");
           console.log("Creation successful:", response.data);
           this.$router.push('/Ad_Management');
         }
@@ -283,6 +293,8 @@ export default {
   components: {
     errorModal,
     spinner,
+    successModal,
+    Footer,
   },
 };
 </script>

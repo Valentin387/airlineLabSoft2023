@@ -22,7 +22,7 @@
             <input type="email" id="email" placeholder="Email" v-model="email" required>
             <input type="password" id="password" placeholder="Password" v-model="password" required>
             <div class="box-recovery-password">
-              <button id="recovery-password" class="recovery-password" @click.prevent="redirectToRecoverPassword">¿Olvidaste tu contraseña?</button>
+              <button id="recovery-password" type="button" class="recovery-password" @click.prevent="redirectToRecoverPassword">¿Olvidaste tu contraseña?</button>
             </div>
             <button id="login" class="login"  type="submit">Iniciar Sesión</button>
         </form>
@@ -37,6 +37,9 @@
         <button id="register" class="register" @click.prevent="redirectToSignUp">Registrarse</button>
     </div>
   </div>
+  <!------------------------------------------------FOOTER------------------------------------------->
+  <Footer></Footer>
+
 </template>
 
 
@@ -242,6 +245,7 @@
 import LoginService from "@/services/authenticationService/LoginService.js";
 import errorModal from "@/components/ErrorModal.vue";
 import spinner from "@/components/spinner.vue";
+import Footer from '@/components/footer.vue';
 
 export default {
     data() { 
@@ -309,6 +313,7 @@ export default {
   components: {
     errorModal,
     spinner,
+    Footer,
   },
 };
 </script>

@@ -4,46 +4,65 @@
     <div class="registration-container">
         <h1 class ="title">Crear Cuenta</h1>
       <form id="registration-form" @submit.prevent="createAccount">
-        <div class="form-group">
-          <!-- Nombre Completo -->
-          <input type="text" id="firstName" placeholder="Nombre" v-model="firstName" required>
-          <p v-if="!isValidFirstName">El nombre no es válido</p>
-          
-          <!-- Apellido -->
-          <input type="text" id="lastName" placeholder="Apellido" v-model="lastName" required>
-          <p v-if="lastName.length > 25">El apellido no puede tener más de 25 caracteres</p>
+        <div class="card-body media align-items-center">
+          <img :src="profileImage" required alt="Imagen de perfil" width="100" height="100">
+          <div class="media-body ml-3">
+            <button @click="showAvatarGallery" class="btn btn-outline-primary">Agregar foto de perfil</button>
+            <div v-if="showGallery" class="avatar-gallery">
+              <img
+                v-for="(avatar, index) in avatarOptions"
+                :key="index"
+                :src="avatar"
+                @click="selectAvatar(avatar)"
+                alt="Avatar"
+              />
+            </div>
+          </div>
+        </div>
+        <hr class="border-light m-0">
+        <div class="card-body">
+          <div class="form-group">
+            <!-- Nombre Completo -->
+            <input type="text" id="firstName" placeholder="Nombre" v-model="firstName" required>
+            <p v-if="!isValidFirstName">El nombre no es válido</p>
+            
+            <!-- Apellido -->
+            <input type="text" id="lastName" placeholder="Apellido" v-model="lastName" required>
+            <p v-if="lastName.length > 25">El apellido no puede tener más de 25 caracteres</p>
 
-          <!-- Lugar de Nacimiento -->
-          <input type="text" id="birth-place" placeholder="Lugar de Nacimiento" v-model="birthPlace" required>
+            <!-- Lugar de Nacimiento -->
+            <input type="text" id="birth-place" placeholder="Lugar de Nacimiento" v-model="birthPlace" required>
 
-          <!-- Fecha de Nacimiento -->
-          <input type="date" id="birth-date" v-model="birthDate" required>
+            <!-- Fecha de Nacimiento -->
+            <input type="date" class="birth-place" v-model="birthDate" @input="validateBirthdate" required>
+             <p v-if="!isValidBirthday">{{ birthdateError }}</p>
 
-          <!-- Direccion de Facturacion -->
-          <input type="text" id="billing-address" placeholder="Dirección de Facturación" v-model="billingAddress" required>
+            <!-- Direccion de Facturacion -->
+            <input type="text" id="billing-address" placeholder="Dirección de Facturación" v-model="billingAddress" required>
 
-          <!-- DNI -->
-          <input type="text" id="DNI" placeholder="Documento" v-model="DNI" required>
-          <p v-if="DNI.length > 10">El DNI no puede tener más de 10 caracteres</p>
+            <!-- DNI -->
+            <input type="text" id="DNI" placeholder="Documento" v-model="DNI" required>
+            <p v-if="DNI.length > 10">El DNI no puede tener más de 10 caracteres</p>
 
-          <!-- Género -->
-          <select id="gender" placeholder="Género" v-model="gender">
-            <option value="male">Masculino</option>
-            <option value="female">Femenino</option>
-            <option value="Other">Otro</option>
-          </select>
+            <!-- Género -->
+            <select id="gender" placeholder="Género" v-model="gender">
+              <option value="male">Masculino</option>
+              <option value="female">Femenino</option>
+              <option value="Other">Otro</option>
+            </select>
 
-          <!-- Email -->
-          <input type="email" id="email" placeholder="Correo Electrónico" v-model="email" required>
-          <p v-if="email.length > 80">El correo electrónico no puede tener más de 30 caracteres</p>
+            <!-- Email -->
+            <input type="email" id="email" placeholder="Correo Electrónico" v-model="email" required>
+            <p v-if="email.length > 80">El correo electrónico no puede tener más de 30 caracteres</p>
 
-          <!-- Usuario -->
-          <input type="text" id="username" placeholder="Usuario" v-model="username" required>
-          <p v-if="username.length > 25">El usuario no puede tener más de 25 caracteres</p>
+            <!-- Usuario -->
+            <input type="text" id="username" placeholder="Usuario" v-model="username" required>
+            <p v-if="username.length > 25">El usuario no puede tener más de 25 caracteres</p>
 
-          <!-- Contraseña -->
-          <input type="password" id="password" placeholder="Contraseña" v-model="password" required>
-          <p v-if="password.length < 8 || password.length > 30">La contraseña debe tener entre 8 y 30 caracteres</p>
+            <!-- Contraseña -->
+            <input type="password" id="password" placeholder="Contraseña" v-model="password" required>
+            <p v-if="password.length < 8 || password.length > 30">La contraseña debe tener entre 8 y 30 caracteres</p>
+          </div>
         </div>
   
         <button id="create-account" class="create-account" @submit.prevent="createAccount" type="submit">Crear Cuenta</button>
@@ -54,6 +73,8 @@
         <button id="login" class="login" @click.prevent="redirectToLogin">Iniciar sesión</button>
     </div>
   </div>
+  <!------------------------------------------------FOOTER------------------------------------------->
+  <Footer></Footer>
 </template>
   
 <style lang="scss">
@@ -175,6 +196,19 @@
           margin-top: 30px;
       }
 
+      .avatar-gallery {
+        display: flex;
+        flex-wrap: wrap;
+      }
+
+    .avatar-gallery img {
+        width: 100px;
+        height: 100px;
+        margin: 5px;
+        cursor: pointer;
+    }
+
+
 
     }
 
@@ -215,14 +249,19 @@
 import registerService from "@/services/authenticationService/registerService.js";
 import errorModal from "@/components/ErrorModal.vue";
 import spinner from "@/components/spinner.vue";
+import Footer from '@/components/footer.vue';
 
 export default {
   components: {
     errorModal,
     spinner,
+    Footer,
   },
   data() {
     return {
+      isValidBirthday: true,
+      birthdateError: "",
+
       firstName: "",
       lastName: "",
       birthPlace: "",
@@ -238,9 +277,55 @@ export default {
       showErrorMessage: false,
       isValidFirstName: true,
       showSpinner: false,
+
+      showGallery: false,
+        selectedAvatar: null,
+        avatarOptions: [
+            "https://bootdey.com/img/Content/avatar/avatar1.png",
+            "https://bootdey.com/img/Content/avatar/avatar2.png",
+            "https://bootdey.com/img/Content/avatar/avatar3.png",
+            "https://bootdey.com/img/Content/avatar/avatar8.png",
+            // Agrega más URLs de avatares según sea necesario
+        ],
     };
   },
+
   methods: {
+
+    validateBirthdate() {
+      const userBirthdate = this.birthDate;
+      const currentDate = new Date();
+      const currentDateString = currentDate.toISOString().split('T')[0];
+      const eighteenYearsAgo = new Date();
+      // Subtract 18 years from the current date
+      eighteenYearsAgo.setFullYear(currentDate.getFullYear() - 18);
+      const eighteenYearsAgoString = eighteenYearsAgo.toISOString().split('T')[0];
+
+      if (userBirthdate > currentDateString) {
+        //console.log("¡Ten cuidado McFly!, no puedes nacer en el futuro");
+        this.birthdateError = "¡Ten cuidado McFly!, no puedes nacer en el futuro";
+        this.isValidBirthday = false;
+      } 
+      else if (userBirthdate > eighteenYearsAgoString){
+        this.birthdateError = "¡Ten cuidado McFly!, debes ser mayor de edad para registrarte";
+        this.isValidBirthday = false;
+      } else{
+        this.birthdateError = '';
+        this.isValidBirthday = true;
+      }
+    },
+    showAvatarGallery() {
+         this.showGallery = true;
+    },
+
+    selectAvatar(avatar) {
+        this.selectedAvatar = avatar;
+        // Aquí puedes guardar el avatar seleccionado en tu perfil
+        this.profileImage = avatar;
+        console.log("Avatar seleccionado:", avatar);
+        this.showGallery = false;
+    },
+
     createAccount() {
       this.showSpinner = true;
       if (this.password.length < 8 || this.password.length > 30) {
@@ -250,6 +335,13 @@ export default {
         this.showSpinner = false;
         return;
       }
+
+      if(!this.isValidFirstName || !this.isValidBirthday){
+        this.errorMessage = "Datos no válidos, revisa que hayas llenado correctamente todos los campos";
+        this.showErrorMessage = true;
+        return;
+      }
+
       if (isNaN(this.firstName) && this.firstName.length <= 25) {
         this.isValidFirstName = true;
 
@@ -282,7 +374,7 @@ export default {
           }
           else {
             // You can redirect the user or perform other actions here.
-            this.errorMessage = "Algo pasó, vuelve a intentatlo más tarde";
+            this.errorMessage = "Error en el registro, revisa los campos, si el error persiste, cierra sesión y vuelve a iniciar sesión por favor";
             this.showErrorMessage = true;
             console.error("Something happened:", error);
           }

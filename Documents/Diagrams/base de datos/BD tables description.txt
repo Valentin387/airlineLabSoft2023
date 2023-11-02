@@ -38,8 +38,7 @@ permission	VARCHAR(50)
 
 tblShoppingCart	
 PK	ID	INT		
-quantity	INT	
-FK	userID	INT		
+quantity	INT			
 totalAmount	DOUBLE
 
 
@@ -60,6 +59,7 @@ userName	VARCHAR(25)
 profileImage	VARCHAR(25)
 active: BOOL
 subscribedToFeed: BOOL
+FK	shoppingCartID: INT
 
 
 
@@ -90,7 +90,7 @@ CVC	VARCHAR(3)
 + CHARSET utf8mb4,
 + COLLATE utf8mb4_0900_ai_ci;
 
-ShoppingCartSeats	
+tblShoppingCartSeats	
 PK	ID	INT	
 FK	shoppingCartID	INT	
 FK	seatID	INT		
@@ -168,9 +168,5 @@ email	VARCHAR(50)
 contactName	VARCHAR(100)		
 contactNo	VARCHAR(100)		
 didCheckIn	BOOL
-
-
-
-
 
 
