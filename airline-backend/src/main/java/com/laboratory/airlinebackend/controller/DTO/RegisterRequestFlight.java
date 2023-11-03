@@ -15,12 +15,10 @@ import java.util.Date;
 @AllArgsConstructor
 public class RegisterRequestFlight {
     private Date flightDate;
-    private String flightTime;
     private String origin;
     private String destination;
     private String flightDuration;
     private Date arrivalDate;
-    private String arrivalTime;
     private double costByPerson;
     private boolean isInternational;
 
