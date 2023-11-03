@@ -132,13 +132,11 @@ hasExtraSpace	BOOL
 tblFlight	
 PK	ID	INT		
 image	VARCHAR(150)		
-flightDate	DATE		
-flightTime	VARCHAR(50)		
+flightDate	DATE				
 origin	VARCHAR(100)		
 destination 	VARCHAR(100)		
 flightDuration	VARCHAR(50)		
-arrivalDate	DATE 		
-arrivalTime	VARCHAR(50)		
+arrivalDate	DATE 				
 costByPerson	DOUBLE		
 costByPersonOffer	DOUBLE		
 availableSeats	INT 		

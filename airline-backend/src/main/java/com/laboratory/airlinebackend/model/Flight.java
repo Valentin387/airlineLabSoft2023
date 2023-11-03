@@ -23,9 +23,6 @@ public class Flight {
     @Column
     private Date flightDate;
 
-    @Column(length = 50)
-    private String flightTime;
-
     @Column(length = 100)
     private String origin;
 
@@ -37,9 +34,6 @@ public class Flight {
 
     @Column
     private Date arrivalDate;
-
-    @Column(length = 50)
-    private String arrivalTime;
 
     @Column
     private double costByPerson;
