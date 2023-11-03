@@ -118,7 +118,7 @@ paymentDetails	VARCHAR(100)
 
 
 
-tblSeats	
+tblSeat	
 PK	ID	INT		
 state	ENUM		
 class	VARCHAR(50)	

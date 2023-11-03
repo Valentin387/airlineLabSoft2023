@@ -1,7 +1,9 @@
 package com.laboratory.airlinebackend.model;
 
+import com.laboratory.airlinebackend.repository.SeatRepository;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
 
