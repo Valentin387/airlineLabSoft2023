@@ -36,19 +36,24 @@ public class FlightController {
             int assignedSeats;
             int firstClassSeatsQuantity;
             int economicClassSeatsQuantity;
-            int maxSeatRows;
+            int firstClassSeatRows;
+            int economicClassSeatRows;
+            //System.out.println(requestNewFlight);
+
             if (requestNewFlight.isInternational()) {
                 //International
                 assignedSeats = 250;
                 firstClassSeatsQuantity = 50;
+                firstClassSeatRows = 9; //round up firstClassSeatsQuantity/6
                 economicClassSeatsQuantity = 200;
-                maxSeatRows = 42; //round up assignedSeats/6
+                economicClassSeatRows = 34; //round up economicClassSeatsQuantity/6
             } else {
                 //National
                 assignedSeats = 150;
                 firstClassSeatsQuantity = 25;
+                firstClassSeatRows = 5; //round up firstClassSeatsQuantity/6
                 economicClassSeatsQuantity = 125;
-                maxSeatRows = 25; //assignedSeats/6
+                economicClassSeatRows = 21; //round up economicClassSeatsQuantity/6
             }
             var flight = Flight.builder()
                 .flightDate(requestNewFlight.getFlightDate())
@@ -66,10 +71,35 @@ public class FlightController {
             //now let's create the seats for this flight
             char letterArray[] = {'A', 'B', 'C', 'D', 'E', 'F'};
             int seatCounter = 0;
-            boolean tempExtraSpace = false;
-            for(int l = 0; l < maxSeatRows; l++){
+            boolean tempExtraSpace;
+
+            //for the first class seats
+            for(int l = 0; l < firstClassSeatRows; l++){
                 for(int c = 0; c < 6; c++){
-                    if(seatCounter < assignedSeats){
+                    if(seatCounter < firstClassSeatsQuantity){
+                        if (c==0 || c==5){
+                            tempExtraSpace=true;
+                        }else{
+                            tempExtraSpace=false;
+                        }
+                        var seat = Seat.builder()
+                                .flightId((int) flight.getId())
+                                .number(l)
+                                .letter(letterArray[c])
+                                .state(SeatState.AVAILABLE.toString())
+                                .hasExtraSpace(tempExtraSpace)
+                                .seatClass("First Class")
+                                .build();
+                        seatRepository.save(seat);
+                        seatCounter++;
+                    }
+                }
+            }
+            seatCounter = 0;
+            //for the economic class seats
+            for(int l = 0; l < economicClassSeatRows; l++){
+                for(int c = 0; c < 5; c++){
+                    if(seatCounter < economicClassSeatsQuantity){
                         if (c==0 || c==6){
                             tempExtraSpace=true;
                         }else{
@@ -81,6 +111,7 @@ public class FlightController {
                                 .letter(letterArray[c])
                                 .state(SeatState.AVAILABLE.toString())
                                 .hasExtraSpace(tempExtraSpace)
+                                .seatClass("Economic Class")
                                 .build();
                         seatRepository.save(seat);
                         seatCounter++;
@@ -88,7 +119,9 @@ public class FlightController {
                 }
             }
 
-            return ResponseEntity.ok("Flight created successfully");
+            return ResponseEntity.ok("Flight created succesfully \n" +
+                    "added economic class seats: " + economicClassSeatsQuantity + "\n" +
+                    "added first class seats: " + firstClassSeatsQuantity);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error creating flight");
         }
