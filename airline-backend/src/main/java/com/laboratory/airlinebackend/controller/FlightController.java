@@ -2,6 +2,7 @@ package com.laboratory.airlinebackend.controller;
 import com.laboratory.airlinebackend.controller.DTO.FlightState;
 import com.laboratory.airlinebackend.controller.DTO.RegisterRequestFlight;
 import com.laboratory.airlinebackend.controller.DTO.SeatState;
+import com.laboratory.airlinebackend.controller.service.SeatCreatorService;
 import com.laboratory.airlinebackend.model.Flight;
 import com.laboratory.airlinebackend.model.Seat;
 import com.laboratory.airlinebackend.repository.FlightRepository;
@@ -22,7 +23,7 @@ public class FlightController {
     private FlightRepository flightRepository;
 
     @Autowired
-    private SeatRepository seatRepository;
+    private SeatCreatorService seatCreatorService;
 
     @PostMapping("/create")
     public ResponseEntity<?> createNewFlight(
@@ -69,12 +70,13 @@ public class FlightController {
             flightRepository.save(flight);
 
             //now let's create the seats for this flight
-            flight.create_seats(
+            seatCreatorService.create_seats(
                     //assignedSeats,
                     firstClassSeatsQuantity,
                     firstClassSeatRows,
                     economicClassSeatsQuantity,
-                    economicClassSeatRows);
+                    economicClassSeatRows,
+                    flight);
 
             return ResponseEntity.ok("Flight created succesfully \n" +
                     "added economic class seats: " + economicClassSeatsQuantity + "\n" +
