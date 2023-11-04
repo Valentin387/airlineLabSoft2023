@@ -69,66 +69,12 @@ public class FlightController {
             flightRepository.save(flight);
 
             //now let's create the seats for this flight
-            char letterArray[] = {'A', 'B', 'C', 'D', 'E', 'F'};
-            int seatCounter = 0;
-            boolean tempExtraSpace;
-
-            //for the first class seats
-            for(int l = 1; l <= firstClassSeatRows; l++){
-                //System.out.print(l + "\t");
-                for(int c = 0; c < 6; c++){
-                    if(seatCounter < firstClassSeatsQuantity){
-                        if (c==0 || c==6){
-                            tempExtraSpace=true;
-                        }else{
-                            tempExtraSpace=false;
-                        }
-                        var seat = Seat.builder()
-                                .flightId((int) flight.getId())
-                                .number(l)
-                                .letter(letterArray[c])
-                                .state(SeatState.AVAILABLE.toString())
-                                .hasExtraSpace(tempExtraSpace)
-                                .seatClass("First Class")
-                                .build();
-                        seatRepository.save(seat);
-                        seatCounter++;
-                        //System.out.print(letterArray[c] + " ");
-                    }
-                    //System.out.print(letterArray[c] + " ");
-                }
-                //System.out.println();
-            }
-            seatCounter = 0;
-            //System.out.print("------------------------------------\n");
-            //for the economic class seats
-
-            for(int l = 1; l <= economicClassSeatRows; l++){
-                //System.out.print(l + "\t");
-                for(int c = 0; c < 6; c++){
-                    if(seatCounter < economicClassSeatsQuantity){
-                        if (c==0 || c==6){
-                            tempExtraSpace=true;
-                        }else{
-                            tempExtraSpace=false;
-                        }
-                        var seat = Seat.builder()
-                                .flightId((int) flight.getId())
-                                .number(l)
-                                .letter(letterArray[c])
-                                .state(SeatState.AVAILABLE.toString())
-                                .hasExtraSpace(tempExtraSpace)
-                                .seatClass("Economic Class")
-                                .build();
-                        seatRepository.save(seat);
-                        seatCounter++;
-                        //System.out.print(letterArray[c] + " ");
-                    }
-                    //System.out.print(letterArray[c] + " ");
-                }
-                //System.out.println();
-            }
-
+            flight.create_seats(
+                    //assignedSeats,
+                    firstClassSeatsQuantity,
+                    firstClassSeatRows,
+                    economicClassSeatsQuantity,
+                    economicClassSeatRows);
 
             return ResponseEntity.ok("Flight created succesfully \n" +
                     "added economic class seats: " + economicClassSeatsQuantity + "\n" +
