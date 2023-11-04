@@ -74,10 +74,11 @@ public class FlightController {
             boolean tempExtraSpace;
 
             //for the first class seats
-            for(int l = 0; l < firstClassSeatRows; l++){
+            for(int l = 1; l <= firstClassSeatRows; l++){
+                //System.out.print(l + "\t");
                 for(int c = 0; c < 6; c++){
                     if(seatCounter < firstClassSeatsQuantity){
-                        if (c==0 || c==5){
+                        if (c==0 || c==6){
                             tempExtraSpace=true;
                         }else{
                             tempExtraSpace=false;
@@ -92,13 +93,19 @@ public class FlightController {
                                 .build();
                         seatRepository.save(seat);
                         seatCounter++;
+                        //System.out.print(letterArray[c] + " ");
                     }
+                    //System.out.print(letterArray[c] + " ");
                 }
+                //System.out.println();
             }
             seatCounter = 0;
+            //System.out.print("------------------------------------\n");
             //for the economic class seats
-            for(int l = 0; l < economicClassSeatRows; l++){
-                for(int c = 0; c < 5; c++){
+
+            for(int l = 1; l <= economicClassSeatRows; l++){
+                //System.out.print(l + "\t");
+                for(int c = 0; c < 6; c++){
                     if(seatCounter < economicClassSeatsQuantity){
                         if (c==0 || c==6){
                             tempExtraSpace=true;
@@ -115,9 +122,13 @@ public class FlightController {
                                 .build();
                         seatRepository.save(seat);
                         seatCounter++;
+                        //System.out.print(letterArray[c] + " ");
                     }
+                    //System.out.print(letterArray[c] + " ");
                 }
+                //System.out.println();
             }
+
 
             return ResponseEntity.ok("Flight created succesfully \n" +
                     "added economic class seats: " + economicClassSeatsQuantity + "\n" +
