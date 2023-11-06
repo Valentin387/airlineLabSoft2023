@@ -1,4 +1,4 @@
-
+"
 <template>
     <!-----------------------------------Imagen de inicio de la pagina --------------------------------->
     <section class ="Home" id="home">
@@ -72,7 +72,7 @@
                 <div class="content">
                     <h3>Miami </h3>
                     <p>Miami es una ciudad en el sureste de Florida, conocida por su clima tropical, playas impresionantes y vida nocturna vibrante. Es un destino popular para aquellos que buscan diversión, compras y relajación bajo el sol de Florida.</p>
-                    <a href="/Vuelos-Miami" class >Ver vuelos <i class="material-symbols-outlined">arrow_forward_ios</i></a>
+                    <a href="/Vuelos-Miami"  class >Ver vuelos <i class="material-symbols-outlined">arrow_forward_ios</i></a>
                     <h5>Desde <br> <span> $1.717.176 </span> </h5>
                 </div>
             </div>
@@ -215,6 +215,7 @@
 <style lang="scss" > 
  
     @import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;1,300&family=Poppins:ital,wght@0,100;0,300;0,400;0,500;0,600;1,200&display=swap");
+    
     *{
         font-family: 'Poppins', sans-serif;
         margin: 0; padding: 0;
@@ -466,13 +467,12 @@
                         font-weight: bolder;
                     }
                 }
-
+              
                 a{//Botón de "ver vuelo"
                     font-size:1.7rem;
                     color:$verde;
-                    padding: rem;
                     text-transform: capitalize;
-
+                    
                     &:hover{//Al pasar el mouse por encima del botón
                         padding-left: 1rem;
                         background-color: transparent;
@@ -761,4 +761,4 @@ export default {
     Footer,
   },
 };
-</script>
+</script>"

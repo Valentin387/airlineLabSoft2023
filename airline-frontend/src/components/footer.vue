@@ -4,12 +4,7 @@
             <div class="box"  >
                 <h3 href="/" class="logo"><i class="fas fa-paper-plane"></i>AirTravel</h3>
                 <p> Elige más que un tiquete; elige una experiencia de viaje excepcional con nosotros.</p>
-                <div class="compartir">
-                    <a href="#" class="fab fa-facebook-f"></a>
-                    <a href="#" class="fab fa-twitter"></a>
-                    <a href="#" class="fab fa-instagram"></a>
-                    <a href="#" class="fab fa-github"></a>
-                </div>
+               
             </div>
 
             <div class="box">
@@ -89,7 +84,12 @@
               padding: 1rem 0;
               background:$secondary;
               .logo{
-                  color:$negro;
+                i{//Figura de avión 
+                    padding-right: 1rem;
+                    color:$blanco;
+                    text-shadow: -1px 3px 3px rgba(1, 0.4, 0.3, 0.6);
+                }
+                  color:$negro;//Letra de la palabra AirTravel
               }
               h3{
                   font-size: 2.2rem;
@@ -113,31 +113,6 @@
                   
               }
 
-              .compartir{ //Seccion de redes sociales 
-                  padding:1rem 0;
-
-                  a{
-                      
-                      height: 4.5rem;
-                      width: 4.5rem;
-                      line-height:4rem;
-                      font-size:2rem;
-                      border-radius:50%;
-                      font-size:1.7rem;
-                      border: $accent .2rem solid;
-                      color:$negro;
-                      margin-right:1rem;
-                      text-align:center ;
-
-                      &:hover{
-                          background:$azul;
-                          color:$blanco;
-                          border: $azul .2rem solid;
-                          text-decoration-line: none;
-                      }
-
-                  }
-              }
               .links{ //Links rapidos a secciones de la pagina
                   font-size: 1.4rem;
                   color: $negro;
