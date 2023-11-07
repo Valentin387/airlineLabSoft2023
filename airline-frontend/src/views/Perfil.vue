@@ -101,7 +101,7 @@
                     
                 </div>
                
-                <div style="margin-bottom: 20px;"></div> 
+                <div style="margin-bottom: 50px;"></div> 
             </div>
             <!------------------------------------------------FOOTER------------------------------------------->
             <Footer></Footer>

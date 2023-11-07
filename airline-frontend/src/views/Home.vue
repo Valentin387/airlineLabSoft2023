@@ -54,7 +54,7 @@
                     <span>¿Cuántos?</span>
                     <input type="number" placeholder="Número de pasajeros" value="">
                 </div>
-                <input  data-aos="zoom-in" datas-aos-delay="900" type="submit" value="Buscar" class="btn"><!--Botón de busqueda de vuelo -->
+                <input  data-aos="zoom-in" datas-aos-delay="900" type="submit" value="Buscar" class="btn_buscar"><!--Botón de busqueda de vuelo -->
         </form>
     </section>
     <!-------------------Imagenes, información  y precio de los destinos del vuelo ---------------------->
@@ -363,7 +363,7 @@
                 
             }
 
-            .btn{
+            .btn_buscar{
                 flex: 1 1 15rem;
                 align-content: center;
                 border: $accent .3rem solid;
@@ -372,7 +372,7 @@
         }
 
     }
-    .btn{ //------Botón de buscar vuelo
+    .btn_buscar{ //------Botón de buscar vuelo
         margin-top:1rem;
         display:inline-block;
         padding: 1rem 3rem; 

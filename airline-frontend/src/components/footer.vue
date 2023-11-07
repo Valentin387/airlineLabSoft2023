@@ -83,6 +83,7 @@
           .box{
               padding: 1rem 0;
               background:$secondary;
+             
               .logo{
                 i{//Figura de avión 
                     padding-right: 1rem;
@@ -91,6 +92,24 @@
                 }
                   color:$negro;//Letra de la palabra AirTravel
               }
+              .btn{ //------Botón de buscar vuelo
+                    margin-top:1rem;
+                    display:inline-block;
+                    padding: 1rem 3rem; 
+                    font-size: 1.7rem;
+                    color: $blanco;
+                    border:$azul .2rem solid; 
+                    border-radius:5rem;
+                    cursor: pointer;
+                    background: $azul;
+
+                    &:hover{
+                        background: $accent;
+                        color: $blanco;
+                        text-decoration-line: none;
+                        
+                    }
+                }
               h3{
                   font-size: 2.2rem;
                   color:$azul;
