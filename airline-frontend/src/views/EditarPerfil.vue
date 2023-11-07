@@ -10,7 +10,7 @@
                             href="#account-general">Información Personal</a>
                     </div>
                 </div>
-                <div class="col-md-9">
+                <div class="col-md-10">
                     <div class="tab-content">
                         <div @submit="updateProfile" class="tab-pane fade active show" id="account-general">
                             <div class="card-body media align-items-center">
@@ -38,6 +38,36 @@
                                             <input type="text" class="form-control" v-model="profile.firstName" required>
                                             <p v-if="!isValidFirstName">El nombre no es válido</p>
                                         </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Lugar de Nacimiento</label>
+                                            <select class="form-control" id="lugar" placeholder="País" v-model="profile.birthPlace">
+                                                <option value="Alemania">Alemania</option><option value="Albania">Albania</option><option value="Andorra">Andorra</option><option value="Angola">Angola</option>
+                                                <option value="Argentina">Argentina</option><option value="Arabia Saudita">Arabia Saudita</option><option value="Armenia">Armenia</option><option value="Australia">Australia</option>
+                                                <option value="Austria">Austria</option><option value="Barbados">Barbados</option><option value="Baréin">Baréin</option><option value="Bangladesh">Bangladesh</option>
+                                                <option value="Belice">Belice</option><option value="Bermuda">Bermuda</option><option value="Bielorrusia">Bielorrusia</option><option value="Botsuana">Botsuana</option><option value="Brasil">Brasil</option>
+                                                <option value="Bulgaria">Bulgaria</option><option value="Camboya">Camboya</option> <option value="Camerún">Camerún</option><option value="Canadá">Canadá</option>
+                                                <option value="Catar">Catar</option><option value="Chile">Chile</option><option value="China">China</option><option value="Chipre">Chipre</option><option value="Colombia">Colombia</option>
+                                                <option value="Corea del Sur">Corea del Sur</option><option value="Costa Rica">Costa Rica</option><option value="Croacia">Croacia</option><option value="Dinamarca">Dinamarca</option>
+                                                <option value="Ecuador">Ecuador</option><option value="Egipto">Egipto</option><option value="El Salvador">El Salvador</option><option value="Emiratos Árabes Unidos">Emiratos Árabes Unidos</option>
+                                                <option value="Eslovaquia">Eslovaquia</option><option value="Eslovenia">Eslovenia</option><option value="España">España</option><option value="Estados Unidos">Estados Unidos</option><option value="Estonia">Estonia</option>
+                                                <option value="Filipinas">Filipinas</option><option value="Finlandia">Finlandia</option><option value="Fiyi">Fiyi</option><option value="Francia">Francia</option>
+                                                <option value="Ghana">Ghana</option> <option value="Gibraltar">Gibraltar</option><option value="Grecia">Grecia</option><option value="Guadalupe">Guadalupe</option><option value="Guatemala">Guatemala</option>
+                                                <option value="Guayana Francesa">Guayana Francesa</option><option value="Honduras">Honduras</option><option value="Hong Kong">Hong Kong</option><option value="India">India</option><option value="Indonesia">Indonesia</option>
+                                                <option value="Irlanda">Irlanda</option><option value="Islas Caimán">Islas Caimán</option><option value="Islas Marshall">Islas Marshall</option> <option value="Israel">Israel</option>
+                                                <option value="Italia">Italia</option><option value="Jamaica">Jamaica</option><option value="Japón">Japón</option><option value="Jordania">Jordania</option><option value="Kazajistán">Kazajistán</option><option value="Kenia">Kenia</option>
+                                                <option value="Kirguistán">Kirguistán</option><option value="Kuwait">Kuwait</option><option value="Letonia">Letonia</option>
+                                                <option value="Lituania">Lituania</option><option value="Luxemburgo">Luxemburgo</option><option value="Macao">Macao</option><option value="Malasia">Malasia</option>
+                                                <option value="Malta">Malta</option><option value="Marruecos">Marruecos</option><option value="Martinica">Martinica</option><option value="Mauricio">Mauricio</option><option value="Mayotte">Mayotte</option>
+                                                <option value="México">México</option><option value="Micronesia">Micronesia</option><option value="Mónaco">Mónaco</option><option value="Namibia">Namibia</option><option value="Nigeria">Nigeria</option>
+                                                <option value="Nueva Caledonia">Nueva Caledonia</option><option value="Nueva Zelanda">Nueva Zelanda</option><option value="Omán">Omán</option><option value="Pakistán">Pakistán</option><option value="Palaos">Palaos</option>
+                                                <option value="Panamá">Panamá</option><option value="Paraguay">Paraguay</option><option value="Perú">Perú</option><option value="Polonia">Polonia</option><option value="Portugal">Portugal</option>
+                                                <option value="Reino Unido">Reino Unido</option><option value="República Checa">República Checa</option><option value="República Dominicana">República Dominicana</option>
+                                                <option value="Rumanía">Rumanía</option><option value="Rusia">Rusia</option><option value="San Bartolomé">San Bartolomé</option><option value="San Cristóbal y Nieves">San Cristóbal y Nieves</option><option value="San Marino">San Marino</option>
+                                                <option value="Sri Lanka">Sri Lanka</option><option value="Sudáfrica">Sudáfrica</option><option value="Suecia">Suecia</option><option value="Suiza">Suiza</option>
+                                                <option value="Tailandia">Tailandia</option><option value="Taiwán">Taiwán</option><option value="Territorios Palestinos">Territorios Palestinos</option><option value="Trinidad y Tobago">Trinidad y Tobago</option><option value="Turquía">Turquía</option>
+                                                <option value="Ucrania">Ucrania</option><option value="Uruguay">Uruguay</option><option value="Venezuela">Venezuela</option><option value="Vietnam">Vietnam</option><option value="Zimbabue">Zimbabue</option>
+                                            </select>
+                                        </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-group">
@@ -48,30 +78,21 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label">Fecha de Nacimiento</label>
-                                            <input type="label" class="form-control" v-model="formattedBirthday" required
-                                                readonly>
+                                          <!--  <input type="label" class="form-control" v-model="formattedBirthday" required
+                                                readonly> --> 
                                             <input type="date" class="form-control" v-model="profile.birthday"
                                                 @input="validateBirthdate" required>
                                             <p v-if="!isValidBirthday">{{ birthdateError }}</p>
                                         </div>
+                                        <div class="form-group">
+                                            <label class="form-label">Dirección de Facturación</label>
+                                            <input type="text" class="form-control" v-model="profile.billingAddress" required>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">Lugar de Nacimiento</label>
-                                    <select class="form-control" id="lugar"
-                                    v-model="profile.birthPlace">
-                                                <option value="male">Masculino</option>
-                                                <option value="female">Femenino</option>
-                                                <option value="Other">Otro</option>
-                                            </select>
-                                    <input type="text" class="form-control" v-model="profile.birthPlace" required>
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">Dirección de Facturación</label>
-                                    <input type="text" class="form-control" v-model="profile.billingAddress" required>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
+                                       
                                         <div class="form-group">
                                             <label class="form-label">Género</label>
                                             <select class="form-control" id="gender" placeholder="Género"
@@ -81,16 +102,12 @@
                                                 <option value="Other">Otro</option>
                                             </select>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                            <div class="switch-button">
+                                        <div class="switch-button">
                                                 <label class="form-label">Suscribirse al módulo de noticias</label>
                                                 <input type="checkbox" name="switch-button" id="switch-label"
                                                     class="switch-button__checkbox" v-model="profile.subscribedToFeed"
                                                     required />
                                                 <label for="switch-label" class="switch-button__label"></label>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -111,7 +128,7 @@
                     </div>
                 </div>
             </div>
-            <div style="margin-bottom: 20px;"></div>
+            <div style="margin-bottom: 40px;"></div>
         </div>
         <!------------------------------------------------FOOTER------------------------------------------->
         <Footer></Footer>
@@ -365,11 +382,20 @@ html:not(.dark-style) .account-settings-links .list-group-item.active {
 //BOTÓN DESLIANTE 
 .switch-button {
     display: inline-block;
-
+    padding-top: 3rem;
+    display: flex;
+    label{
+        margin-right: 2rem;
+        font-weight: bolder;
+    }
+    
+   
+    
 }
 
 .switch-button .switch-button__checkbox {
     display: none;
+    
 }
 
 .switch-button .switch-button__label {
@@ -770,7 +796,7 @@ export default {
                         //delete "password" value in response.data
                         delete response.data.password;
                         console.log("User Profile updated!!", response.data);
-                        this.successMessage = "Datos actualizados correctamente, si cambiaste tu email, te pedimos que vuelvas a iniciar sesión por favor";
+                        this.successMessage = "¡Datos actualizados correctamente!";
                         this.showSuccessMessage = true;
                         this.showSpinner = false;
                         // You can redirect the user or perform other actions here.
