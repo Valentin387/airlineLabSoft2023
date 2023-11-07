@@ -101,7 +101,7 @@
                     
                 </div>
                
-                <div style="margin-bottom: 20px;"></div> 
+                <div style="margin-bottom: 50px;"></div> 
             </div>
             <!------------------------------------------------FOOTER------------------------------------------->
             <Footer></Footer>
@@ -110,7 +110,7 @@
     <!------------------------------------------------FOOTER------------------------------------------->
 
 </template>
-<style lang="scss">
+<style lang="scss" >
      $light-color:#312c02;
      $degradado: rgba(149, 168, 238, 0.11);
      $bg:rgba(6, 31, 14, 0.947);

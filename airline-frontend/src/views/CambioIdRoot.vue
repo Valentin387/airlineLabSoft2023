@@ -26,7 +26,7 @@
 
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
    
      $light-color:#312c02;
      $degradado: rgba(149, 168, 238, 0.11);

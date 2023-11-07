@@ -43,7 +43,7 @@
 </template>
 
 
-<style lang="scss"  >
+<style lang="scss" >
   $light-color:#312c02;
   $degradado: rgba(33, 36, 36, 0.552);
   $bg:rgba(6, 31, 14, 0.947);

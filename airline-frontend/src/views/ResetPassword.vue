@@ -26,7 +26,7 @@
     <Footer></Footer>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped >
    
      $light-color:#312c02;
      $degradado: rgba(149, 168, 238, 0.11);
@@ -130,15 +130,7 @@
     
 
     
-    input {
-          width: 80%;
-          margin-top: 10rem;
-          margin: 10px 0;
-          padding: 10px;
-          border: 1px solid #ccc;
-          border-radius: 5px;
-      }
-  
+   
 
     .input-password:hover {
         border: 2px solid $azul;
@@ -174,6 +166,15 @@
             font-weight: 600;
             cursor: pointer;
          }
+        input {
+          width: 80%;
+          margin-top: 10rem;
+          margin: 10px 0;
+          padding: 10px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+        }
+  
     }
 
     

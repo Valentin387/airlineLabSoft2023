@@ -58,7 +58,7 @@
 
 
 
-<style lang="scss"  > 
+<style lang="scss" scoped > 
 
 
     * {//La regla * selecciona todos los elementos de la página y les aplica los estilos CSS
