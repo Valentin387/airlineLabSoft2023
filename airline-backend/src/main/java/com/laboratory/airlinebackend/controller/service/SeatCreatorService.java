@@ -34,7 +34,7 @@ public class SeatCreatorService {
                 //System.out.print(l + "\t");
                 for (int c = 0; c < 6; c++) {
                     if (seatCounter < firstClassSeatsQuantity) {
-                        if (c == 0 || c == 6) {
+                        if (c == 0 || c == 5) {
                             tempExtraSpace = true;
                         } else {
                             tempExtraSpace = false;
@@ -62,7 +62,7 @@ public class SeatCreatorService {
                 //System.out.print(l + "\t");
                 for (int c = 0; c < 6; c++) {
                     if (seatCounter < economicClassSeatsQuantity) {
-                        if (c == 0 || c == 6) {
+                        if (c == 0 || c == 5) {
                             tempExtraSpace = true;
                         } else {
                             tempExtraSpace = false;
