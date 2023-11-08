@@ -2,6 +2,7 @@ package com.laboratory.airlinebackend.repository;
 
 import com.laboratory.airlinebackend.model.Flight;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDate;
@@ -20,6 +21,14 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
 
     @Query("SELECT f FROM tblFlight f WHERE f.state = 'ON_TIME'")
     List<Flight> getOnTimeFlights();
+
+    @Modifying
+    @Query("UPDATE tblFlight f SET f.costByPersonOffer = (f.costByPerson - (f.costByPerson*(:discount))) " +
+            "WHERE f.origin = :origin " +
+            "AND f.destination = :destination " +
+            "AND f.flightDate <= :validDateRange " +
+            "AND f.state = 'ON_TIME' ")
+    void updateCostByPersonOffer(double discount, String origin, String destination, Date validDateRange);
 
 
 }
