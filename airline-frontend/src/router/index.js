@@ -10,6 +10,10 @@ import CambioIdRoot from '../views/CambioIdRoot.vue'
 import EditarPerfil from '../views/EditarPerfil.vue'
 import RecoverPassword from '../views/RecoverPassword.vue'
 import ResetPassword from '../views/ResetPassword.vue'
+import M_Financiero from '../views/M_Financiero.vue'
+import ListVuelos_Ad from '../views/ListVuelos_Ad.vue'
+import DetalleVuelo from '../views/DetalleVuelo.vue'
+import Carrito from '../views/Carrito.vue'
 
 const router = createRouter ({
 
@@ -74,8 +78,27 @@ const router = createRouter ({
             component:  EditarPerfil,
             meta: { requiresAuth: true }
            
-        }
+        },
 
+        {
+            path: '/M_Financiero',
+            component: M_Financiero
+        },
+
+        {
+            path: '/ListVuelos_Ad',
+            component: ListVuelos_Ad
+        },
+
+        {
+            path: '/DetalleVuelo',
+            component: DetalleVuelo
+        },
+
+        {
+            path: '/Carrito',
+            component: Carrito
+        },
     ]
     
 })
