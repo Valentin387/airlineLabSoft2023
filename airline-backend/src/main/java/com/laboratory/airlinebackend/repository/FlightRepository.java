@@ -18,5 +18,8 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
     @Query("SELECT f FROM tblFlight f WHERE f.destination = :destinationName and f.state = 'ON_TIME'")
     List<Flight> getOnTimeFlightsForDestination(String destinationName);
 
+    @Query("SELECT f FROM tblFlight f WHERE f.state = 'ON_TIME'")
+    List<Flight> getOnTimeFlights();
+
 
 }

@@ -91,6 +91,16 @@ public class FlightController {
 
     }
 
+    @GetMapping("/list/active")
+    public ResponseEntity<?> getActiveFlights(){
+        try{
+            List<Flight> flights = flightRepository.getOnTimeFlights();
+            return ResponseEntity.ok(flights);
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error getting active flights");
+        }
+    }
+
     /*
     //Only use this endpoint once!
     private Map<String, String> cityToCountryMap;
