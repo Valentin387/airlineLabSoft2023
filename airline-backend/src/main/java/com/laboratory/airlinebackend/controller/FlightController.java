@@ -4,8 +4,10 @@ import com.laboratory.airlinebackend.controller.DTO.RegisterRequestFlight;
 import com.laboratory.airlinebackend.controller.DTO.SeatState;
 import com.laboratory.airlinebackend.controller.service.SeatCreatorService;
 import com.laboratory.airlinebackend.model.Flight;
+import com.laboratory.airlinebackend.model.Offer;
 import com.laboratory.airlinebackend.model.Seat;
 import com.laboratory.airlinebackend.repository.FlightRepository;
+import com.laboratory.airlinebackend.repository.OfferRepository;
 import com.laboratory.airlinebackend.repository.SeatRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,9 @@ public class FlightController {
 
     @Autowired
     private SeatCreatorService seatCreatorService;
+
+    @Autowired
+    private OfferRepository offerRepository;
 
     @PostMapping("/create")
     public ResponseEntity<?> createNewFlight(
@@ -71,6 +76,19 @@ public class FlightController {
                 .state(FlightState.ON_TIME.toString())
                 .availableSeats(assignedSeats)
                 .build();
+
+            // Check for valid offers
+            List<Offer> validOffers = offerRepository.findValidOffers(
+                    flight.getOrigin(),
+                    flight.getDestination(),
+                    flight.getFlightDate()
+            );
+
+            if (validOffers.size() > 0) {
+                flight.setCostByPersonOffer(
+                    flight.getCostByPerson() - ( validOffers.get(0).getDiscount()/100 * flight.getCostByPerson() )
+                );
+            }
             flightRepository.save(flight);
 
             //now let's create the seats for this flight
