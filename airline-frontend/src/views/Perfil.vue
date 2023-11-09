@@ -121,7 +121,7 @@
      $blanco: #FFFFFF;
      $negro:#1A1320;
      $accent:#0B97F4;
-     $accent3: #f7f7f7;
+     $accent3: rgba(149, 168, 238, 0.11);
      $secondary:#ceeafd;
      html{
             /* 
@@ -361,11 +361,10 @@
    
     }
 
-    
     .footer{  
         .box-container{
             @include grid(25rem);
-            background:$accent3;
+            background: #F3F5FD;
             box-shadow: 2px 3px 4px 5px rgba(156, 156, 161, 0.2);
             border-radius: 10px;
             padding: 3rem 2rem;
@@ -374,7 +373,7 @@
             
             .box{
                 padding: 1rem 0;
-                background:$accent3;
+                background: #F3F5FD;
                 .logo{
                     color:$negro;
                 }
@@ -455,6 +454,7 @@
             color: $negro;
         }
     }
+   
     
 </style>
 <script>

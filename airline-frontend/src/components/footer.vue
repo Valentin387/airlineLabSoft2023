@@ -64,6 +64,7 @@
       $blanco: #FFFFFF;
       $negro:#1A1320;
       $accent:#0B97F4;
+      $accent3: #F3F5FD;
       $secondary:#ceeafd;
 
       
@@ -77,12 +78,15 @@
   .footer{  
       .box-container{
           @include grid(25rem);
-          background:$secondary;
+          background: $accent3;
           padding: 3rem 2rem;
+          border-radius: 2rem;
+          box-shadow: 1px 0.5px 6px 2px rgba(225, 227, 230, 0.7);
           
           .box{
               padding: 1rem 0;
-              background:$secondary;
+              background : #F3F5FD;
+              
              
               .logo{
                 i{//Figura de avión 
@@ -175,6 +179,7 @@
   .credit{//Autores de la pagina
       background: $secondary;
       text-align: center;
+      border-radius: 2rem;
       font-size: 2rem;
       padding: 2rem 1rem;
       color: $verde;
