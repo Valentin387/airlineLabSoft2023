@@ -121,6 +121,7 @@
      $blanco: #FFFFFF;
      $negro:#1A1320;
      $accent:#0B97F4;
+     $accent3: #f7f7f7;
      $secondary:#ceeafd;
      html{
             /* 
@@ -364,14 +365,16 @@
     .footer{  
         .box-container{
             @include grid(25rem);
-            background:$secondary;
+            background:$accent3;
+            box-shadow: 2px 3px 4px 5px rgba(156, 156, 161, 0.2);
+            border-radius: 10px;
             padding: 3rem 2rem;
             margin-top: 10rem;
             width:90vw;
             
             .box{
                 padding: 1rem 0;
-                background:$secondary;
+                background:$accent3;
                 .logo{
                     color:$negro;
                 }
@@ -379,7 +382,7 @@
                     font-size: 2.2rem;
                     color:$azul;
                     font-weight: bolder;
-                    padding:1rem 0;
+                    padding:1.5rem 0;
                     text-transform: capitalize;
 
                 }
@@ -387,7 +390,7 @@
                 p{
                     font-size: 1.4rem;
                     color:$negro;
-                    padding:1rem 0;
+                    padding:0.5rem 0;
                     line-height: 2;
                     i{//Iconos de informacion de contacto
                         padding-right:.5rem ;
@@ -397,31 +400,7 @@
                     
                 }
 
-                .compartir{ //Seccion de redes sociales 
-                    padding:1rem 0;
-
-                    a{
-                        
-                        height: 4.5rem;
-                        width: 4.5rem;
-                        line-height:4rem;
-                        font-size:2rem;
-                        border-radius:50%;
-                        font-size:1.7rem;
-                        border: $accent .2rem solid;
-                        color:$negro;
-                        margin-right:1rem;
-                        text-align:center ;
-
-                        &:hover{
-                            background:$azul;
-                            color:$blanco;
-                            border: $azul .2rem solid;
-                            text-decoration-line: none;
-                        }
-
-                    }
-                }
+                
                 .links{ //Links rapidos a secciones de la pagina
                     font-size: 1.4rem;
                     color: $negro;
@@ -463,6 +442,8 @@
     }
     .credit{//Autores de la pagina
         background: $secondary;
+        box-shadow: 3px 3px 6px rgba(1, 0.2, 1, 0.2);
+        border-radius: 10px;
         text-align: center;
         font-size: 2rem;
         padding: 2rem 1rem;

@@ -114,10 +114,12 @@
             font-weight: 450;
             text-transform: capitalize;
             text-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+          
             &:hover, &.router-link-exact-active{
                 color:$negro;//Al pasar el cursor sobre la letra del enlace, el color cambia a azul
                 background-color: transparent;//color de fondo al selleccionar el texto
                 text-decoration-line: none;
+                cursor: pointer; // Cambia el cursor a un puntero al pasar sobre el botón
             }
         
             &.router-link-exact-active{
@@ -139,10 +141,12 @@
             margin: 0 1rem; // Ajusta el margen derecho para separar el usuario del carrito de compras
             background: transparent;
 
+
             &:hover, &.router-link-exact-active{
             color:$negro;//Al pasar el cursor sobre la letra del enlace, el color cambia a azul
             background-color: transparent;//color de fondo al selleccionar el texto
             text-decoration-line: none;
+            cursor: pointer; // Cambia el cursor a un puntero al pasar sobre el botón
             }
 
             i{//ICONOS DE CARRITO Y USUARIO
@@ -217,6 +221,7 @@
             }
             .carrito {
                 position: absolute;
+                cursor: pointer; // Cambia el cursor a un puntero al pasar sobre el botón
                 right: 6.5rem; // Ajusta el margen derecho según sea necesario
             }
         }
@@ -237,6 +242,7 @@
             }
             .carrito {
                 position: absolute;
+                cursor: pointer; // Cambia el cursor a un puntero al pasar sobre el botón
                 right: 6.5rem; // Ajusta el margen derecho según sea necesario
             }
     }

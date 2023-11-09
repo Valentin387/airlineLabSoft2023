@@ -234,6 +234,7 @@
         $blanco: #FFFFFF;
         $negro:#1A1320;
         $accent:#0B97F4;
+        $accent3: #77797a;
         $secondary:#ceeafd;
 
         
@@ -568,7 +569,7 @@
     .footer{  
         .box-container{
             @include grid(25rem);
-            background:$secondary;
+            background: $accent3;
             padding: 3rem 2rem;
             
             .box{
@@ -665,7 +666,7 @@
     }
 
     .credit{//Autores de la pagina
-        background: $secondary;
+        background: $accent3;
         text-align: center;
         font-size: 2rem;
         padding: 2rem 1rem;
