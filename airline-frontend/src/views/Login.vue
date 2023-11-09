@@ -44,9 +44,9 @@
 
 
 <style lang="scss" >
-  $light-color:#312c02;
-  $degradado: rgba(33, 36, 36, 0.552);
-  $bg:rgba(6, 31, 14, 0.947);
+  $light-color:#2e2b18;
+  $degradado: rgba(34, 33, 39, 0.552);
+  $bg:rgba(25, 32, 57, 0.947);
   $azul-claro: #CFE0EB;
   $gris:#F7F7F7;
   $verde: #00BD8E;
@@ -54,6 +54,8 @@
   $blanco: #FFFFFF;
   $negro:#1A1320;
   $accent:#0B97F4;
+  $accent2:#007bff;
+  $accent3: #77797a;
   $secondary:#ceeafd;
   html{
         /* 
@@ -103,7 +105,7 @@
        /* Fondo gris */
        padding: 4rem;
         text-align: center;
-        color: #ccc;
+        color: $blanco;
         text-shadow: #000000;
         width: 50%;
         background: linear-gradient( $bg, $degradado), url("src/assets/buenosaires.jpg") no-repeat center/cover;
@@ -118,10 +120,11 @@
       align-items: center;
       text-align: center;
       padding-top: 3rem;
-      background-color: $azul-claro; 
+      background-color: $secondary; 
 
       h1 {
         margin: 0;
+        color: $negro;
       }
 
       input {
@@ -141,6 +144,7 @@
         color: #fff;
         border: none;
         border-radius: 5px;
+        margin-bottom: 2rem;
         cursor: pointer;
       }
 
@@ -165,6 +169,7 @@
         border: none;
         border-radius: 5px;
         cursor: pointer;
+        margin-bottom: 2rem;
       }
 
       .left-content-inner {

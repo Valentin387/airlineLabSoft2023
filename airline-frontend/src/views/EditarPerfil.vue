@@ -14,7 +14,7 @@
                     <div class="tab-content">
                         <div @submit="updateProfile" class="tab-pane fade active show" id="account-general">
                             <div class="card-body media align-items-center">
-                                <img :src="profile.profileImage" required alt="Imagen de perfil" width="100" height="100">
+                                <img :src="profileImage || 'src/assets/user.png'" required alt="Imagen de perfil" width="100" height="100">
                                 <div class="media-body ml-3">
                                     <button @click="showAvatarGallery" class="btn btn-outline-primary">Cambiar Foto de
                                         perfil</button>
@@ -368,6 +368,7 @@ html {
     border: $azul-claro .2rem solid;
     border-radius: 5rem;
     box-shadow: inset 0px 0px 0px 1px $negro;
+    
 
 }
 
@@ -559,14 +560,21 @@ html:not(.dark-style) .account-settings-links .list-group-item.active {
 .avatar-gallery {
     display: flex;
     flex-wrap: wrap;
-}
+    align-items: center !important;
+    display: flex !important;
+    justify-content: center !important;
+  
+  }
 
-.avatar-gallery img {
+  .avatar-gallery img {
     width: 100px;
     height: 100px;
-    margin: 6px;
+    margin: 5px;
+    border: 1px solid #1b1818;
     cursor: pointer;
-}
+    border-radius: 50%; /* Aplicamos un borde circular */
+    overflow: hidden; /* Aseguramos que la imagen esté dentro del círculo */
+  }
 </style>
 
 <script>
@@ -625,6 +633,7 @@ export default {
                 "https://bootdey.com/img/Content/avatar/avatar2.png",
                 "https://bootdey.com/img/Content/avatar/avatar3.png",
                 "https://bootdey.com/img/Content/avatar/avatar8.png",
+                'src/assets/user.png',
                 // Agrega más URLs de avatares según sea necesario
             ],
             originalProfile: {}, // To store the original profile before editing
