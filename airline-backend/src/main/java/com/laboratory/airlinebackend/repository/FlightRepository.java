@@ -23,7 +23,7 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
     List<Flight> getOnTimeFlights();
 
     @Modifying
-    @Query("UPDATE tblFlight f SET f.costByPersonOffer = (f.costByPerson - (f.costByPerson*(:discount))) " +
+    @Query("UPDATE tblFlight f SET f.costByPersonOffer = (f.costByPerson - (:discount*f.costByPerson)) " +
             "WHERE f.origin = :origin " +
             "AND f.destination = :destination " +
             "AND f.flightDate <= :validDateRange " +

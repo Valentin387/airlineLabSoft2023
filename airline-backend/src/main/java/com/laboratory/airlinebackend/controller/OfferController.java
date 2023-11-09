@@ -4,6 +4,7 @@ import com.laboratory.airlinebackend.controller.DTO.RegisterRequestOffer;
 import com.laboratory.airlinebackend.model.Offer;
 import com.laboratory.airlinebackend.repository.FlightRepository;
 import com.laboratory.airlinebackend.repository.OfferRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class OfferController {
     @Autowired
     private OfferRepository offerRepository;
 
-
+    @Transactional
     @PostMapping("/create")
     public ResponseEntity<?> createNewOffer(
             @RequestBody RegisterRequestOffer requestNewOffer
