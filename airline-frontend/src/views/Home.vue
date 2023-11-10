@@ -15,6 +15,11 @@
                 <div  class="inputBox">
                     <span>Origen</span><!--Origen del vuelo -->
                     <select name="origin" placeholder = "¿Desde dónde vuelas?" value="">
+                        <option value="Madrid">Madrid</option>
+                        <option value="Londres">Londres</option>
+                        <option value="NewYork">New York</option>
+                        <option value="BuenosAires">Buenos Aires</option>
+                        <option value="Miami">Miami</option>
                         <option value="Pereira">Pereira</option>
                         <option value="Bogotá">Bogotá</option>
                         <option value="Medellín">Medellín</option>
@@ -229,13 +234,16 @@
         $bg:rgba(6, 31, 14, 0.947);
         $azul-claro: #CFE0EB;
         $gris:#F7F7F7;
+        $gris2:  #364265;
         $verde: #00BD8E;
         $azul: #0D629B;
         $blanco: #FFFFFF;
         $negro:#1A1320;
         $accent:#0B97F4;
         $accent3: #77797a;
+        $blue: #54b2f1; 
         $secondary:#ceeafd;
+        $card:#0d629b17;
 
         
     @mixin grid($val){
@@ -422,9 +430,10 @@
            // border: solid 1px rgba(255, 255, 255, 0.5);
             overflow:hidden;
             //background: rgba(255, 255, 255, 0.3);
-            background: $secondary;
+            //background: #aae1fe91;
+            background: #0d629b17;
             backdrop-filter: blur(20px);
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+            box-shadow: 6px 6px 6px rgba(5, 0, 0, 0.2);
             transition: transform 0.3s ease;
             &:hover img{
                 transform:scale(1.1);  
@@ -453,10 +462,12 @@
 
                 h3{//Titulo de la información del destino de vuelo
                     font-size:2.8rem;
-                    color: $accent;
-                    text-shadow:0px 1px 1px rgba(0, 0, 0, 0.322);
-                    font-family: 'Nunito', sans-serif;
-                    font-weight: bolder;
+                    color: $negro;
+                    //verde
+                   //-webkit-text-stroke: 0.5px #25a84a; 
+                   text-shadow: 0.5px 2.5px 0.5px rgba(255, 248, 248, 0.734);
+                   // font-family: 'Nunito', sans-serif;
+                    
                 }
                 p{//información del vuelo
                     padding:1rem 0;
@@ -482,13 +493,14 @@
               
                 a{//Botón de "ver vuelo"
                     font-size:1.7rem;
-                    color:$verde;
+                    color:$accent;
+                    text-shadow:1px 1px 1px rgba(16, 15, 15, 0.492);
                     text-transform: capitalize;
                     
                     &:hover{//Al pasar el mouse por encima del botón
                         padding-left: 1rem;
                         background-color: transparent;
-                        color:$azul;
+                        color:$verde;
                         text-decoration-line: none;
         
                     }

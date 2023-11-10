@@ -50,9 +50,11 @@
   $azul: #0D629B;
   $blanco: #FFFFFF;
   $negro:#1A1320;
+  $blue: #54b2f1; 
   $accent:#0B97F4;
   $accent2:#007bff;
-  $accent3: rgba(149, 168, 238, 0.11);;
+  $gris2: #364265;
+  $accent3: rgba(149, 168, 238, 0.11);
   $secondary:#ceeafd;
   html{
         /* 
@@ -138,7 +140,7 @@
         width: 80%;
         padding: 10px;
         margin-top: 45px;
-        background-color: #007bff;
+        background-color: $blue;
         color: #fff;
         border: none;
         border-radius: 5px;
@@ -162,7 +164,7 @@
         width: 40%;
         padding: 10px;
         
-        background-color: #77797a;
+        background-color: #364265;
         color: #fff;
         border: none;
         border-radius: 5px;

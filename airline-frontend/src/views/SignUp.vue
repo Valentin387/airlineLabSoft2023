@@ -205,6 +205,7 @@ $blanco: #FFFFFF;
 $negro: #1A1320;
 $accent: #0B97F4;
 $accent3: #f7f7f7;
+$blue: #54b2f1; 
 $secondary: #ceeafd;
 
 html {
@@ -293,7 +294,7 @@ html {
   .create-account {
     width: 40%;
     padding: 7px;
-    background-color: #007bff;
+    background-color: $blue;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -304,7 +305,7 @@ html {
   .login {
     width: 30%;
     padding: 7px;
-    background-color: #676d72;
+    background-color: #364265;
     color: #fff;
     border: none;
     border-radius: 5px;

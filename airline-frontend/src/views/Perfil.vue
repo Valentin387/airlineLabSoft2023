@@ -116,8 +116,10 @@
      $bg:rgba(6, 31, 14, 0.947);
      $azul-claro: #CFE0EB;
      $gris:#F7F7F7;
+     $gris2: #364265;
      $verde: #00BD8E;
      $azul: #0D629B;
+     $blue: #54b2f1; 
      $blanco: #FFFFFF;
      $negro:#1A1320;
      $accent:#0B97F4;
@@ -364,7 +366,8 @@
     .footer{  
         .box-container{
             @include grid(25rem);
-            background: #F3F5FD;
+           // background: #364265;
+           background: #0d629b;
             box-shadow: 2px 3px 4px 5px rgba(156, 156, 161, 0.2);
             border-radius: 10px;
             padding: 3rem 2rem;
@@ -373,27 +376,30 @@
             
             .box{
                 padding: 1rem 0;
-                background: #F3F5FD;
+                //background: #364265;
+                background: #0d629b;
                 .logo{
-                    color:$negro;
+                    color:$blanco;
                 }
                 h3{
                     font-size: 2.2rem;
-                    color:$azul;
+                    color:$blue;
                     font-weight: bolder;
                     padding:1.5rem 0;
                     text-transform: capitalize;
+                    text-shadow: 1px 3px 3px rgba(1, 0.4, 0.3, 0.6);
 
                 }
 
                 p{
                     font-size: 1.4rem;
-                    color:$negro;
+                    color:$blanco;
                     padding:0.5rem 0;
                     line-height: 2;
                     i{//Iconos de informacion de contacto
                         padding-right:.5rem ;
-                        color:$accent;
+                        color:$negro;
+                        text-shadow: 1px 3px 3px rgba(1, 0.4, 0.3, 0.6);
                     }
 
                     
@@ -402,7 +408,7 @@
                 
                 .links{ //Links rapidos a secciones de la pagina
                     font-size: 1.4rem;
-                    color: $negro;
+                    color: $blanco;
                     padding: 1rem 0 ;
                     display: block;
                     text-transform: capitalize;
@@ -419,39 +425,43 @@
 
                     i{
                         padding-right:.5rem ;
-                        color:$accent;
+                        color:$negro;
                     }
                 }
                 form .email{
                     width: 100%;
                     border-radius: 5rem;
-                    border:$accent solid .1rem;
+                    border:$blue solid .1rem;
                     background: none;
                     font-size:1.5rem;
                     text-transform: none;
-                    color:$negro;
+                    color:$blanco;
                     margin-top: 1rem;
                     padding: 1.4rem 1.4rem;
+                    &::placeholder{
+                        color: $blanco;
+                    }
 
 
                 }
+               
             }
 
         }
     }
     .credit{//Autores de la pagina
-        background: $secondary;
+        background: $gris2;
         box-shadow: 3px 3px 6px rgba(1, 0.2, 1, 0.2);
         border-radius: 10px;
         text-align: center;
         font-size: 2rem;
         padding: 2rem 1rem;
-        color: $verde;
+        color: $accent;
         font-weight: bolder;
         margin-top: 5rem;
 
         span{ 
-            color: $negro;
+            color: $blanco;
         }
     }
    
