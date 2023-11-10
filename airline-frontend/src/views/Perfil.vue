@@ -17,7 +17,7 @@
                                 <a class="list-group-item list-group-item-action" data-toggle="list"
                                 @click="redirectToRootIDChange"
                                 v-if="isRoot">Editar id del root</a>
-                            <button type="button" class="btn btn-primary"
+                            <button type="button" class="btn-cerrar"
                             @click="logout">Cerrar sesión </button>&nbsp;
                            
                         </div>
@@ -25,8 +25,8 @@
                     <div class="col-md-9">
                         <div class="tab-content">
                             <div   class="tab-pane fade active show" id="account-general">
-                                <div class="card-body media align-items-center">
-                                    <img :src="profile.profileImage" alt="Imagen de perfil" width="100" height="100">
+                                <div class="card-body align-items-center">
+                                    <img :src="profile.profileImage" class="imagenPerfil" alt="Imagen de perfil" width="100" height="100">
                                 </div>
                                 <hr class="border-light m-0">
                                 <div class="card-body">
@@ -229,7 +229,7 @@
     .btn-outline-primary {
         border-color: $accent;
         background: transparent;
-        color: $accent;
+        color: $azul;
     }
 
 
@@ -241,7 +241,16 @@
     .text-light {
         color:$azul!important;
     }
-
+     
+    .imagenPerfil  {
+        display: block !important; // Asegura que la imagen esté centrada en su contenedor
+        border-radius: 50%; /* Aplicamos un borde circular */
+        overflow: hidden; /* Aseguramos que la imagen esté dentro del círculo */
+        align-items: center !important;
+        margin: 0 auto 2rem; // Alinea la imagen al centro horizontalmente dentro de su contenedor
+        display: flex !important;
+        justify-content: center !important;
+    }
    
 
     .card{
@@ -252,6 +261,19 @@
         margin-top: 10rem;
         width:90vw;
         margin-right: -10%; 
+
+        .btn-cerrar  {
+            background-color: $gris2;
+            color: $blanco;
+            margin-top: 1rem;
+            margin: 1rem auto ;//Centrado 
+            display: inline-block;
+            padding: 1rem 3rem;
+            font-size: 1.7rem;
+            border: $azul-claro .2rem solid;
+            border-radius: 5rem;
+            box-shadow: inset 0px 0px 0px 1px $negro;
+        }
     }
 
     .row-bordered {

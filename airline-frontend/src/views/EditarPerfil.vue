@@ -6,15 +6,16 @@
             <div class="row no-gutters row-bordered row-border-light">
                 <div class="col-md-2 pt-0">
                     <div class="list-group list-group-flush account-settings-links">
-                        <a class="list-group-item list-group-item-action active" data-toggle="list"
-                            href="#account-general">Información Personal</a>
+                        <a class="list-group-item list-group-item-action active" data-toggle="list" href="#account-general">Información Personal</a>
+                        <button type="button" class="btn-borrar" @click="deleteAccount" required>Borrar cuenta</button>&nbsp;
+                           
                     </div>
                 </div>
                 <div class="col-md-10">
                     <div class="tab-content">
                         <div @submit="updateProfile" class="tab-pane fade active show" id="account-general">
-                            <div class="card-body media align-items-center">
-                                <img :src="profileImage || 'src/assets/user.png'" required alt="Imagen de perfil" width="100" height="100">
+                            <div class="card-body align-items-center">
+                                <img :src="profile.profileImage" required class="imagenPerfil" alt="Imagen de perfil" width="100" height="100">
                                 <div class="media-body ml-3">
                                     <button @click="showAvatarGallery" class="btn btn-outline-primary">Cambiar Foto de
                                         perfil</button>
@@ -201,12 +202,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div>
-                                <div class="text-left mt-3 bt-3">
-                                    <button type="button" class="btn btn-primary" @click="deleteAccount" required>Borrar
-                                        cuenta</button>&nbsp;
-                                </div>
-                            </div>
+                           
                             <div class="text-right mt-3 bt-3">
                                 <button type="submit" class="btn btn-primary" @click="updateProfile" required>Guardar
                                     Cambios</button>&nbsp;
@@ -233,11 +229,13 @@ $degradado: rgba(149, 168, 238, 0.11);
 $bg: rgba(6, 31, 14, 0.947);
 $azul-claro: #CFE0EB;
 $gris: #F7F7F7;
+$gris2:  #364265;
 $verde: #00BD8E;
 $azul: #0D629B;
 $blanco: #FFFFFF;
 $negro: #1A1320;
 $accent: #0B97F4;
+$blue: #54b2f1; 
 $secondary: #ceeafd;
 
 html {
@@ -342,22 +340,22 @@ html {
 
 
 .btn-outline-primary {
-    border-color: $accent;
+    border-color: $blue;
     background: transparent;
-    color: $accent;
+    color: $gris2;
     margin-top: 1rem;
     display: inline-block;
     padding: 1rem 3rem;
     font-size: 1.7rem;
     font-weight: bolder;
-    border: $azul .2rem solid;
+    border: $blue .2rem solid;
     border-radius: 5rem;
     margin-left: 5rem;
     box-shadow: inset 0px 0px 0px 1px $accent;
 }
 
-.btn-primary {
-    background-color: $accent;
+.btn-primary  {
+    background-color: $gris2;
     color: $blanco;
     margin-top: 1rem;
     display: inline-block;
@@ -368,9 +366,8 @@ html {
     border: $azul-claro .2rem solid;
     border-radius: 5rem;
     box-shadow: inset 0px 0px 0px 1px $negro;
-    
-
 }
+
 
 
 
@@ -392,7 +389,23 @@ html {
     margin-top: 10rem;
     width: 90vw;
     margin-right: -10%;
+
+    .btn-borrar  {
+        background-color: $gris2;
+        color: $blanco;
+        margin-top: 1rem;
+        margin: 1rem auto ;//Centrado 
+        display: inline-block;
+        padding: 1rem 3rem;
+        font-size: 1.7rem;
+        border: $azul-claro .2rem solid;
+        border-radius: 5rem;
+        box-shadow: inset 0px 0px 0px 1px $negro;
+    }
+    
 }
+
+
 
 .row-bordered {
     overflow: hidden;
@@ -408,10 +421,14 @@ html {
 
 .account-settings-links .list-group-item.active {
     font-weight: bold !important;
+    align-items: center !important;
+    display: flex !important;
+    justify-content: center !important;
 }
 
 html:not(.dark-style) .account-settings-links .list-group-item.active {
     background: transparent !important;
+    
 }
 
 .account-settings-multiselect~.select2-container {
@@ -421,6 +438,7 @@ html:not(.dark-style) .account-settings-links .list-group-item.active {
 .light-style .account-settings-links .list-group-item {
     padding: 0.85rem 1.5rem;
     border-color: rgba(24, 28, 33, 0.03) !important;
+    
 }
 
 
@@ -431,6 +449,7 @@ html:not(.dark-style) .account-settings-links .list-group-item.active {
     box-shadow: 0px 0px 5px rgba(19, 99, 174, 0.5) !important;
     background-color: #f5f5f5 !important;
     transition: all 0.3s ease-in-out !important;
+    
 }
 
 
@@ -444,7 +463,7 @@ html:not(.dark-style) .account-settings-links .list-group-item.active {
 /* Aumenta el tamaño de las etiquetas en los formularios */
 .form-label {
     font-size: 1.8rem;
-    color: $azul;
+    color: $negro;
     font-weight: bolder;
     /* Ajusta el tamaño según tus preferencias */
 }

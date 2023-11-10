@@ -53,7 +53,7 @@
   $blue: #54b2f1; 
   $accent:#0B97F4;
   $accent2:#007bff;
-  $gris2: #364265;
+  $gris2:  #364265;
   $accent3: rgba(149, 168, 238, 0.11);
   $secondary:#ceeafd;
   html{
