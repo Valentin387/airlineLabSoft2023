@@ -275,6 +275,12 @@
         }
 
     }
+    body{  //FONDO DE LA PAGINA
+        background: #F3F5FD;
+       //background-image: linear-gradient(to top, #fcfeff 0%, #fbfeff 100%);
+
+        overflow-x:hidden;
+    }
 
     .Home {  //Recuadro con imagen 
         margin: 0 auto;
@@ -413,8 +419,11 @@
 
         .box{
             border-radius: 1rem;
+           // border: solid 1px rgba(255, 255, 255, 0.5);
             overflow:hidden;
+            //background: rgba(255, 255, 255, 0.3);
             background: $secondary;
+            backdrop-filter: blur(20px);
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
             transition: transform 0.3s ease;
             &:hover img{
@@ -443,8 +452,10 @@
                 
 
                 h3{//Titulo de la información del destino de vuelo
-                    font-size:2.3rem;
+                    font-size:2.8rem;
                     color: $accent;
+                    text-shadow:0px 1px 1px rgba(0, 0, 0, 0.322);
+                    font-family: 'Nunito', sans-serif;
                     font-weight: bolder;
                 }
                 p{//información del vuelo
@@ -463,7 +474,7 @@
                     bottom: 1rem; /* Ajusta esta cantidad según tus necesidades para posicionar el precio */
                     right: 2rem; 
                     span{
-                        color: $azul;
+                        color: $verde;
                         font-size: 2rem;
                         font-weight: bolder;
                     }
@@ -477,7 +488,7 @@
                     &:hover{//Al pasar el mouse por encima del botón
                         padding-left: 1rem;
                         background-color: transparent;
-                        color:$accent;
+                        color:$azul;
                         text-decoration-line: none;
         
                     }
@@ -566,118 +577,6 @@
 
    
 
-    .footer{  
-        .box-container{
-            @include grid(25rem);
-            background: $accent3;
-            padding: 3rem 2rem;
-            
-            .box{
-                padding: 1rem 0;
-                background:$secondary;
-                .logo{
-                    color:$negro;
-                }
-                h3{
-                    font-size: 2.2rem;
-                    color:$azul;
-                    font-weight: bolder;
-                    padding:1rem 0;
-                    text-transform: capitalize;
-
-                }
-
-                p{
-                    font-size: 1.4rem;
-                    color:$negro;
-                    padding:1rem 0;
-                    line-height: 2;
-                    i{//Iconos de informacion de contacto
-                        padding-right:.5rem ;
-                        color:$accent;
-                    }
-
-                    
-                }
-
-                .compartir{ //Seccion de redes sociales 
-                    padding:1rem 0;
-
-                    a{
-                        
-                        height: 4.5rem;
-                        width: 4.5rem;
-                        line-height:4rem;
-                        font-size:2rem;
-                        border-radius:50%;
-                        font-size:1.7rem;
-                        border: $accent .2rem solid;
-                        color:$negro;
-                        margin-right:1rem;
-                        text-align:center ;
-
-                        &:hover{
-                            background:$azul;
-                            color:$blanco;
-                            border: $azul .2rem solid;
-                            text-decoration-line: none;
-                        }
-
-                    }
-                }
-                .links{ //Links rapidos a secciones de la pagina
-                    font-size: 1.4rem;
-                    color: $negro;
-                    padding: 1rem 0 ;
-                    display: block;
-                    text-transform: capitalize;
-                    font-weight: bolder;
-
-                    &:hover{
-                        background-color: transparent;
-                        color:$verde;
-                        text-decoration: none;
-                        i{
-                        padding-right: 2rem;
-                        }
-                    }
-
-                    i{
-                        padding-right:.5rem ;
-                        color:$accent;
-                    }
-                }
-                form .email{
-                    width: 100%;
-                    border-radius: 5rem;
-                    border:$accent solid .1rem;
-                    background: none;
-                    font-size:1.5rem;
-                    text-transform: none;
-                    color:$negro;
-                    margin-top: 1rem;
-                    padding: 1.4rem 1.4rem;
-
-
-                }
-            }
-
-        }
-    }
-
-    .credit{//Autores de la pagina
-        background: $accent3;
-        text-align: center;
-        font-size: 2rem;
-        padding: 2rem 1rem;
-        color: $verde;
-        font-weight: bolder;
-        margin-top: 5rem;
-
-        span{ 
-            color: $negro;
-        }
-    }
 
 
     @media (max-width: 991px) {//pagina en tamaño de computador 

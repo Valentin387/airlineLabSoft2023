@@ -82,12 +82,7 @@
         $accent:#0B97F4;
         $secondary:#a7d6f6;
         
-    body{  //FONDO DE LA PAGINA
-        background: $blanco;
-       //background-image: linear-gradient(to top, #fcfeff 0%, #fbfeff 100%);
-
-        overflow-x:hidden;
-    }
+   
     
     //BARRA DE NAVEGACIÓN----------------------------------------------------------------
 

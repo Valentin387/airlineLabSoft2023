@@ -19,17 +19,13 @@
         <h1>Iniciar Sesión</h1>
         <hr><hr>
         <form @submit.prevent="login" id="login-form">
-            <input type="email" id="email" placeholder="Email" v-model="email" required>
-            <input type="password" id="password" placeholder="Password" v-model="password" required>
+            <input type="email" id="email" placeholder="Correo Electrónico" v-model="email" required>
+            <input type="password" id="password" placeholder="Contraseña" v-model="password" required>
             <div class="box-recovery-password">
               <button id="recovery-password" type="button" class="recovery-password" @click.prevent="redirectToRecoverPassword">¿Olvidaste tu contraseña?</button>
             </div>
             <button id="login" class="login"  type="submit">Iniciar Sesión</button>
         </form>
-
-
-
-        <hr>
         <p id="text2" class="text">o</p>
         <!-- Mostrar mensaje de error como modal -->
         <error-modal :show-error="showErrorMessage" :error-message="errorMessage" @close="showErrorMessage = false" />
@@ -38,12 +34,13 @@
     </div>
   </div>
   <!------------------------------------------------FOOTER------------------------------------------->
+ 
   <Footer></Footer>
 
 </template>
 
 
-<style lang="scss" >
+<style lang="scss" scoped >
   $light-color:#2e2b18;
   $degradado: rgba(34, 33, 39, 0.552);
   $bg:rgba(25, 32, 57, 0.947);
@@ -55,7 +52,7 @@
   $negro:#1A1320;
   $accent:#0B97F4;
   $accent2:#007bff;
-  $accent3: #77797a;
+  $accent3: rgba(149, 168, 238, 0.11);;
   $secondary:#ceeafd;
   html{
         /* 
@@ -125,6 +122,7 @@
       h1 {
         margin: 0;
         color: $negro;
+        
       }
 
       input {
