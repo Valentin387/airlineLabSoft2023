@@ -39,6 +39,16 @@ public class SearchController {
         // Use the parameters (origin, destination, departureDate, returnDate, numPassengers) to perform the search.
         try {
             List<Flight> flights = flightRepository.findFlightsByParameters(origin, destination, departureDate, numPassengers);
+            /*if (flights.isEmpty()) {
+                System.out.println("no matches");
+                return ResponseEntity.badRequest().body("No flights found");
+            }else{
+                System.out.println(flights.size() + " matches");
+            }
+            for (Flight flight : flights) {
+                System.out.println(flight);
+            }
+            System.out.println("finished");*/
             return ResponseEntity.ok(flights);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error searching flights " + e.getMessage() );

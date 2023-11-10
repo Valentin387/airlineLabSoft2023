@@ -10,11 +10,11 @@
     </section>
     <!----------------------------------------Barra de busqueda de vuelos----------------------------- -->
     <section class="book-form" id="book-form">
-        <form action="">
+        <form action="" @submit.prevent="performFlightSearch">
 
             <div class="inputBox">
                 <span>Origen</span><!--Origen del vuelo -->
-                <select name="origin" placeholder="¿Desde dónde vuelas?" value="">
+                <select name="origin" placeholder="¿Desde dónde vuelas?" v-model="searchParams.origin">
                     <option value="" disabled selected>¿Desde dónde vuelas?</option>
                     <option value="Madrid">Madrid</option>
                     <option value="Londres">Londres</option>
@@ -31,7 +31,7 @@
 
             <div class="inputBox">
                 <span>Destino</span><!--Destino del vuelo-->
-                <select name="destination" placeholder="¿A dónde vuelas?" value="">
+                <select name="destination" placeholder="¿A dónde vuelas?" v-model="searchParams.destination">
                     <option value="" disabled selected>¿A dónde vuelas?</option>
                     <option value="Madrid">Madrid</option>
                     <option value="Londres">Londres</option>
@@ -48,7 +48,7 @@
             </div>
             <div class="inputBox"><!--Fecha de salida del vuelo -->
                 <span>Fecha de salida</span>
-                <input type="date" name="departureDate" value="">
+                <input type="date" name="departureDate" v-model="searchParams.departureDate">
 
             </div>
 
@@ -59,9 +59,9 @@
 
             <div class="inputBox" id="numPasajeros"><!--Número de pasajeros del vuelo -->
                 <span>¿Cuántos?</span>
-                <input type="number" name="numPassengers" placeholder="Número de pasajeros" value="">
+                <input type="number" name="numPassengers" placeholder="Número de pasajeros" v-model="searchParams.numPassengers">
             </div>
-            <input data-aos="zoom-in" datas-aos-delay="900" type="submit" @click="performFlightSearch" value="Buscar"
+            <input data-aos="zoom-in" datas-aos-delay="900" type="submit"  value="Buscar"
                 class="btn_buscar"><!--Botón de busqueda de vuelo -->
         </form>
     </section>
@@ -749,6 +749,7 @@ export default {
         performFlightSearch() {
             flightService.parametrizedSearch(this.searchParams)
                 .then(response => {
+                    console.log(response.status);
                     if (response.status === 200) {
                         console.log("Vuelos encontrados:", response.data);
                         // Construye la URL con los parámetros de búsqueda
