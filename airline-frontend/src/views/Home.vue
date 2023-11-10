@@ -14,7 +14,7 @@
               
                 <div  class="inputBox">
                     <span>Origen</span><!--Origen del vuelo -->
-                    <select name="origen" placeholder = "¿Desde dónde vuelas?" value="">
+                    <select name="origin" placeholder = "¿Desde dónde vuelas?" value="">
                         <option value="Pereira">Pereira</option>
                         <option value="Bogotá">Bogotá</option>
                         <option value="Medellín">Medellín</option>
@@ -25,7 +25,7 @@
               
                 <div  class="inputBox">
                     <span>Destino</span><!--Destino del vuelo-->
-                    <select name="destino" placeholder = "¿A dónde vuelas?" value="">
+                    <select name="destination" placeholder = "¿A dónde vuelas?" value="">
                         <option value="Madrid">Madrid</option>
                         <option value="Londres">Londres</option>
                         <option value="NewYork">New York</option>
@@ -41,18 +41,18 @@
                 </div>
                 <div  class="inputBox"><!--Fecha de salida del vuelo -->
                     <span>Fecha de salida</span>
-                    <input type="date" value="">
+                    <input type="date" name="departureDate" value="">
                     
                 </div>
             
-                <div class="inputBox"><!--Fecha de regreso del vuelo -->
+                <!--<div class="inputBox"> Fecha de regreso del vuelo 
                     <span>Fecha de regreso</span>
-                    <input type="date" value="">
-                </div>
+                    <input type="date" name="returnDate" value="">
+                </div>-->
             
                 <div  class="inputBox" id="numPasajeros"><!--Número de pasajeros del vuelo -->
                     <span>¿Cuántos?</span>
-                    <input type="number" placeholder="Número de pasajeros" value="">
+                    <input type="number" name="numPassengers" placeholder="Número de pasajeros" value="">
                 </div>
                 <input  data-aos="zoom-in" datas-aos-delay="900" type="submit" value="Buscar" class="btn_buscar"><!--Botón de busqueda de vuelo -->
         </form>
