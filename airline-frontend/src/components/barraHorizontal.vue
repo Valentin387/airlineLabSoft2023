@@ -132,13 +132,13 @@
         }
 
         .carrito, .usuario {
-            color:$blanco;
+            color:$negro;
             margin: 0 1rem; // Ajusta el margen derecho para separar el usuario del carrito de compras
             background: transparent;
 
 
             &:hover, &.router-link-exact-active{
-            color:$negro;//Al pasar el cursor sobre la letra del enlace, el color cambia a azul
+            color:$blanco;//Al pasar el cursor sobre la letra del enlace, el color cambia a azul
             background-color: transparent;//color de fondo al selleccionar el texto
             text-decoration-line: none;
             cursor: pointer; // Cambia el cursor a un puntero al pasar sobre el botón

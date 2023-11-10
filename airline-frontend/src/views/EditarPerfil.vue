@@ -14,7 +14,7 @@
                 <div class="col-md-10">
                     <div class="tab-content">
                         <div @submit="updateProfile" class="tab-pane fade active show" id="account-general">
-                            <div class="card-body align-items-center">
+                            <div class="card-body media align-items-center">
                                 <img :src="profile.profileImage" required class="imagenPerfil" alt="Imagen de perfil" width="100" height="100">
                                 <div class="media-body ml-3">
                                     <button @click="showAvatarGallery" class="btn btn-outline-primary">Cambiar Foto de
@@ -735,31 +735,36 @@ export default {
         },
 
         deleteAccount() {
-            this.showSpinner = true;
-            // Get the user ID from the JWT token in sessionStorage
-            const token = window.sessionStorage.getItem('JWTtoken');
-            const tokenData = JSON.parse(atob(token.split('.')[1]));
-            const id = tokenData.ID;
+            // Muestra un mensaje de confirmación en lugar de redirigir directamente
+            const isConfirmed = window.confirm("¿Estás seguro de que deseas eliminar tu cuenta?");
+            if (isConfirmed) {
+                this.showSpinner = true;
+                // Get the user ID from the JWT token in sessionStorage
+                const token = window.sessionStorage.getItem('JWTtoken');
+                const tokenData = JSON.parse(atob(token.split('.')[1]));
+                const id = tokenData.ID;
 
-            deleteUserService.deleteUser(id).then(response => {
-                if (response.status == 200) {
-                    console.log("User Profile deleted!!", response.data);
-                    this.successMessage = "Cuenta eliminada correctamente";
-                    this.showSuccessMessage = true;
+                deleteUserService.deleteUser(id).then(response => {
+                    if (response.status == 200) {
+                        console.log("User Profile deleted!!", response.data);
+                        this.successMessage = "Cuenta eliminada correctamente";
+                        this.showSuccessMessage = true;
+                        this.showSpinner = false;
+                        this.$router.push('/Login');
+                        // You can redirect the user or perform other actions here.
+                    }
+                }).catch(error => {
                     this.showSpinner = false;
-                    this.$router.push('/Login');
-                    // You can redirect the user or perform other actions here.
-                }
-            }).catch(error => {
-                this.showSpinner = false;
-                // Handle login errors here
-                if (error == 403) {
-                    console.log("User not found sorry:", error.response.status, error);
-                    this.errorMessage = error || "User not found";
-                    this.showErrorMessage = true;
-                }
+                    // Handle login errors here
+                    if (error == 403) {
+                        console.log("User not found sorry:", error.response.status, error);
+                        this.errorMessage = error || "User not found";
+                        this.showErrorMessage = true;
+                    }
 
-            });
+                });
+            }
+            
         },
 
         showAvatarGallery() {
