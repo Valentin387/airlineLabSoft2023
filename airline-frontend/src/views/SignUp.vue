@@ -281,8 +281,7 @@ html {
     align-items: center !important;
   }
 
-  input,
-  select {
+  input, select {
 
     width: 70%;
     margin: 10px 0;
