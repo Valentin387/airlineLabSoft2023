@@ -10,5 +10,5 @@ import java.util.List;
 public interface OfferRepository  extends JpaRepository<Offer, Long> {
 
     @Query("SELECT o FROM tblOffer o WHERE o.validDateRange >= :flightDate AND o.origin = :origin AND o.destination = :destination")
-    List findValidOffers(String origin, String destination, Date flightDate);
+    List<Offer> findValidOffers(String origin, String destination, Date flightDate);
 }

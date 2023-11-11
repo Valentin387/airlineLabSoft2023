@@ -86,7 +86,11 @@ public class FlightController {
 
             if (validOffers.size() > 0) {
                 flight.setCostByPersonOffer(
-                    flight.getCostByPerson() - ( validOffers.get(0).getDiscount()/100 * flight.getCostByPerson() )
+                        // Multiply by 100 to keep two decimal places, then round, and divide by 100
+                        Math.round(
+                                (flight.getCostByPerson() - ( validOffers.get(0).getDiscount()/100 * flight.getCostByPerson() ))
+                                * 100.0
+                        )/100.0
                 );
             }
             flightRepository.save(flight);
