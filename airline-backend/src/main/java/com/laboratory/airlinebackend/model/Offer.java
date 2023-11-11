@@ -15,7 +15,7 @@ public class Offer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long ID;
     private double discount;
     @Column(length = 150)
     private String description;
