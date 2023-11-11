@@ -2,8 +2,9 @@
   <div>
     <h2>Resultados de la búsqueda</h2>
     <!-- Verifica si hay vuelos para mostrar -->
-    <ul v-if="flights.length > 0">
-      <li v-for="flight in flights" :key="flight.ID">
+    <ul v-if="flights && flights.length > 0">
+    <!-- Renderizar vuelos aquí -->
+      <li v-for="(flight, index) in flights" :key="index">
         <!-- Muestra la información del vuelo -->
         <p>ID: {{ flight.ID }}</p>
         <p>Origen: {{ flight.origin }}</p>
@@ -17,8 +18,6 @@
 </template>
 
 <script>
-import flightService from '@/services/searchService/parametrizedSearchService.js';
-
 export default {
   data() {
     return {
@@ -26,33 +25,15 @@ export default {
     };
   },
   mounted() {
-    // Cuando el componente se monta, carga los vuelos con los parámetros de la URL
-    this.loadFlights();
-  },
+    // Carga los vuelos almacenados en el almacenamiento de la sesión
+    const storedResults = sessionStorage.getItem('searchResults');
+    console.log("Stored Results:", storedResults);
 
-  methods: {
-    loadFlights() {
-      // Obtiene los parámetros de la URL
-      const queryParams = new URLSearchParams(this.$route.params);
+    if (storedResults) {
+      this.flights = JSON.parse(storedResults);
+      console.log("Flights:", this.flights);
+    }
+  }
 
-      const searchParams = {
-        origin: queryParams.get('origin') || '',
-        destination: queryParams.get('destination') || '',
-        departureDate: queryParams.get('departureDate') || '',
-      };
-
-      // Llama al servicio para obtener los vuelos
-      flightService.parametrizedSearch(searchParams)
-        .then(response => {
-          // Maneja la respuesta de la API aquí
-          console.log(response.data);
-          this.flights = response.data; // Asigna la lista de vuelos a la propiedad data
-        })
-        .catch(error => {
-          // Maneja el error de la API
-          console.error(error);
-        });
-    },
-  },
 };
 </script>

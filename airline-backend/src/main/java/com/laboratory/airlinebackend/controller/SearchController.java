@@ -25,7 +25,7 @@ public class SearchController {
     public ResponseEntity<?> searchFlights(
             @RequestParam  String origin,
             @RequestParam  String destination,
-            @RequestParam  @DateTimeFormat(pattern = "yyyy-MM-dd") Date departureDate,
+            @RequestParam  @DateTimeFormat(pattern = "yyyy-MM-dd") Date flightDate,
             //@RequestParam  @DateTimeFormat(pattern = "yyyy-MM-dd") Date returnDate,
             @RequestParam  int numPassengers) {
         // Your flight search logic here
@@ -38,7 +38,7 @@ public class SearchController {
         */
         // Use the parameters (origin, destination, departureDate, returnDate, numPassengers) to perform the search.
         try {
-            List<Flight> flights = flightRepository.findFlightsByParameters(origin, destination, departureDate, numPassengers);
+            List<Flight> flights = flightRepository.findFlightsByParameters(origin, destination, flightDate, numPassengers);
             /*if (flights.isEmpty()) {
                 System.out.println("no matches");
                 return ResponseEntity.badRequest().body("No flights found");

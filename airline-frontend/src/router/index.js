@@ -77,12 +77,12 @@ const router = createRouter ({
            
         },
         {
-            path: '/flights/:searchParams',
-            name: 'search-results',
+            path: '/search-results',
+            name: 'SearchResults',
             component: SearchResults,
-            props: true,
           },
-
+          
+    
     ]
     
 })
