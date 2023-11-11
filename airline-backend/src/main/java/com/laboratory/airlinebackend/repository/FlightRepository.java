@@ -30,5 +30,11 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
             "AND f.state = 'ON_TIME' ")
     void updateCostByPersonOffer(double discount, String origin, String destination, Date validDateRange);
 
-
+    @Modifying
+    @Query("UPDATE tblFlight f SET f.costByPersonOffer = 0.0 " +
+            "WHERE f.origin = :origin " +
+            "AND f.destination = :destination " +
+            "AND f.flightDate <= :validDateRange " +
+            "AND f.state = 'ON_TIME' ")
+    void resetCostByPersonOffer(String origin, String destination, Date validDateRange);
 }

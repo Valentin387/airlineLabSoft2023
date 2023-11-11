@@ -63,10 +63,17 @@ public class OfferController {
         }
     }
 
+    @Transactional
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteOffer(@PathVariable Long id){
         try{
+            Offer offer = offerRepository.findById(id).orElseThrow(() -> new Exception("Offer not found"));
             offerRepository.deleteById(id);
+
+            //I need to modify the attribute ´costByPersonOffer´ in every Flight that
+            // matches the origin, destination and whose flightDate is lower than the validDateRange
+            flightRepository.resetCostByPersonOffer(offer.getOrigin(), offer.getDestination(), offer.getValidDateRange());
+
             return ResponseEntity.ok("Offer deleted successfully");
         }catch (Exception e){
             return ResponseEntity.badRequest().body("Error deleting offer " + e.getMessage());
