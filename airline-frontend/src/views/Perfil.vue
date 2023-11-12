@@ -21,7 +21,7 @@
                     <div class="tab-content">
                         <div class="tab-pane fade active show" id="account-general">
                             <div class="card-body align-items-center">
-                                <img :src="profile.profileImage" class="imagenPerfil" alt="Imagen de perfil" width="100"
+                                <img :src=" profile.profileImage" class="imagenPerfil" alt="Imagen de perfil" width="100"
                                     height="100">
                             </div>
                             <hr class="border-light m-0">

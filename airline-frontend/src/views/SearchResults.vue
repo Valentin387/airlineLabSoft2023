@@ -6,7 +6,6 @@
     <!-- Renderizar vuelos aquí -->
       <li v-for="(flight, index) in flights" :key="index">
         <!-- Muestra la información del vuelo -->
-        <p>ID: {{ flight.ID }}</p>
         <p>Origen: {{ flight.origin }}</p>
         <p>Destino: {{ flight.destination }}</p>
         <!-- Agrega más campos según sea necesario -->

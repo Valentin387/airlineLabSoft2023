@@ -826,7 +826,7 @@ export default {
         origin: "",
         destination: "",
         flightDate: "",
-        numPassengers: 0,
+        //numPassengers: 0,
       },
     };
   },

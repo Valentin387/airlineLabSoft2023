@@ -264,6 +264,11 @@ export default {
         this.showSpinner = false;
         return;
       }
+      // Validación de complejidad de contraseña (puedes personalizar la expresión regular según tus criterios)
+      if (this.profile.password && !/(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,30}/.test(this.profile.password)) {
+                this.handleValidationError("La contraseña no cumple con los criterios de complejidad");
+                return;
+        }
 
       let { email, password, temporal } = this;
 
