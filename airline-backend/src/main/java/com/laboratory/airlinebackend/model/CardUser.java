@@ -18,27 +18,26 @@ import java.util.Optional;
 @Entity(name = "tblCardUser")
 public class CardUser {
 
-    @Autowired
-    private CardRepository cardRepository;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @ManyToOne
     @JoinColumn(name = "userID")
-    private User userId;
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "cardID")
-    private Card cardId;
+    private Card card;
 
     @Column
     private int quantityCreditCards;
 
     @Column
     private int quantityDebitCards;
+}
 
+    /*
     @Transient // Indica que este método no debe ser persistido en la base de datos
     public Card getCard() {
         // Implementación del método para obtener la tarjeta asociada
@@ -46,4 +45,6 @@ public class CardUser {
 
         return cardOptional.orElse(null);
     }
-}
+
+     */
+

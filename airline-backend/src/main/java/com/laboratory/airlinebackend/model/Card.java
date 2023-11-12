@@ -10,10 +10,11 @@ import lombok.*;
 @Builder
 @Entity(name = "tblCard")
 public class Card {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
+    /*
     @Column
     private double balance;
 
@@ -31,4 +32,5 @@ public class Card {
 
     @Column(length = 3)
     private String cvc;
+    */
 }

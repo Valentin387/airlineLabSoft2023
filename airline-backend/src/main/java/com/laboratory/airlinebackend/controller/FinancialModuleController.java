@@ -43,7 +43,8 @@ public class FinancialModuleController {
 
             List<Card> userCards = new ArrayList<>();
 
-            // Iterar sobre la lista de relaciones CardUser para obtener las tarjetas
+            //loop on the list of CardUser relationships to get the cards
+
             for (CardUser cardUser : cardUserList) {
                 userCards.add(cardUser.getCard());
             }
@@ -54,5 +55,6 @@ public class FinancialModuleController {
             return ResponseEntity.notFound().build();
         }
     }
+
 }
 
