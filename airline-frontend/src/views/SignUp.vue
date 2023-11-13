@@ -488,11 +488,11 @@ export default {
       showGallery: false,
       selectedAvatar: null,
       avatarOptions: [
-        "https://bootdey.com/img/Content/avatar/avatar1.png",
+        "https://bootdey.com/img/Content/avatar/avatar1.png",//Opciones de imagen de usuario
         "https://bootdey.com/img/Content/avatar/avatar2.png",
         "https://bootdey.com/img/Content/avatar/avatar3.png",
         "https://bootdey.com/img/Content/avatar/avatar8.png",
-        'src/assets/user.png'
+        'src/assets/user.png'//Imagen por defecto de usuario
         // Agrega más URLs de avatares según sea necesario
       ],
     };
