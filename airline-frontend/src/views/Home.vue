@@ -21,12 +21,12 @@
           name="origin"
           placeholder="¿Desde dónde vuelas?"
           v-model="searchParams.origin"
-        >
+         required>
           <option value="" disabled selected>¿Desde dónde vuelas?</option>
           <option value="Madrid">Madrid</option>
           <option value="Londres">Londres</option>
-          <option value="NewYork">New York</option>
-          <option value="BuenosAires">Buenos Aires</option>
+          <option value="New York">New York</option>
+          <option value="Buenos Aires">Buenos Aires</option>
           <option value="Miami">Miami</option>
           <option value="Pereira">Pereira</option>
           <option value="Bogotá">Bogotá</option>
@@ -43,12 +43,12 @@
           name="destination"
           placeholder="¿A dónde vuelas?"
           v-model="searchParams.destination"
-        >
+        required>
           <option value="" disabled selected>¿A dónde vuelas?</option>
           <option value="Madrid">Madrid</option>
           <option value="Londres">Londres</option>
-          <option value="NewYork">New York</option>
-          <option value="BuenosAires">Buenos Aires</option>
+          <option value="New York">New York</option>
+          <option value="Buenos Aires">Buenos Aires</option>
           <option value="Miami">Miami</option>
           <option value="Pereira">Pereira</option>
           <option value="Bogotá">Bogotá</option>
@@ -63,7 +63,7 @@
         <input
           type="date"
           name="departureDate"
-          v-model="searchParams.flightDate"
+          v-model="searchParams.flightDate" required
         />
       </div>
 
@@ -80,7 +80,7 @@
           name="numPassengers"
           placeholder="Número de pasajeros"
           v-model="searchParams.numPassengers"
-        />
+         required/>
       </div>
       <input
         data-aos="zoom-in"
@@ -826,7 +826,7 @@ export default {
         origin: "",
         destination: "",
         flightDate: "",
-        //numPassengers: 0,
+        numPassengers: 1,
       },
     };
   },

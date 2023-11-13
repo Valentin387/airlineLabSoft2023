@@ -718,28 +718,7 @@ export default {
             });
     },
     methods: {
-        validateBirthdate() {
-            const userBirthdate = this.profile.birthday;
-            const currentDate = new Date();
-            const currentDateString = currentDate.toISOString().split('T')[0];
-            const eighteenYearsAgo = new Date();
-            // Subtract 18 years from the current date
-            eighteenYearsAgo.setFullYear(currentDate.getFullYear() - 18);
-            const eighteenYearsAgoString = eighteenYearsAgo.toISOString().split('T')[0];
-
-            if (userBirthdate > currentDateString) {
-                //console.log("¡Ten cuidado McFly!, no puedes nacer en el futuro");
-                this.birthdateError = "¡Ten cuidado McFly!, no puedes nacer en el futuro";
-                this.isValidBirthday = false;
-            }
-            else if (userBirthdate > eighteenYearsAgoString) {
-                this.birthdateError = "¡Ten cuidado McFly!, debes ser mayor de edad para registrarte";
-                this.isValidBirthday = false;
-            } else {
-                this.birthdateError = '';
-                this.isValidBirthday = true;
-            }
-        },
+       
         updateProfileBirthday(event) {
             const selectedDate = new Date(event.target.value);
             this.profile.birthday = selectedDate.getTime();
