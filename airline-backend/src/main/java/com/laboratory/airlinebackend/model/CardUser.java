@@ -37,14 +37,4 @@ public class CardUser {
     private int quantityDebitCards;
 }
 
-    /*
-    @Transient // Indica que este método no debe ser persistido en la base de datos
-    public Card getCard() {
-        // Implementación del método para obtener la tarjeta asociada
-        Optional<Card> cardOptional = cardRepository.findById(cardId.getId());
-
-        return cardOptional.orElse(null);
-    }
-
-     */
 

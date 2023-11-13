@@ -1,7 +1,10 @@
 package com.laboratory.airlinebackend.model;
 
+import com.laboratory.airlinebackend.controller.DTO.NewCard;
 import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -14,7 +17,7 @@ public class Card {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    /*
+
     @Column
     private double balance;
 
@@ -32,5 +35,9 @@ public class Card {
 
     @Column(length = 3)
     private String cvc;
-    */
+
+    @OneToMany(mappedBy = "card", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CardUser> cardUsers;
+
+
 }
