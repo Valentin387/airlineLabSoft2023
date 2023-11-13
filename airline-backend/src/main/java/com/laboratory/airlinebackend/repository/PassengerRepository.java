@@ -1,4 +1,7 @@
 package com.laboratory.airlinebackend.repository;
 
-public interface PassengerRepository {
+import com.laboratory.airlinebackend.model.Passenger;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface PassengerRepository extends JpaRepository<Passenger, Long> {
 }
