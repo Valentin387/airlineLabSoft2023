@@ -4,8 +4,10 @@ import com.laboratory.airlinebackend.controller.DTO.RegisterRequestFlight;
 import com.laboratory.airlinebackend.controller.DTO.SeatState;
 import com.laboratory.airlinebackend.controller.service.SeatCreatorService;
 import com.laboratory.airlinebackend.model.Flight;
+import com.laboratory.airlinebackend.model.Offer;
 import com.laboratory.airlinebackend.model.Seat;
 import com.laboratory.airlinebackend.repository.FlightRepository;
+import com.laboratory.airlinebackend.repository.OfferRepository;
 import com.laboratory.airlinebackend.repository.SeatRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,9 @@ public class FlightController {
 
     @Autowired
     private SeatCreatorService seatCreatorService;
+
+    @Autowired
+    private OfferRepository offerRepository;
 
     @PostMapping("/create")
     public ResponseEntity<?> createNewFlight(
@@ -71,6 +76,23 @@ public class FlightController {
                 .state(FlightState.ON_TIME.toString())
                 .availableSeats(assignedSeats)
                 .build();
+
+            // Check for valid offers
+            List<Offer> validOffers = offerRepository.findValidOffers(
+                    flight.getOrigin(),
+                    flight.getDestination(),
+                    flight.getFlightDate()
+            );
+
+            if (validOffers.size() > 0) {
+                flight.setCostByPersonOffer(
+                        // Multiply by 100 to keep two decimal places, then round, and divide by 100
+                        Math.round(
+                                (flight.getCostByPerson() - ( validOffers.get(0).getDiscount()/100 * flight.getCostByPerson() ))
+                                * 100.0
+                        )/100.0
+                );
+            }
             flightRepository.save(flight);
 
             //now let's create the seats for this flight
@@ -89,6 +111,16 @@ public class FlightController {
             return ResponseEntity.badRequest().body("Error creating flight");
         }
 
+    }
+
+    @GetMapping("/list/active")
+    public ResponseEntity<?> getActiveFlights(){
+        try{
+            List<Flight> flights = flightRepository.getOnTimeFlights();
+            return ResponseEntity.ok(flights);
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error getting active flights");
+        }
     }
 
     /*
