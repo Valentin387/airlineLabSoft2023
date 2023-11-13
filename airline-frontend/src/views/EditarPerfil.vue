@@ -611,8 +611,12 @@ import deleteUserService from "@/services/userService/deleteUserService.js";
 import errorModal from "@/components/ErrorModal.vue";
 import spinner from "@/components/spinner.vue";
 import successModal from "@/components/successModal.vue";
-import { is } from "date-fns/locale";
+
 import Footer from '@/components/footer.vue';
+import {  parse } from 'date-fns';
+import { es } from 'date-fns/locale';
+import { utcToZonedTime, zonedTimeToUtc } from 'date-fns-tz';
+
 
 export default {
     data() {
@@ -718,10 +722,12 @@ export default {
             });
     },
     methods: {
-       
+
         updateProfileBirthday(event) {
-            const selectedDate = new Date(event.target.value);
-            this.profile.birthday = selectedDate.getTime();
+            const selectedDate = new Date(event.target.value + 'T00:00:00'); // Así se evitan problemas con UTC
+            const selectedDateUTC = zonedTimeToUtc(selectedDate, 'America/Bogota'); // Convierte a UTC
+
+            this.profile.birthday = selectedDateUTC.getTime();
             this.validateBirthdate();
             this.updateProfile(); // Agregamos la llamada a la función de actualización
         },
@@ -800,7 +806,7 @@ export default {
                 return;
             }
 
-            
+
             this.showSpinner = true;
             //this.showSpinner = true;
             const token = window.sessionStorage.getItem("JWTtoken");
