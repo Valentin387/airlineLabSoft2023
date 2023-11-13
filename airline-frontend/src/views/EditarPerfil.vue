@@ -8,13 +8,17 @@
                     <div class="list-group list-group-flush account-settings-links">
                         <a class="list-group-item list-group-item-action active" data-toggle="list"
                             href="#account-general">Información Personal</a>
+                        <button type="button" class="btn-borrar" @click="deleteAccount" required>Borrar
+                            cuenta</button>&nbsp;
+
                     </div>
                 </div>
                 <div class="col-md-10">
                     <div class="tab-content">
                         <div @submit="updateProfile" class="tab-pane fade active show" id="account-general">
                             <div class="card-body media align-items-center">
-                                <img :src="profileImage || 'src/assets/user.png'" required alt="Imagen de perfil" width="100" height="100">
+                                <img :src="profile.profileImage" required class="imagenPerfil" alt="Imagen de perfil"
+                                    width="100" height="100">
                                 <div class="media-body ml-3">
                                     <button @click="showAvatarGallery" class="btn btn-outline-primary">Cambiar Foto de
                                         perfil</button>
@@ -166,12 +170,11 @@
                                         </div>
                                         <div class="form-group">
                                             <label class="form-label">Fecha de Nacimiento</label>
-                                            <!--  <input type="label" class="form-control" v-model="formattedBirthday" required
-                                                readonly> -->
-                                            <input type="date" class="form-control" v-model="profile.birthday"
-                                                @input="validateBirthdate" required>
+                                            <input type="date" class="form-control" :value="formattedBirthday"
+                                                @input="updateProfileBirthday" required />
                                             <p v-if="!isValidBirthday">{{ birthdateError }}</p>
                                         </div>
+
                                         <div class="form-group">
                                             <label class="form-label">Dirección de Facturación</label>
                                             <input type="text" class="form-control" v-model="profile.billingAddress"
@@ -186,11 +189,14 @@
                                             <label class="form-label">Género</label>
                                             <select class="form-control" id="gender" placeholder="Género"
                                                 v-model="profile.gender">
-                                                <option value="male">Masculino</option>
-                                                <option value="female">Femenino</option>
-                                                <option value="Other">Otro</option>
+                                                <option value="Masculino" :selected="profile.gender === 'Masculino'">
+                                                    Masculino</option>
+                                                <option value="Femenino" :selected="profile.gender === 'Femenino'">Femenino
+                                                </option>
+                                                <option value="Otro" :selected="profile.gender === 'Otro'">Otro</option>
                                             </select>
                                         </div>
+
                                         <div class="switch-button">
                                             <label class="form-label">Suscribirse al módulo de noticias</label>
                                             <input type="checkbox" name="switch-button" id="switch-label"
@@ -201,12 +207,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div>
-                                <div class="text-left mt-3 bt-3">
-                                    <button type="button" class="btn btn-primary" @click="deleteAccount" required>Borrar
-                                        cuenta</button>&nbsp;
-                                </div>
-                            </div>
+
                             <div class="text-right mt-3 bt-3">
                                 <button type="submit" class="btn btn-primary" @click="updateProfile" required>Guardar
                                     Cambios</button>&nbsp;
@@ -233,11 +234,13 @@ $degradado: rgba(149, 168, 238, 0.11);
 $bg: rgba(6, 31, 14, 0.947);
 $azul-claro: #CFE0EB;
 $gris: #F7F7F7;
+$gris2: #364265;
 $verde: #00BD8E;
 $azul: #0D629B;
 $blanco: #FFFFFF;
 $negro: #1A1320;
 $accent: #0B97F4;
+$blue: #54b2f1;
 $secondary: #ceeafd;
 
 html {
@@ -342,35 +345,34 @@ html {
 
 
 .btn-outline-primary {
-    border-color: $accent;
+    border-color: $blue;
     background: transparent;
-    color: $accent;
+    color: $gris2;
     margin-top: 1rem;
     display: inline-block;
     padding: 1rem 3rem;
     font-size: 1.7rem;
     font-weight: bolder;
-    border: $azul .2rem solid;
+    border: $blue .2rem solid;
     border-radius: 5rem;
     margin-left: 5rem;
     box-shadow: inset 0px 0px 0px 1px $accent;
 }
 
 .btn-primary {
-    background-color: $accent;
+    background-color: $gris2;
     color: $blanco;
     margin-top: 1rem;
     display: inline-block;
     padding: 1rem 3rem;
     font-size: 1.7rem;
-   // font-weight: bold;
+    // font-weight: bold;
     margin-left: 5rem;
     border: $azul-claro .2rem solid;
     border-radius: 5rem;
     box-shadow: inset 0px 0px 0px 1px $negro;
-    
-
 }
+
 
 
 
@@ -392,7 +394,23 @@ html {
     margin-top: 10rem;
     width: 90vw;
     margin-right: -10%;
+
+    .btn-borrar {
+        background-color: $gris2;
+        color: $blanco;
+        margin-top: 1rem;
+        margin: 1rem auto; //Centrado 
+        display: inline-block;
+        padding: 1rem 3rem;
+        font-size: 1.7rem;
+        border: $azul-claro .2rem solid;
+        border-radius: 5rem;
+        box-shadow: inset 0px 0px 0px 1px $negro;
+    }
+
 }
+
+
 
 .row-bordered {
     overflow: hidden;
@@ -408,10 +426,14 @@ html {
 
 .account-settings-links .list-group-item.active {
     font-weight: bold !important;
+    align-items: center !important;
+    display: flex !important;
+    justify-content: center !important;
 }
 
 html:not(.dark-style) .account-settings-links .list-group-item.active {
     background: transparent !important;
+
 }
 
 .account-settings-multiselect~.select2-container {
@@ -421,6 +443,7 @@ html:not(.dark-style) .account-settings-links .list-group-item.active {
 .light-style .account-settings-links .list-group-item {
     padding: 0.85rem 1.5rem;
     border-color: rgba(24, 28, 33, 0.03) !important;
+
 }
 
 
@@ -431,6 +454,7 @@ html:not(.dark-style) .account-settings-links .list-group-item.active {
     box-shadow: 0px 0px 5px rgba(19, 99, 174, 0.5) !important;
     background-color: #f5f5f5 !important;
     transition: all 0.3s ease-in-out !important;
+
 }
 
 
@@ -444,7 +468,7 @@ html:not(.dark-style) .account-settings-links .list-group-item.active {
 /* Aumenta el tamaño de las etiquetas en los formularios */
 .form-label {
     font-size: 1.8rem;
-    color: $azul;
+    color: $negro;
     font-weight: bolder;
     /* Ajusta el tamaño según tus preferencias */
 }
@@ -563,18 +587,20 @@ html:not(.dark-style) .account-settings-links .list-group-item.active {
     align-items: center !important;
     display: flex !important;
     justify-content: center !important;
-  
-  }
 
-  .avatar-gallery img {
+}
+
+.avatar-gallery img {
     width: 100px;
     height: 100px;
     margin: 5px;
     border: 1px solid #1b1818;
     cursor: pointer;
-    border-radius: 50%; /* Aplicamos un borde circular */
-    overflow: hidden; /* Aseguramos que la imagen esté dentro del círculo */
-  }
+    border-radius: 50%;
+    /* Aplicamos un borde circular */
+    overflow: hidden;
+    /* Aseguramos que la imagen esté dentro del círculo */
+}
 </style>
 
 <script>
@@ -692,55 +718,45 @@ export default {
             });
     },
     methods: {
-        validateBirthdate() {
-            const userBirthdate = this.profile.birthday;
-            const currentDate = new Date();
-            const currentDateString = currentDate.toISOString().split('T')[0];
-            const eighteenYearsAgo = new Date();
-            // Subtract 18 years from the current date
-            eighteenYearsAgo.setFullYear(currentDate.getFullYear() - 18);
-            const eighteenYearsAgoString = eighteenYearsAgo.toISOString().split('T')[0];
-
-            if (userBirthdate > currentDateString) {
-                //console.log("¡Ten cuidado McFly!, no puedes nacer en el futuro");
-                this.birthdateError = "¡Ten cuidado McFly!, no puedes nacer en el futuro";
-                this.isValidBirthday = false;
-            }
-            else if (userBirthdate > eighteenYearsAgoString) {
-                this.birthdateError = "¡Ten cuidado McFly!, debes ser mayor de edad para registrarte";
-                this.isValidBirthday = false;
-            } else {
-                this.birthdateError = '';
-                this.isValidBirthday = true;
-            }
+       
+        updateProfileBirthday(event) {
+            const selectedDate = new Date(event.target.value);
+            this.profile.birthday = selectedDate.getTime();
+            this.validateBirthdate();
+            this.updateProfile(); // Agregamos la llamada a la función de actualización
         },
 
         deleteAccount() {
-            this.showSpinner = true;
-            // Get the user ID from the JWT token in sessionStorage
-            const token = window.sessionStorage.getItem('JWTtoken');
-            const tokenData = JSON.parse(atob(token.split('.')[1]));
-            const id = tokenData.ID;
+            // Muestra un mensaje de confirmación en lugar de redirigir directamente
+            const isConfirmed = window.confirm("¿Estás seguro de que deseas eliminar tu cuenta?");
+            if (isConfirmed) {
+                this.showSpinner = true;
+                // Get the user ID from the JWT token in sessionStorage
+                const token = window.sessionStorage.getItem('JWTtoken');
+                const tokenData = JSON.parse(atob(token.split('.')[1]));
+                const id = tokenData.ID;
 
-            deleteUserService.deleteUser(id).then(response => {
-                if (response.status == 200) {
-                    console.log("User Profile deleted!!", response.data);
-                    this.successMessage = "Cuenta eliminada correctamente";
-                    this.showSuccessMessage = true;
+                deleteUserService.deleteUser(id).then(response => {
+                    if (response.status == 200) {
+                        console.log("User Profile deleted!!", response.data);
+                        this.successMessage = "Cuenta eliminada correctamente";
+                        this.showSuccessMessage = true;
+                        this.showSpinner = false;
+                        this.$router.push('/Login');
+                        // You can redirect the user or perform other actions here.
+                    }
+                }).catch(error => {
                     this.showSpinner = false;
-                    this.$router.push('/Login');
-                    // You can redirect the user or perform other actions here.
-                }
-            }).catch(error => {
-                this.showSpinner = false;
-                // Handle login errors here
-                if (error == 403) {
-                    console.log("User not found sorry:", error.response.status, error);
-                    this.errorMessage = error || "User not found";
-                    this.showErrorMessage = true;
-                }
+                    // Handle login errors here
+                    if (error == 403) {
+                        console.log("User not found sorry:", error.response.status, error);
+                        this.errorMessage = error || "User not found";
+                        this.showErrorMessage = true;
+                    }
 
-            });
+                });
+            }
+
         },
 
         showAvatarGallery() {
@@ -783,6 +799,8 @@ export default {
                 this.showErrorMessage = true;
                 return;
             }
+
+            
             this.showSpinner = true;
             //this.showSpinner = true;
             const token = window.sessionStorage.getItem("JWTtoken");

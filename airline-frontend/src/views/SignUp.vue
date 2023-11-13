@@ -4,30 +4,32 @@
     <div class="registration-container">
       <div class="title">Crear Cuenta</div>
       <form id="registration-form" @submit.prevent="createAccount">
-
-        <div class="card-body  align-items-center">
-          <div class="image-section ">       
-            <img :src="profileImage || 'src/assets/user.png' " required alt="Imagen de perfil" width="100" height="100">
+        <div class="card-body align-items-center">
+          <div class="image-section">
+            <img :src="profileImage || 'src/assets/user.png'" required alt="Imagen de perfil" width="100" height="100" />
           </div>
-          <div class="media-body align-items-center ">
-            
-            <button @click="showAvatarGallery" class="btn btn-outline-primary">Agregar foto de perfil</button>
+          <div class="media-body align-items-center">
+            <button @click="showAvatarGallery" class="btn btn-outline-primary">
+              Agregar foto de perfil
+            </button>
             <div v-if="showGallery" class="avatar-gallery">
               <img v-for="(avatar, index) in avatarOptions" :key="index" :src="avatar" @click="selectAvatar(avatar)"
                 alt="Avatar" />
             </div>
           </div>
         </div>
-        <hr class="border-light m-0">
+        <hr class="border-light m-0" />
         <div class="card-body">
           <div class="form-group">
             <!-- Nombre Completo -->
-            <input type="text" id="firstName" placeholder="Nombre" v-model="firstName" required>
+            <input type="text" id="firstName" placeholder="Nombre" v-model="firstName" required />
             <p v-if="!isValidFirstName">El nombre no es válido</p>
 
             <!-- Apellido -->
-            <input type="text" id="lastName" placeholder="Apellido" v-model="lastName" required>
-            <p v-if="lastName.length > 25">El apellido no puede tener más de 25 caracteres</p>
+            <input type="text" id="lastName" placeholder="Apellido" v-model="lastName" required />
+            <p v-if="lastName.length > 25">
+              El apellido no puede tener más de 25 caracteres
+            </p>
 
             <!-- Lugar de Nacimiento -->
 
@@ -66,7 +68,9 @@
               <option value="Ecuador">Ecuador</option>
               <option value="Egipto">Egipto</option>
               <option value="El Salvador">El Salvador</option>
-              <option value="Emiratos Árabes Unidos">Emiratos Árabes Unidos</option>
+              <option value="Emiratos Árabes Unidos">
+                Emiratos Árabes Unidos
+              </option>
               <option value="Eslovaquia">Eslovaquia</option>
               <option value="Eslovenia">Eslovenia</option>
               <option value="España">España</option>
@@ -129,7 +133,9 @@
               <option value="Rumanía">Rumanía</option>
               <option value="Rusia">Rusia</option>
               <option value="San Bartolomé">San Bartolomé</option>
-              <option value="San Cristóbal y Nieves">San Cristóbal y Nieves</option>
+              <option value="San Cristóbal y Nieves">
+                San Cristóbal y Nieves
+              </option>
               <option value="San Marino">San Marino</option>
               <option value="Sri Lanka">Sri Lanka</option>
               <option value="Sudáfrica">Sudáfrica</option>
@@ -137,7 +143,9 @@
               <option value="Suiza">Suiza</option>
               <option value="Tailandia">Tailandia</option>
               <option value="Taiwán">Taiwán</option>
-              <option value="Territorios Palestinos">Territorios Palestinos</option>
+              <option value="Territorios Palestinos">
+                Territorios Palestinos
+              </option>
               <option value="Trinidad y Tobago">Trinidad y Tobago</option>
               <option value="Turquía">Turquía</option>
               <option value="Ucrania">Ucrania</option>
@@ -147,46 +155,57 @@
               <option value="Zimbabue">Zimbabue</option>
             </select>
             <!-- Fecha de Nacimiento -->
-            <input type="date" class="birth-place" v-model="birthDate" @input="validateBirthdate" required>
+            <input type="date" class="birth-place" v-model="birthDate" @input="validateBirthdate" required />
             <p v-if="!isValidBirthday">{{ birthdateError }}</p>
 
             <!-- Direccion de Facturacion -->
             <input type="text" id="billing-address" placeholder="Dirección de Facturación" v-model="billingAddress"
-              required>
+              required />
 
             <!-- DNI -->
-            <input type="text" id="DNI" placeholder="Documento" v-model="DNI" required>
-            <p v-if="DNI.length > 10">El DNI no puede tener más de 10 caracteres</p>
+            <input type="text" id="DNI" placeholder="Documento" v-model="DNI" required />
+            <p v-if="DNI.length > 10">
+              El DNI no puede tener más de 10 caracteres
+            </p>
 
             <!-- Género -->
             <select id="gender" placeholder="Género" v-model="gender">
               <option value="" disabled selected>Seleccione el género</option>
-              <option value="male">Masculino</option>
-              <option value="female">Femenino</option>
-              <option value="Other">Otro</option>
+              <option value="Masculino">Masculino</option>
+              <option value="Femenino">Femenino</option>
+              <option value="Otro">Otro</option>
             </select>
 
             <!-- Email -->
-            <input type="email" id="email" placeholder="Correo Electrónico" v-model="email" required>
-            <p v-if="email.length > 80">El correo electrónico no puede tener más de 30 caracteres</p>
+            <input type="email" id="email" placeholder="Correo Electrónico" v-model="email" required />
+            <p v-if="email.length > 80">
+              El correo electrónico no puede tener más de 30 caracteres
+            </p>
 
             <!-- Usuario -->
-            <input type="text" id="username" placeholder="Usuario" v-model="username" required>
-            <p v-if="username.length > 25">El usuario no puede tener más de 25 caracteres</p>
+            <input type="text" id="username" placeholder="Usuario" v-model="username" required />
+            <p v-if="username.length > 25">
+              El usuario no puede tener más de 25 caracteres
+            </p>
 
             <!-- Contraseña -->
-            <input type="password" id="password" placeholder="Contraseña" v-model="password" required>
-            <p v-if="password.length < 8 || password.length > 30">La contraseña debe tener entre 8 y 30 caracteres</p>
+            <input type="password" id="password" placeholder="Contraseña" v-model="password" required />
+            <p v-if="password.length < 8 || password.length > 30">
+              La contraseña debe tener entre 8 y 30 caracteres, al menos una mayúscula, una minúscula y un número
+            </p>
           </div>
         </div>
 
-        <button id="create-account" class="create-account" @submit.prevent="createAccount" type="submit">Crear
-          Cuenta</button>
+        <button id="create-account" class="create-account" @submit.prevent="createAccount" type="submit">
+          Crear Cuenta
+        </button>
       </form>
       <p id="text1">o</p>
       <error-modal :show-error="showErrorMessage" :error-message="errorMessage" @close="showErrorMessage = false" />
       <p>¿Ya tienes una cuenta?</p>
-      <button id="login" class="login" @click.prevent="redirectToLogin">Iniciar sesión</button>
+      <button id="login" class="login" @click.prevent="redirectToLogin">
+        Iniciar sesión
+      </button>
     </div>
   </div>
   <!------------------------------------------------FOOTER------------------------------------------->
@@ -197,14 +216,15 @@
 $light-color: #312c02;
 $degradado: rgba(149, 168, 238, 0.11);
 $bg: rgba(6, 31, 14, 0.947);
-$azul-claro: #CFE0EB;
-$gris: #F7F7F7;
-$verde: #00BD8E;
-$azul: #0D629B;
-$blanco: #FFFFFF;
-$negro: #1A1320;
-$accent: #0B97F4;
+$azul-claro: #cfe0eb;
+$gris: #f7f7f7;
+$verde: #00bd8e;
+$azul: #0d629b;
+$blanco: #ffffff;
+$negro: #1a1320;
+$accent: #0b97f4;
 $accent3: #f7f7f7;
+$blue: #54b2f1;
 $secondary: #ceeafd;
 
 html {
@@ -235,9 +255,7 @@ html {
   &::-webkit-scrollbar-thumb {
     background-color: $azul;
   }
-
 }
-
 
 .registration-box {
   box-shadow: 0 6px 6px rgba(6, 6, 6, 0.1);
@@ -254,11 +272,9 @@ html {
   overflow: hidden;
   text-align: center;
 
-
   .form-group {
     margin: 10px 0;
     padding: 20px;
-    
   }
 
   .title {
@@ -271,7 +287,6 @@ html {
     color: $negro;
     font-weight: bolder;
     text-align: center;
-    
   }
 
   label {
@@ -282,7 +297,6 @@ html {
 
   input,
   select {
-
     width: 70%;
     margin: 10px 0;
     padding: 10px;
@@ -293,7 +307,7 @@ html {
   .create-account {
     width: 40%;
     padding: 7px;
-    background-color: #007bff;
+    background-color: $blue;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -304,7 +318,7 @@ html {
   .login {
     width: 30%;
     padding: 7px;
-    background-color: #676d72;
+    background-color: #364265;
     color: #fff;
     border: none;
     border-radius: 5px;
@@ -316,34 +330,38 @@ html {
   .login-link:hover {
     text-decoration: underline;
   }
+
   .image-section {
     //text-align: center; // Alinea la imagen al centro horizontalmente
-    margin-top: 1rem;// Ajusta el espaciado superior según tus necesidades
+    margin-top: 1rem; // Ajusta el espaciado superior según tus necesidades
     align-items: center !important;
     display: flex !important;
     justify-content: center !important;
   }
- 
+
   .image-section img {
     display: block !important; // Asegura que la imagen esté centrada en su contenedor
     //margin: 0 auto; // Alinea la imagen al centro horizontalmente dentro de su contenedor
-    border-radius: 50%; /* Aplicamos un borde circular */
-    overflow: hidden; /* Aseguramos que la imagen esté dentro del círculo */
-   // text-align: center;
-   
+    border-radius: 50%;
+    /* Aplicamos un borde circular */
+    overflow: hidden;
+    /* Aseguramos que la imagen esté dentro del círculo */
+    // text-align: center;
   }
 
   .profile-picture {
     width: 30px;
-    border-radius: 50%; /* Aplicamos un borde circular */
-    overflow: hidden; /* Aseguramos que la imagen esté dentro del círculo */
+    border-radius: 50%;
+    /* Aplicamos un borde circular */
+    overflow: hidden;
+    /* Aseguramos que la imagen esté dentro del círculo */
     align-items: center !important;
     display: flex !important;
     justify-content: center !important;
   }
 
   .text1 {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: "Courier New", Courier, monospace;
     font-size: small;
     text-align: center;
     margin-top: 30px;
@@ -355,7 +373,6 @@ html {
     align-items: center !important;
     display: flex !important;
     justify-content: center !important;
-  
   }
 
   .avatar-gallery img {
@@ -364,8 +381,10 @@ html {
     margin: 5px;
     border: 1px solid #1b1818;
     cursor: pointer;
-    border-radius: 50%; /* Aplicamos un borde circular */
-    overflow: hidden; /* Aseguramos que la imagen esté dentro del círculo */
+    border-radius: 50%;
+    /* Aplicamos un borde circular */
+    overflow: hidden;
+    /* Aseguramos que la imagen esté dentro del círculo */
   }
 
   .btn-outline-primary {
@@ -379,7 +398,7 @@ html {
     align-items: center !important;
     font-size: 1.7rem;
     font-weight: bolder;
-    border: $azul .2rem solid;
+    border: $azul 0.2rem solid;
     border-radius: 5rem;
     margin-left: 0rem;
     box-shadow: inset 0px 0px 0px 1px $accent;
@@ -392,18 +411,13 @@ html {
     display: inline-block;
     padding: 1rem 3rem;
     font-size: 1.7rem;
-   // font-weight: bold;
+    // font-weight: bold;
     margin-left: 5rem;
-    border: $azul-claro .2rem solid;
+    border: $azul-claro 0.2rem solid;
     border-radius: 5rem;
     box-shadow: inset 0px 0px 0px 1px $negro;
-    
-
   }
-
 }
-
-
 
 @media screen and (max-width: 1000px) {
   .registration-box {
@@ -439,6 +453,7 @@ html {
 
 <script>
 import registerService from "@/services/authenticationService/registerService.js";
+import emailService from "@/services/authenticationService/emailCheckingService";
 import errorModal from "@/components/ErrorModal.vue";
 import spinner from "@/components/spinner.vue";
 import Footer from '@/components/footer.vue';
@@ -464,12 +479,12 @@ export default {
       email: "",
       username: "",
       password: "",
-      profileImage: "",
+      profileImage: 'src/assets/user.png',
       errorMessage: "",
       showErrorMessage: false,
       isValidFirstName: true,
       showSpinner: false,
-
+     
       showGallery: false,
       selectedAvatar: null,
       avatarOptions: [
@@ -490,23 +505,36 @@ export default {
       const currentDate = new Date();
       const currentDateString = currentDate.toISOString().split('T')[0];
       const eighteenYearsAgo = new Date();
-      // Subtract 18 years from the current date
       eighteenYearsAgo.setFullYear(currentDate.getFullYear() - 18);
       const eighteenYearsAgoString = eighteenYearsAgo.toISOString().split('T')[0];
 
-      if (userBirthdate > currentDateString) {
-        //console.log("¡Ten cuidado McFly!, no puedes nacer en el futuro");
-        this.birthdateError = "¡Ten cuidado McFly!, no puedes nacer en el futuro";
-        this.isValidBirthday = false;
-      }
-      else if (userBirthdate > eighteenYearsAgoString) {
+      // Verifica si el usuario tiene más de 18 años
+      if (userBirthdate > eighteenYearsAgoString) {
         this.birthdateError = "¡Ten cuidado McFly!, debes ser mayor de edad para registrarte";
         this.isValidBirthday = false;
       } else {
-        this.birthdateError = '';
-        this.isValidBirthday = true;
+        // Verifica si el usuario tiene menos de 90 años
+        const ninetyYearsAgo = new Date();
+        ninetyYearsAgo.setFullYear(currentDate.getFullYear() - 90);
+        const ninetyYearsAgoString = ninetyYearsAgo.toISOString().split('T')[0];
+
+        if (userBirthdate < ninetyYearsAgoString) {
+          this.birthdateError = "¡Eres demasiado mayor para registrarte!";
+          this.isValidBirthday = false;
+        } else {
+          this.birthdateError = '';
+          this.isValidBirthday = true;
+        }
+      }
+
+      // Mostrar una ventana emergente en caso de error
+      if (!this.isValidBirthday) {
+        this.errorMessage = this.birthdateError;
+        this.showErrorMessage = true;
       }
     },
+
+
     showAvatarGallery() {
       this.showGallery = true;
     },
@@ -519,21 +547,78 @@ export default {
       this.showGallery = false;
     },
 
-    createAccount() {
+    async createAccount() {
       this.showSpinner = true;
-      if (this.password.length < 8 || this.password.length > 30) {
-        console.log("La contraseña no esta dentro del limite");
-        this.errorMessage = "La contraseña debe ser menor a 30 y mayor a 8 carácteres";
-        this.showErrorMessage = true;
-        this.showSpinner = false;
+
+      // Validación de complejidad de contraseña (ejemplo: al menos una mayúscula, una minúscula y un número)
+      if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,30}/.test(this.password)) {
+        this.handleValidationError("La contraseña no cumple con los criterios de complejidad");
         return;
       }
 
+      // Validación de nombre y fecha de nacimiento
       if (!this.isValidFirstName || !this.isValidBirthday) {
-        this.errorMessage = "Datos no válidos, revisa que hayas llenado correctamente todos los campos";
-        this.showErrorMessage = true;
+        this.handleValidationError("Datos no válidos, revisa que hayas llenado correctamente todos los campos");
         return;
       }
+
+      // Validación de DNI (ejemplo: debe ser numérico)
+      if (isNaN(this.DNI)) {
+        this.handleValidationError("El DNI debe ser numérico");
+        return;
+      }
+
+      // Validar que el nombre de usuario no consista solo en espacios, solo en caracteres especiales o solo en números
+      if (/^\s*[a-zA-Z]+[a-zA-Z0-9]*[!@#$%^&*(),.?":{}|<>_-]*[a-zA-Z0-9]+\s*$/.test(this.username)) {
+        // El nombre de usuario cumple con los criterios
+      } else {
+        this.handleValidationError("El nombre de usuario no puede consistir solo en espacios, solo en caracteres especiales o solo en números");
+        return;
+      }
+
+      // Validar que el nombre no consista solo en espacios, números o caracteres especiales
+      if (!/^[a-zA-Z]+$/.test(this.firstName)) {
+        this.handleValidationError("El nombre no puede contener números, espacios o caracteres especiales");
+        return;
+      }
+
+      // Validar que el apellido no consista solo en espacios, números o caracteres especiales
+      if (!/^[a-zA-Z]+$/.test(this.lastName)) {
+        this.handleValidationError("El apellido no puede contener números, espacios o caracteres especiales");
+        return;
+      }
+
+      // Validar que la contraseña no consista solo en espacios en blanco
+      if (this.password.trim().length === 0) {
+        this.handleValidationError("La contraseña no puede consistir solo en espacios en blanco");
+        return;
+      }
+
+      // Validar el formato del correo electrónico
+      if (!/\S+@\S+\.\S+/.test(this.email)) {
+        this.handleValidationError("El formato del correo electrónico no es válido");
+        return;
+      }
+
+      // Verificación de disponibilidad de correo electrónico
+      try {
+        const response = await emailService.emailChecking(this.email);
+
+        if (response.status === 200) {
+          // El correo electrónico está disponible, continúa con el registro
+          // ... (resto de tu lógica de registro)
+        } else {
+          // El correo electrónico ya está en uso
+          this.handleValidationError("El correo electrónico ya está en uso");
+        }
+      } catch (error) {
+        // Maneja cualquier error de la solicitud
+        console.error("Error al verificar el correo electrónico:", error);
+        this.handleValidationError("Error al verificar el correo electrónico");
+      } finally {
+        this.showSpinner = false;
+      }
+
 
       if (isNaN(this.firstName) && this.firstName.length <= 25) {
         this.isValidFirstName = true;
@@ -579,6 +664,13 @@ export default {
         this.errorMessage = "El nombre no puede ser un numero o no esta dentro del limite";
         this.showErrorMessage = true;
       }
+    },
+
+    // Función para manejar errores de validación
+    handleValidationError(errorMessage) {
+      this.showSpinner = false;
+      this.errorMessage = errorMessage;
+      this.showErrorMessage = true;
     },
     /*uploadProfilePicture(event) {
       const file = event.target.files[0];

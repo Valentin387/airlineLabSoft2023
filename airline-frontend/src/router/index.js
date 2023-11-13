@@ -10,6 +10,7 @@ import CambioIdRoot from '../views/CambioIdRoot.vue'
 import EditarPerfil from '../views/EditarPerfil.vue'
 import RecoverPassword from '../views/RecoverPassword.vue'
 import ResetPassword from '../views/ResetPassword.vue'
+import SearchResults from '../views/SearchResults.vue'; // Ajusta la ruta según sea necesario
 
 const router = createRouter ({
 
@@ -74,8 +75,14 @@ const router = createRouter ({
             component:  EditarPerfil,
             meta: { requiresAuth: true }
            
-        }
-
+        },
+        {
+            path: '/search-results',
+            name: 'SearchResults',
+            component: SearchResults,
+          },
+          
+    
     ]
     
 })

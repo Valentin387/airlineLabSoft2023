@@ -26,7 +26,7 @@
                 <p>Suscríbete para conocer las últimas actualizaciones</p>
                 <form action = "">
                     <input type="email" placeholder="Ingrese su correo" class="email" id="">
-                    <input type="submit" value="Suscribirse" class="btn">
+                    <input type="submit" value="Suscribirse" class="btn-email">
                 </form>
             </div>
         </div>
@@ -78,14 +78,14 @@
   .footer{  
       .box-container{
           @include grid(25rem);
-          background: $accent3;
+          background:  #364265;
           padding: 3rem 2rem;
           border-radius: 2rem;
           box-shadow: 1px 0.5px 6px 2px rgba(225, 227, 230, 0.7);
           
           .box{
               padding: 1rem 0;
-              background : #F3F5FD;
+              background :  #364265;
               
              
               .logo{
@@ -116,7 +116,7 @@
                 }
               h3{
                   font-size: 2.2rem;
-                  color:$azul;
+                  color:$blanco;
                   font-weight: bolder;
                   padding:1rem 0;
                   text-transform: capitalize;
@@ -171,6 +171,27 @@
 
 
               }
+              .btn-email{ //------Botón de suscribirse
+                    display:center;
+                    padding: 1rem 3rem; 
+                    font-size: 1.7rem;
+                    color: $blanco;
+                    border:$azul .2rem solid; 
+                    border-radius:5rem;
+                    cursor: pointer;
+                    background: $accent;
+                    margin: 1rem auto;
+                    align-items: center !important;
+                    display: flex !important;
+                    justify-content: center !important;
+
+                    &:hover{
+                        background: $accent;
+                        color: $blanco;
+                        text-decoration-line: none;
+                        
+                    }
+                }
           }
 
       }
