@@ -19,17 +19,13 @@
         <h1>Iniciar Sesión</h1>
         <hr><hr>
         <form @submit.prevent="login" id="login-form">
-            <input type="email" id="email" placeholder="Email" v-model="email" required>
-            <input type="password" id="password" placeholder="Password" v-model="password" required>
+            <input type="email" id="email" placeholder="Correo Electrónico" v-model="email" required>
+            <input type="password" id="password" placeholder="Contraseña" v-model="password" required>
             <div class="box-recovery-password">
               <button id="recovery-password" type="button" class="recovery-password" @click.prevent="redirectToRecoverPassword">¿Olvidaste tu contraseña?</button>
             </div>
             <button id="login" class="login"  type="submit">Iniciar Sesión</button>
         </form>
-
-
-
-        <hr>
         <p id="text2" class="text">o</p>
         <!-- Mostrar mensaje de error como modal -->
         <error-modal :show-error="showErrorMessage" :error-message="errorMessage" @close="showErrorMessage = false" />
@@ -38,22 +34,27 @@
     </div>
   </div>
   <!------------------------------------------------FOOTER------------------------------------------->
+ 
   <Footer></Footer>
 
 </template>
 
 
-<style lang="scss"  >
-  $light-color:#312c02;
-  $degradado: rgba(33, 36, 36, 0.552);
-  $bg:rgba(6, 31, 14, 0.947);
+<style lang="scss" scoped >
+  $light-color:#2e2b18;
+  $degradado: rgba(34, 33, 39, 0.552);
+  $bg:rgba(25, 32, 57, 0.947);
   $azul-claro: #CFE0EB;
   $gris:#F7F7F7;
   $verde: #00BD8E;
   $azul: #0D629B;
   $blanco: #FFFFFF;
   $negro:#1A1320;
+  $blue: #54b2f1; 
   $accent:#0B97F4;
+  $accent2:#007bff;
+  $gris2:  #364265;
+  $accent3: rgba(149, 168, 238, 0.11);
   $secondary:#ceeafd;
   html{
         /* 
@@ -103,7 +104,7 @@
        /* Fondo gris */
        padding: 4rem;
         text-align: center;
-        color: #ccc;
+        color: $blanco;
         text-shadow: #000000;
         width: 50%;
         background: linear-gradient( $bg, $degradado), url("src/assets/buenosaires.jpg") no-repeat center/cover;
@@ -118,10 +119,12 @@
       align-items: center;
       text-align: center;
       padding-top: 3rem;
-      background-color: $azul-claro; 
+      background-color: $secondary; 
 
       h1 {
         margin: 0;
+        color: $negro;
+        
       }
 
       input {
@@ -137,10 +140,11 @@
         width: 80%;
         padding: 10px;
         margin-top: 45px;
-        background-color: #007bff;
+        background-color: $blue;
         color: #fff;
         border: none;
         border-radius: 5px;
+        margin-bottom: 2rem;
         cursor: pointer;
       }
 
@@ -160,11 +164,12 @@
         width: 40%;
         padding: 10px;
         
-        background-color: #77797a;
+        background-color: #364265;
         color: #fff;
         border: none;
         border-radius: 5px;
         cursor: pointer;
+        margin-bottom: 2rem;
       }
 
       .left-content-inner {
