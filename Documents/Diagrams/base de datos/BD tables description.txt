@@ -69,7 +69,10 @@ FK	userID	INT
 FK	cardID	INT		
 quantityCreditCards	INT		
 quantityDebitCards	INT
-tblCard	PK	ID	INT		
+
+
+tblCard	
+PK	ID	INT		
 balance	DOUBLE		
 type	VARCHAR(15)		
 number	VARCHAR(16)		
