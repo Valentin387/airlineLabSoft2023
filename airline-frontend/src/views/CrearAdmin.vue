@@ -14,7 +14,7 @@
         </form>
         <p id="error-message" class="error-message">{{ errorMessage }}</p>
       </div>
-      <img class="image-containerCrearAdmin" src="src/assets/CrearAdmin.svg" alt="">
+      <img class="image-containerCrearAdmin" src="@/assets/CrearAdmin.svg" alt="">
       <error-modal :show-error="showErrorMessage" :error-message="errorMessage" @close="showErrorMessage = false" />
       <success-modal :show-note="showSuccessMessage" :success-message="successMessage" @close="showSuccessMessage = false" />
     </div>
