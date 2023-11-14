@@ -1,5 +1,8 @@
 {
   "dependencies": {
     "jsonwebtoken": "^9.0.2"
+  },
+  "scripts": {
+    "heroku-postbuild": "cd frontend && npm install && npm run build"
   }
 }
