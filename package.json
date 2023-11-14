@@ -3,6 +3,6 @@
     "jsonwebtoken": "^9.0.2"
   },
   "scripts": {
-    "heroku-postbuild": "cd airline-frontend && npm install && npm run build"
+    "heroku-postbuild": "npm --prefix airline-frontend install && npm --prefix airline-frontend run build"
   }
 }
