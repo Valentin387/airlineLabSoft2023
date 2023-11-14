@@ -28,6 +28,7 @@ import java.util.Optional;
 @RequestMapping("/api/financial-module")
 @CrossOrigin("http://localhost:5173")
 @RequiredArgsConstructor
+@Transactional
 public class FinancialModuleController {
 
     @Autowired
@@ -40,7 +41,6 @@ public class FinancialModuleController {
     private CardRepository cardRepository;
 
     @PostMapping("/add/{id}")
-    @Transactional
     public ResponseEntity<?> addCards(@PathVariable Long id, @RequestBody NewCard newCard) {
         Optional<User> userOptional = userRepository.findById(id);
 
@@ -120,7 +120,6 @@ public class FinancialModuleController {
     }
 
     @PostMapping("/list/{id}")
-    @Transactional
     public ResponseEntity<?> cards(@PathVariable Long id) {
         Optional<User> userOptional = userRepository.findById(id);
 
@@ -129,6 +128,8 @@ public class FinancialModuleController {
             if (userOptional.isPresent()) {
                 User existingUser = userOptional.get();
                 List<Card> userCards = cardUserRepository.findCardsByUser(existingUser.getID());
+
+                //System.out.println(userCards.get(0).getName());
 
                 return ResponseEntity.ok(userCards);
             } else {

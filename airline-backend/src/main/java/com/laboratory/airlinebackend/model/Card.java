@@ -1,5 +1,6 @@
 package com.laboratory.airlinebackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.laboratory.airlinebackend.controller.DTO.NewCard;
 import jakarta.persistence.*;
 import lombok.*;
@@ -35,9 +36,6 @@ public class Card {
 
     @Column(length = 3)
     private String cvc;
-
-    @OneToMany(mappedBy = "card", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CardUser> cardUsers;
 
 
 }
