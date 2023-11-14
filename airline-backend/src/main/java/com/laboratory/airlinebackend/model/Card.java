@@ -37,5 +37,9 @@ public class Card {
     @Column(length = 3)
     private String cvc;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "card", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CardUser> cardUsers;
+
 
 }

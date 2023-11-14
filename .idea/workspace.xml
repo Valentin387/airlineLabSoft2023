@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="2e0abf07-9820-4643-9f68-1385b5e1c1a4" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/airline-backend/src/main/java/com/laboratory/airlinebackend/controller/DTO/UpdateBalance.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/airline-backend/src/main/java/com/laboratory/airlinebackend/controller/FinancialModuleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/airline-backend/src/main/java/com/laboratory/airlinebackend/controller/FinancialModuleController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/airline-backend/src/main/java/com/laboratory/airlinebackend/model/Card.java" beforeDir="false" afterPath="$PROJECT_DIR$/airline-backend/src/main/java/com/laboratory/airlinebackend/model/Card.java" afterDir="false" />

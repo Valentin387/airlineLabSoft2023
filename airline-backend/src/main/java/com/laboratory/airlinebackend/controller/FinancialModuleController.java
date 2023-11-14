@@ -1,8 +1,5 @@
 package com.laboratory.airlinebackend.controller;
-import com.laboratory.airlinebackend.controller.DTO.CardCountDTO;
-import com.laboratory.airlinebackend.controller.DTO.ChangeIdRootRequest;
-import com.laboratory.airlinebackend.controller.DTO.NewCard;
-import com.laboratory.airlinebackend.controller.DTO.UpdateProfileRequest;
+import com.laboratory.airlinebackend.controller.DTO.*;
 import com.laboratory.airlinebackend.controller.DTO.NewCard;
 import com.laboratory.airlinebackend.controller.exceptions.RootIdChangeException;
 import com.laboratory.airlinebackend.model.Card;
@@ -22,6 +19,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 
 @RestController
@@ -141,9 +140,45 @@ public class FinancialModuleController {
         }
 
         //return ResponseEntity.ok("Tarjetas obtenidas correctamente");
-
-
     }
+
+    @DeleteMapping("/remove/{cardId}")
+    public ResponseEntity<?> deleteCard(@PathVariable Long cardId) {
+        Optional<Card> cardOptional = cardRepository.findById(cardId);
+
+        if (cardOptional.isPresent()) {
+            cardRepository.deleteById(cardId);
+            cardUserRepository.deleteById(cardId);
+            return ResponseEntity.ok("Tarjeta eliminada exitosamente");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Tarjeta con ID " + cardId + " no encontrada");
+        }
+    }
+
+    @PutMapping("/edit-balance/{cardId}")
+    public ResponseEntity<?> updateBalance(@PathVariable Long cardId, @RequestBody UpdateBalance updatedBalance) {
+        Optional<Card> cardOptional = cardRepository.findById(cardId);
+
+        if (cardOptional.isPresent()) {
+            Card existingCard = cardOptional.get();
+
+            // Actualiza el saldo de la tarjeta
+            existingCard.setBalance(updatedBalance.getBalance());
+
+            if (updatedBalance.getBalance() < 0) {
+                return ResponseEntity.badRequest().body("El saldo actualizado debe ser mayor o igual a cero");
+            }else {
+                // Guarda el usuario actualizado en la base de datos
+                Card updatedCardInDB = cardRepository.save(existingCard);
+
+                return ResponseEntity.ok("saldo actualizado exitosamente");
+            }
+        } else {
+            // Si no se encuentra la tarjeta, devuelve un error 404 (Not Found)
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }
 
 
