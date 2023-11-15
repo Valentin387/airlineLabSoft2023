@@ -217,7 +217,7 @@
 
 <script>
 import rootChangeId from "@/services/rootService/rootChangeId.js";
-import errorModal from "@/components/ErrorModal.vue";
+import errorModal from "@/components/errorModal.vue";
 import spinner from "@/components/spinner.vue";
 import successModal from "@/components/successModal.vue";
 import Footer from '@/components/footer.vue';

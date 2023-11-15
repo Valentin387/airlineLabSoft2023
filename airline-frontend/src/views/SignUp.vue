@@ -454,7 +454,7 @@ html {
 <script>
 import registerService from "@/services/authenticationService/registerService.js";
 import emailService from "@/services/authenticationService/emailCheckingService";
-import errorModal from "@/components/ErrorModal.vue";
+import errorModal from "@/components/errorModal.vue";
 import spinner from "@/components/spinner.vue";
 import Footer from '@/components/footer.vue';
 
