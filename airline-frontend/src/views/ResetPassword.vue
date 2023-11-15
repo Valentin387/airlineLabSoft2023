@@ -234,7 +234,7 @@ $blue: #54b2f1;
 
 <script>
 import updatePasswordService from "@/services/authenticationService/updatePasswordService.js";
-import errorModal from "@/components/ErrorModal.vue";
+import errorModal from "@/components/errorModal.vue";
 import spinner from "@/components/spinner.vue";
 import successModal from "@/components/successModal.vue";
 import Footer from "@/components/footer.vue";

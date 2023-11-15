@@ -608,7 +608,7 @@ import updateProfileService from "@/services/userService/updateProfileService.js
 import { format } from 'date-fns'; // Importa la función de formato de date-fns
 import viewProfileService from "@/services/userService/viewProfileService.js";
 import deleteUserService from "@/services/userService/deleteUserService.js";
-import errorModal from "@/components/ErrorModal.vue";
+import errorModal from "@/components/errorModal.vue";
 import spinner from "@/components/spinner.vue";
 import successModal from "@/components/successModal.vue";
 

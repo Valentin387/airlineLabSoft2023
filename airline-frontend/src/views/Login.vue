@@ -248,7 +248,7 @@
 
 <script>
 import LoginService from "@/services/authenticationService/LoginService.js";
-import errorModal from "@/components/ErrorModal.vue";
+import errorModal from "@/components/errorModal.vue";
 import spinner from "@/components/spinner.vue";
 import Footer from '@/components/footer.vue';
 
