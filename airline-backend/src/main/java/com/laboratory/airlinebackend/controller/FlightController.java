@@ -1,16 +1,18 @@
 package com.laboratory.airlinebackend.controller;
-import com.laboratory.airlinebackend.controller.DTO.FlightState;
-import com.laboratory.airlinebackend.controller.DTO.RegisterRequestFlight;
-import com.laboratory.airlinebackend.controller.DTO.SeatState;
+import com.laboratory.airlinebackend.controller.DTO.*;
+import com.laboratory.airlinebackend.controller.exceptions.RootIdChangeException;
 import com.laboratory.airlinebackend.controller.service.SeatCreatorService;
 import com.laboratory.airlinebackend.model.Flight;
 import com.laboratory.airlinebackend.model.Offer;
 import com.laboratory.airlinebackend.model.Seat;
+import com.laboratory.airlinebackend.model.User;
 import com.laboratory.airlinebackend.repository.FlightRepository;
 import com.laboratory.airlinebackend.repository.OfferRepository;
 import com.laboratory.airlinebackend.repository.SeatRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.text.SimpleDateFormat;
@@ -33,6 +35,10 @@ public class FlightController {
 
     @Autowired
     private OfferRepository offerRepository;
+
+    @Autowired
+    private SeatRepository seatRepository;
+
 
     @PostMapping("/create")
     public ResponseEntity<?> createNewFlight(
@@ -238,5 +244,72 @@ public class FlightController {
         }
     }
     */
+
+    @GetMapping("/list/{state}")
+    public ResponseEntity<?> getFlightsByState(@PathVariable String state) {
+        try{
+            List<Flight> flights = flightRepository.getFlightsByState(state);
+
+            // Si la lista de vuelos es nula o está vacía,se devulve un ResponseEntity.notFound()
+            if (flights == null || flights.isEmpty()) {
+                return ResponseEntity.notFound().build();
+            }
+
+            return ResponseEntity.ok(flights);
+        } catch (Exception e) {
+            // En caso de error, devolver un ResponseEntity con el mensaje de error
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al obtener la lista de vuelos");
+        }
+
+    }
+    @DeleteMapping ("/delete/{id}")
+    public ResponseEntity<?> deleteProfile(@PathVariable Long id) {
+        try{
+            // Obtener el vuelo por ID
+            Flight flight = flightRepository.getFlightById(id);
+
+            // Verificar si el vuelo existe y está activo
+            if (flight == null || !"ON_TIME".equals(flight.getState())) {
+                return ResponseEntity.notFound().build();
+            }
+
+            // Actualizar las sillas asociadas al vuelo borrado
+            List<Seat> seats = seatRepository.getSeatsByFlightId(id);
+            seats.forEach(seat -> seat.setFlightId(0));
+
+            flightRepository.deleteById(id);
+
+            return ResponseEntity.ok("Vuelo con ID " + id + " borrado exitosamente");
+        }catch (Exception e) {
+            e.printStackTrace(); // Imprime el seguimiento de la pila en la consola
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al cancelar el vuelo");
+        }
+    }
+
+    @PutMapping("/edit/{id}")
+    public ResponseEntity<?> editFlight(@PathVariable Long id, @RequestBody EditFlight flightUpdated) {
+        Optional<Flight> flightOptional = flightRepository.findById(id);
+
+        if (flightOptional.isPresent()) {
+            Flight existingFlight = flightOptional.get();
+
+            // Actualiza los datos del usuario
+            existingFlight.setImage(flightUpdated.getImage());
+            existingFlight.setCostByPerson(flightUpdated.getCostByPerson());
+            existingFlight.setCostByPersonOffer(flightUpdated.getCostByPersonOffer());
+            existingFlight.setAvailableSeats(flightUpdated.getAvailableSeats());
+            existingFlight.setState(flightUpdated.getState());
+
+            // Guarda el usuario actualizado en la base de datos
+            Flight updatedFlightInDB = flightRepository.save(existingFlight);
+
+            return ResponseEntity.ok(updatedFlightInDB);
+        } else {
+            // Si no se encuentra el usuario, devuelve un error 404 (Not Found)
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
 
 }
