@@ -1,4 +1,7 @@
 package com.laboratory.airlinebackend.repository;
 
-public interface ShoppingCartSeatsRepository {
+import com.laboratory.airlinebackend.model.ShoppingCartSeats;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface ShoppingCartSeatsRepository extends JpaRepository<ShoppingCartSeats, Long> {
 }

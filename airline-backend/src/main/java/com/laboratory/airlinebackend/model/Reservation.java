@@ -20,10 +20,10 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long ID;
 
-    private int IDSeat;
+    private long IDSeat;
     private Date reservationDate;
     private Date expirationDate;
-    private int IDUser;
+    private long IDUser;
 
 
 

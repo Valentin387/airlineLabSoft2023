@@ -19,7 +19,7 @@ import java.util.List;
 public class User implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long ID;
+    private long ID;
     private String DNI;
     private String email;
     private String password;
@@ -34,6 +34,7 @@ public class User implements UserDetails{
     private String profileImage;
     private Boolean active;
     private Boolean subscribedToFeed;
+    private long shoppingCartID;
 
 
     public void editAttributes() {

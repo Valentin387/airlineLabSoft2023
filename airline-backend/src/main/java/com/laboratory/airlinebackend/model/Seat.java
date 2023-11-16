@@ -13,7 +13,7 @@ public class Seat {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int ID;
+    private long ID;
 
     private String state;
 

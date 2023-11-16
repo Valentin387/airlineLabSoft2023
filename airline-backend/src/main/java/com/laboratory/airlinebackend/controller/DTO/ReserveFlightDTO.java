@@ -16,6 +16,5 @@ public class ReserveFlightDTO {
     private long userID;
     private long flightID;
     private int seatQuantity ;
-    private int IDUser;
     private String seatClass;
 }
