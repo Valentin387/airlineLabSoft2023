@@ -11,7 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity(name = "tblShoppingCart")
+@Entity(name = "tblShoppingCartSeats")
 public class ShoppingCartSeats {
 
     @Id
