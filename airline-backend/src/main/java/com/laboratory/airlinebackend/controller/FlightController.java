@@ -123,6 +123,21 @@ public class FlightController {
         }
     }
 
+    @GetMapping("/detail/{id}")
+    public ResponseEntity<?> flightDetail (@PathVariable Long id){
+        try{
+            Optional<Flight> flightOptional = flightRepository.findById(id);
+            if (flightOptional.isPresent()) {
+                Flight flight = flightOptional.get();
+                return ResponseEntity.ok(flight);
+            } else {
+                return ResponseEntity.badRequest().body("Flight not found");
+            }
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error getting flight detail");
+        }
+    }
+
     /*
     //Only use this endpoint once!
     private Map<String, String> cityToCountryMap;
