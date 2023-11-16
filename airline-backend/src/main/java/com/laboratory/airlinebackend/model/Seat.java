@@ -20,8 +20,8 @@ public class Seat {
     @Column(length = 50)
     private String seatClass;
 
-    private int flightId;
-    private int passengerId;
+    private long flightId;
+    private long passengerId;
     private char letter;
     private int number;
     private boolean hasExtraSpace;

@@ -49,11 +49,11 @@ public class ShoppingCartController {
                 }
             }
 
-            Optional<User> userOptinal = userRepository.findById(bookFlightDTO.getUserID());
-            if (userOptinal.isEmpty()) {
+            Optional<User> userOptional = userRepository.findById(bookFlightDTO.getUserID());
+            if (userOptional.isEmpty()) {
                 return ResponseEntity.badRequest().body("User not found");
             }
-            User existingUser = userOptinal.get();
+            User existingUser = userOptional.get();
             ShoppingCart existingShoppingCart = shoppingCartRepository.findById(existingUser.getShoppingCartID()).get();
 
             Optional <Flight> flightOptinal = flightRepository.findById(bookFlightDTO.getFlightID());
@@ -85,7 +85,7 @@ public class ShoppingCartController {
                 seats.remove(randomIndex);
             }
 
-            return ResponseEntity.ok("Flight added to user's cart succesfully");
+            return ResponseEntity.ok("Flight added to user's cart successfully");
         }catch (Exception e) {
             return ResponseEntity.badRequest().body("Error adding flight to cart");
         }
