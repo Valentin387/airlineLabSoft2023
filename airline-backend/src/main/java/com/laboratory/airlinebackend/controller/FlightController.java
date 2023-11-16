@@ -1,4 +1,8 @@
 package com.laboratory.airlinebackend.controller;
+import com.laboratory.airlinebackend.controller.DTO.FlightState;
+import com.laboratory.airlinebackend.controller.DTO.RegisterRequestFlight;
+import com.laboratory.airlinebackend.controller.DTO.ReserveFlightDTO;
+import com.laboratory.airlinebackend.controller.DTO.SeatState;
 import com.laboratory.airlinebackend.controller.DTO.*;
 import com.laboratory.airlinebackend.controller.exceptions.RootIdChangeException;
 import com.laboratory.airlinebackend.controller.service.SeatCreatorService;
@@ -142,6 +146,15 @@ public class FlightController {
         }catch (Exception e) {
             return ResponseEntity.badRequest().body("Error getting flight detail");
         }
+    }
+
+    @PostMapping("/reserve")
+    public ResponseEntity<?> reserveFlight (
+            @RequestBody ReserveFlightDTO reserveFlightDTO
+    ){
+        List<Seat> seats = new ArrayList<>();
+        seats = seatRepository.findSeatsByFlightID(reserveFlightDTO.getFlightID());
+
     }
 
     /*
