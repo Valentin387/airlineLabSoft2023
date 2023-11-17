@@ -44,14 +44,31 @@ public class FlightController {
             return ResponseEntity.badRequest().body("Flight date must be after current date");
         }
         try{
+            //all combinations of travels are listed here below (not scalable I know, but works)
+            Map<String, String> cityToCountryMap;
+            cityToCountryMap = new HashMap<>();
+            cityToCountryMap.put("Madrid", "Spain");
+            cityToCountryMap.put("Londres", "United Kingdom");
+            cityToCountryMap.put("New York", "United States");
+            cityToCountryMap.put("Buenos Aires", "Argentina");
+            cityToCountryMap.put("Miami", "United States");
+            cityToCountryMap.put("Pereira", "Colombia");
+            cityToCountryMap.put("Bogotá", "Colombia");
+            cityToCountryMap.put("Medellín", "Colombia");
+            cityToCountryMap.put("Cali", "Colombia");
+            cityToCountryMap.put("Cartagena", "Colombia");
+
             int assignedSeats;
             int firstClassSeatsQuantity;
             int economicClassSeatsQuantity;
             int firstClassSeatRows;
             int economicClassSeatRows;
             //System.out.println(requestNewFlight);
+            String country1 = cityToCountryMap.get(requestNewFlight.getOrigin());
+            String country2 = cityToCountryMap.get(requestNewFlight.getDestination());
+            boolean isInternational = !country1.equals(country2);
 
-            if (requestNewFlight.isInternational()) {
+            if (isInternational) {
                 //International
                 assignedSeats = 250;
                 firstClassSeatsQuantity = 50;
@@ -73,7 +90,7 @@ public class FlightController {
                 .flightDuration(requestNewFlight.getFlightDuration())
                 .arrivalDate(requestNewFlight.getArrivalDate())
                 .costByPerson(requestNewFlight.getCostByPerson())
-                .isInternational(requestNewFlight.isInternational())
+                .isInternational(isInternational)
                 .state(FlightState.ON_TIME.toString())
                 .availableSeats(assignedSeats)
                 .build();
@@ -96,14 +113,57 @@ public class FlightController {
             }
             flightRepository.save(flight);
 
-            //now let's create the seats for this flight
-            seatCreatorService.create_seats(
-                    //assignedSeats,
-                    firstClassSeatsQuantity,
-                    firstClassSeatRows,
-                    economicClassSeatsQuantity,
-                    economicClassSeatRows,
-                    flight);
+            //I'm going to fetch the seats whose flightID is 0
+            //then I{m going to count if there are enough seats for the new flight depending on whether it is international or not
+            //if there are enough seats, I'm going to assign them to the new flight
+            //if there are not enough seats, I'm going to create the seats for the new flight
+            List<Seat> seats0 = new ArrayList<>();
+            seats0 = seatRepository.getSeatsByFlightId(0L);
+            //count the elements in seats0
+            int countSeats0 = 0;
+            int economicClassSeatsQuantity0 = 0;
+            int firstClassSeatsQuantity0 = 0;
+            for (Seat seat : seats0) {
+                if (seat.getSeatClass().equals("Economic Class"))
+                    economicClassSeatsQuantity0++;
+                else
+                    firstClassSeatsQuantity0++;
+                countSeats0++;
+            }
+            System.out.println("countSeats0: " + countSeats0);
+            System.out.println("economicClassSeatsQuantity0: " + economicClassSeatsQuantity0);
+            System.out.println("firstClassSeatsQuantity0: " + firstClassSeatsQuantity0);
+
+            if (countSeats0 >= assignedSeats && economicClassSeatsQuantity0 >= economicClassSeatsQuantity && firstClassSeatsQuantity0 >= firstClassSeatsQuantity) {
+                //there are enough seats
+                System.out.println("there are enough seats");
+                //I'm going to assign them to the new flight, respecting the classes and the quantity
+                int countEconomic = 0;
+                int countFirstClass = 0;
+                for (Seat seat : seats0) {
+                    if (seat.getSeatClass().equals("Economic Class") && countEconomic < economicClassSeatsQuantity) {
+                        seat.setFlightId(flight.getId());
+                        seatRepository.save(seat);
+                        countEconomic++;
+                    } else if (seat.getSeatClass().equals("First Class") && countFirstClass < firstClassSeatsQuantity) {
+                        seat.setFlightId(flight.getId());
+                        seatRepository.save(seat);
+                        countFirstClass++;
+                    }
+                }
+
+            } else {
+                //there are not enough seats
+                System.out.println("there are no enough seats");
+                //I'm going to create the seats for the new flight
+                seatCreatorService.create_seats(
+                        //assignedSeats,
+                        firstClassSeatsQuantity,
+                        firstClassSeatRows,
+                        economicClassSeatsQuantity,
+                        economicClassSeatRows,
+                        flight);
+            }
 
             return ResponseEntity.ok("Flight created succesfully \n" +
                     "added economic class seats: " + economicClassSeatsQuantity + "\n" +
