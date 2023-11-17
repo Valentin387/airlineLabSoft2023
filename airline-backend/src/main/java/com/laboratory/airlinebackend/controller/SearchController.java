@@ -26,34 +26,15 @@ public class SearchController {
             @RequestParam  String origin,
             @RequestParam  String destination,
             @RequestParam  @DateTimeFormat(pattern = "yyyy-MM-dd") Date flightDate,
-            //@RequestParam  @DateTimeFormat(pattern = "yyyy-MM-dd") Date returnDate,
             @RequestParam  int numPassengers) {
-        // Your flight search logic here
-        /*
-        System.out.println("Origin: " + origin);
-        System.out.println("Destination: " + destination);
-        System.out.println("Departure Date: " + departureDate);
-        //System.out.println("Return Date: " + returnDate);
-        System.out.println("Number of Passengers: " + numPassengers);
-        */
-        // Use the parameters (origin, destination, departureDate, returnDate, numPassengers) to perform the search.
+
         try {
             List<Flight> flights = flightRepository.findFlightsByParameters(origin, destination, flightDate, numPassengers);
-            /*if (flights.isEmpty()) {
-                System.out.println("no matches");
-                return ResponseEntity.badRequest().body("No flights found");
-            }else{
-                System.out.println(flights.size() + " matches");
-            }
-            for (Flight flight : flights) {
-                System.out.println(flight);
-            }
-            System.out.println("finished");*/
+
             return ResponseEntity.ok(flights);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Error searching flights " + e.getMessage() );
         }
-        // Return the search results in the ResponseEntity.
 
     }
 

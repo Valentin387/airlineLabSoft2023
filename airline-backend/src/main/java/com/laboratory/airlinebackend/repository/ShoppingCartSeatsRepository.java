@@ -10,7 +10,7 @@ import java.util.List;
 public interface ShoppingCartSeatsRepository extends JpaRepository<ShoppingCartSeats, Long> {
 
     @Query("SELECT ShoppingCartSeatsDetailsDTO(" +
-            "scs.ID, s.letter, s.number, s.hasExtraSpace, s.seatClass, f.origin, f.destination, f.flightDate) " +
+            "scs.ID, f.image, f.costByPerson, f.costByPersonOffer,s.letter, s.number, s.hasExtraSpace, s.seatClass, f.origin, f.destination, f.flightDate) " +
             "FROM tblShoppingCartSeats scs " +
             "JOIN tblSeat s ON scs.seatID = s.ID " +
             "JOIN tblFlight f ON s.flightId = f.id " +

@@ -20,6 +20,5 @@ public class RegisterRequestFlight {
     private String flightDuration;
     private Date arrivalDate;
     private double costByPerson;
-    private boolean international;
 
 }
