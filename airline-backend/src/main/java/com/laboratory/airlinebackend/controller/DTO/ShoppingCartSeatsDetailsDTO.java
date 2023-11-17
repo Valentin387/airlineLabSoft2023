@@ -1,5 +1,6 @@
 package com.laboratory.airlinebackend.controller.DTO;
 
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,6 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class ShoppingCartSeatsDetailsDTO {
     private long ID;
+    private String image;
     private char letter;
     private int number;
     private boolean hasExtraSpace;
@@ -20,4 +22,8 @@ public class ShoppingCartSeatsDetailsDTO {
     private String origin;
     private String destination;
     private Date flightDate;
+
+    private double costByPerson;
+    private double costByPersonOffer;
+
 }
