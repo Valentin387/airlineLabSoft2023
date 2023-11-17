@@ -10,6 +10,7 @@ import CambioIdRoot from '../views/CambioIdRoot.vue'
 import EditarPerfil from '../views/EditarPerfil.vue'
 import RecoverPassword from '../views/RecoverPassword.vue'
 import ResetPassword from '../views/ResetPassword.vue'
+import SearchResults from '../views/SearchResults.vue'; // Ajusta la ruta según sea necesario
 import M_Financiero from '../views/M_Financiero.vue'
 import ListVuelos_Ad from '../views/ListVuelos_Ad.vue'
 import DetalleVuelo from '../views/DetalleVuelo.vue'
@@ -80,6 +81,14 @@ const router = createRouter ({
             component:  EditarPerfil,
             meta: { requiresAuth: true }
            
+        },
+        {
+            path: '/search-results',
+            name: 'SearchResults',
+            component: SearchResults,
+          },
+          
+    
         },
 
         {

@@ -92,7 +92,7 @@
 
 
 
-<style lang="scss">
+<style lang="scss" scoped>
     $light-color:#312c02;
     $degradado: rgba(149, 168, 238, 0.11);
     $bg:rgba(6, 31, 14, 0.947);
@@ -342,7 +342,7 @@
 import listAdminsService from "@/services/adminService/listAdminsService.js";
 import logoutService from "@/services/authenticationService/logoutService.js";
 import deleteAdminService from "@/services/adminService/deleteAdminService.js";
-import errorModal from "@/components/ErrorModal.vue";
+import errorModal from "@/components/errorModal.vue";
 import spinner from "@/components/spinner.vue";
 import successModal from "@/components/successModal.vue";
 import Footer from '@/components/footer.vue';

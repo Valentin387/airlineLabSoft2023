@@ -8,7 +8,6 @@ const createFlight = (
                     flightDuration,
                     arrivalDate,
                     costByPerson,
-                    international
                     ) => {
   const credentials = { 
                     flightDate,
@@ -17,7 +16,6 @@ const createFlight = (
                     flightDuration,
                     arrivalDate,
                     costByPerson,
-                    international
                      };
   return axiosInstance.post(`flight/create`, credentials);
 };

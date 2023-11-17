@@ -58,7 +58,7 @@
 
 
 
-<style lang="scss"  > 
+<style lang="scss" scoped > 
 
 
     * {//La regla * selecciona todos los elementos de la página y les aplica los estilos CSS
@@ -82,12 +82,7 @@
         $accent:#0B97F4;
         $secondary:#a7d6f6;
         
-    body{  //FONDO DE LA PAGINA
-        background: $blanco;
-       //background-image: linear-gradient(to top, #fcfeff 0%, #fbfeff 100%);
-
-        overflow-x:hidden;
-    }
+   
     
     //BARRA DE NAVEGACIÓN----------------------------------------------------------------
 
@@ -114,10 +109,12 @@
             font-weight: 450;
             text-transform: capitalize;
             text-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+          
             &:hover, &.router-link-exact-active{
                 color:$negro;//Al pasar el cursor sobre la letra del enlace, el color cambia a azul
                 background-color: transparent;//color de fondo al selleccionar el texto
                 text-decoration-line: none;
+                cursor: pointer; // Cambia el cursor a un puntero al pasar sobre el botón
             }
         
             &.router-link-exact-active{
@@ -135,14 +132,16 @@
         }
 
         .carrito, .usuario {
-            color:$blanco;
+            color:$negro;
             margin: 0 1rem; // Ajusta el margen derecho para separar el usuario del carrito de compras
             background: transparent;
 
+
             &:hover, &.router-link-exact-active{
-            color:$negro;//Al pasar el cursor sobre la letra del enlace, el color cambia a azul
+            color:$blanco;//Al pasar el cursor sobre la letra del enlace, el color cambia a azul
             background-color: transparent;//color de fondo al selleccionar el texto
             text-decoration-line: none;
+            cursor: pointer; // Cambia el cursor a un puntero al pasar sobre el botón
             }
 
             i{//ICONOS DE CARRITO Y USUARIO
@@ -217,6 +216,7 @@
             }
             .carrito {
                 position: absolute;
+                cursor: pointer; // Cambia el cursor a un puntero al pasar sobre el botón
                 right: 6.5rem; // Ajusta el margen derecho según sea necesario
             }
         }
@@ -237,6 +237,7 @@
             }
             .carrito {
                 position: absolute;
+                cursor: pointer; // Cambia el cursor a un puntero al pasar sobre el botón
                 right: 6.5rem; // Ajusta el margen derecho según sea necesario
             }
     }

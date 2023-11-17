@@ -5,10 +5,12 @@ import com.laboratory.airlinebackend.controller.DTO.AuthenticationRequest;
 import com.laboratory.airlinebackend.controller.DTO.AuthenticationResponse;
 import com.laboratory.airlinebackend.controller.DTO.RegisterRequest;
 import com.laboratory.airlinebackend.controller.exceptions.EmailAlreadyTakenException;
+import com.laboratory.airlinebackend.model.ShoppingCart;
 import com.laboratory.airlinebackend.model.User;
 import com.laboratory.airlinebackend.model.token.Token;
 import com.laboratory.airlinebackend.model.token.TokenRepository;
 import com.laboratory.airlinebackend.model.token.TokenType;
+import com.laboratory.airlinebackend.repository.ShoppingCartRepository;
 import com.laboratory.airlinebackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -25,12 +27,18 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final TokenRepository tokenRepository;
+    private final ShoppingCartRepository shoppingCartRepository;
 
     public AuthenticationResponse register(RegisterRequest request) {
         String email = request.getEmail();
         if (userRepository.existsByEmail(email)) {
             throw new EmailAlreadyTakenException("Email already exists");
         }
+        var shoppingCart = ShoppingCart.builder()
+                .build();
+        shoppingCartRepository.save(shoppingCart);
+        Long shoppingCartID = shoppingCart.getID();
+
 
         var user = User.builder()
                 .firstName(request.getFirstName())
@@ -45,6 +53,7 @@ public class AuthenticationService {
                 .profileImage(request.getProfileImage())
                 .subscribedToFeed(Boolean.FALSE)
                 .role(3)
+                .shoppingCartID(shoppingCartID)
                 .active(Boolean.TRUE)
                 .password(passwordEncoder.encode(request.getPassword()))
                 .build();

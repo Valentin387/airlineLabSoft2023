@@ -26,7 +26,7 @@
 
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
    
      $light-color:#312c02;
      $degradado: rgba(149, 168, 238, 0.11);
@@ -217,7 +217,7 @@
 
 <script>
 import rootChangeId from "@/services/rootService/rootChangeId.js";
-import errorModal from "@/components/ErrorModal.vue";
+import errorModal from "@/components/errorModal.vue";
 import spinner from "@/components/spinner.vue";
 import successModal from "@/components/successModal.vue";
 import Footer from '@/components/footer.vue';
