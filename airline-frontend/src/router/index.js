@@ -11,6 +11,12 @@ import EditarPerfil from '../views/EditarPerfil.vue'
 import RecoverPassword from '../views/RecoverPassword.vue'
 import ResetPassword from '../views/ResetPassword.vue'
 import SearchResults from '../views/SearchResults.vue'; // Ajusta la ruta según sea necesario
+import M_Financiero from '../views/M_Financiero.vue'
+import ListVuelos_Ad from '../views/ListVuelos_Ad.vue'
+import DetalleVuelo from '../views/DetalleVuelo.vue'
+import Carrito from '../views/Carrito.vue'
+import List_Reservas from '../views/List_Reservas.vue'
+import CentroAyuda from '../views/CentroAyuda.vue'
 
 const router = createRouter ({
 
@@ -83,6 +89,35 @@ const router = createRouter ({
           },
           
     
+        },
+
+        {
+            path: '/M_Financiero',
+            component: M_Financiero
+        },
+
+        {
+            path: '/ListVuelos_Ad',
+            component: ListVuelos_Ad
+        },
+
+        {
+            path: '/DetalleVuelo',
+            component: DetalleVuelo
+        },
+
+        {
+            path: '/Carrito',
+            component: Carrito
+        },
+        {
+            path: '/List_Reservas',
+            component: List_Reservas
+        },
+        {
+            path: '/CentroAyuda',
+            component: CentroAyuda
+        },
     ]
     
 })
