@@ -86,9 +86,6 @@ const router = createRouter ({
             path: '/search-results',
             name: 'SearchResults',
             component: SearchResults,
-          },
-          
-    
         },
 
         {
