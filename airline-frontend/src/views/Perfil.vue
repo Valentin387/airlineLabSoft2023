@@ -95,8 +95,9 @@
             <div style="margin-bottom: 50px;"></div>
         </div>
         <!------------------------------------------------FOOTER------------------------------------------->
-        <Footer></Footer>
+       
         <error-modal :show-error="showErrorMessage" :error-message="errorMessage" @close="showErrorMessage = false" />
+        <Footer/>
     </div>
     <!------------------------------------------------FOOTER------------------------------------------->
 </template>

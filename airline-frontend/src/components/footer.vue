@@ -1,5 +1,5 @@
 <template>
-<footer class="footer">
+    <footer class="footer">
         <div class="box-container">
             <div class="box"  >
                 <h3 href="/" class="logo"><i class="fas fa-paper-plane"></i>AirTravel</h3>
@@ -204,6 +204,7 @@
       font-size: 2rem;
       padding: 2rem 1rem;
       color: $verde;
+      display: flex !important;
       font-weight: bolder;
       margin-top: 5rem;
 

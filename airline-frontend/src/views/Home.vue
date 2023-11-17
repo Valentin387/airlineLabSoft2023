@@ -83,8 +83,6 @@
          required/>
       </div>
       <input
-        data-aos="zoom-in"
-        datas-aos-delay="900"
         type="submit"
         value="Buscar"
         class="btn_buscar"
@@ -350,12 +348,19 @@
       </p>
     </div>
   </section>
+  <error-modal
+      :show-error="showNumberError"
+      :error-message="numberErrorMessage"
+      @close="showNumberError = false"
+    />
+
   <!------------------------------------------------FOOTER------------------------------------------->
   <Footer></Footer>
 </template>
  
 
 <style lang="scss" >
+
 @import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;1,300&family=Poppins:ital,wght@0,100;0,300;0,400;0,500;0,600;1,200&display=swap");
 
 * {
@@ -815,10 +820,12 @@ section {
 </style><script>
 import flightService from "@/services/searchService/parametrizedSearchService.js";
 import Footer from "@/components/footer.vue";
+import errorModal from "@/components/ErrorModal.vue";
 
 export default {
   components: {
     Footer,
+    errorModal,
   },
   data() {
     return {
@@ -828,10 +835,24 @@ export default {
         flightDate: "",
         numPassengers: 1,
       },
+      showNumberError: false,
+      numberErrorMessage: "",
     };
   },
   methods: {
     performFlightSearch() {
+      if (this.searchParams.numPassengers <= 0 || isNaN(this.searchParams.numPassengers  )) {
+        // Mostrar un mensaje de error o tomar la acción correspondiente
+        this.showNumberError= true;
+        this.numberErrorMessage = "Por favor, ingrese un número válido de pasajeros.";
+        return;
+      }
+      if(this.searchParams.numPassengers > 16){
+        this.showNumberError= true;
+        this.numberErrorMessage = "Las búsquedas tienen un máximo de 16 pasajeros.";
+        return;
+      }
+      
       flightService
         .parametrizedSearch(this.searchParams)
         .then((response) => {
