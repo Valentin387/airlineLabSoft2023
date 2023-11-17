@@ -14,6 +14,8 @@ import M_Financiero from '../views/M_Financiero.vue'
 import ListVuelos_Ad from '../views/ListVuelos_Ad.vue'
 import DetalleVuelo from '../views/DetalleVuelo.vue'
 import Carrito from '../views/Carrito.vue'
+import List_Reservas from '../views/List_Reservas.vue'
+import CentroAyuda from '../views/CentroAyuda.vue'
 
 const router = createRouter ({
 
@@ -98,6 +100,14 @@ const router = createRouter ({
         {
             path: '/Carrito',
             component: Carrito
+        },
+        {
+            path: '/List_Reservas',
+            component: List_Reservas
+        },
+        {
+            path: '/CentroAyuda',
+            component: CentroAyuda
         },
     ]
     
