@@ -1,13 +1,12 @@
 import axiosInstance from '../axiosInstance.js';
 
+/* @RequestParam  String origin,
+@RequestParam  String destination,
+@RequestParam  Date flightDate,
+@RequestParam  int numPassengers */
+
 const parametrizedSearch = (params) => {
   return axiosInstance.get(`search/parametrized-search`, { params });
-   /*  .then(response => response.data)
-    .catch(error => {
-      // Maneja el error de la API
-      console.error('Error en la búsqueda:', error);
-      throw new Error('No se pudieron cargar los vuelos. Por favor, inténtalo de nuevo más tarde.');
-    }); */
 };
 
 export default { parametrizedSearch };
