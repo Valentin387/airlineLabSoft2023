@@ -1,9 +1,11 @@
 package com.laboratory.airlinebackend.repository;
 
 import com.laboratory.airlinebackend.model.Flight;
+import com.laboratory.airlinebackend.model.Seat;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -37,4 +39,9 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
             "AND f.flightDate <= :validDateRange " +
             "AND f.state = 'ON_TIME' ")
     void resetCostByPersonOffer(String origin, String destination, Date validDateRange);
+
+    @Query("SELECT f FROM tblFlight f WHERE f.state = :state")
+    List<Flight> getFlightsByState(@Param("state") String state);
+
+    Flight getFlightById(Long id);
 }

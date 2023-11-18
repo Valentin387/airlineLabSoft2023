@@ -8,17 +8,22 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class RegisterRequestFlight {
-    private Date flightDate;
+public class ShoppingCartSeatsDetailsDTO {
+    private long ID;
+    private String image;
+    private char letter;
+    private int number;
+    private boolean hasExtraSpace;
+    private String seatClass;
     private String origin;
     private String destination;
-    private String flightDuration;
-    private Date arrivalDate;
+    private Date flightDate;
+
     private double costByPerson;
+    private double costByPersonOffer;
 
 }
