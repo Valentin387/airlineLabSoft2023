@@ -16,6 +16,7 @@ import java.util.List;
 public class ReservationDetailsDTO {
     private Date reservationDate;
     private Date expirationDate;
+    private Long flightId;
     private String origin;
     private String destination;
     private Date flightDate;

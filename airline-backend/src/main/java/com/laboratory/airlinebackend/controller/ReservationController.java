@@ -94,37 +94,28 @@ public class ReservationController {
             @PathVariable("userID") Long userID
     ){
         try{
-            int count = 0;
-            List<Object[]> results = reservationRepository.getReservationsByUserId(userID);
+            List<Object[]> results = reservationRepository.getGroupedReservationsByUserId(userID);
+            //for every object in results, call the getReservationsByUserId method
             List<ReservationDetailsDTO> reservations = new ArrayList<>();
             for (Object[] result : results) {
-                ReservationDetailsDTO reservationDetailsDTO = ReservationDetailsDTO.builder()
-                        .reservationDate((Date) result[0])
-                        .expirationDate((Date) result[1])
-                        .origin((String) result[2])
-                        .destination((String) result[3])
-                        .flightDate((Date) result[4])
-                        .state((String) result[5])
-                        .costByPerson((Double) result[6])
-                        .costByPersonOffer((Double) result[7])
-                        //.seats((List<Seat>) result[8])
-                        .build();
-                reservations.add(reservationDetailsDTO);
-                //print every attribute of the reservationDetailsDTO
-                System.out.println(count);
-                System.out.println(reservationDetailsDTO.getReservationDate());
-                System.out.println(reservationDetailsDTO.getExpirationDate());
-                System.out.println(reservationDetailsDTO.getOrigin());
-                System.out.println(reservationDetailsDTO.getDestination());
-                System.out.println(reservationDetailsDTO.getFlightDate());
-                System.out.println(reservationDetailsDTO.getState());
-                System.out.println(reservationDetailsDTO.getCostByPerson());
-                System.out.println(reservationDetailsDTO.getCostByPersonOffer());
-                //System.out.println(reservationDetailsDTO.getSeats());
-                System.out.println(" ");
-                count++;
-
+                List<Object[]> results2 = reservationRepository.getReservationsByUserId(userID, (long) result[0]);
+                for (Object[] result2 : results2) {
+                    ReservationDetailsDTO reservationDetailsDTO = ReservationDetailsDTO.builder()
+                            .reservationDate((Date) result2[0])
+                            .expirationDate((Date) result2[1])
+                            .flightId((Long) result2[2])
+                            .origin((String) result2[3])
+                            .destination((String) result2[4])
+                            .flightDate((Date) result2[5])
+                            .state((String) result2[6])
+                            .costByPerson((Double) result2[7])
+                            .costByPersonOffer((Double) result2[8])
+                            .seats(reservationRepository.getSeatsByUserIdAndFlightId(userID, (long) result2[2]))
+                            .build();
+                    reservations.add(reservationDetailsDTO);
+                }
             }
+
             return ResponseEntity.ok(reservations);
         }catch (Exception e) {
             return ResponseEntity.badRequest().body("Error getting reservations");
