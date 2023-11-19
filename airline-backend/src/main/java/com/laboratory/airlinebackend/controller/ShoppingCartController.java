@@ -1,4 +1,5 @@
 package com.laboratory.airlinebackend.controller;
+import com.laboratory.airlinebackend.controller.DTO.ReservationDetailsDTO;
 import com.laboratory.airlinebackend.controller.DTO.ReserveFlightDTO;
 import com.laboratory.airlinebackend.controller.DTO.ShoppingCartSeatsDetailsDTO;
 import com.laboratory.airlinebackend.model.*;
@@ -9,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -93,6 +95,53 @@ public class ShoppingCartController {
     }
 
     @GetMapping("/list")
+    public ResponseEntity<?> getItemsByUserID(
+            @RequestParam long userID
+    ){
+        try{
+            //get the user
+            Optional<User> OptionalUser = userRepository.findById(userID);
+            if (OptionalUser.isEmpty()) {
+                return ResponseEntity.badRequest().body("User not found");
+            }
+            User user = OptionalUser.get();
+
+            //get the shopping cart
+            Optional<ShoppingCart> OptionalShoppingCart = shoppingCartRepository.findById(user.getShoppingCartID());
+            if (OptionalShoppingCart.isEmpty()) {
+                return ResponseEntity.badRequest().body("Shopping cart not found");
+            }
+            ShoppingCart shoppingCart = OptionalShoppingCart.get();
+
+            List<Object[]> results = shoppingCartSeatsRepository.getGroupedItemsByShoppingCartId(shoppingCart.getID());
+            //for every object in results, call the getItemsByShoppingCartId method
+
+            List<ShoppingCartSeatsDetailsDTO> items = new ArrayList<>();
+            for (Object[] result : results) {
+                List<Object[]> results2 = shoppingCartSeatsRepository.getItemsByShoppingCartId(shoppingCart.getID(), (long) result[0]);
+                for (Object[] result2 : results2) {
+                    ShoppingCartSeatsDetailsDTO shoppingCartSeatsDetailsDTO = ShoppingCartSeatsDetailsDTO.builder()
+                            .flightId((Long) result2[0])
+                            .origin((String) result2[1])
+                            .destination((String) result2[2])
+                            .flightDate((Date) result2[3])
+                            .state((String) result2[4])
+                            .costByPerson((Double) result2[5])
+                            .costByPersonOffer((Double) result2[6])
+                            .seats(shoppingCartSeatsRepository.getSeatsByShoppingCartIdAndFlightId(shoppingCart.getID(), (long) result2[0]))
+                            .build();
+                    items.add(shoppingCartSeatsDetailsDTO);
+                }
+            }
+
+            return ResponseEntity.ok(items);
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error getting shopping cart items");
+        }
+    }
+
+    /*
+    @GetMapping("/list")
     public ResponseEntity<?> listShoppingCartItems(
             @RequestParam  long userID
     ){
@@ -110,7 +159,7 @@ public class ShoppingCartController {
         }catch (Exception e) {
             return ResponseEntity.badRequest().body("Error listing shopping cart items");
         }
-    }
+    }*/
 
     @DeleteMapping("/drop")
     public ResponseEntity<?> dropItemFromShoppingCart(
