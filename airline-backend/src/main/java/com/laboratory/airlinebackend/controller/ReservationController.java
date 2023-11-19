@@ -124,29 +124,28 @@ public class ReservationController {
 
     @PostMapping("/cancel")
     public ResponseEntity<?> cancelReservation(
-            @RequestParam  long reservationID
+            @RequestParam long flightID,
+            @RequestParam long userID
     ){
         try{
-            //get the reservation
-            Optional<Reservation> OptionalReservation = reservationRepository.findById(reservationID);
-            if (OptionalReservation.isEmpty()) {
-                return ResponseEntity.badRequest().body("Reservation not found");
-            }
-            Reservation reservation = OptionalReservation.get();
-
-            //get the seat
-            Optional <Seat> OptionalSeat = seatRepository.findById(reservation.getIDSeat());
-            if (OptionalSeat.isEmpty()) {
-                return ResponseEntity.badRequest().body("Seat not found");
-            }
-            Seat seat = OptionalSeat.get();
+            //get the seats
+            List<Seat> seats = reservationRepository.getSeatsByUserIdAndFlightId(userID, flightID);
             //change the state of the seat to AVAILABLE
-            seat.setState(SeatState.AVAILABLE.toString());
-            //delete the reservation
-            reservationRepository.delete(reservation);
-            //save the seat
-            seatRepository.save(seat);
-            return ResponseEntity.ok("Reservation cancelled succesfully");
+            for (Seat seat : seats) {
+                seat.setState(SeatState.AVAILABLE.toString());
+                seatRepository.save(seat);
+            }
+
+            //for each seat, get and delete the reservation
+            for (Seat seat : seats) {
+                Optional<Reservation> OptionalReservation = reservationRepository.findByIDSeat(seat.getID());
+                if (OptionalReservation.isEmpty()) {
+                    return ResponseEntity.badRequest().body("Reservation not found");
+                }
+                Reservation reservation = OptionalReservation.get();
+                reservationRepository.delete(reservation);
+            }
+            return ResponseEntity.ok("Reservation cancelled successfully");
         }catch (Exception e) {
             return ResponseEntity.badRequest().body("Error cancelling reservation");
         }
@@ -154,30 +153,27 @@ public class ReservationController {
 
     @PostMapping("/move-to-cart")
     public ResponseEntity<?> move_to_cart(
-            @RequestParam  long reservationID,
+            @RequestParam  long flightID,
             @RequestParam  long userID
     ) {
         try{
-            //get the reservation
-            Optional<Reservation> OptionalReservation = reservationRepository.findById(reservationID);
-            if (OptionalReservation.isEmpty()) {
-                return ResponseEntity.badRequest().body("Reservation not found");
-            }
-            Reservation reservation = OptionalReservation.get();
-
-            //get the seat
-            Optional <Seat> OptionalSeat = seatRepository.findById(reservation.getIDSeat());
-            if (OptionalSeat.isEmpty()) {
-                return ResponseEntity.badRequest().body("Seat not found");
-            }
-            Seat seat = OptionalSeat.get();
+            //get the seats
+            List<Seat> seats = reservationRepository.getSeatsByUserIdAndFlightId(userID, flightID);
             //change the state of the seat to AVAILABLE
-            seat.setState(SeatState.AVAILABLE.toString());
+            for (Seat seat : seats) {
+                seat.setState(SeatState.AVAILABLE.toString());
+                seatRepository.save(seat);
+            }
 
-            //delete the reservation
-            reservationRepository.delete(reservation);
-            //save the seat
-            seatRepository.save(seat);
+            //for each seat, get and delete the reservation
+            for (Seat seat : seats) {
+                Optional<Reservation> OptionalReservation = reservationRepository.findByIDSeat(seat.getID());
+                if (OptionalReservation.isEmpty()) {
+                    return ResponseEntity.badRequest().body("Reservation not found");
+                }
+                Reservation reservation = OptionalReservation.get();
+                reservationRepository.delete(reservation);
+            }
 
             //get the user
             Optional <User> OptionalUser = userRepository.findById(userID);
@@ -194,7 +190,7 @@ public class ReservationController {
             ShoppingCart shoppingCart = OptionalShoppingCart.get();
 
             //get the flight
-            Optional <Flight> OptionalFlight = flightRepository.findById(seat.getFlightId());
+            Optional <Flight> OptionalFlight = flightRepository.findById(flightID);
             if (OptionalFlight.isEmpty()) {
                 return ResponseEntity.badRequest().body("Flight not found");
             }
@@ -207,16 +203,19 @@ public class ReservationController {
                 UnitPrice = flight.getCostByPerson();
             }
 
-            ShoppingCartSeats shoppingCartSeats = ShoppingCartSeats.builder()
-                    .seatID(seat.getID())
-                    .shoppingCartID(shoppingCart.getID())
-                    .unitPrice(UnitPrice)
-                    .build();
+            //for every seat in seats, create a shoppingCartSeats object and save it
+            for (Seat seat : seats) {
+                ShoppingCartSeats shoppingCartSeats = ShoppingCartSeats.builder()
+                        .seatID(seat.getID())
+                        .shoppingCartID(shoppingCart.getID())
+                        .unitPrice(UnitPrice)
+                        .build();
 
-            shoppingCartSeatsRepository.save(shoppingCartSeats);
-            shoppingCart.setQuantity(shoppingCart.getQuantity() + 1);
-            shoppingCart.setTotalAmount(shoppingCart.getTotalAmount() + UnitPrice);
-            shoppingCartRepository.save(shoppingCart);
+                shoppingCartSeatsRepository.save(shoppingCartSeats);
+                shoppingCart.setQuantity(shoppingCart.getQuantity() + 1);
+                shoppingCart.setTotalAmount(shoppingCart.getTotalAmount() + UnitPrice);
+                shoppingCartRepository.save(shoppingCart);
+            }
 
             return ResponseEntity.ok("Reservation moved to shopping cart successfully");
         }catch (Exception e) {

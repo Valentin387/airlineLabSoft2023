@@ -1,6 +1,9 @@
 import axiosInstance from '../axiosInstance.js';
               
-/* @RequestParam  long reservationID */
+/*           
+@RequestParam long flightID,
+@RequestParam long userID 
+ */
 
 const cancelReservation = (params) => {
 

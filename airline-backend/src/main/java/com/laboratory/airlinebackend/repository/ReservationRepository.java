@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Long> {
 
@@ -36,5 +37,8 @@ public interface ReservationRepository extends JpaRepository<Reservation, Long> 
             "WHERE r.IDUser = :userId AND s.flightId = :flightId")
     List<Seat> getSeatsByUserIdAndFlightId(@Param("userId") long userId, @Param("flightId") long flightId);
 
+    //get the reservation by IDSeat
+    @Query("SELECT r FROM tblReservation r WHERE r.IDSeat = :idSeat")
+    Optional<Reservation> findByIDSeat(long idSeat);
 
 }
