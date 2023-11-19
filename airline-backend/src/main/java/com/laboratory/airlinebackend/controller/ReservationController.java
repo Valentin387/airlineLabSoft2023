@@ -94,7 +94,37 @@ public class ReservationController {
             @PathVariable("userID") Long userID
     ){
         try{
-            List<ReservationDetailsDTO> reservations = reservationRepository.getReservationDetailsByUserID(userID);
+            int count = 0;
+            List<Object[]> results = reservationRepository.getReservationsByUserId(userID);
+            List<ReservationDetailsDTO> reservations = new ArrayList<>();
+            for (Object[] result : results) {
+                ReservationDetailsDTO reservationDetailsDTO = ReservationDetailsDTO.builder()
+                        .reservationDate((Date) result[0])
+                        .expirationDate((Date) result[1])
+                        .origin((String) result[2])
+                        .destination((String) result[3])
+                        .flightDate((Date) result[4])
+                        .state((String) result[5])
+                        .costByPerson((Double) result[6])
+                        .costByPersonOffer((Double) result[7])
+                        //.seats((List<Seat>) result[8])
+                        .build();
+                reservations.add(reservationDetailsDTO);
+                //print every attribute of the reservationDetailsDTO
+                System.out.println(count);
+                System.out.println(reservationDetailsDTO.getReservationDate());
+                System.out.println(reservationDetailsDTO.getExpirationDate());
+                System.out.println(reservationDetailsDTO.getOrigin());
+                System.out.println(reservationDetailsDTO.getDestination());
+                System.out.println(reservationDetailsDTO.getFlightDate());
+                System.out.println(reservationDetailsDTO.getState());
+                System.out.println(reservationDetailsDTO.getCostByPerson());
+                System.out.println(reservationDetailsDTO.getCostByPersonOffer());
+                //System.out.println(reservationDetailsDTO.getSeats());
+                System.out.println(" ");
+                count++;
+
+            }
             return ResponseEntity.ok(reservations);
         }catch (Exception e) {
             return ResponseEntity.badRequest().body("Error getting reservations");
