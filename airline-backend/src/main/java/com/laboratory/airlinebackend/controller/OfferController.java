@@ -45,7 +45,9 @@ public class OfferController {
 
             //I need to modify the attribute ´costByPersonOffer´ in every Flight that
             // matches the origin, destination and whose flightDate is lower than the validDateRange
-            flightRepository.updateCostByPersonOffer(requestNewOffer.getDiscount()/100, requestNewOffer.getOrigin(), requestNewOffer.getDestination(), requestNewOffer.getValidDateRange());
+            long currentOrderID = offer.getID();
+            flightRepository.updateCostByPersonOffer(requestNewOffer.getDiscount()/100, requestNewOffer.getOrigin(), requestNewOffer.getDestination(), requestNewOffer.getValidDateRange(),currentOrderID);
+
 
             return ResponseEntity.ok("Offer created successfully");
         }catch (Exception e){
