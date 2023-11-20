@@ -57,6 +57,9 @@ public class Flight {
     @Column
     private boolean isInternational;
 
+    @Column
+    private long offerID;
+
 
 
     // Constructors, getters, setters, and other methods
