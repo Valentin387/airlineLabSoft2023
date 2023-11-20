@@ -82,11 +82,11 @@ public class ShoppingCartController {
                         .build();
 
                 shoppingCartSeatsRepository.save(shoppingCartSeats);
-                existingShoppingCart.setQuantity(existingShoppingCart.getQuantity() + 1);
                 existingShoppingCart.setTotalAmount(existingShoppingCart.getTotalAmount() + UnitPrice);
-                shoppingCartRepository.save(existingShoppingCart);
                 seats.remove(randomIndex);
             }
+            existingShoppingCart.setQuantity(existingShoppingCart.getQuantity() + 1);
+            shoppingCartRepository.save(existingShoppingCart);
 
             return ResponseEntity.ok("Flight added to user's cart successfully");
         }catch (Exception e) {
@@ -180,15 +180,15 @@ public class ShoppingCartController {
                 shoppingCartSeatsRepository.delete(shoppingCartSeats);
 
                 //update the shopping cart
-                shoppingCart.setQuantity(shoppingCart.getQuantity() - 1);
                 if (flight.getCostByPersonOffer() != 0) {
                     shoppingCart.setTotalAmount(shoppingCart.getTotalAmount() - flight.getCostByPersonOffer());
                 } else {
                     shoppingCart.setTotalAmount(shoppingCart.getTotalAmount() - flight.getCostByPerson());
                 }
-                shoppingCartRepository.save(shoppingCart);
 
             }
+            shoppingCart.setQuantity(shoppingCart.getQuantity() - 1);
+            shoppingCartRepository.save(shoppingCart);
 
             return ResponseEntity.ok("Shopping cart item dropped successfully");
 
@@ -196,6 +196,33 @@ public class ShoppingCartController {
             return ResponseEntity.badRequest().body("Error dropping shopping cart items");
         }
     }
+
+    @GetMapping("/checkout")
+    public ResponseEntity<?> checkout(
+            @RequestParam long userID
+    ){
+        try {
+            //get the user
+            Optional<User> OptionalUser = userRepository.findById(userID);
+            if (OptionalUser.isEmpty()) {
+                return ResponseEntity.badRequest().body("User not found");
+            }
+            User user = OptionalUser.get();
+
+            //get the shopping cart
+            Optional<ShoppingCart> OptionalShoppingCart = shoppingCartRepository.findById(user.getShoppingCartID());
+            if (OptionalShoppingCart.isEmpty()) {
+                return ResponseEntity.badRequest().body("Shopping cart not found");
+            }
+            ShoppingCart shoppingCart = OptionalShoppingCart.get();
+
+            return ResponseEntity.ok(shoppingCart);
+
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error checking out shopping cart");
+        }
+    }
+
 
 
 }
