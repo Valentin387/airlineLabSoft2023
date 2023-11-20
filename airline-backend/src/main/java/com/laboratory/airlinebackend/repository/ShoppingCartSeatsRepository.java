@@ -36,5 +36,6 @@ public interface ShoppingCartSeatsRepository extends JpaRepository<ShoppingCartS
             "WHERE scs.shoppingCartID = :ShoppingCartId AND s.flightId = :flightId")
     List<Seat> getSeatsByShoppingCartIdAndFlightId(@Param("ShoppingCartId") long ShoppingCartId, @Param("flightId") long flightId);
 
+    Optional <ShoppingCartSeats> findBySeatID(long seatID);
 
 }

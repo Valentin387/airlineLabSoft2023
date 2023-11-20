@@ -140,45 +140,19 @@ public class ShoppingCartController {
         }
     }
 
-    /*
-    @GetMapping("/list")
-    public ResponseEntity<?> listShoppingCartItems(
-            @RequestParam  long userID
-    ){
-        try {
-            Optional<User> userOptional = userRepository.findById(userID);
-            if (userOptional.isEmpty()) {
-                return ResponseEntity.badRequest().body("User not found");
-            }
-            User existingUser = userOptional.get();
-            ShoppingCart existingShoppingCart = shoppingCartRepository.findById(existingUser.getShoppingCartID()).get();
-
-            List<ShoppingCartSeatsDetailsDTO> shoppingCartSeatsList = shoppingCartSeatsRepository.getShoppingCartSeatsDetailsByShoppingCartID(existingShoppingCart.getID());
-
-            return ResponseEntity.ok(shoppingCartSeatsList);
-        }catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error listing shopping cart items");
-        }
-    }*/
-
     @DeleteMapping("/drop")
     public ResponseEntity<?> dropItemFromShoppingCart(
             @RequestParam  long userID,
-            @RequestParam  long scsID
+            @RequestParam  long flightID
     ){
         try {
-            //get the scs
-            Optional<ShoppingCartSeats> OptionalShoppingCartSeats = shoppingCartSeatsRepository.findById(scsID);
-            if (OptionalShoppingCartSeats.isEmpty()) {
-                return ResponseEntity.badRequest().body("Shopping cart seat not found");
-            }
-            ShoppingCartSeats shoppingCartSeats = OptionalShoppingCartSeats.get();
-            //get the shopping cart ID
+            //get the user
             Optional<User> OptionalUser = userRepository.findById(userID);
             if (OptionalUser.isEmpty()) {
                 return ResponseEntity.badRequest().body("User not found");
             }
             User user = OptionalUser.get();
+
             //get the shopping cart
             Optional<ShoppingCart> OptionalShoppingCart = shoppingCartRepository.findById(user.getShoppingCartID());
             if (OptionalShoppingCart.isEmpty()) {
@@ -186,10 +160,35 @@ public class ShoppingCartController {
             }
             ShoppingCart shoppingCart = OptionalShoppingCart.get();
 
-            shoppingCartSeatsRepository.delete(shoppingCartSeats);
-            shoppingCart.setQuantity(shoppingCart.getQuantity() - 1);
-            shoppingCart.setTotalAmount(shoppingCart.getTotalAmount() - shoppingCartSeats.getUnitPrice());
-            shoppingCartRepository.save(shoppingCart);
+            //get the flight
+            Optional<Flight> OptionalFlight = flightRepository.findById(flightID);
+            if (OptionalFlight.isEmpty()) {
+                return ResponseEntity.badRequest().body("Flight not found");
+            }
+            Flight flight = OptionalFlight.get();
+
+            //get the seats
+            List<Seat> seats = shoppingCartSeatsRepository.getSeatsByShoppingCartIdAndFlightId(shoppingCart.getID(), flightID);
+
+            //delete the shopping cart seats
+            for (Seat seat : seats) {
+                Optional<ShoppingCartSeats> OptionalShoppingCartSeats = shoppingCartSeatsRepository.findBySeatID(seat.getID());
+                if (OptionalShoppingCartSeats.isEmpty()) {
+                    return ResponseEntity.badRequest().body("Shopping cart seats not found");
+                }
+                ShoppingCartSeats shoppingCartSeats = OptionalShoppingCartSeats.get();
+                shoppingCartSeatsRepository.delete(shoppingCartSeats);
+
+                //update the shopping cart
+                shoppingCart.setQuantity(shoppingCart.getQuantity() - 1);
+                if (flight.getCostByPersonOffer() != 0) {
+                    shoppingCart.setTotalAmount(shoppingCart.getTotalAmount() - flight.getCostByPersonOffer());
+                } else {
+                    shoppingCart.setTotalAmount(shoppingCart.getTotalAmount() - flight.getCostByPerson());
+                }
+                shoppingCartRepository.save(shoppingCart);
+
+            }
 
             return ResponseEntity.ok("Shopping cart item dropped successfully");
 
