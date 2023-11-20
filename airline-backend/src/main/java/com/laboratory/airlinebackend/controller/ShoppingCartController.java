@@ -2,6 +2,8 @@ package com.laboratory.airlinebackend.controller;
 import com.laboratory.airlinebackend.controller.DTO.ReservationDetailsDTO;
 import com.laboratory.airlinebackend.controller.DTO.ReserveFlightDTO;
 import com.laboratory.airlinebackend.controller.DTO.ShoppingCartSeatsDetailsDTO;
+import com.laboratory.airlinebackend.controller.service.AddShoppingCartItemService;
+import com.laboratory.airlinebackend.controller.service.DropShoppingCartItemService;
 import com.laboratory.airlinebackend.model.*;
 import com.laboratory.airlinebackend.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -34,6 +36,13 @@ public class ShoppingCartController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private AddShoppingCartItemService addShoppingCartItemService;
+
+    @Autowired
+    private DropShoppingCartItemService dropShoppingCartItemService;
+
 
     @PostMapping("/add-to-cart")
     public ResponseEntity<?> addFlightToCart(
@@ -220,6 +229,21 @@ public class ShoppingCartController {
 
         }catch (Exception e) {
             return ResponseEntity.badRequest().body("Error checking out shopping cart");
+        }
+    }
+
+    @PostMapping("/modify-cart-item")
+    public ResponseEntity<?> addSingleSeatToCart(
+            @RequestBody ReserveFlightDTO bookFlightDTO
+    ){
+        try {
+            //I call the service DropShoppingCartItemService and then, the service AddShoppingCartItemService
+            dropShoppingCartItemService.drop_item_from_cart(bookFlightDTO.getUserID(), bookFlightDTO.getFlightID());
+            addShoppingCartItemService.add_item_to_cart(bookFlightDTO);
+
+            return ResponseEntity.ok("Flight modified in user's cart successfully");
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error modifying flight in cart");
         }
     }
 
