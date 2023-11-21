@@ -1,7 +1,8 @@
 import axiosInstance from '../axiosInstance.js';
 
-/* @RequestParam  long userID,
-@RequestParam  long scsID  // this is the item's ID in the shopping cart. ShopingCartSeats - >scs
+/* 
+            @RequestParam  long userID,
+            @RequestParam  long flightID
 */
 
 const dropItem = (params) => {

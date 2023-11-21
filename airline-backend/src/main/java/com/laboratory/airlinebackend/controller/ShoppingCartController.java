@@ -1,6 +1,9 @@
 package com.laboratory.airlinebackend.controller;
+import com.laboratory.airlinebackend.controller.DTO.ReservationDetailsDTO;
 import com.laboratory.airlinebackend.controller.DTO.ReserveFlightDTO;
 import com.laboratory.airlinebackend.controller.DTO.ShoppingCartSeatsDetailsDTO;
+import com.laboratory.airlinebackend.controller.service.AddShoppingCartItemService;
+import com.laboratory.airlinebackend.controller.service.DropShoppingCartItemService;
 import com.laboratory.airlinebackend.model.*;
 import com.laboratory.airlinebackend.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,6 +36,13 @@ public class ShoppingCartController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private AddShoppingCartItemService addShoppingCartItemService;
+
+    @Autowired
+    private DropShoppingCartItemService dropShoppingCartItemService;
+
 
     @PostMapping("/add-to-cart")
     public ResponseEntity<?> addFlightToCart(
@@ -80,11 +91,11 @@ public class ShoppingCartController {
                         .build();
 
                 shoppingCartSeatsRepository.save(shoppingCartSeats);
-                existingShoppingCart.setQuantity(existingShoppingCart.getQuantity() + 1);
                 existingShoppingCart.setTotalAmount(existingShoppingCart.getTotalAmount() + UnitPrice);
-                shoppingCartRepository.save(existingShoppingCart);
                 seats.remove(randomIndex);
             }
+            existingShoppingCart.setQuantity(existingShoppingCart.getQuantity() + 1);
+            shoppingCartRepository.save(existingShoppingCart);
 
             return ResponseEntity.ok("Flight added to user's cart successfully");
         }catch (Exception e) {
@@ -93,43 +104,17 @@ public class ShoppingCartController {
     }
 
     @GetMapping("/list")
-    public ResponseEntity<?> listShoppingCartItems(
-            @RequestParam  long userID
+    public ResponseEntity<?> getItemsByUserID(
+            @RequestParam long userID
     ){
-        try {
-            Optional<User> userOptional = userRepository.findById(userID);
-            if (userOptional.isEmpty()) {
-                return ResponseEntity.badRequest().body("User not found");
-            }
-            User existingUser = userOptional.get();
-            ShoppingCart existingShoppingCart = shoppingCartRepository.findById(existingUser.getShoppingCartID()).get();
-
-            List<ShoppingCartSeatsDetailsDTO> shoppingCartSeatsList = shoppingCartSeatsRepository.getShoppingCartSeatsDetailsByShoppingCartID(existingShoppingCart.getID());
-
-            return ResponseEntity.ok(shoppingCartSeatsList);
-        }catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error listing shopping cart items");
-        }
-    }
-
-    @DeleteMapping("/drop")
-    public ResponseEntity<?> dropItemFromShoppingCart(
-            @RequestParam  long userID,
-            @RequestParam  long scsID
-    ){
-        try {
-            //get the scs
-            Optional<ShoppingCartSeats> OptionalShoppingCartSeats = shoppingCartSeatsRepository.findById(scsID);
-            if (OptionalShoppingCartSeats.isEmpty()) {
-                return ResponseEntity.badRequest().body("Shopping cart seat not found");
-            }
-            ShoppingCartSeats shoppingCartSeats = OptionalShoppingCartSeats.get();
-            //get the shopping cart ID
+        try{
+            //get the user
             Optional<User> OptionalUser = userRepository.findById(userID);
             if (OptionalUser.isEmpty()) {
                 return ResponseEntity.badRequest().body("User not found");
             }
             User user = OptionalUser.get();
+
             //get the shopping cart
             Optional<ShoppingCart> OptionalShoppingCart = shoppingCartRepository.findById(user.getShoppingCartID());
             if (OptionalShoppingCart.isEmpty()) {
@@ -137,9 +122,81 @@ public class ShoppingCartController {
             }
             ShoppingCart shoppingCart = OptionalShoppingCart.get();
 
-            shoppingCartSeatsRepository.delete(shoppingCartSeats);
+            List<Object[]> results = shoppingCartSeatsRepository.getGroupedItemsByShoppingCartId(shoppingCart.getID());
+            //for every object in results, call the getItemsByShoppingCartId method
+
+            List<ShoppingCartSeatsDetailsDTO> items = new ArrayList<>();
+            for (Object[] result : results) {
+                List<Object[]> results2 = shoppingCartSeatsRepository.getItemsByShoppingCartId(shoppingCart.getID(), (long) result[0]);
+                for (Object[] result2 : results2) {
+                    ShoppingCartSeatsDetailsDTO shoppingCartSeatsDetailsDTO = ShoppingCartSeatsDetailsDTO.builder()
+                            .flightId((Long) result2[0])
+                            .origin((String) result2[1])
+                            .destination((String) result2[2])
+                            .flightDate((Date) result2[3])
+                            .state((String) result2[4])
+                            .costByPerson((Double) result2[5])
+                            .costByPersonOffer((Double) result2[6])
+                            .seats(shoppingCartSeatsRepository.getSeatsByShoppingCartIdAndFlightId(shoppingCart.getID(), (long) result2[0]))
+                            .build();
+                    items.add(shoppingCartSeatsDetailsDTO);
+                }
+            }
+
+            return ResponseEntity.ok(items);
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error getting shopping cart items");
+        }
+    }
+
+    @DeleteMapping("/drop")
+    public ResponseEntity<?> dropItemFromShoppingCart(
+            @RequestParam  long userID,
+            @RequestParam  long flightID
+    ){
+        try {
+            //get the user
+            Optional<User> OptionalUser = userRepository.findById(userID);
+            if (OptionalUser.isEmpty()) {
+                return ResponseEntity.badRequest().body("User not found");
+            }
+            User user = OptionalUser.get();
+
+            //get the shopping cart
+            Optional<ShoppingCart> OptionalShoppingCart = shoppingCartRepository.findById(user.getShoppingCartID());
+            if (OptionalShoppingCart.isEmpty()) {
+                return ResponseEntity.badRequest().body("Shopping cart not found");
+            }
+            ShoppingCart shoppingCart = OptionalShoppingCart.get();
+
+            //get the flight
+            Optional<Flight> OptionalFlight = flightRepository.findById(flightID);
+            if (OptionalFlight.isEmpty()) {
+                return ResponseEntity.badRequest().body("Flight not found");
+            }
+            Flight flight = OptionalFlight.get();
+
+            //get the seats
+            List<Seat> seats = shoppingCartSeatsRepository.getSeatsByShoppingCartIdAndFlightId(shoppingCart.getID(), flightID);
+
+            //delete the shopping cart seats
+            for (Seat seat : seats) {
+                Optional<ShoppingCartSeats> OptionalShoppingCartSeats = shoppingCartSeatsRepository.findBySeatID(seat.getID());
+                if (OptionalShoppingCartSeats.isEmpty()) {
+                    return ResponseEntity.badRequest().body("Shopping cart seats not found");
+                }
+                ShoppingCartSeats shoppingCartSeats = OptionalShoppingCartSeats.get();
+                shoppingCartSeatsRepository.delete(shoppingCartSeats);
+
+                //update the shopping cart
+                if (flight.getCostByPersonOffer() != 0) {
+                    shoppingCart.setTotalAmount(shoppingCart.getTotalAmount() - flight.getCostByPersonOffer());
+                } else {
+                    shoppingCart.setTotalAmount(shoppingCart.getTotalAmount() - flight.getCostByPerson());
+                }
+
+            }
             shoppingCart.setQuantity(shoppingCart.getQuantity() - 1);
-            shoppingCart.setTotalAmount(shoppingCart.getTotalAmount() - shoppingCartSeats.getUnitPrice());
             shoppingCartRepository.save(shoppingCart);
 
             return ResponseEntity.ok("Shopping cart item dropped successfully");
@@ -148,6 +205,48 @@ public class ShoppingCartController {
             return ResponseEntity.badRequest().body("Error dropping shopping cart items");
         }
     }
+
+    @GetMapping("/checkout")
+    public ResponseEntity<?> checkout(
+            @RequestParam long userID
+    ){
+        try {
+            //get the user
+            Optional<User> OptionalUser = userRepository.findById(userID);
+            if (OptionalUser.isEmpty()) {
+                return ResponseEntity.badRequest().body("User not found");
+            }
+            User user = OptionalUser.get();
+
+            //get the shopping cart
+            Optional<ShoppingCart> OptionalShoppingCart = shoppingCartRepository.findById(user.getShoppingCartID());
+            if (OptionalShoppingCart.isEmpty()) {
+                return ResponseEntity.badRequest().body("Shopping cart not found");
+            }
+            ShoppingCart shoppingCart = OptionalShoppingCart.get();
+
+            return ResponseEntity.ok(shoppingCart);
+
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error checking out shopping cart");
+        }
+    }
+
+    @PostMapping("/modify-cart-item")
+    public ResponseEntity<?> addSingleSeatToCart(
+            @RequestBody ReserveFlightDTO bookFlightDTO
+    ){
+        try {
+            //I call the service DropShoppingCartItemService and then, the service AddShoppingCartItemService
+            dropShoppingCartItemService.drop_item_from_cart(bookFlightDTO.getUserID(), bookFlightDTO.getFlightID());
+            addShoppingCartItemService.add_item_to_cart(bookFlightDTO);
+
+            return ResponseEntity.ok("Flight modified in user's cart successfully");
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().body("Error modifying flight in cart");
+        }
+    }
+
 
 
 }

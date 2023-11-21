@@ -93,6 +93,7 @@ public class FlightController {
                 .isInternational(isInternational)
                 .state(FlightState.ON_TIME.toString())
                 .availableSeats(assignedSeats)
+                .offerID(0L)
                 .build();
 
             // Check for valid offers
@@ -110,6 +111,7 @@ public class FlightController {
                                 * 100.0
                         )/100.0
                 );
+                flight.setOfferID(validOffers.get(0).getID());
             }
             flightRepository.save(flight);
 
@@ -338,6 +340,7 @@ public class FlightController {
                                 .isInternational(isInternational)
                                 .state(FlightState.ON_TIME.toString())
                                 .availableSeats(assignedSeats)
+                                .offerID(0L)
                                 .build();
 
                         System.out.println(count + ". Origin: "+ origin + " Destination: " + destination +
