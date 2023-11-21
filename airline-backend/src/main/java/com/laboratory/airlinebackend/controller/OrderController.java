@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 
 @RestController
@@ -45,6 +42,9 @@ public class OrderController {
 
     @Autowired
     private EmailSenderService emailSenderService;
+
+    @Autowired
+    private ShoppingCartSeatsRepository shoppingCartSeatsRepository;
 
     @GetMapping("/findPassenger")
     public ResponseEntity<?> findPassenger(
@@ -141,8 +141,6 @@ public class OrderController {
             shoppingCartRepository.save(newShoppingCart);
             user.setShoppingCartID(newShoppingCart.getID());
 
-
-
             //book the seats
             List<OrderFlightInfo> orderFlightInfoList = requestNewOrder.getOrderFlightInfoList();
             //for each orderFlightInfo in orderFlightInfoList, get the flight and the passengerList
@@ -184,7 +182,7 @@ public class OrderController {
 
                     //send e-mail to the passenger with the flight info
 
-                    try {
+                    //try {
                         String body = "Estimado/a usuario/a,\n" +
                                 "\n" +
                                 "El equipo de AirTravelLabSoft le comunica que ha sido asignado como pasajero en un vuelo.\n" +
@@ -198,10 +196,11 @@ public class OrderController {
                                 "Atentamente.";
                         emailSenderService.sendEmail(passenger.getEmail(),
                                 "Código de confirmación de asiento", body);
-                    } catch (Exception e) {
-                        return ResponseEntity.badRequest().body("Error sending the e-mail " + e.getMessage());
+                    //} catch (Exception e) {
+                      //  return ResponseEntity.badRequest().body("Error sending the e-mail " + e.getMessage());
 
-                    }
+                    //}
+
 
 
                 }
@@ -228,6 +227,75 @@ public class OrderController {
             return ResponseEntity.ok(orderList);
         }catch (Exception e){
             return ResponseEntity.badRequest().body("Error listing the orders " + e.getMessage());
+        }
+    }
+
+
+    @PostMapping("/cancel")
+    public ResponseEntity<?> cancelOrder(){
+        try{
+            return ResponseEntity.ok("Order cancelled successfully");
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body("Error cancelling the order " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/detail-passengers")
+    public ResponseEntity<?> detailOrderPassengers(
+            @RequestParam String orderCOD
+    ){
+        try{
+            //get Order by COD
+            Optional<Order> OptionalOrder = orderRepository.findByCOD(orderCOD);
+            if (OptionalOrder.isEmpty()) {
+                return ResponseEntity.badRequest().body("Order not found");
+            }
+            Order order = OptionalOrder.get();
+
+            //get the shoppingCart by ID
+            ShoppingCart shoppingCart = shoppingCartRepository.getShoppingCartByID(order.getShoppingCartID());
+            //get the items in the shoppingCart, grouped by flightID
+            List<Object[]> results = shoppingCartSeatsRepository.getGroupedItemsByShoppingCartId(shoppingCart.getID());
+
+            List<OrderDetailsDTO> items = new ArrayList<>();
+            for (Object[] result : results) {
+                List<Object[]> results2 = shoppingCartSeatsRepository.getItemsByShoppingCartId(shoppingCart.getID(), (long) result[0]);
+                for (Object[] result2 : results2) {
+                    OrderDetailsDTO shoppingCartOrderDetailsDTO = OrderDetailsDTO.builder()
+                            .flightId((Long) result2[0])
+                            .origin((String) result2[1])
+                            .destination((String) result2[2])
+                            .flightDate((Date) result2[3])
+                            .state((String) result2[4])
+                            .costByPerson((Double) result2[5])
+                            .costByPersonOffer((Double) result2[6])
+                            .passengers(shoppingCartSeatsRepository.getPassengersByShoppingCartIdAndFlightId(shoppingCart.getID(), (long) result2[0]))
+                            .build();
+                    items.add(shoppingCartOrderDetailsDTO);
+                }
+            }
+
+            return ResponseEntity.ok(items);
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body("Error getting the order detail " + e.getMessage());
+        }
+    }
+
+    @GetMapping("/detail")
+    public ResponseEntity<?> detailOrder(
+            @RequestParam String orderCOD
+    ){
+        try{
+            //get Order by COD
+            Optional<Order> OptionalOrder = orderRepository.findByCOD(orderCOD);
+            if (OptionalOrder.isEmpty()) {
+                return ResponseEntity.badRequest().body("Order not found");
+            }
+            Order order = OptionalOrder.get();
+
+            return ResponseEntity.ok(order);
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body("Error getting the order detail " + e.getMessage());
         }
     }
 
