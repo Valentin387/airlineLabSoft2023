@@ -204,5 +204,17 @@ public class OrderController {
         }
     }
 
+    @GetMapping("/list")
+    public ResponseEntity<?> list(
+            @RequestParam long userID
+    ){
+        try{
+            List<Order> orderList = orderRepository.findByUserID(userID);
+            return ResponseEntity.ok(orderList);
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body("Error listing the orders " + e.getMessage());
+        }
+    }
+
 
 }

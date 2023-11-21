@@ -15,11 +15,6 @@ import java.util.List;
 @AllArgsConstructor
 public class RegisterRequestOrder {
 
-    private long ID;
-
-    @Column(length = 100)
-    private String COD;
-
     private long userID;
     private long cardID;
     private double totalAmount;
