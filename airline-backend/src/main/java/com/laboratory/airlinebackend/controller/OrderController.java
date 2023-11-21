@@ -80,7 +80,7 @@ public class OrderController {
             @RequestBody RegisterRequestOrder requestNewOrder
     ){
         try{
-            /*
+
             //do the payment
             //get the card
             Card card = cardRepository.getCardById(requestNewOrder.getCardID());
@@ -141,27 +141,23 @@ public class OrderController {
             shoppingCartRepository.save(newShoppingCart);
             user.setShoppingCartID(newShoppingCart.getID());
 
-             */
+
 
             //book the seats
             List<OrderFlightInfo> orderFlightInfoList = requestNewOrder.getOrderFlightInfoList();
             //for each orderFlightInfo in orderFlightInfoList, get the flight and the passengerList
             //for every flight purchased
-            System.out.println("orderFlightInfoList size: " + orderFlightInfoList.size());
             for (OrderFlightInfo ofi :  orderFlightInfoList ){
                 //OrderFlightInfo orderFlightInfo = ofi;
                 //get the flight by ID
-                System.out.println("ID: " + ofi.getID());
-                System.out.println("passengerList: " + ofi.getPassengerList());
-
-                Flight flight = flightRepository.getFlightById(ofi.getID());
+                Flight flight = flightRepository.getFlightById(ofi.getFlightID());
                 if (flight == null) {
                     return ResponseEntity.badRequest().body("Flight not found");
                 }
                 //get the passengerList
                 List<PassengerPlusSeat> passengerList = ofi.getPassengerList();
                 //for each passenger in passengerList, get the seat by seatID
-                /*
+
                 for (PassengerPlusSeat passengerPlusSeat : passengerList) {
 
                     Passenger passenger = Passenger.builder()
@@ -209,7 +205,7 @@ public class OrderController {
 
 
                 }
-                */
+
 
 
             }
@@ -217,6 +213,7 @@ public class OrderController {
 
             return ResponseEntity.ok("Purchase carried out successfully");
         }catch (Exception e){
+            e.printStackTrace(); // Add this line to print the exception details
             return ResponseEntity.badRequest().body("Error during the purchase process " + e.getMessage());
         }
     }
@@ -235,6 +232,30 @@ public class OrderController {
     }
 
 
+    @Transactional
+    @GetMapping("/testEmail")
+    public ResponseEntity<?> testEmail(
+            @RequestParam String email
+    ){
+        try{
+            String body = "Estimado/a usuario/a,\n" +
+                    "\n" +
+                    "El equipo de AirTravelLabSoft le comunica que ha sido asignado como pasajero en un vuelo.\n" +
+                    "\n" +
+                    "Podrá hacer check-in ingresando a nuestra página, módulo de check-in e ingresando su DNI y el siguiente código:\n" +
+                    "\n" +
+                    "COD" + "\n" +
+                    "\n" +
+                    "Le agradecemos por confiar en nuestros servicios y estamos aquí para ayudarle en caso de cualquier duda o inquietud.\n" +
+                    "\n" +
+                    "Atentamente.";
+            emailSenderService.sendEmail(email,
+                    "Código de confirmación de asiento", body);
+            return ResponseEntity.ok("Email sent successfully");
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body("Error sending the e-mail " + e.getMessage());
+        }
+    }
 
 
 }

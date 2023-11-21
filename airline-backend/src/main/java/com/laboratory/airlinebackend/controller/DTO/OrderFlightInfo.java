@@ -14,6 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 public class OrderFlightInfo {
 
-    private long ID; //the flight's ID
+    private long flightID; //the flight's ID
     private List<PassengerPlusSeat> passengerList;
 }
