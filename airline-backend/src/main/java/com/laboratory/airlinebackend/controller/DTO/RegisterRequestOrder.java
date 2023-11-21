@@ -21,10 +21,8 @@ public class RegisterRequestOrder {
     private String COD;
 
     private long userID;
-    private long shoppingCartID;
     private long cardID;
     private double totalAmount;
-    private java.util.Date Date;
 
     @Column(length = 100)
     private String paymentDetails;
