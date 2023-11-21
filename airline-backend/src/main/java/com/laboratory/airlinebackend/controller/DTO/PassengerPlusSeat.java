@@ -30,7 +30,6 @@ public class PassengerPlusSeat {
     private String contactName;
     @Column(length = 100)
     private String contactNo;
-    private boolean didCheckIn;
     private long seatID;
 
 }

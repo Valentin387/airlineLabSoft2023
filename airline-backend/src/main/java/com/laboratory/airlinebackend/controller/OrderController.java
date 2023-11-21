@@ -3,6 +3,7 @@ import com.laboratory.airlinebackend.controller.DTO.*;
 import com.laboratory.airlinebackend.controller.service.EmailSenderService;
 import com.laboratory.airlinebackend.model.*;
 import com.laboratory.airlinebackend.repository.*;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import java.util.UUID;
 @CrossOrigin("http://localhost:5173")
 @RequiredArgsConstructor
 public class OrderController {
+
 
     @Autowired
     private UserRepository userRepository;
@@ -72,11 +74,13 @@ public class OrderController {
     }
 
 
+    @Transactional
     @PostMapping("/purchase")
     public ResponseEntity<?> purchase(
             @RequestBody RegisterRequestOrder requestNewOrder
     ){
         try{
+            /*
             //do the payment
             //get the card
             Card card = cardRepository.getCardById(requestNewOrder.getCardID());
@@ -107,7 +111,7 @@ public class OrderController {
 
             //get shoppingCart by looking into the user's shoppingCartID
             long shoppingCartID = user.getShoppingCartID();
-            ShoppingCart shoppingCart = shoppingCartRepository.getShoppingCartById(shoppingCartID);
+            ShoppingCart shoppingCart = shoppingCartRepository.getShoppingCartByID(shoppingCartID);
 
             //create a new order
             Order order = Order.builder()
@@ -124,7 +128,7 @@ public class OrderController {
             long orderID = order.getID();
 
             //concatenate the orderID with the bookingReference
-            String COD = bookingReference + orderID;
+            String COD = bookingReference + '#' +orderID;
             System.out.println("COD: " + COD);
             order.setCOD(COD);
             orderRepository.save(order);
@@ -137,13 +141,19 @@ public class OrderController {
             shoppingCartRepository.save(newShoppingCart);
             user.setShoppingCartID(newShoppingCart.getID());
 
+             */
+
             //book the seats
             List<OrderFlightInfo> orderFlightInfoList = requestNewOrder.getOrderFlightInfoList();
             //for each orderFlightInfo in orderFlightInfoList, get the flight and the passengerList
             //for every flight purchased
+            System.out.println("orderFlightInfoList size: " + orderFlightInfoList.size());
             for (OrderFlightInfo ofi :  orderFlightInfoList ){
                 //OrderFlightInfo orderFlightInfo = ofi;
                 //get the flight by ID
+                System.out.println("ID: " + ofi.getID());
+                System.out.println("passengerList: " + ofi.getPassengerList());
+
                 Flight flight = flightRepository.getFlightById(ofi.getID());
                 if (flight == null) {
                     return ResponseEntity.badRequest().body("Flight not found");
@@ -151,6 +161,7 @@ public class OrderController {
                 //get the passengerList
                 List<PassengerPlusSeat> passengerList = ofi.getPassengerList();
                 //for each passenger in passengerList, get the seat by seatID
+                /*
                 for (PassengerPlusSeat passengerPlusSeat : passengerList) {
 
                     Passenger passenger = Passenger.builder()
@@ -176,6 +187,7 @@ public class OrderController {
                     flight.setAvailableSeats(flight.getAvailableSeats() - 1);
 
                     //send e-mail to the passenger with the flight info
+
                     try {
                         String body = "Estimado/a usuario/a,\n" +
                                 "\n" +
@@ -194,15 +206,21 @@ public class OrderController {
                         return ResponseEntity.badRequest().body("Error sending the e-mail " + e.getMessage());
 
                     }
+
+
                 }
+                */
+
 
             }
+
 
             return ResponseEntity.ok("Purchase carried out successfully");
         }catch (Exception e){
             return ResponseEntity.badRequest().body("Error during the purchase process " + e.getMessage());
         }
     }
+
 
     @GetMapping("/list")
     public ResponseEntity<?> list(
@@ -215,6 +233,8 @@ public class OrderController {
             return ResponseEntity.badRequest().body("Error listing the orders " + e.getMessage());
         }
     }
+
+
 
 
 }
