@@ -18,6 +18,7 @@ import Carrito from '../views/Carrito.vue'
 import List_Reservas from '../views/List_Reservas.vue'
 import CentroAyuda from '../views/CentroAyuda.vue'
 import ListVuelosClient from '../views/ListVuelos_Client.vue'
+import CrearVuelo from '../views/CrearVuelo.vue'
 const router = createRouter ({
 
     history: createWebHistory(),
@@ -122,6 +123,11 @@ const router = createRouter ({
           name: 'ListVuelosClient',
           component: ListVuelosClient
        },
+       {
+        path: '/CrearVuelo',
+        name: 'CrearVuelo',
+        component: CrearVuelo
+        },
     ]
     
 })

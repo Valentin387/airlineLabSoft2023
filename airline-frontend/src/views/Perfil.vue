@@ -100,6 +100,8 @@
         <Footer/>
     </div>
     <!------------------------------------------------FOOTER------------------------------------------->
+      <!-- Footer aquí -->
+      <Footer></Footer>
 </template>
 <style lang="scss"  >
 $light-color: #312c02;
