@@ -21,7 +21,8 @@
           name="origin"
           placeholder="¿Desde dónde vuelas?"
           v-model="searchParams.origin"
-         required>
+          required
+        >
           <option value="" disabled selected>¿Desde dónde vuelas?</option>
           <option value="Madrid">Madrid</option>
           <option value="Londres">Londres</option>
@@ -43,7 +44,8 @@
           name="destination"
           placeholder="¿A dónde vuelas?"
           v-model="searchParams.destination"
-        required>
+          required
+        >
           <option value="" disabled selected>¿A dónde vuelas?</option>
           <option value="Madrid">Madrid</option>
           <option value="Londres">Londres</option>
@@ -63,7 +65,8 @@
         <input
           type="date"
           name="departureDate"
-          v-model="searchParams.flightDate" required
+          v-model="searchParams.flightDate"
+          required
         />
       </div>
 
@@ -80,7 +83,8 @@
           name="numPassengers"
           placeholder="Número de pasajeros"
           v-model="searchParams.numPassengers"
-         required/>
+          required
+        />
       </div>
       <input
         type="submit"
@@ -109,9 +113,10 @@
             destino popular para aquellos que buscan diversión, compras y
             relajación bajo el sol de Florida.
           </p>
-          <a href="/Miami" class
-            >Ver vuelos
-            <i class="material-symbols-outlined">arrow_forward_ios</i></a
+          <a @click="verVuelos('Miami')" class
+            >Ver vuelos<i class="material-symbols-outlined"
+              >arrow_forward_ios</i
+            ></a
           >
           <h5>
             Desde <br />
@@ -131,7 +136,7 @@
             combina la historia y la modernidad. Ofrece una amplia gama de
             atracciones, desde el Palacio de Buckingham hasta el Museo Británico
           </p>
-          <a href="/Londres"
+          <a @click="verVuelos('Londres')"
             >Ver vuelos
             <i class="material-symbols-outlined">arrow_forward_ios</i></a
           >
@@ -153,7 +158,7 @@
             del mundo. Ofrece rascacielos imponentes, teatros de Broadway y una
             escena artística vibrante.
           </p>
-          <a href="/New York"
+          <a @click="verVuelos('New York')"
             >Ver vuelos
             <i class="material-symbols-outlined">arrow_forward_ios</i></a
           >
@@ -175,7 +180,7 @@
             y vida nocturna. Puedes disfrutar de tapas en los bares locales,
             visitar el Museo del Prado y explorar la arquitectura impresionante.
           </p>
-          <a href="/Madrid"
+          <a @click="verVuelos('Madrid')"
             >Ver vuelos
             <i class="material-symbols-outlined">arrow_forward_ios</i></a
           >
@@ -197,7 +202,7 @@
             el tango, su deliciosa comida y su arquitectura europea. Es una
             ciudad que combina un ambiente elegante con un toque de nostalgia.
           </p>
-          <a href="/Buenos Aires"
+          <a @click="verVuelos('Buenos Aires')"
             >Ver vuelos
             <i class="material-symbols-outlined">arrow_forward_ios</i></a
           >
@@ -219,7 +224,7 @@
             rica historia y una creciente escena de arte. El Museo del Oro y el
             centro histórico son puntos de referencia importantes.
           </p>
-          <a href="/Bogotá"
+          <a @click="verVuelos('Bogotá')"
             >Ver vuelos
             <i class="material-symbols-outlined">arrow_forward_ios</i></a
           >
@@ -242,7 +247,7 @@
             la ciudad disfruta de un clima templado durante todo el año.
             Medellín es famosa por su espíritu innovador.
           </p>
-          <a href="/Medellín"
+          <a @click="verVuelos('Medellín')"
             >Ver vuelos
             <i class="material-symbols-outlined">arrow_forward_ios</i></a
           >
@@ -264,7 +269,7 @@
             cafetales. Es un destino ideal para los amantes de la naturaleza y
             el café colombiano.
           </p>
-          <a href="/Pereira"
+          <a @click="verVuelos('Pereira')"
             >Ver vuelos
             <i class="material-symbols-outlined">arrow_forward_ios</i></a
           >
@@ -286,7 +291,7 @@
             tiene una vibrante escena de baile y música, además de una cultura
             culinaria única
           </p>
-          <a href="/Cali"
+          <a @click="verVuelos('Cali')"
             >Ver vuelos
             <i class="material-symbols-outlined">arrow_forward_ios</i></a
           >
@@ -309,7 +314,7 @@
             cristalinas. Es un lugar perfecto para sumergirse en la historia y
             la cultura.
           </p>
-          <a href="/Cartagena"
+          <a @click="verVuelos('Cartagena')"
             >Ver vuelos
             <i class="material-symbols-outlined">arrow_forward_ios</i></a
           >
@@ -349,18 +354,16 @@
     </div>
   </section>
   <error-modal
-      :show-error="showNumberError"
-      :error-message="numberErrorMessage"
-      @close="showNumberError = false"
-    />
+    :show-error="showNumberError"
+    :error-message="numberErrorMessage"
+    @close="showNumberError = false"
+  />
 
   <!------------------------------------------------FOOTER------------------------------------------->
   <Footer></Footer>
 </template>
- 
 
-<style lang="scss" >
-
+<style lang="scss">
 @import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;1,300&family=Poppins:ital,wght@0,100;0,300;0,400;0,500;0,600;1,200&display=swap");
 
 * {
@@ -375,8 +378,8 @@
 }
 
 $light-color: #312c02;
-$degradado: rgba(149, 168, 238, 0.11);
-$bg: rgba(6, 31, 14, 0.947);
+$degradado: rgba(39, 64, 153, 0.479);
+$bg: rgba(6, 31, 14, 0.873);
 $azul-claro: #cfe0eb;
 $gris: #f7f7f7;
 $gris2: #364265;
@@ -454,32 +457,35 @@ body {
   padding-bottom: 5rem;
 
   .content {
-    text-align: center;
-
+   
+    text-align: center;   
     span {
       //Texto 1 posicionado sobre la imagen de fondo
       font-weight: bolder;
       color: transparent;
-      -webkit-text-stroke: 0.1rem $blanco;
+      -webkit-text-stroke: 0.2rem $blanco;
       // Esta línea establece el tamaño de fuente de un elemento al 4% del ancho de la ventana gráfica en el archivo Home.vue
-      font-size: 4vw;
+      font-size: 8.5vw;
       display: block;
+  
     }
 
     h3 {
       //texto 2
-      font-size: 6vw;
+      font-size: 8vw;
       color: white;
+      text-align: center;
     }
 
     p {
       //Texto 3
       max-width: 60rem;
       margin: 1rem auto;
-      font-size: 1.4rem;
+      font-size: 2rem;
       color: $blanco;
       line-height: 2;
-    }
+     
+     }
   }
 }
 
@@ -749,6 +755,17 @@ section {
   html {
     font-size: 55%;
   }
+  .home{
+    .content {
+      span {
+      
+        -webkit-text-stroke: 50rem ;
+      }
+
+    }
+  }
+  
+
 
   .header {
     padding: 1.5rem 2rem; // Establece el padding de la barra de navegación en 1.5rem en la parte superior e inferior y 2rem en la izquierda y derecha
@@ -762,11 +779,12 @@ section {
 
     .content {
       span {
-        font-size: 8%;
+        font-size: 20%;
+        -webkit-text-stroke: 0.2rem ;
       }
 
       h3 {
-        font-size: 9%;
+        font-size: 15%;
       }
     }
   }
@@ -775,12 +793,14 @@ section {
 @media (max-width: 450px) {
   //Tamaño de celular
   html {
-    font-size: 43%;
+    font-size: 10%;
   }
 
   .about .content h3 {
-    font-size: 3.5rem;
+    font-size: 3rem;
+    
   }
+  
 }
 
 @media (max-width: 1280px) {
@@ -817,11 +837,12 @@ section {
     }
   }
 }
-</style><script>
+</style>
+<script>
 import flightService from "@/services/searchService/parametrizedSearchService.js";
 import Footer from "@/components/footer.vue";
 import errorModal from "@/components/ErrorModal.vue";
-
+import vueloService from '@/services/searchService/searchByPlaceService'; 
 export default {
   components: {
     Footer,
@@ -835,36 +856,52 @@ export default {
         flightDate: "",
         numPassengers: 1,
       },
+   
       showNumberError: false,
       numberErrorMessage: "",
     };
   },
   methods: {
-    performFlightSearch() {
-      if (this.searchParams.numPassengers <= 0 || isNaN(this.searchParams.numPassengers  )) {
-        // Mostrar un mensaje de error o tomar la acción correspondiente
-        this.showNumberError= true;
-        this.numberErrorMessage = "Por favor, ingrese un número válido de pasajeros.";
-        return;
-      }
-      if(this.searchParams.numPassengers > 16){
-        this.showNumberError= true;
-        this.numberErrorMessage = "Las búsquedas tienen un máximo de 16 pasajeros.";
-        return;
-      }
-      
-      flightService
-        .parametrizedSearch(this.searchParams)
+    verVuelos(nombreVuelo) {
+      vueloService.searchByPlace(nombreVuelo)
         .then((response) => {
-          console.log(response.status);
+          if (response.status === 200) {
+            console.log("Vuelos encontrados:", response.data);
+            // Almacena los vuelos encontrados en alguna variable
+            sessionStorage.setItem("ListVuelosClient",JSON.stringify(response.data) );
+            // Redirige a la vista ListVuelosClient
+            this.$router.push({ name: "ListVuelosClient" });
+          }
+        })
+        .catch((error) => {
+          console.error("Error en la búsqueda de vuelos:", error);
+        });
+    },
+
+    performFlightSearch() {
+      if (
+        this.searchParams.numPassengers <= 0 ||
+        isNaN(this.searchParams.numPassengers)
+      ) {
+        // Mostrar un mensaje de error o tomar la acción correspondiente
+        this.showNumberError = true;
+        this.numberErrorMessage =
+          "Por favor, ingrese un número válido de pasajeros.";
+        return;
+      }
+      if (this.searchParams.numPassengers > 16) {
+        this.showNumberError = true;
+        this.numberErrorMessage =
+          "Las búsquedas tienen un máximo de 16 pasajeros.";
+        return;
+      }
+  
+      flightService. parametrizedSearch(this.searchParams).then((response) => {console.log(response.status);
           if (response.status === 200) {
             console.log("Vuelos encontrados:", response.data);
 
             // Almacena los vuelos en el almacenamiento de la sesión
-            sessionStorage.setItem(
-              "searchResults",
-              JSON.stringify(response.data)
-            );
+            sessionStorage.setItem("searchResults",JSON.stringify(response.data) );
 
             // Redirige a la nueva vista
             this.$router.push({ name: "SearchResults" });
