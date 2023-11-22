@@ -73,7 +73,7 @@ public class FinancialModuleController {
             if ("debito".equalsIgnoreCase(newCard.getType())) {
                 newCardRegistered = Card.builder()
                         //.id(id)
-                        .balance(Double.parseDouble(newCard.getBalance()))
+                        .balance(newCard.getBalance())
                         .type(newCard.getType())
                         .number(newCard.getNumber())
                         .name(newCard.getName())
@@ -89,7 +89,7 @@ public class FinancialModuleController {
             } else if ("credito".equalsIgnoreCase(newCard.getType())) {
                 newCardRegistered = Card.builder()
                         //.id(id)
-                        .balance(Double.parseDouble(newCard.getBalance()))
+                        .balance(newCard.getBalance())
                         .type(newCard.getType())
                         .number(newCard.getNumber())
                         .name(newCard.getName())

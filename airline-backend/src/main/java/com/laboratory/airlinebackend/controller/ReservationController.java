@@ -59,6 +59,13 @@ public class ReservationController {
                 }
             }
 
+            //get the flight
+            Optional<Flight> OptionalFlight = flightRepository.findById(reserveFlightDTO.getFlightID());
+            if (OptionalFlight.isEmpty()) {
+                return ResponseEntity.badRequest().body("Flight not found");
+            }
+            Flight flight = OptionalFlight.get();
+
             //I want to do a for loop on seats, for selecting randomly a quantity of seatQuantity seats
             //and then change the state of those seats to RESERVED
             //and then save the seats in the database
@@ -79,6 +86,8 @@ public class ReservationController {
                 seatRepository.save(seat);
                 reservationRepository.save(reservation);
                 seats.remove(randomIndex);
+                //decrease the available seats
+                flight.setAvailableSeats(flight.getAvailableSeats() - 1);
             }
             return ResponseEntity.ok("Flight reserved succesfully");
 
@@ -136,6 +145,13 @@ public class ReservationController {
                 seatRepository.save(seat);
             }
 
+            //get the flight
+            Optional <Flight> OptionalFlight = flightRepository.findById(flightID);
+            if (OptionalFlight.isEmpty()) {
+                return ResponseEntity.badRequest().body("Flight not found");
+            }
+            Flight flight = OptionalFlight.get();
+
             //for each seat, get and delete the reservation
             for (Seat seat : seats) {
                 Optional<Reservation> OptionalReservation = reservationRepository.findByIDSeat(seat.getID());
@@ -144,6 +160,8 @@ public class ReservationController {
                 }
                 Reservation reservation = OptionalReservation.get();
                 reservationRepository.delete(reservation);
+                //increase the available seats
+                flight.setAvailableSeats(flight.getAvailableSeats() + 1);
             }
             return ResponseEntity.ok("Reservation cancelled successfully");
         }catch (Exception e) {
@@ -165,6 +183,13 @@ public class ReservationController {
                 seatRepository.save(seat);
             }
 
+            //get the flight
+            Optional <Flight> OptionalFlight = flightRepository.findById(flightID);
+            if (OptionalFlight.isEmpty()) {
+                return ResponseEntity.badRequest().body("Flight not found");
+            }
+            Flight flight = OptionalFlight.get();
+
             //for each seat, get and delete the reservation
             for (Seat seat : seats) {
                 Optional<Reservation> OptionalReservation = reservationRepository.findByIDSeat(seat.getID());
@@ -173,6 +198,8 @@ public class ReservationController {
                 }
                 Reservation reservation = OptionalReservation.get();
                 reservationRepository.delete(reservation);
+                //increase the available seats
+                flight.setAvailableSeats(flight.getAvailableSeats() + 1);
             }
 
             //get the user
@@ -188,13 +215,6 @@ public class ReservationController {
                 return ResponseEntity.badRequest().body("Shopping cart not found");
             }
             ShoppingCart shoppingCart = OptionalShoppingCart.get();
-
-            //get the flight
-            Optional <Flight> OptionalFlight = flightRepository.findById(flightID);
-            if (OptionalFlight.isEmpty()) {
-                return ResponseEntity.badRequest().body("Flight not found");
-            }
-            Flight flight = OptionalFlight.get();
 
             double UnitPrice;
             if (flight.getCostByPersonOffer() != 0) {

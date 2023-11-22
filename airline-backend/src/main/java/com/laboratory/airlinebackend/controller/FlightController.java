@@ -6,6 +6,7 @@ import com.laboratory.airlinebackend.controller.service.SeatCreatorService;
 import com.laboratory.airlinebackend.model.*;
 import com.laboratory.airlinebackend.repository.*;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -219,24 +220,43 @@ public class FlightController {
         }
 
     }
-    @DeleteMapping ("/delete/{id}")
-    public ResponseEntity<?> deleteProfile(@PathVariable Long id) {
+
+    @PostMapping ("/delete/{id}")
+    public ResponseEntity<?> flightCancelled(@PathVariable Long id) {
         try{
             // Obtener el vuelo por ID
-            Flight flight = flightRepository.getFlightById(id);
+            Optional<Flight> flightOptional = flightRepository.findById(id);
 
-            // Verificar si el vuelo existe y está activo
-            if (flight == null || !"ON_TIME".equals(flight.getState())) {
+            if(flightOptional.isPresent()) {
+                Flight flight = flightOptional.get();
+
+                // Verificar si el vuelo existe y está activo
+                if (!"ON_TIME".equals(flight.getState())) {
+                    return ResponseEntity.notFound().build();
+                }
+
+                flight.setState(FlightState.CANCELLED.toString());
+                flight.setAvailableSeats(0);
+                //update the flight with the new state in the database
+                flightRepository.save(flight);
+
+                // Actualizar las sillas asociadas al vuelo borrado
+                List<Seat> seats = seatRepository.getSeatsByFlightId(id);
+                //seats.forEach(seat -> seat.setFlightId(0));
+                for (Seat seat : seats) {
+                    seat.setFlightId(0);
+                    seatRepository.save(seat);
+                }
+
+                //change state to cancelled
+
+                //flightRepository.deleteById(id);
+
+                return ResponseEntity.ok("Vuelo con ID " + id + " cancelado exitosamente /n");
+            }else {
+                // Si no se encuentra el usuario, devuelve un error 404 (Not Found)
                 return ResponseEntity.notFound().build();
             }
-
-            // Actualizar las sillas asociadas al vuelo borrado
-            List<Seat> seats = seatRepository.getSeatsByFlightId(id);
-            seats.forEach(seat -> seat.setFlightId(0));
-
-            flightRepository.deleteById(id);
-
-            return ResponseEntity.ok("Vuelo con ID " + id + " borrado exitosamente");
         }catch (Exception e) {
             e.printStackTrace(); // Imprime el seguimiento de la pila en la consola
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al cancelar el vuelo");
