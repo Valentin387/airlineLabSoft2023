@@ -182,7 +182,7 @@ public class OrderController {
 
                     //send e-mail to the passenger with the flight info
 
-                    //try {
+                    /*try {
                         String body = "Estimado/a usuario/a,\n" +
                                 "\n" +
                                 "El equipo de AirTravelLabSoft le comunica que ha sido asignado como pasajero en un vuelo.\n" +
@@ -196,10 +196,10 @@ public class OrderController {
                                 "Atentamente.";
                         emailSenderService.sendEmail(passenger.getEmail(),
                                 "Código de confirmación de asiento", body);
-                    //} catch (Exception e) {
-                      //  return ResponseEntity.badRequest().body("Error sending the e-mail " + e.getMessage());
+                    } catch (Exception e) {
+                        return ResponseEntity.badRequest().body("Error sending the e-mail " + e.getMessage());
 
-                    //}
+                    }*/
 
 
 
