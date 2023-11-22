@@ -472,9 +472,10 @@ body {
 
     h3 {
       //texto 2
-      font-size: 8vw;
+      font-size: 6.8vw;
       color: white;
       text-align: center;
+      
     }
 
     p {
@@ -493,7 +494,7 @@ body {
 .book-form {
   width: 80vw;
   margin: 0 auto;
-  margin-top: -9rem;
+  margin-top: -8rem;
   background: $azul;
   border-radius: 3rem;
   padding: 3rem 2rem;

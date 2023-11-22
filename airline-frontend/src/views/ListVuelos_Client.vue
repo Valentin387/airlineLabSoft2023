@@ -1,17 +1,17 @@
 <template>
   
-        <div class="imagen">
+    <div class="imagen">
         <div v-if="flights && flights.length > 0">
             <div v-for="(flight, index) in flights" :key="index">
-            <div v-if="index == 1">
-                <div class="content">
-                <span> Destino a {{ flight.destination }} </span>
+                <div v-if="index == 1">
+                    <div class="content">
+                        <span> Destino a {{ flight.destination }} </span>
+                    </div>
                 </div>
             </div>
-            </div>
         </div>
-        </div>
-        <div class="contenedores">
+    </div>
+    <div class="contenedores">
         <div v-if="flights && flights.length > 0">
             <div
             v-for="(flight, index) in flights"
@@ -53,7 +53,7 @@
             </div>
         </div>
         <p v-else>No se encontraron vuelos con los criterios seleccionados.</p>
-        </div>
+    </div>
 
 </template>
   
@@ -330,8 +330,7 @@ html {
 }
 </style>
   
-  <script>
-import vueloService from "@/services/searchService/searchByPlaceService";
+<script>
 
 export default {
   name: "ListVuelosClient",
