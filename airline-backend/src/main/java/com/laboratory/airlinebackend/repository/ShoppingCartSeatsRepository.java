@@ -1,6 +1,7 @@
 package com.laboratory.airlinebackend.repository;
 
 import com.laboratory.airlinebackend.controller.DTO.ShoppingCartSeatsDetailsDTO;
+import com.laboratory.airlinebackend.model.Passenger;
 import com.laboratory.airlinebackend.model.Reservation;
 import com.laboratory.airlinebackend.model.Seat;
 import com.laboratory.airlinebackend.model.ShoppingCartSeats;
@@ -36,6 +37,17 @@ public interface ShoppingCartSeatsRepository extends JpaRepository<ShoppingCartS
             "WHERE scs.shoppingCartID = :ShoppingCartId AND s.flightId = :flightId")
     List<Seat> getSeatsByShoppingCartIdAndFlightId(@Param("ShoppingCartId") long ShoppingCartId, @Param("flightId") long flightId);
 
+
+    //get the passengers by shopping cart ID and flight ID
+    @Query("SELECT p FROM tblPassenger p " +
+            "JOIN tblSeat s ON s.passengerId = p.ID " +
+            "JOIN tblShoppingCartSeats scs ON s.ID = scs.seatID " +
+            "WHERE scs.shoppingCartID = :ShoppingCartId AND s.flightId = :flightId")
+    List<Passenger> getPassengersByShoppingCartIdAndFlightId(@Param("ShoppingCartId") long ShoppingCartId, @Param("flightId") long flightId);
+
     Optional <ShoppingCartSeats> findBySeatID(long seatID);
+
+    @Query("SELECT s FROM tblShoppingCartSeats s WHERE s.shoppingCartID = :shoppingCartId")
+    List<ShoppingCartSeats> getShoppingCartSeatsByShoppingCartId(@Param("shoppingCartId") long shoppingCartId);
 
 }

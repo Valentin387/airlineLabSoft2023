@@ -68,11 +68,11 @@ public class ShoppingCartController {
             User existingUser = userOptional.get();
             ShoppingCart existingShoppingCart = shoppingCartRepository.findById(existingUser.getShoppingCartID()).get();
 
-            Optional <Flight> flightOptinal = flightRepository.findById(bookFlightDTO.getFlightID());
-            if (flightOptinal.isEmpty()) {
+            Optional <Flight> flightOptional = flightRepository.findById(bookFlightDTO.getFlightID());
+            if (flightOptional.isEmpty()) {
                 return ResponseEntity.badRequest().body("Flight not found");
             }
-            Flight existingFlight = flightOptinal.get();
+            Flight existingFlight = flightOptional.get();
             double UnitPrice;
             if (existingFlight.getCostByPersonOffer() != 0) {
                 UnitPrice = existingFlight.getCostByPersonOffer();

@@ -44,6 +44,7 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
     @Query("SELECT f FROM tblFlight f WHERE f.state = :state")
     List<Flight> getFlightsByState(@Param("state") String state);
 
+    @Query("SELECT f FROM tblFlight f WHERE f.id = :id ")
     Flight getFlightById(Long id);
 
 }
