@@ -104,7 +104,7 @@
           {
             titulo: "Derechos del titular y cómo ejercerlos",
             contenido:
-              "Contenido: Conocer, actualizar, rectificar y/o eliminar sus datos personales, siempre que no medie un deber legal o contractual que lo impida. El canal oficial para ejercer estos derechos es el correo: habeasdata@avianca.com. Para saber más detalles del procedimiento, ver la sección 4.1 de la Política de Privacidad.",
+              "Contenido: Conocer, actualizar, rectificar y/o eliminar sus datos personales, siempre que no medie un deber legal o contractual que lo impida. Para saber más detalles del procedimiento, ver la sección 4.1 de la Política de Privacidad.",
             abierto: false
           },
           {

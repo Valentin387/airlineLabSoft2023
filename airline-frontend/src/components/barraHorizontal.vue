@@ -39,7 +39,7 @@
                 this.$router.push("/Check-In");
             },
             redirectToAyuda() {
-                this.$router.push("/Ayuda");
+                this.$router.push("/CentroAyuda");
             },
             redirectToCarrito() {
                 this.$router.push("/Carrito");
