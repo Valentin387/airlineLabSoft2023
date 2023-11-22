@@ -230,11 +230,68 @@ public class OrderController {
         }
     }
 
-
-    @PostMapping("/cancel")
-    public ResponseEntity<?> cancelOrder(){
+    @Transactional
+    @DeleteMapping("/cancel")
+    public ResponseEntity<?> cancelOrder(
+            @RequestParam String orderCOD
+    ){
         try{
-            return ResponseEntity.ok("Order cancelled successfully");
+            //get Order by COD
+            Optional<Order> OptionalOrder = orderRepository.findByCOD(orderCOD);
+            if (OptionalOrder.isEmpty()) {
+                return ResponseEntity.badRequest().body("Order not found");
+            }
+            Order order = OptionalOrder.get();
+            System.out.println("ORDER");
+            System.out.println(order);
+            //get the card
+            Card card = cardRepository.getCardById(order.getCardID());
+            if (card == null) {
+                return ResponseEntity.badRequest().body("Card not found");
+            }
+            System.out.println("CARD");
+            System.out.println(card);
+            //get the shoppingCart by ID
+            ShoppingCart shoppingCart = shoppingCartRepository.getShoppingCartByID(order.getShoppingCartID());
+            System.out.println("shoppingCart");
+            System.out.println(shoppingCart);
+
+            //---------------- Cancellation Process ------------------
+
+            //get the seats booked by the order
+            List<ShoppingCartSeats> seatList = shoppingCartSeatsRepository.getShoppingCartSeatsByShoppingCartId(shoppingCart.getID());
+            System.out.println("seatList");
+            System.out.println(seatList);
+            //for each seat in seatList, get the passengerID and the seatID
+            for (ShoppingCartSeats scs : seatList){
+                //get the seat by ID
+                System.out.println("scs.getSeatID()");
+                System.out.println(scs.getSeatID());
+                Seat seat = seatRepository.getSeatById(scs.getSeatID());
+                //get the passenger by ID
+                System.out.println("SEAT");
+                System.out.println(seat);
+                Passenger passenger = passengerRepository.getPassengerById(seat.getPassengerId());
+                //get the flight
+                Flight flight = flightRepository.getFlightById(seat.getFlightId());
+                //update the flight's available seats
+                flight.setAvailableSeats(flight.getAvailableSeats() + 1);
+                //set the seat's state to AVAILABLE
+                seat.setState(SeatState.AVAILABLE.toString());
+                seat.setPassengerId(0);
+                seatRepository.save(seat);
+                //delete the passenger
+                passengerRepository.delete(passenger);
+                //delete the reference to that previous assignment
+                shoppingCartSeatsRepository.delete(scs);
+            }
+            shoppingCartRepository.delete(shoppingCart);
+            //update the card's balance
+            card.setBalance(card.getBalance() + order.getTotalAmount());
+            //delete the order (in real life, this has to be  registered somewhere in the database)
+            orderRepository.delete(order);
+
+            return ResponseEntity.ok("Order cancelled successfully, money refunded");
         }catch (Exception e){
             return ResponseEntity.badRequest().body("Error cancelling the order " + e.getMessage());
         }

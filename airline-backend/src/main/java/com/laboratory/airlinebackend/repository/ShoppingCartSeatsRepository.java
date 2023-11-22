@@ -47,4 +47,7 @@ public interface ShoppingCartSeatsRepository extends JpaRepository<ShoppingCartS
 
     Optional <ShoppingCartSeats> findBySeatID(long seatID);
 
+    @Query("SELECT s FROM tblShoppingCartSeats s WHERE s.shoppingCartID = :shoppingCartId")
+    List<ShoppingCartSeats> getShoppingCartSeatsByShoppingCartId(@Param("shoppingCartId") long shoppingCartId);
+
 }

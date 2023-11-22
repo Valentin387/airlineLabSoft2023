@@ -14,6 +14,6 @@ public interface SeatRepository extends JpaRepository<Seat, Long> {
     List<Seat> getSeatsByFlightId(Long id);
 
     @Query("SELECT s FROM tblSeat s " +
-            "WHERE s.ID = :id AND s.state = 'AVAILABLE' ")
+            "WHERE s.ID = :id ")
     Seat getSeatById(Long id);
 }
