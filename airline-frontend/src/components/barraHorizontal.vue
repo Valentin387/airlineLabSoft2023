@@ -8,7 +8,7 @@
                 <nav class="navbar"> <!-- LINKS DE NAVEGACIÓN-->
                     <a data-aos="zoom-in-left" data-aos-delay="300" href="/">Inicio</a>
                     <a data-aos= "zoom-in-left" data-aos-delay="450" @click="redirectToCheckIn">Confirmar Check-in</a>
-                    <a data-aos= "zoom-in-left" data-aos-delay="600" @click="redirectToAyuda">ayuda</a>
+                    <a data-aos= "zoom-in-left" data-aos-delay="600" href="CentroAyuda" @click="redirectToAyuda">ayuda</a>
                 </nav>
                 <a data-aos= "zoom-in-left" data-aos-delay="600" @click="redirectToCarrito" class="carrito" id="carrito"><i class="material-symbols-outlined">shopping_cart</i></a>
                 <a data-aos= "zoom-in-left" data-aos-delay="600" @click="redirectToProfile" class="usuario" id="usuario"><i class="material-symbols-outlined">person</i></a>

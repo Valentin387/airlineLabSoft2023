@@ -17,7 +17,7 @@ import DetalleVuelo from '../views/DetalleVuelo.vue'
 import Carrito from '../views/Carrito.vue'
 import List_Reservas from '../views/List_Reservas.vue'
 import CentroAyuda from '../views/CentroAyuda.vue'
-
+import ListVuelosClient from '../views/ListVuelos_Client.vue'
 const router = createRouter ({
 
     history: createWebHistory(),
@@ -26,10 +26,7 @@ const router = createRouter ({
           component: Home 
           
         },
-        {
-            path: '/Ayuda',
-            component: () => import('../views/Ayuda.vue')   
-        },
+   
         {
             path: '/Login',
             component: Login
@@ -90,31 +87,41 @@ const router = createRouter ({
 
         {
             path: '/M_Financiero',
-            component: M_Financiero
+            component: M_Financiero,
+            meta: { requiresAuth: true }
         },
 
         {
             path: '/ListVuelos_Ad',
-            component: ListVuelos_Ad
+            component: ListVuelos_Ad,
+            meta: { requiresAuth: true }
         },
 
         {
             path: '/DetalleVuelo',
-            component: DetalleVuelo
+            component: DetalleVuelo,
+            meta: { requiresAuth: true }
         },
 
         {
             path: '/Carrito',
-            component: Carrito
+            component: Carrito,
+            meta: { requiresAuth: true }
         },
         {
             path: '/List_Reservas',
-            component: List_Reservas
+            component: List_Reservas,
+            meta: { requiresAuth: true }
         },
         {
             path: '/CentroAyuda',
             component: CentroAyuda
         },
+        {
+          path: '/ListVuelos_Client',
+          name: 'ListVuelosClient',
+          component: ListVuelosClient
+       },
     ]
     
 })

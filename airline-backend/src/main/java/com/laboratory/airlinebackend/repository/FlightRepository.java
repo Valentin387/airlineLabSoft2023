@@ -25,15 +25,16 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
     List<Flight> getOnTimeFlights();
 
     @Modifying
-    @Query("UPDATE tblFlight f SET f.costByPersonOffer = (f.costByPerson - (:discount*f.costByPerson)) " +
+    @Query("UPDATE tblFlight f SET f.costByPersonOffer = (f.costByPerson - (:discount*f.costByPerson)), " +
+                                "f.offerID = :offerID " +
             "WHERE f.origin = :origin " +
             "AND f.destination = :destination " +
             "AND f.flightDate <= :validDateRange " +
             "AND f.state = 'ON_TIME' ")
-    void updateCostByPersonOffer(double discount, String origin, String destination, Date validDateRange);
+    void updateCostByPersonOffer(double discount, String origin, String destination, Date validDateRange, long offerID);
 
     @Modifying
-    @Query("UPDATE tblFlight f SET f.costByPersonOffer = 0.0 " +
+    @Query("UPDATE tblFlight f SET f.costByPersonOffer = 0.0, f.offerID = 0 " +
             "WHERE f.origin = :origin " +
             "AND f.destination = :destination " +
             "AND f.flightDate <= :validDateRange " +
@@ -43,5 +44,7 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
     @Query("SELECT f FROM tblFlight f WHERE f.state = :state")
     List<Flight> getFlightsByState(@Param("state") String state);
 
+    @Query("SELECT f FROM tblFlight f WHERE f.id = :id ")
     Flight getFlightById(Long id);
+
 }

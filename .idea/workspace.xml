@@ -6,6 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="2e0abf07-9820-4643-9f68-1385b5e1c1a4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/airline-backend/src/main/java/com/laboratory/airlinebackend/controller/FlightController.java" beforeDir="false" afterPath="$PROJECT_DIR$/airline-backend/src/main/java/com/laboratory/airlinebackend/controller/FlightController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

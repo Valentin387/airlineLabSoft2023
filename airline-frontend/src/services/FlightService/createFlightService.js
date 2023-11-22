@@ -1,6 +1,6 @@
 import axiosInstance from '../axiosInstance.js';
               
-
+//crea un nuevo vuelo
 const createFlight = (
                     flightDate,
                     origin,

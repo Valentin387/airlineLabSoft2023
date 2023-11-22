@@ -1,6 +1,6 @@
 import axiosInstance from '../axiosInstance.js';
 
-              
+//borra un administrador           
 
 const deleteAdmin = (id) => {
   //const credentials = { id };

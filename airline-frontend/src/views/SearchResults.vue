@@ -55,10 +55,9 @@
         </div>
         <input type="submit" value="Buscar" class="btn_buscar" /><!--Botón de busqueda de vuelo -->
       </form>
-    </section>
+    </section> <!--Finaliza aquí la barra de búsqueda -->
 
-    <div class="contenedores ">
-
+    <div class="contenedores ">        
       <!-- Verifica si hay vuelos para mostrar -->
       <div v-if="flights && flights.length > 0">
         <!-- Renderizar vuelos aquí -->
@@ -228,7 +227,7 @@ html {
   //position: relative;
   //display: fixed;
   flex-wrap: wrap;
-  width: 90vw;
+  width: 100%;
   margin: 0 auto;
   overflow: hidden;
 
@@ -306,7 +305,7 @@ html {
 
             .directo {
               font-weight: bolder;
-               //margin-left: 2%;
+               
             }
 
           }
@@ -315,14 +314,14 @@ html {
             font-family: 'Material Icons';
             font-size: 2.5rem;
             line-height: 1;
-            margin: 0 6rem;
+            margin: 0rem;
             // margin-left: 15%;
             display: inside;
             color: $blue;
 
             .letrahoras {
               color: $negro;
-              //margin-left: 4%;
+              margin-left: 4%;
             }
 
           }
@@ -364,9 +363,6 @@ html {
       }
     }
   }
-
-
-
 }
 
 .flight-info {
@@ -421,6 +417,7 @@ html {
 @media screen and (min-width: 1024px) {
   .flight-container {
     max-width: 80rem;
+    
   }
 }
 </style>
@@ -448,12 +445,12 @@ export default {
     };
   },
   methods: {
-    verOferta(flight) {
+    verOferta(flight) {//Botón de ber oferta del vuelo
       // Lógica para ver la oferta del vuelo
       console.log('Ver oferta para el vuelo:', flight);
       // Puedes redirigir a una página de detalles de la oferta, por ejemplo.
     },
-    formatDate(dateString) {
+    formatDate(dateString) {//Cambia el formato de la fecha de milisegundos a años, meses y dias 
       const options = { year: 'numeric', month: 'long', day: 'numeric' };
       const date = new Date(dateString);
       return date.toLocaleDateString('es-ES', options);
@@ -476,7 +473,7 @@ export default {
       const hours = parts[0];
       return hours > 0;
     },
-    performFlightSearch() {
+    performFlightSearch() { //Busqueda de vuelos
       if (this.searchParams.numPassengers <= 0 || isNaN(this.searchParams.numPassengers)) {
         // Mostrar un mensaje de error o tomar la acción correspondiente
         this.showNumberError = true;

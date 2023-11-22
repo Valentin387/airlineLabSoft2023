@@ -23,7 +23,7 @@ public class Order {
     private long shoppingCartID;
     private long cardID;
     private double totalAmount;
-    private Date Date;
+    private Date date;
 
     @Column(length = 100)
     private String paymentDetails;

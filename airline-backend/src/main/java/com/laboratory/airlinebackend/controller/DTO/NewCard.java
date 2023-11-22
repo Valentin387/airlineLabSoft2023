@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class NewCard {
-    private String balance;
+    private double balance;
     private String type;
     private String number;
     private String name;
