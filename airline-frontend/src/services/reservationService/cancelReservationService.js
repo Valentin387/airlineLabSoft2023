@@ -5,6 +5,7 @@ import axiosInstance from '../axiosInstance.js';
 @RequestParam long userID 
  */
 
+//cancela una reserva
 const cancelReservation = (params) => {
 
   return axiosInstance.post(`reservation/cancel`, { params });
