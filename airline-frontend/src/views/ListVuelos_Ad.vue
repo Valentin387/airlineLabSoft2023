@@ -7,7 +7,7 @@
         <button class = "cancelados" @click="showFlights('cancelados')" :class="{ activeButton: filter === 'cancelados' }">Cancelados</button>
       </div>
       <div class="right-button">
-        <button  href= "/CrearVuelo" @click="createFlight">Crear Vuelo</button>
+        <button class="right" href= "/CrearVuelo" @click="createFlight">Crear Vuelo</button>
       </div>
     </div>
     <div class="flight-list">
@@ -91,12 +91,22 @@ html {
     height: 85vh;
     width: 90vw;
     margin: 0 auto; /* Centrar horizontalmente */
+    background: #0d629b13;
     margin-top: 10rem; /* Centrar verticalmente */
+    .right-button {
+      text-align: right;
+      background-color: #7eb2d417;
+      background: #0d629b17;
+      border: 0.2rem solid #0f293a17;
+      color: white;
+
+  }
   }
 
   .buttons-container {
     display: flex;
     justify-content: space-between;
+    
   }
 
   .left-buttons {
@@ -128,9 +138,7 @@ html {
     margin: 1rem auto; //Centrado 
     display: inline-block;
   }
-  .right-button {
-    text-align: right;
-  }
+
 
   .tittle-container {
     border: 1px solid #0d629b17;
@@ -139,6 +147,8 @@ html {
     max-height: 300px; 
     overflow-y: auto;
     margin-top: 20px;
+    
+
 
   }
 

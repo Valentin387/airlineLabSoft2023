@@ -505,25 +505,6 @@ html:not(.dark-style) .account-settings-links .list-group-item.active {
     /* Ajusta el relleno según tus preferencias */
 }
 
-/*.btn {
-    //------Botón de buscar vuelo
-    margin-top: 1rem;
-    display: inline-block;
-    padding: 1rem 3rem;
-    font-size: 1.7rem;
-    color: $blanco;
-    border: $azul .2rem solid;
-    border-radius: 5rem;
-    cursor: pointer;
-    background: $azul;
-
-    &:hover {
-        background: $accent;
-        color: $blanco;
-        text-decoration-line: none;
-
-    }
-}*/
 
 //BOTÓN DESLIANTE 
 .switch-button {

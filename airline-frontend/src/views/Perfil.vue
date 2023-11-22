@@ -97,11 +97,11 @@
         <!------------------------------------------------FOOTER------------------------------------------->
        
         <error-modal :show-error="showErrorMessage" :error-message="errorMessage" @close="showErrorMessage = false" />
-        <Footer/>
+        
     </div>
     <!------------------------------------------------FOOTER------------------------------------------->
       <!-- Footer aquí -->
-      <Footer></Footer>
+      <Footer/>
 </template>
 <style lang="scss"  >
 $light-color: #312c02;
