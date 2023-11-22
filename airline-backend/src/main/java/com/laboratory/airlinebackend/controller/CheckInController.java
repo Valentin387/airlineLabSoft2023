@@ -1,4 +1,5 @@
 package com.laboratory.airlinebackend.controller;
+import com.laboratory.airlinebackend.controller.DTO.ConsultCheckInDTO;
 import com.laboratory.airlinebackend.controller.service.EmailSenderService;
 import com.laboratory.airlinebackend.model.Order;
 import com.laboratory.airlinebackend.model.Passenger;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -70,15 +72,20 @@ public class CheckInController {
             //get the order userID
             long userId = order.getUserID();
 
-
+            //get the shopping cart ID
+            long shoppingCartId = order.getShoppingCartID();
 
             //check if the passenger is the owner of the order
             if(passengerId != userId){
-                return ResponseEntity.badRequest().body("Passenger is not the owner of the order");
+                //get only my passenger details for the flight I was included in, in the order
+                List<ConsultCheckInDTO> passengersBookingDetails = passengerRepository.getPassengerBookedDetailsByShoppingCartIdandOwnDNI(shoppingCartId, passengerDNI);
+                return ResponseEntity.badRequest().body(passengersBookingDetails);
+            }else{
+                //get all the passengers included in the order
+                List<ConsultCheckInDTO> passengersBookingDetails = passengerRepository.getPassengerBookedDetailsByShoppingCartId(shoppingCartId);
+                return ResponseEntity.badRequest().body(passengersBookingDetails);
             }
 
-
-            return ResponseEntity.ok("ok");
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }

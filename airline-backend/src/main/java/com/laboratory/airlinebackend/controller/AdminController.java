@@ -1,6 +1,8 @@
 package com.laboratory.airlinebackend.controller;
 
 import com.laboratory.airlinebackend.controller.service.EmailSenderService;
+import com.laboratory.airlinebackend.model.ShoppingCart;
+import com.laboratory.airlinebackend.repository.ShoppingCartRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import com.laboratory.airlinebackend.controller.DTO.RegisterRequestAdmin;
 import com.laboratory.airlinebackend.controller.exceptions.EmailAlreadyTakenException;
@@ -28,6 +30,9 @@ public class AdminController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ShoppingCartRepository shoppingCartRepository;
 
     @Autowired
     private EmailSenderService emailSenderService;
@@ -82,12 +87,21 @@ public class AdminController {
 
         emailSenderService.sendEmail(email, "Contraseña temporal en AirTravelLabSoft", body);
 
+        //just in case the root wants to do some crazy things later ... like managing what permissions get associated to what roles
+        var shoppingCart = ShoppingCart.builder()
+                .quantity(0)
+                .totalAmount(0.0)
+                .build();
+        shoppingCartRepository.save(shoppingCart);
+        Long shoppingCartID = shoppingCart.getID();
+
         var user = User.builder()
                 .firstName(requestNewAdmin.getFirstName())
                 .email(requestNewAdmin.getEmail())
                 .role(2)
                 .active(Boolean.TRUE)
                 .password(passwordEncoder.encode(requestNewAdmin.getPassword()))
+                .shoppingCartID(shoppingCartID)
                 .build();
 
         var savedUser = userRepository.save(user);

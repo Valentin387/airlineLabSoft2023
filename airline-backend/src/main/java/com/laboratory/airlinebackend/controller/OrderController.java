@@ -74,11 +74,12 @@ public class OrderController {
     }
 
 
-    @Transactional
+    //@Transactional
     @PostMapping("/purchase")
     public ResponseEntity<?> purchase(
             @RequestBody RegisterRequestOrder requestNewOrder
     ){
+        System.out.println("Received JSON payload: " + requestNewOrder);
         try{
 
             //do the payment
@@ -157,6 +158,7 @@ public class OrderController {
                 //for each passenger in passengerList, get the seat by seatID
 
                 for (PassengerPlusSeat passengerPlusSeat : passengerList) {
+                    System.out.println("DNI: " + passengerPlusSeat.getDNI());
 
                     Passenger passenger = Passenger.builder()
                             .DNI(passengerPlusSeat.getDNI())
@@ -182,7 +184,7 @@ public class OrderController {
 
                     //send e-mail to the passenger with the flight info
 
-                    /*try {
+                    try {
                         String body = "Estimado/a usuario/a,\n" +
                                 "\n" +
                                 "El equipo de AirTravelLabSoft le comunica que ha sido asignado como pasajero en un vuelo.\n" +
@@ -199,7 +201,7 @@ public class OrderController {
                     } catch (Exception e) {
                         return ResponseEntity.badRequest().body("Error sending the e-mail " + e.getMessage());
 
-                    }*/
+                    }
 
 
 
