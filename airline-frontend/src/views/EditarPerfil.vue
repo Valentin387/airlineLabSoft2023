@@ -1,8 +1,7 @@
 <template>
     <spinner :showSpinner="showSpinner"></spinner>
-    <div class="container light-style flex-grow-1 container-p-y">
-
-        <div class="card card-large">
+  
+        <div class="card card-large light-style flex-grow-1 container-p-y">
             <div class="row no-gutters row-bordered row-border-light">
                 <div class="col-md-2 pt-0">
                     <div class="list-group list-group-flush account-settings-links">
@@ -221,11 +220,12 @@
             <div style="margin-bottom: 40px;"></div>
         </div>
         <!------------------------------------------------FOOTER------------------------------------------->
-        <Footer></Footer>
+       
         <error-modal :show-error="showErrorMessage" :error-message="errorMessage" @close="showErrorMessage = false" />
         <success-modal :show-note="showSuccessMessage" :success-message="successMessage"
             @close="showSuccessMessage = false" />
-    </div>
+ 
+    <Footer></Footer>
 </template>
   
 <style lang="scss" >

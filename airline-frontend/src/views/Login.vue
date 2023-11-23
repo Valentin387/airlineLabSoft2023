@@ -177,7 +177,6 @@ html {
       color: $azul;
       font-weight: bold;
       font-size: 3rem; /* Aumenta el tamaño de la fuente */
-     
       letter-spacing: 1px; /* Aumenta el espaciado entre las letras */
       text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.456); /* Añade una sombra al texto */
       font-family: "Arial", sans-serif; /* Cambia la fuente (opcional) */
