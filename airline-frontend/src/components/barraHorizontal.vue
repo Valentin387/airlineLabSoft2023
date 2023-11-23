@@ -2,45 +2,79 @@
     <div>
         <main class="barraHorizontal">
             <header class="header">
-                <div id="menubtn" class="material-symbols-outlined" @click="toggle">
+                <div id="menu-btn" class="material-symbols-outlined" @click="toggle">
                     menu
                 </div>
                 <a data-aos="zoom-in-left" data-aos-delay="150" @click="redirectToPaginaPrincipal" class="logo">
-                    <i class="fa-solid fa-paper-plane"></i>AirTravel</a>
+                    <i class="fa-solid fa-paper-plane"></i>AirTravel
+                </a>
                 <nav class="navbar">
-                    <!-- LINKS DE NAVEGACIÓN-->
-                    <a data-aos="zoom-in-left" data-aos-delay="300" href="/">Inicio</a>
+                    <!-- LINKS DE NAVEGACIÓN -->
+                    <a data-aos="zoom-in-left" data-aos-delay="300" @click="redirectToPaginaPrincipal" >Inicio</a>
                     <a data-aos="zoom-in-left" data-aos-delay="450" @click="redirectToCheckIn">Confirmar Check-in</a>
-                    <a data-aos="zoom-in-left" data-aos-delay="600" href="CentroAyuda" @click="redirectToAyuda">ayuda</a>
+                    <a data-aos="zoom-in-left" data-aos-delay="600" @click="redirectToAyuda">ayuda</a>
                 </nav>
-                <a data-aos="zoom-in-left" data-aos-delay="600" @click="redirectToCarrito" class="carrito" id="carrito"><i
-                        class="material-symbols-outlined">shopping_cart</i></a>
+                <a data-aos="zoom-in-left" data-aos-delay="600" @click="redirectToCarrito" class="carrito" id="carrito">
+                    <i class="material-symbols-outlined">shopping_cart</i>
+                </a>
 
- 
-                        <div class="profile" @click="menuToggle">
-                            <a data-aos="zoom-in-left" :data-aos-delay="600" class="usuario" id="usuario">
-                                <i class="material-symbols-outlined">person</i>
-                            </a>
-                        </div>
-                        <div class="menu">
-                            <h3>Usuario<br /><span>Bienvenido</span></h3>
-                            <ul>
-                                <li><a href="#">Perfil</a></li>
-                                <li><a href="#">Modulo Financiero</a></li>
-                                <li><a href="#">Mis compras</a></li>
-                                <li><a href="#">Mis reservas</a></li>
-                                <li><a href="#">Noticias</a></li>
-                                <!--  <li><a href="#">Foro de preguntas</a></li> -->
-                                <li><a href="#">Cerrar Sesión</a></li>
-                            </ul>
-                        </div>
-                    
+                <a data-aos="zoom-in-left" data-aos-delay="600" @click="handleUserIconClick"   class="usuario" id="usuario">
+                    <i class="material-symbols-outlined">person</i>
+                </a>
+
+                <!-- Menú desplegable del usuario -->
+                <div class="menuUsuario" :class="{ active: isMenuUsuarioActive }">
+                    <ul v-if="userRole === 1">
+                        <!-- Root -->
+                        <li><a href="/Perfil">Perfil</a></li>
+                        <li><a href="/Ad_Management">Gestionar Administradores</a></li>
+                        <li>
+                            <div class="btn-cerrar" @click="logout">
+                                <span class="material-symbols-outlined">logout</span>Cerrar sesión
+                            </div>
+                        </li>
+                    </ul>
+                    <ul v-else-if="userRole === 2">
+                        <!-- Administrador -->
+                        <li><a href="/Perfil">Perfil</a></li>
+                        <li><a href="/ListVuelos_Ad">Gestionar Vuelos</a></li>
+                        <li><a href="#">Gestionar Promociones</a></li>
+                        <li> <div class="btn-cerrar" @click="logout">
+                                <span class="material-symbols-outlined">logout</span>Cerrar sesión
+                            </div></li>
+                    </ul>
+                    <ul v-else-if="userRole === 3">
+                        <!-- Cliente -->
+                        <li><a href="#">Perfil</a></li>
+                        <li><a href="/M_Financiero">Módulo Financiero</a></li>
+                        <li><a href="#">Mis Compras</a></li>
+                        <li><a href="/List_Reservas">Mis Reservas</a></li>
+                        <li><a href="#">Noticias</a></li>
+                        <li> <div class="btn-cerrar" @click="logout">
+                                <span class="material-symbols-outlined">logout</span>Cerrar sesión
+                            </div></li>
+                    </ul>
+                </div>
             </header>
         </main>
     </div>
 </template>
 
-<style lang="scss" scoped >
+<style lang="scss" scoped>
+* {
+    //La regla * selecciona todos los elementos de la página y les aplica los estilos CSS
+    border: 1px solid black;
+
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    text-decoration: none;
+
+    transition: all 0.2s linear;
+}
+
 $blue: #54b2f1;
 $verde: #00bd8e;
 $border: 0.2rem solid $blue;
@@ -55,8 +89,6 @@ $secondary: #a7d6f6;
 
 .header {
     position: fixed; //La barra de navegación se fija en la parte superior de la página
-   // position: relative;
-   width: 100%;; 
     top: 0;
     right: 0;
     left: 0;
@@ -68,88 +100,6 @@ $secondary: #a7d6f6;
     justify-content: space-between;
     padding: 1.5rem 4%;
     box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
-    .menu{
-       
-        display: inline-block; /* Mantiene los elementos en línea */
-        vertical-align: middle; /* Alinea verticalmente */
-    }
-     .menu {
-        position: absolute;
-        /* Ajusta la posición para que el menú no afecte la barra de navegación */
-        top: 100%;
-        right: auto;
-        /* Modifica otros estilos según sea necesario */
-        padding: 10px 20px;
-        background: white;
-        width: 200px;
-        box-sizing: border-box;
-        /* Corrige la propiedad box-sizing */
-        border-radius: 15px;
-        transition: 0.5s;
-        visibility: hidden;
-        opacity: 0;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        z-index: 100;
-        transition: opacity 0.3s ease, visibility 0.3s ease;
-        /* Asegura que esté por debajo de la barra de navegación */
-    }
-
-     .menu h3 {
-        width: 100%;
-        text-align: center;
-        font-size: 18px;
-        padding: 20px 0;
-        font-weight: 500;
-        font-size: 18px;
-        color: black;
-        line-height: 1.2em;
-    }
-
-     .menu::before {
-        content: "";
-        position: relative;
-        top: -5;
-        right: 28px;
-        width: 20px;
-        height: 20px;
-        background: white;
-        transform: rotate(45deg);
-    }
-
-    .menu h3 span {
-        font-size: 14px;
-        color: rgb(179, 130, 67);
-        font-weight: 400;
-    }
-
-    .menu ul li {
-        list-style: none;
-        padding: 10px 0;
-        border-top: 1px solid rgba(0, 0, 0, 0.5);
-        display: flex;
-        align-items: center;
-    }
-
-     .menu ul li a {
-        display: inline-block;
-        text-decoration: none;
-        color: aquamarine;
-        font-weight: 500;
-        transition: 0.5s;
-    }
-
-     .menu ul li a:hover {
-        color: rgb(179, 130, 67);
-    }
-
-     .menu.active {
-         /* Mantén la posición relativa para evitar conflictos con la barra de navegación */
-        position: relative; 
-        display: block;
-        /* Ajusta la visibilidad y la opacidad al activar el menú */
-        visibility: visible;
-        opacity: 1;
-    }
 
     .navbar a {
         //Estilos para los enlaces de la barra de navegación
@@ -231,7 +181,7 @@ $secondary: #a7d6f6;
 }
 
 //BARRA RESPONSIVE ----------------------------------------------------------------
-#menubtn {
+#menu-btn {
     //BOTÓN DE TRES LINEAS PARA RESPONSIVE
     font-size: 2.5rem; // Tamaño de fuente de 2.5rem
     color: $negro; // Color de texto blanco
@@ -243,14 +193,14 @@ $secondary: #a7d6f6;
 @media (max-width: 768px) {
     //Pagina en tamaño de tablet
 
-    #menubtn {
+    #menu-btn {
         display: inline-block; //El menú se muestra desplegado de forma horizontal
     }
 
     .header {
         .navbar {
-            //  position: absolute;
-            //top: 99%;
+            position: absolute;
+            top: 99%;
             left: 0;
             right: 0;
             background: $azul; //Color de la barra al desplegarla con el botón de tres lineas
@@ -305,20 +255,141 @@ $secondary: #a7d6f6;
         }
     }
 }
+
+.menuUsuario {
+    position: absolute;
+    top: 100%;
+    /* Coloca el menú justo debajo del ícono del usuario */
+    right: 0;
+    background-color: $blanco;
+    /* Color de fondo del menú del usuario */
+    border-radius: 15px;
+    width: 200px;
+    box-sizing: border-box;
+    /* Corrige la propiedad box-sizing */
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s, opacity 0.5s linear;
+    /* Transición para la visibilidad y opacidad */
+    align-items: center;
+
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+
+        li {
+            padding: 10px;
+            display: flex;
+            align-items: center;
+
+            a {
+                text-decoration: none;
+                color: $azul;
+                background-color: transparent;
+                font-weight: 500;
+                transition: color 0.3s;
+                /* Transición para el cambio de color */
+
+                &:hover {
+                    color: $verde;
+                    /* Cambio de color al pasar el mouse */
+                }
+            }
+
+            .btn-cerrar {
+                text-decoration: none;
+                color: $azul;
+                margin-right:0.5rem ;
+                background-color: transparent;
+                font-weight: 500;
+                transition: color 0.3s;
+                /* Transición para el cambio de color */
+
+                &:hover {
+                    color: $verde;
+                    /* Cambio de color al pasar el mouse */
+                }
+            }
+        }
+    }
+}
+
+.menuUsuario.active {
+    visibility: visible;
+    opacity: 1;
+}
 </style>
 
 <script>
+
+import logoutService from "@/services/authenticationService/logoutService.js";
 export default {
+
     data() {
         return {
             token: window.sessionStorage.getItem("JWTtoken"),
+            isMenuUsuarioActive: false,
+            userRole: null, // Almacena el rol del usuario
+            profile: {
+                id: "",
+                email: "",
+                dni: "",
+                firstName: "",
+                lastName: "",
+                birthday: "",
+                birthPlace: "",
+                billingAddress: "",
+                gender: "",
+                role: "",
+                username: "",
+                password: "",
+                profileImage: "",
+                active: "",
+                subscribedToFeed: "",
+            },
         };
     },
+    created() {
+
+        this.getUserRole(); // Llama a la función para obtener el rol del usuario
+
+    },
+
     methods: {
-        menuToggle() {
-            const menuToggle = document.querySelector(".menu");
-            menuToggle.classList.toggle("active");
+        handleUserIconClick() {
+            const token = window.sessionStorage.getItem("JWTtoken");
+            if (token && token != null) {
+                this.isMenuUsuarioActive = !this.isMenuUsuarioActive;
+            } else {
+               
+                this.redirectToLogin();
+            }
         },
+        redirectToLogin() {
+            this.$router.push("/Login"); // Redirige a la página de inicio de sesión
+            this.userRole=null;
+        },
+        getUserRole() {
+            const token = window.sessionStorage.getItem("JWTtoken");
+            if (this.token) {
+                const tokenData = JSON.parse(atob(token.split('.')[1]));
+
+                if (tokenData.role == "root") {
+                    this.userRole = 1;
+                }
+                if (tokenData.role == "admin") {
+                    this.userRole = 2;
+                }
+                if (tokenData.role == "registeredUser") {
+                    this.userRole = 3;
+                }
+            } else {
+                this.$router.push("/login");
+            }
+
+        },
+
         toggle() {
             let navbar = document.querySelector(".navbar");
             navbar.classList.toggle("active");
@@ -335,16 +406,29 @@ export default {
         redirectToCarrito() {
             this.$router.push("/Carrito");
         },
-        redirectToProfile() {
-            const token = window.sessionStorage.getItem("JWTtoken");
-            if (token && token != null) {
-                this.$router.push("/Perfil");
-            } else {
-                this.$router.push("/Login");
-            }
-        },
+
+        logout(){
+            this.isMenuUsuarioActive = false; // Cierra el menú desplegable del usuario
+            logoutService.logout().then((response) => {
+          // Maneja la respuesta exitosa aquí
+         
+          if (response.status === 200) {
+            console.log("logout exitoso", response.data);
+       
+            // Redirige al usuario o realiza otras acciones según tus necesidades
+          }
+        })
+        .catch((error) => {
+            console.error("Something happened:", error);
+            this.errorMessage = error.response.data.message || "Something happened, try to logout and login again please";
+            this.showErrorMessage = true;
+          }
+        );
+        // Remove the JWT token from the localStorage
+        window.sessionStorage.removeItem("JWTtoken");
+        this.$router.push("/Login");
+    },
+
     },
 };
 </script>
-
-

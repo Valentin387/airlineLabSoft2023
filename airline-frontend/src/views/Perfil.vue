@@ -9,11 +9,9 @@
                             href="#account-general">Información Personal</a>
                         <a class="list-group-item list-group-item-action" data-toggle="list"
                             @click="redirectToUpdatePassword">Cambiar Contraseña</a>
-                        <a class="list-group-item list-group-item-action" data-toggle="list"
-                            @click="redirectToAdminManagement" v-if="hasCreateAdminPermission">Gestionar administradores</a>
                         <a class="list-group-item list-group-item-action" data-toggle="list" @click="redirectToRootIDChange"
-                            v-if="isRoot">Editar id del root</a>
-                        <button type="button" class="btn-cerrar" @click="logout">Cerrar sesión </button>&nbsp;
+                            v-if="isRoot">Editar ID del root</a>
+                       
 
                     </div>
                 </div>

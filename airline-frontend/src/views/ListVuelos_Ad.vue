@@ -35,6 +35,8 @@
       </div>
     </div>
   </div>
+  <!------------------------------------------------FOOTER------------------------------------------->
+  <Footer></Footer>
 </template>
 
 <style lang="scss">
@@ -91,12 +93,12 @@ html {
     height: 85vh;
     width: 90vw;
     margin: 0 auto; /* Centrar horizontalmente */
-    background: #0d629b13;
+    background: $secondary;
     margin-top: 10rem; /* Centrar verticalmente */
     .right-button {
       text-align: right;
-      background-color: #7eb2d417;
-      background: #0d629b17;
+      background-color:  #f2f2f283;
+      background:  #f2f2f283;
       border: 0.2rem solid #0f293a17;
       color: white;
 
@@ -142,7 +144,7 @@ html {
 
   .tittle-container {
     border: 1px solid #0d629b17;
-    background: #0d629b17;
+    background:  #f2f2f283;
     border-radius: 5px;
     max-height: 300px; 
     overflow-y: auto;
@@ -171,7 +173,7 @@ html {
   }
 
   .button-delete {
-    background: #0d629b17;
+    background:  #f2f2f283;
     color: white;
     border-radius: 5px;
     cursor: pointer;
@@ -187,7 +189,7 @@ html {
   }
   
   .left-buttons button {
-    background: #0d629b17;
+    background:  #f2f2f283;
     color: $azul;
     border: 3px solid #0d629b17;
     border-radius: 5px;
@@ -214,6 +216,9 @@ html {
 </style>
 
 <script>
+import errorModal from "@/components/errorModal.vue";
+import spinner from "@/components/spinner.vue";
+import Footer from "@/components/footer.vue";
   export default {
     data() {
       return {
@@ -241,5 +246,10 @@ html {
         this.flights = this.flights.filter(flight => flight.id !== id);
       },
     },
+    components: {
+    errorModal,
+    spinner,
+    Footer,
+  },
   };
 </script>

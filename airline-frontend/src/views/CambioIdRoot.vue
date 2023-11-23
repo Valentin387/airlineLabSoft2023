@@ -9,9 +9,12 @@
                     <i class="material-icons larger-icon">account_circle</i> 
                 </h1>
                 <h1 class="title">Cambiar Id Root</h1>
+                <br>
                 <form   @submit.prevent="rootChangeID" class="inputs-container">
                     <p class="texto">Introduce tu nuevo Correo Electrónico</p>
+                    <br>
                     <input class="input-admin" type="email" placeholder="Correo Electrónico" v-model="email" required>
+                    <br>
                     <button class="btn-admin"  type="submit" >Guardar Cambios</button>
                 </form>
                 <!-- <p id="error-message" class="error-message">{{ errorMessage }}</p> -->
@@ -75,7 +78,7 @@
             width: 60%;
             display: flex;
             flex-direction: column;
-            justify-content: space-around;
+          
             align-items: center;
         }
     }
@@ -89,11 +92,13 @@
     }
 
     .title {
-        text-transform: capitalize;
-        font-size: 2.25rem;
-        font-weight: 600;
-        letter-spacing: 1px;
-        color: $azul;
+        margin: 0;
+      color: $azul;
+      font-weight: bold;
+      font-size: 3rem; /* Aumenta el tamaño de la fuente */
+      letter-spacing: 1px; /* Aumenta el espaciado entre las letras */
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.456); /* Añade una sombra al texto */
+      font-family: "Arial", sans-serif; /* Cambia la fuente (opcional) */
         
     }
 
@@ -150,11 +155,11 @@
         display:inline-block;
         padding: 1rem 3rem; 
         font-size: 1.7rem;
-        color: $accent;
         border:$azul .2rem solid; 
         border-radius:5rem;
         cursor: pointer;
-        background: $blanco;
+        background-color: #364265;
+        color: #fff;
         box-shadow: 1px 5px 5px rgba(0.5, 0.1, 0.1, 0.1);
 
         &:hover{
