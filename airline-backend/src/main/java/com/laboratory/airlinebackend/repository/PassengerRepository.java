@@ -1,13 +1,11 @@
 package com.laboratory.airlinebackend.repository;
 
-import com.laboratory.airlinebackend.controller.DTO.ConsultCheckInDTO;
 import com.laboratory.airlinebackend.model.Passenger;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface PassengerRepository extends JpaRepository<Passenger, Long> {
 

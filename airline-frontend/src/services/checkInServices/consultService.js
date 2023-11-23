@@ -15,3 +15,23 @@ const consult = (params) => {
 };
 
 export default { consult };
+
+//returns an array of objects with the following structure:
+/*
+   private long flightId;
+    private long passengerId;
+    private String email;
+    private String firstName;
+    private String lastName;
+    private String DNI;
+    private boolean didCheckIn;
+    private String origin;
+    private String destination;
+    private Date flightDate;
+    private String state;
+    private long SeatId;
+    private int SeatNumber;
+    private char SeatLetter;
+
+
+*/

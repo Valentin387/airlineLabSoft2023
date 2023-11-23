@@ -1,7 +1,6 @@
 package com.laboratory.airlinebackend.controller;
 import com.laboratory.airlinebackend.controller.DTO.*;
 import com.laboratory.airlinebackend.controller.DTO.NewCard;
-import com.laboratory.airlinebackend.controller.exceptions.RootIdChangeException;
 import com.laboratory.airlinebackend.model.Card;
 import com.laboratory.airlinebackend.model.CardUser;
 import com.laboratory.airlinebackend.model.User;
@@ -9,14 +8,12 @@ import com.laboratory.airlinebackend.repository.CardRepository;
 import com.laboratory.airlinebackend.repository.CardUserRepository;
 import com.laboratory.airlinebackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.valves.rewrite.InternalRewriteMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
