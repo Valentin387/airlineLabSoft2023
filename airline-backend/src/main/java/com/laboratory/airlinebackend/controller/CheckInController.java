@@ -95,17 +95,18 @@ public class CheckInController {
                 ConsultCheckInDTO passengerBookingDetails = ConsultCheckInDTO.builder()
                         .flightId((long) result[0])
                         .passengerId((long) result[1])
-                        .firstName((String) result[2])
-                        .lastName((String) result[3])
-                        .DNI((String) result[4])
-                        .didCheckIn((boolean) result[5])
-                        .origin((String) result[6])
-                        .destination((String) result[7])
-                        .flightDate((Date) result[8])
-                        .state((String) result[9])
-                        .SeatId((long) result[10])
-                        .SeatNumber((int) result[11])
-                        .SeatLetter((char) result[12])
+                        .email((String) result[2])
+                        .firstName((String) result[3])
+                        .lastName((String) result[4])
+                        .DNI((String) result[5])
+                        .didCheckIn((boolean) result[6])
+                        .origin((String) result[7])
+                        .destination((String) result[8])
+                        .flightDate((Date) result[9])
+                        .state((String) result[10])
+                        .SeatId((long) result[11])
+                        .SeatNumber((int) result[12])
+                        .SeatLetter((char) result[13])
                         .build();
                 passengersBookingDetailsDTO.add(passengerBookingDetails);
             }
@@ -140,9 +141,47 @@ public class CheckInController {
             passenger.setDidCheckIn(true);
             passengerRepository.save(passenger);
 
-            //send the PDF
+            //--------------------Process of sending the PDF to the passenger's email--------------------
+            //get the ShoppingCarId in tblShoppingCartSeats by seatID
+            Optional<ShoppingCartSeats> optionalShoppingCartSeats = shoppingCartSeatsRepository.findBySeatID(seatID);
+            if(optionalShoppingCartSeats.isEmpty()){
+                //System.out.println("ShoppingCartSeats not found");
+                return ResponseEntity.badRequest().body("ShoppingCartSeats not found");
+            }
+            ShoppingCartSeats shoppingCartSeats = optionalShoppingCartSeats.get();
+            long shoppingCartId = shoppingCartSeats.getShoppingCartID();
 
-            return ResponseEntity.ok("Check-in successful");
+            //get the object ConsultCheckInDTO for this specific seat confirmation
+            List<Object[]> results;
+            List<ConsultCheckInDTO> passengersBookingDetailsDTO = new ArrayList<>();
+            results = passengerRepository.getPassengerBookedDetailsByShoppingCartIdOwnDNIandSeatId(shoppingCartId, passenger.getDNI(), seatID);
+            for (Object[] result : results) {
+                //System.out.println("result: " + result[0] + " " + result[1] + " " + result[2] + " " + result[3] + " " + result[4] + " " + result[5] + " " + result[6] + " " + result[7] + " " + result[8] + " " + result[9] + " " + result[10] + " " + result[11] + " " + result[12]);
+                ConsultCheckInDTO passengerBookingDetails = ConsultCheckInDTO.builder()
+                        .flightId((long) result[0])
+                        .passengerId((long) result[1])
+                        .email((String) result[2])
+                        .firstName((String) result[3])
+                        .lastName((String) result[4])
+                        .DNI((String) result[5])
+                        .didCheckIn((boolean) result[6])
+                        .origin((String) result[7])
+                        .destination((String) result[8])
+                        .flightDate((Date) result[9])
+                        .state((String) result[10])
+                        .SeatId((long) result[11])
+                        .SeatNumber((int) result[12])
+                        .SeatLetter((char) result[13])
+                        .build();
+                passengersBookingDetailsDTO.add(passengerBookingDetails);
+            }
+            ConsultCheckInDTO passengerBookingDetails = passengersBookingDetailsDTO.get(0);
+
+            //send this object to the emailSenderService
+            emailSenderService.sendEmail(passenger.getEmail(),"BOARDING PASS", passengerBookingDetails.toString());
+            //--------------------End of process of sending the PDF to the passenger's email--------------------
+
+            return ResponseEntity.ok("Check-in successful, E-MAIL SENT");
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
