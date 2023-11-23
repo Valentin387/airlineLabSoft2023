@@ -1,5 +1,5 @@
 package com.laboratory.airlinebackend.controller;
-import com.laboratory.airlinebackend.controller.DTO.RegisterRequestFlight;
+
 import com.laboratory.airlinebackend.controller.DTO.RegisterRequestOffer;
 import com.laboratory.airlinebackend.model.Offer;
 import com.laboratory.airlinebackend.repository.FlightRepository;

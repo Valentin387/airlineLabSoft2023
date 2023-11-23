@@ -1,7 +1,6 @@
 package com.laboratory.airlinebackend.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.laboratory.airlinebackend.controller.DTO.NewCard;
 import jakarta.persistence.*;
 import lombok.*;
 
