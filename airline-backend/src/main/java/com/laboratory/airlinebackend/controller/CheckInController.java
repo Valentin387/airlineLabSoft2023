@@ -1,5 +1,6 @@
 package com.laboratory.airlinebackend.controller;
 import com.laboratory.airlinebackend.controller.DTO.ConsultCheckInDTO;
+import com.laboratory.airlinebackend.controller.DTO.SeatState;
 import com.laboratory.airlinebackend.controller.service.EmailSenderService;
 import com.laboratory.airlinebackend.model.*;
 import com.laboratory.airlinebackend.repository.*;
@@ -184,12 +185,19 @@ public class CheckInController {
             }
             Seat currentSeat = optionalSeat.get();
 
+            //get the instance in tblShoppingCartSeats by seatID, in order to keep the semantic coherence
+            Optional<ShoppingCartSeats> optionalShoppingCartSeats = shoppingCartSeatsRepository.findBySeatID(currentSeatID);
+            if(optionalShoppingCartSeats.isEmpty()){
+                return ResponseEntity.badRequest().body("ShoppingCartSeats not found");
+            }
+            ShoppingCartSeats shoppingCartSeats = optionalShoppingCartSeats.get();
+
             //get the new Seat
             Optional<Seat> optionalNewSeat= seatRepository.findById(newSeatID);
             if(optionalNewSeat.isEmpty()){
                 return ResponseEntity.badRequest().body("new Seat not found");
             }
-            Seat newSeat = optionalSeat.get();
+            Seat newSeat = optionalNewSeat.get();
 
             //get the passenger
             Optional<Passenger> optionalPassenger = passengerRepository.findById(passengerID);
@@ -199,10 +207,19 @@ public class CheckInController {
             Passenger passenger = optionalPassenger.get();
 
             //Process
+            //book the new seat
             newSeat.setPassengerId(passenger.getID());
-            currentSeat.setPassengerId(0);
-            seatRepository.save(currentSeat);
+            newSeat.setState(SeatState.BOOKED.toString());
             seatRepository.save(newSeat);
+            //update the reference to the new Seat in tblShoppingCartSeats
+            shoppingCartSeats.setSeatID(newSeatID);
+            shoppingCartSeatsRepository.save(shoppingCartSeats);
+            //free the current seat
+            currentSeat.setPassengerId(0);
+            currentSeat.setState(SeatState.AVAILABLE.toString());
+            seatRepository.save(currentSeat);
+
+            //update the passenger
             passenger.setDidCheckIn(true);
             passengerRepository.save(passenger);
 
