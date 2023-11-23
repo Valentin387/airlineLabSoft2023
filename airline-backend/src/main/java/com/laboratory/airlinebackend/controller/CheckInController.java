@@ -2,6 +2,7 @@ package com.laboratory.airlinebackend.controller;
 import com.laboratory.airlinebackend.controller.DTO.ConsultCheckInDTO;
 import com.laboratory.airlinebackend.controller.DTO.SeatState;
 import com.laboratory.airlinebackend.controller.service.EmailSenderService;
+import com.laboratory.airlinebackend.controller.service.PdfGenerationService;
 import com.laboratory.airlinebackend.model.*;
 import com.laboratory.airlinebackend.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -44,6 +45,9 @@ public class CheckInController {
 
     @Autowired
     private EmailSenderService emailSenderService;
+
+    @Autowired
+    private PdfGenerationService pdfGenerationService;
 
     @Autowired
     private ShoppingCartSeatsRepository shoppingCartSeatsRepository;
@@ -178,7 +182,9 @@ public class CheckInController {
             ConsultCheckInDTO passengerBookingDetails = passengersBookingDetailsDTO.get(0);
 
             //send this object to the emailSenderService
-            emailSenderService.sendEmail(passenger.getEmail(),"BOARDING PASS", passengerBookingDetails.toString());
+            byte[] pdfBytes = pdfGenerationService.generatePdf(passengerBookingDetails.toString());
+
+            emailSenderService.sendEmailWithAttachment(passenger.getEmail(),"BOARDING PASS", "Check the attached PDF.", "GeneratedFile.pdf", pdfBytes);
             //--------------------End of process of sending the PDF to the passenger's email--------------------
 
             return ResponseEntity.ok("Check-in successful, E-MAIL SENT");
