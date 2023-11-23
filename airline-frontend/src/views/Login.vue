@@ -8,7 +8,9 @@
           <h1 class="tittle">Bienvenido a AirTravel</h1>
           <hr>
           <div class="text-login">
-            <p>Somos tu pasaporte hacia el mundo de la aviación. Con una amplia gama de destinos, ofertas irresistibles y un servicio excepcional, estamos aquí para hacer realidad tus sueños de viaje. Descubre vuelos asequibles, reserva con facilidad y despega hacia tus aventuras. En AirTravel, volamos alto para que tú también lo hagas. ¡Prepara tus maletas y comencemos a explorar el mundo juntos!</p>
+            <p>Somos tu pasaporte hacia el mundo de la aviación. Con una amplia gama de destinos, ofertas irresistibles y un servicio excepcional, estamos aquí para hacer realidad tus sueños de viaje.</p>
+            <hr><hr> 
+            <p class="text1"> ¡Prepara tus maletas y comencemos a explorar el mundo juntos!</p>
           </div>
           
       </div>
@@ -109,6 +111,29 @@
         width: 50%;
         background: linear-gradient( $bg, $degradado), url("src/assets/buenosaires.jpg") no-repeat center/cover;
         box-sizing: border-box;
+        .left-content-inner {
+           margin-right: 40px; /* Agregar margen derecho de 40px entre el título y el texto */
+           .text-login  {
+            margin-top: 15rem;
+            text-align: center;
+            margin: 6rem 0;
+            font-size: 2rem;
+          }
+          .tittle{
+            font-size: 4rem;
+            font-weight: bolder;
+            color: transparent;
+            -webkit-text-stroke: 0.2rem $blanco;
+          }
+
+          .text1{
+            font-size: 2.5rem;
+            margin-top: 25%;
+            text-align: center;
+            font-weight: bolder;
+          }
+        }
+
       }
      
 
@@ -172,32 +197,21 @@
         margin-bottom: 2rem;
       }
 
-      .left-content-inner {
-        margin-right: 40px; /* Agregar margen derecho de 40px entre el título y el texto */
-      }
+     
 
       .tittle {
         margin-top: 20px;
+        font-size: 5rem;
       }
 
-      .text-login p {
-        margin-top: 80px;
-        text-align: center;
-        margin: 10px 0;
-        
-      }
-
-      .text1{
-        font-family: 'Courier New', Courier, monospace;
-        font-size: small;
-        text-align: right;
-      }
+    
 
       .text2{
         font-family: 'Courier New', Courier, monospace;
-        font-size: small;
+        //font-size: small;
         text-align: center;
         margin-top: 10px;
+        font-weight: bolder;
       }
 
       .error-message {

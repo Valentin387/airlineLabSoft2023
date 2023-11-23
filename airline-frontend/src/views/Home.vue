@@ -481,7 +481,7 @@ body {
     p {
       //Texto 3
       max-width: 60rem;
-      margin: 1rem auto;
+      margin: 6rem auto;
       font-size: 2rem;
       color: $blanco;
       line-height: 2;
