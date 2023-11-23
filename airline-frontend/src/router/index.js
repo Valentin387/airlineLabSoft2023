@@ -19,6 +19,7 @@ import List_Reservas from '../views/List_Reservas.vue'
 import CentroAyuda from '../views/CentroAyuda.vue'
 import ListVuelosClient from '../views/ListVuelos_Client.vue'
 import CrearVuelo from '../views/CrearVuelo.vue'
+import DatosPasajeros from '../views/DatosPasajeros.vue'
 const router = createRouter ({
 
     history: createWebHistory(),
@@ -119,14 +120,19 @@ const router = createRouter ({
             component: CentroAyuda
         },
         {
-          path: '/ListVuelos_Client',
-          name: 'ListVuelosClient',
-          component: ListVuelosClient
+            path: '/ListVuelos_Client',
+            name: 'ListVuelosClient',
+            component: ListVuelosClient
        },
        {
-        path: '/CrearVuelo',
-        name: 'CrearVuelo',
-        component: CrearVuelo
+            path: '/CrearVuelo',
+            name: 'CrearVuelo',
+            component: CrearVuelo
+        },
+        {
+            path: '/DatosPasajeros',
+            name: 'DatosPasajeros',
+            component: DatosPasajeros
         },
     ]
     

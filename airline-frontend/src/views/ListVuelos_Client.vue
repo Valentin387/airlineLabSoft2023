@@ -353,13 +353,6 @@ export default {
  data() {
    return {
      flights: [],
-     searchParams: {
-       origin: "",
-       destination: "",
-       flightDate: "",
-       arrivalDate: "",
-       numPassengers: 1,
-     },
      showNumberError: false,
      numberErrorMessage: "",
    };

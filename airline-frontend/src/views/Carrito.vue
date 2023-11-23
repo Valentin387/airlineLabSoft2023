@@ -33,10 +33,57 @@
         <button class="button-buy" @click="checkout">Comprar Ahora</button>
       </div>
     </div>
+      <!------------------------------------------------FOOTER------------------------------------------->
+  <Footer></Footer>
 </template>
   
 <style lang="scss">
+    $light-color: #312c02;
+  $degradado: rgba(39, 64, 153, 0.479);
+  $bg: rgba(6, 31, 14, 0.873);
+  $azul-claro: #cfe0eb;
+  $gris: #f7f7f7;
+  $gris2: #364265;
+  $verde: #00bd8e;
+  $azul: #0d629b;
+  $blanco: #ffffff;
+  $negro: #1a1320;
+  $accent: #0b97f4;
+  $accent3: #77797a;
+  $blue: #54b2f1;
+  $secondary: #ceeafd;
+  $card: #0d629b17;
 
+html {
+    /* 
+            Estilo CSS para la vista Home.vue del proyecto Vue.js. 
+            La propiedad font-size establece el tamaño de fuente base en 10px, lo que equivale a 62.5% del tamaño de fuente predeterminado del navegador. 
+            La propiedad overflow-x:hidden oculta el desplazamiento horizontal de la página. 
+            La propiedad scroll-behavior: smooth agrega un efecto de desplazamiento suave al hacer clic en los enlaces internos de la página. 
+            La propiedad scroll-padding-top establece la cantidad de espacio de relleno en la parte superior de la página para compensar la barra de navegación fija. 
+            */
+    font-size: 62.5%;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    scroll-padding-top: 9rem;
+
+    /* 
+            Estilos para la barra de desplazamiento en la vista Home.vue.
+            Se utiliza el selector de pseudo-elemento &:: para aplicar estilos a la barra de desplazamiento.
+            */
+    &::-webkit-scrollbar {
+        width: 1rem;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: $accent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background-color: $azul;
+    }
+
+}
     .cart-container {
     padding: 20px;
     border-radius: 5px;
@@ -44,6 +91,7 @@
     width: 90vw;
     margin: 0 auto; /* Centrar horizontalmente */
     margin-top: 10rem; /* Centrar verticalmente */
+    background-color: $secondary;
     }
 
     .cart-header {
@@ -52,8 +100,11 @@
     }
 
     .cart-items {
-    background-color: #f2f2f2;
+    background-color: #f2f2f283;
     padding: 10px;
+    }
+    .left-align {
+      font-weight: bolder;
     }
 
     table {
@@ -100,6 +151,9 @@
 </style>
 
 <script>
+import errorModal from "@/components/errorModal.vue";
+import spinner from "@/components/spinner.vue";
+import Footer from "@/components/footer.vue";
     export default {
     data() {
         return {
@@ -127,6 +181,11 @@
     mounted() {
         // Calcula la suma total al inicio después de que los datos estén disponibles
         this.calculateTotal();
+    },
+    components: {
+        errorModal,
+        spinner,
+        Footer,
     },
     };
 </script>

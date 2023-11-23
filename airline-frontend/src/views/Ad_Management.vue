@@ -3,19 +3,9 @@
   <div class="admin-panel">
     
     <div class="sidebar">
-      <a data-aos="zoom-in-left" data-aos-delay="150" href="#" class="logo">
-        <i class="fa-solid fa-paper-plane"></i>AirTravel
-      </a>
-      <div class="sidebar-item" @click="redirectToPerfil">
-        <span class="material-symbols-outlined">person</span>Perfil
-      </div>
+     
       <div class="sidebar-item" @click="selectTab('admins', $event)">
         <span class="material-symbols-outlined">lock</span>Gestionar administradores
-      </div>
-      <div class="logout-container">
-        <div class="sidebar-item" @click="logout">
-          <span class="material-symbols-outlined">logout</span>Cerrar sesión
-        </div>
       </div>
     </div>
     <div class="content">
@@ -23,7 +13,10 @@
         <h2>Perfil</h2>
       </div>
       <div v-else-if="selectedTab === 'admins'">
+        <br>
+
         <h2>Administradores</h2>
+        <br>
         <div class="admins-content">
           <ul>
             <li v-for="admin in admins" :key="admin.id">
@@ -44,9 +37,9 @@
                 </div>
                 <div class="card_containerAdmin" :class="{ active: cardContainerAdmin }">
                   <div class="cardAdmin">
-                    <img class="card_img" src="../assets/londres.jpg" alt="">
+                   
                     <div class="card_contentAdmin">
-                      <h1>Eliminar administrador</h1>
+                      <h1>Eliminar Administrador</h1>
                       <p>¿Está seguro de que desea eliminar este administrador?</p>
                       <div class="group_btns">
                         <button class="buttonAdmin" @click="cancelDelete">
@@ -211,7 +204,9 @@
 
   .delete-button-container {
     flex: 0;
-    margin-left: 10px;
+ 
+ 
+    font-size:4vh;
     cursor: pointer;
     color: red;
   }
@@ -403,10 +398,7 @@ export default {
           });
   },
   methods: {
-    redirectToPerfil(){
-      this.$router.push('/Perfil');
-    },
-
+ 
     selectTab(tab, event) {
       this.selectedTab = tab;
       this.creatingAdmin = false; // Oculta el formulario al cambiar de pestaña
