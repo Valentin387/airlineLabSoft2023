@@ -431,7 +431,7 @@ html {
 
 body {
   //FONDO DE LA PAGINA
-  background: #f3f5fd;
+  background:#F0F3F5;
   //background-image: linear-gradient(to top, #fcfeff 0%, #fbfeff 100%);
 
   overflow-x: hidden;
@@ -465,7 +465,7 @@ body {
       color: transparent;
       -webkit-text-stroke: 0.2rem $blanco;
       // Esta línea establece el tamaño de fuente de un elemento al 4% del ancho de la ventana gráfica en el archivo Home.vue
-      font-size: 8.5vw;
+      font-size: 6vw;
       display: block;
   
     }
