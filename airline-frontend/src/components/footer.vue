@@ -54,18 +54,20 @@
       text-decoration: none; 
       transition:all .2s;
   }
-      $light-color:#312c02;
-      $degradado: rgba(149, 168, 238, 0.11);
-      $bg:rgba(6, 31, 14, 0.947);
-      $azul-claro: #CFE0EB;
-      $gris:#F7F7F7;
-      $verde: #00BD8E;
-      $azul: #0D629B;
-      $blanco: #FFFFFF;
-      $negro:#1A1320;
-      $accent:#0B97F4;
-      $accent3: #F3F5FD;
-      $secondary:#ceeafd;
+    $light-color: #312c02;
+    $degradado: rgba(149, 168, 238, 0.11);
+    $bg: rgba(6, 31, 14, 0.947);
+    $azul-claro: #CFE0EB;
+    $gris: #F7F7F7;
+    $gris2: #364265;
+    $verde: #00BD8E;
+    $azul: #0D629B;
+    $blue: #54b2f1;
+    $blanco: #FFFFFF;
+    $negro: #1A1320;
+    $accent: #0B97F4;
+    $accent3: rgba(149, 168, 238, 0.11);
+    $secondary: #ceeafd;
 
       
   @mixin grid($val){
@@ -197,20 +199,21 @@
       }
   }
 
-  .credit{//Autores de la pagina
-      background: $secondary;
-      text-align: center;
-      border-radius: 2rem;
-      font-size: 2rem;
-      padding: 2rem 1rem;
-      color: $verde;
-      display: flex !important;
-      font-weight: bolder;
-      margin-top: 5rem;
+  
+.credit {
+    //Autores de la pagina
+    background: $gris2;
+    box-shadow: 3px 3px 6px rgba(1, 0.2, 1, 0.2);
+    border-radius: 10px;
+    text-align: center;
+    font-size: 2rem;
+    padding: 2rem 1rem;
+    color: $accent;
+    font-weight: bolder;
+    margin-top: 5rem;
 
-      span{ 
-          color: $negro;
-      }
-  }
-
+    span {
+        color: $blanco;
+    }
+}
 </style>

@@ -431,7 +431,7 @@ html {
 
 body {
   //FONDO DE LA PAGINA
-  background: #f3f5fd;
+  background:#F0F3F5;
   //background-image: linear-gradient(to top, #fcfeff 0%, #fbfeff 100%);
 
   overflow-x: hidden;
