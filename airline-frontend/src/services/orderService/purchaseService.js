@@ -26,6 +26,7 @@ const purchase = (
 export default { purchase };
 
 /* 
+Asegurese de poner el dni en minúscula sostenida, al formato JSON le da ansiedad la mayúscula inicial
 
 {
     "userID":52,
@@ -40,7 +41,7 @@ export default { purchase };
             "passengerList":
             [ //for each passenger in that flight
                 {
-                    "DNI":"25-9207323",
+                    "dni":"25-9207323",
                     "firstName":"Brayan",
                     "lastName":"Torres",
                     "birthday":"1950-08-20",
@@ -52,7 +53,7 @@ export default { purchase };
                     "seatID":1015
                 },
                 {
-                    "DNI":"49-3703264",
+                    "dni":"49-3703264",
                     "firstName":"Valentin",
                     "lastName":"Valencia",
                     "birthday":"1983-07-23",
@@ -64,7 +65,7 @@ export default { purchase };
                     "seatID":948
                 },
                 {
-                    "DNI":"03-7631448",
+                    "dni":"03-7631448",
                     "firstName":"Toby",
                     "lastName":"Torres",
                     "birthday":"1978-05-11",
