@@ -45,4 +45,12 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
     @Query("SELECT f FROM tblFlight f WHERE f.id = :id ")
     Flight getFlightById(Long id);
 
+
+    @Query("SELECT p.DNI " +
+            "FROM tblFlight f " +
+            "JOIN tblSeat s ON f.id = s.flightId " +
+            "JOIN tblPassenger p ON s.passengerId = p.ID " +
+            "WHERE f.id = :flightID ")
+    List<String> getDNIofPassengersByFlightId(Long flightID);
+
 }
