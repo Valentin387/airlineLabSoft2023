@@ -24,7 +24,7 @@ public class ConsultCheckInDTO {
     private Date flightDate;
     private String state;
     private long SeatId;
-    private long SeatNumber;
+    private int SeatNumber;
     private char SeatLetter;
 
 }

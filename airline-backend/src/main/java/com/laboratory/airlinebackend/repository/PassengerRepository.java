@@ -15,25 +15,25 @@ public interface PassengerRepository extends JpaRepository<Passenger, Long> {
     Passenger getPassengerById(long passengerId);
 
     @Query("SELECT p FROM tblPassenger p WHERE p.DNI = :passengerDNI")
-    Optional<Passenger> findByDNI(String passengerDNI);
+    List<Passenger> getByDNI(String passengerDNI);
 
-    @Query("SELECT o.ID, scs.shoppingCartID, f.id, p.ID, p.firstName, p.lastName, p.DNI, p.didCheckIn, f.origin, f.destination, f.flightDate, s.ID, s.number, s.letter " +
+    @Query("SELECT f.id, p.ID, p.firstName, p.lastName, p.DNI, p.didCheckIn, f.origin, f.destination, f.flightDate, f.state, s.ID, s.number, s.letter " +
             "FROM tblOrder o " +
             "JOIN tblShoppingCartSeats scs ON o.shoppingCartID = scs.shoppingCartID " +
             "JOIN tblSeat s ON scs.seatID = s.ID " +
             "JOIN tblFlight f ON s.flightId = f.id " +
             "JOIN tblPassenger p ON p.ID = s.passengerId " +
-            "WHERE scs.shoppingCartID = :ShoppingCartId ")
-    List<ConsultCheckInDTO> getPassengerBookedDetailsByShoppingCartId(@Param("ShoppingCartId") long ShoppingCartId);
+            "WHERE scs.shoppingCartID = :shoppingCartId ")
+    List<Object[]> getPassengerBookedDetailsByShoppingCartId(@Param("shoppingCartId") long shoppingCartId);
 
-    @Query("SELECT o.ID, scs.shoppingCartID, f.id, p.ID, p.firstName, p.lastName, p.DNI, p.didCheckIn, f.origin, f.destination, f.flightDate, f.state, s.ID, s.number, s.letter " +
+    @Query("SELECT f.id, p.ID, p.firstName, p.lastName, p.DNI, p.didCheckIn, f.origin, f.destination, f.flightDate, f.state, s.ID, s.number, s.letter " +
             "FROM tblOrder o " +
             "JOIN tblShoppingCartSeats scs ON o.shoppingCartID = scs.shoppingCartID " +
             "JOIN tblSeat s ON scs.seatID = s.ID " +
             "JOIN tblFlight f ON s.flightId = f.id " +
             "JOIN tblPassenger p ON p.ID = s.passengerId " +
-            "WHERE scs.shoppingCartID = :ShoppingCartId AND p.DNI = :passengerDNI")
-    List<ConsultCheckInDTO> getPassengerBookedDetailsByShoppingCartIdandOwnDNI(@Param("ShoppingCartId") long ShoppingCartId, @Param("passengerDNI") String passengerDNI);
+            "WHERE scs.shoppingCartID = :shoppingCartId AND p.DNI = :passengerDNI")
+    List<Object[]> getPassengerBookedDetailsByShoppingCartIdandOwnDNI(@Param("shoppingCartId") long shoppingCartId, @Param("passengerDNI") String passengerDNI);
 
 
 }

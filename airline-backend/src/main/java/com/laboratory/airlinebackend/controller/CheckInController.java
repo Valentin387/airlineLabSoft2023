@@ -1,8 +1,7 @@
 package com.laboratory.airlinebackend.controller;
 import com.laboratory.airlinebackend.controller.DTO.ConsultCheckInDTO;
 import com.laboratory.airlinebackend.controller.service.EmailSenderService;
-import com.laboratory.airlinebackend.model.Order;
-import com.laboratory.airlinebackend.model.Passenger;
+import com.laboratory.airlinebackend.model.*;
 import com.laboratory.airlinebackend.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,6 +47,7 @@ public class CheckInController {
     @Autowired
     private ShoppingCartSeatsRepository shoppingCartSeatsRepository;
 
+
     @GetMapping("/consult")
     public ResponseEntity<?> consult(
             @RequestParam String orderCOD,
@@ -54,6 +55,7 @@ public class CheckInController {
     ) {
         try{
             //get the order
+
             Optional<Order> OptionalOrder = orderRepository.findByCOD(orderCOD);
             if(OptionalOrder.isEmpty()){
                 System.out.println("Order not found");
@@ -61,48 +63,156 @@ public class CheckInController {
             }
             Order order = OptionalOrder.get();
 
-            //get the passenger
-            Optional<Passenger> OptionalPassenger = passengerRepository.findByDNI(passengerDNI);
-            if(OptionalPassenger.isEmpty()){
-                System.out.println("Passenger not found");
-                return ResponseEntity.badRequest().body("Passenger not found");
-            }
-            Passenger passenger = OptionalPassenger.get();
+            //get the passengers, find by DNI
+            List<Passenger> passengers = passengerRepository.getByDNI(passengerDNI);
+            //get the first passenger (they are all the same person beneath)
+            Passenger passenger = passengers.get(0);
 
-            //get the passenger ID
-            long passengerId = passenger.getID();
 
-            //get the order userID
-            long userId = order.getUserID();
+            //get the user who made the order
+            User user = userRepository.getUserById(order.getUserID());
 
-            //get the shopping cart ID
+            //get the order's shopping cart ID
             long shoppingCartId = order.getShoppingCartID();
 
-            List<ConsultCheckInDTO> passengersBookingDetails;
-
-            passengersBookingDetails = passengerRepository.getPassengerBookedDetailsByShoppingCartIdandOwnDNI(shoppingCartId, passengerDNI);
-            System.out.println(passengersBookingDetails);
+            List<Object[]> results;
+            List<ConsultCheckInDTO> passengersBookingDetailsDTO = new ArrayList<>();
 
             //check if the passenger is the owner of the order
-            /*
-            if(passengerId != userId){
-                System.out.println("Passenger is not the holder of the order");
+            //compare the DNI's
+            if(!passenger.getDNI().equals(user.getDNI())){
                 //get only my passenger details for the flight I was included in, in the order
-                passengersBookingDetails = passengerRepository.getPassengerBookedDetailsByShoppingCartIdandOwnDNI(shoppingCartId, passengerDNI);
-                System.out.println(passengersBookingDetails);
+                results = passengerRepository.getPassengerBookedDetailsByShoppingCartIdandOwnDNI(shoppingCartId, passengerDNI);
             }else{
+                //System.out.println("Passenger is the holder of the order");
                 //get all the passengers included in the order
-                passengersBookingDetails = passengerRepository.getPassengerBookedDetailsByShoppingCartId(shoppingCartId);
-                System.out.println(passengersBookingDetails);
+                results = passengerRepository.getPassengerBookedDetailsByShoppingCartId(shoppingCartId);
             }
-            */
 
-            return ResponseEntity.ok(passengersBookingDetails);
+            for (Object[] result : results) {
+                //System.out.println("result: " + result[0] + " " + result[1] + " " + result[2] + " " + result[3] + " " + result[4] + " " + result[5] + " " + result[6] + " " + result[7] + " " + result[8] + " " + result[9] + " " + result[10] + " " + result[11] + " " + result[12]);
+                ConsultCheckInDTO passengerBookingDetails = ConsultCheckInDTO.builder()
+                        .flightId((long) result[0])
+                        .passengerId((long) result[1])
+                        .firstName((String) result[2])
+                        .lastName((String) result[3])
+                        .DNI((String) result[4])
+                        .didCheckIn((boolean) result[5])
+                        .origin((String) result[6])
+                        .destination((String) result[7])
+                        .flightDate((Date) result[8])
+                        .state((String) result[9])
+                        .SeatId((long) result[10])
+                        .SeatNumber((int) result[11])
+                        .SeatLetter((char) result[12])
+                        .build();
+                passengersBookingDetailsDTO.add(passengerBookingDetails);
+            }
+
+            return ResponseEntity.ok(passengersBookingDetailsDTO);
 
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @GetMapping("/confirm-check-in")
+    public ResponseEntity<?> confirmCheckIn(
+            @RequestParam long seatID
+    ) {
+        try {
+            //get the seat
+            Optional<Seat> optionalSeat = seatRepository.findById(seatID);
+            if(optionalSeat.isEmpty()){
+                //System.out.println("Seat not found");
+                return ResponseEntity.badRequest().body("Seat not found");
+            }
+            Seat seat = optionalSeat.get();
+
+            //get the passenger by seat.getPassengerId()
+            Optional<Passenger> optionalPassenger = passengerRepository.findById(seat.getPassengerId());
+            if(optionalPassenger.isEmpty()){
+                //System.out.println("Passenger not found");
+                return ResponseEntity.badRequest().body("Passenger not found");
+            }
+            Passenger passenger = optionalPassenger.get();
+            passenger.setDidCheckIn(true);
+            passengerRepository.save(passenger);
+
+            //send the PDF
+
+            return ResponseEntity.ok("Check-in successful");
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @GetMapping("/fetch-seats")
+    public ResponseEntity<?> fetchAllSeats(
+            @RequestParam long flightID
+    ){
+        try{
+            //get the flight by ID
+            Optional<Flight> optionalFlight = flightRepository.findById(flightID);
+            if(optionalFlight.isEmpty()){
+                //System.out.println("Flight not found");
+                return ResponseEntity.badRequest().body("Flight not found");
+            }
+            Flight flight = optionalFlight.get();
+
+            //get all the seats
+            List<Seat> seats = seatRepository.getAllSeatsByFlightId(flight.getId());
+            return ResponseEntity.ok(seats);
+
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/change-seat")
+    public ResponseEntity<?> changeSeat(
+            @RequestParam long passengerID,
+            @RequestParam long currentSeatID,
+            @RequestParam long newSeatID
+    ){
+        try{
+
+            //get the current Seat
+            Optional<Seat> optionalSeat= seatRepository.findById(currentSeatID);
+            if(optionalSeat.isEmpty()){
+                return ResponseEntity.badRequest().body("current Seat not found");
+            }
+            Seat currentSeat = optionalSeat.get();
+
+            //get the new Seat
+            Optional<Seat> optionalNewSeat= seatRepository.findById(newSeatID);
+            if(optionalNewSeat.isEmpty()){
+                return ResponseEntity.badRequest().body("new Seat not found");
+            }
+            Seat newSeat = optionalSeat.get();
+
+            //get the passenger
+            Optional<Passenger> optionalPassenger = passengerRepository.findById(passengerID);
+            if(optionalPassenger.isEmpty()){
+                return ResponseEntity.badRequest().body("Passenger not found");
+            }
+            Passenger passenger = optionalPassenger.get();
+
+            //Process
+            newSeat.setPassengerId(passenger.getID());
+            currentSeat.setPassengerId(0);
+            seatRepository.save(currentSeat);
+            seatRepository.save(newSeat);
+            passenger.setDidCheckIn(true);
+            passengerRepository.save(passenger);
+
+            return ResponseEntity.ok("Successful seat change");
+
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
 
 
 }

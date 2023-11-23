@@ -23,4 +23,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query("SELECT u FROM tblUser u WHERE u.DNI = :DNI")
     Optional<User> findByDNI(String DNI);
+
+    @Query("SELECT u FROM tblUser u WHERE u.ID = :userId")
+    User getUserById(long userId);
 }
