@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -55,6 +56,7 @@ public class CheckInController {
             //get the order
             Optional<Order> OptionalOrder = orderRepository.findByCOD(orderCOD);
             if(OptionalOrder.isEmpty()){
+                System.out.println("Order not found");
                 return ResponseEntity.badRequest().body("Order not found");
             }
             Order order = OptionalOrder.get();
@@ -62,6 +64,7 @@ public class CheckInController {
             //get the passenger
             Optional<Passenger> OptionalPassenger = passengerRepository.findByDNI(passengerDNI);
             if(OptionalPassenger.isEmpty()){
+                System.out.println("Passenger not found");
                 return ResponseEntity.badRequest().body("Passenger not found");
             }
             Passenger passenger = OptionalPassenger.get();
@@ -75,16 +78,26 @@ public class CheckInController {
             //get the shopping cart ID
             long shoppingCartId = order.getShoppingCartID();
 
+            List<ConsultCheckInDTO> passengersBookingDetails;
+
+            passengersBookingDetails = passengerRepository.getPassengerBookedDetailsByShoppingCartIdandOwnDNI(shoppingCartId, passengerDNI);
+            System.out.println(passengersBookingDetails);
+
             //check if the passenger is the owner of the order
+            /*
             if(passengerId != userId){
+                System.out.println("Passenger is not the holder of the order");
                 //get only my passenger details for the flight I was included in, in the order
-                List<ConsultCheckInDTO> passengersBookingDetails = passengerRepository.getPassengerBookedDetailsByShoppingCartIdandOwnDNI(shoppingCartId, passengerDNI);
-                return ResponseEntity.ok(passengersBookingDetails);
+                passengersBookingDetails = passengerRepository.getPassengerBookedDetailsByShoppingCartIdandOwnDNI(shoppingCartId, passengerDNI);
+                System.out.println(passengersBookingDetails);
             }else{
                 //get all the passengers included in the order
-                List<ConsultCheckInDTO> passengersBookingDetails = passengerRepository.getPassengerBookedDetailsByShoppingCartId(shoppingCartId);
-                return ResponseEntity.ok(passengersBookingDetails);
+                passengersBookingDetails = passengerRepository.getPassengerBookedDetailsByShoppingCartId(shoppingCartId);
+                System.out.println(passengersBookingDetails);
             }
+            */
+
+            return ResponseEntity.ok(passengersBookingDetails);
 
         }catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
