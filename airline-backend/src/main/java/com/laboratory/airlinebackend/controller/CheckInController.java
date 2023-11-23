@@ -184,7 +184,8 @@ public class CheckInController {
             //send this object to the emailSenderService
             byte[] pdfBytes = pdfGenerationService.generatePdf(passengerBookingDetails.toString());
 
-            emailSenderService.sendEmailWithAttachment(passenger.getEmail(),"BOARDING PASS", "Check the attached PDF.", "GeneratedFile.pdf", pdfBytes);
+            emailSenderService.sendEmailWithAttachment(passenger.getEmail(),"BOARDING PASS", "Check the attached PDF. " +
+                    "Thanks for choosing AirTravel", "BoardingPass.pdf", pdfBytes);
             //--------------------End of process of sending the PDF to the passenger's email--------------------
 
             return ResponseEntity.ok("Check-in successful, E-MAIL SENT");

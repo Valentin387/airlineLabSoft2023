@@ -31,7 +31,7 @@ public class EmailSenderService{
         message.setText(body);
         message.setSubject(subject);
         mailSender.send(message);
-        System.out.println("E-Mail Sent...");
+        //System.out.println("E-Mail Sent...");
 
 
     }
@@ -55,7 +55,7 @@ public class EmailSenderService{
             helper.addAttachment(attachmentName, new ByteArrayResource(attachment));
 
             mailSender.send(message);
-            System.out.println("E-Mail with attachment Sent...");
+            //System.out.println("E-Mail with attachment Sent...");
 
         } catch (MessagingException e) {
             e.printStackTrace();
