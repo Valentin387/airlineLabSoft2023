@@ -1,13 +1,11 @@
 package com.laboratory.airlinebackend.repository;
 
 import com.laboratory.airlinebackend.model.Flight;
-import com.laboratory.airlinebackend.model.Seat;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -46,5 +44,13 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
 
     @Query("SELECT f FROM tblFlight f WHERE f.id = :id ")
     Flight getFlightById(Long id);
+
+
+    @Query("SELECT p.DNI " +
+            "FROM tblFlight f " +
+            "JOIN tblSeat s ON f.id = s.flightId " +
+            "JOIN tblPassenger p ON s.passengerId = p.ID " +
+            "WHERE f.id = :flightID ")
+    List<String> getDNIofPassengersByFlightId(Long flightID);
 
 }

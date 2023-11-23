@@ -16,4 +16,9 @@ public interface SeatRepository extends JpaRepository<Seat, Long> {
     @Query("SELECT s FROM tblSeat s " +
             "WHERE s.ID = :id ")
     Seat getSeatById(Long id);
+
+    @Query("SELECT s FROM tblSeat s " +
+            "JOIN tblFlight f ON s.flightId = f.id " +
+            "WHERE f.id = :id ")
+    List<Seat> getAllSeatsByFlightId(Long id);
 }
