@@ -26,7 +26,7 @@ public interface PassengerRepository extends JpaRepository<Passenger, Long> {
             "WHERE scs.shoppingCartID = :ShoppingCartId ")
     List<ConsultCheckInDTO> getPassengerBookedDetailsByShoppingCartId(@Param("ShoppingCartId") long ShoppingCartId);
 
-    @Query("SELECT f.id, p.ID, p.firstName, p.lastName, p.DNI, p.didCheckIn, f.origin, f.destination, f.flightDate, s.ID, s.number, s.letter " +
+    @Query("SELECT f.id, p.ID, p.firstName, p.lastName, p.DNI, p.didCheckIn, f.origin, f.destination, f.flightDate, f.state, s.ID, s.number, s.letter " +
             "FROM tblOrder o " +
             "JOIN tblShoppingCartSeats scs ON o.shoppingCartID = scs.shoppingCartID " +
             "JOIN tblSeat s ON scs.seatID = s.ID " +

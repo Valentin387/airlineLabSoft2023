@@ -79,7 +79,7 @@ public class OrderController {
     public ResponseEntity<?> purchase(
             @RequestBody RegisterRequestOrder requestNewOrder
     ){
-        System.out.println("Received JSON payload: " + requestNewOrder);
+        //System.out.println("Received JSON payload: " + requestNewOrder);
         try{
 
             //do the payment
@@ -158,7 +158,7 @@ public class OrderController {
                 //for each passenger in passengerList, get the seat by seatID
 
                 for (PassengerPlusSeat passengerPlusSeat : passengerList) {
-                    System.out.println("DNI: " + passengerPlusSeat.getDNI());
+                    //System.out.println("DNI: " + passengerPlusSeat.getDNI());
 
                     Passenger passenger = Passenger.builder()
                             .DNI(passengerPlusSeat.getDNI())

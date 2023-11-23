@@ -79,11 +79,11 @@ public class CheckInController {
             if(passengerId != userId){
                 //get only my passenger details for the flight I was included in, in the order
                 List<ConsultCheckInDTO> passengersBookingDetails = passengerRepository.getPassengerBookedDetailsByShoppingCartIdandOwnDNI(shoppingCartId, passengerDNI);
-                return ResponseEntity.badRequest().body(passengersBookingDetails);
+                return ResponseEntity.ok(passengersBookingDetails);
             }else{
                 //get all the passengers included in the order
                 List<ConsultCheckInDTO> passengersBookingDetails = passengerRepository.getPassengerBookedDetailsByShoppingCartId(shoppingCartId);
-                return ResponseEntity.badRequest().body(passengersBookingDetails);
+                return ResponseEntity.ok(passengersBookingDetails);
             }
 
         }catch (Exception e){
