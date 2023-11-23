@@ -1,13 +1,11 @@
 package com.laboratory.airlinebackend.repository;
 
 import com.laboratory.airlinebackend.model.Flight;
-import com.laboratory.airlinebackend.model.Seat;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 

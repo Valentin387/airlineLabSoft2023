@@ -1,6 +1,6 @@
 package com.laboratory.airlinebackend.repository;
 
-import com.laboratory.airlinebackend.controller.DTO.CardCountDTO;
+
 import com.laboratory.airlinebackend.model.Card;
 import com.laboratory.airlinebackend.model.CardUser;
 import com.laboratory.airlinebackend.model.User;

@@ -35,12 +35,6 @@ public class CheckInController {
     private PassengerRepository passengerRepository;
 
     @Autowired
-    private CardRepository cardRepository;
-
-    @Autowired
-    private ShoppingCartRepository shoppingCartRepository;
-
-    @Autowired
     private OrderRepository orderRepository;
 
     @Autowired
