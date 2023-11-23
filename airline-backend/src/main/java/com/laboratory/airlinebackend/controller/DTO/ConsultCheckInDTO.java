@@ -15,6 +15,7 @@ public class ConsultCheckInDTO {
 
     private long flightId;
     private long passengerId;
+    private String email;
     private String firstName;
     private String lastName;
     private String DNI;
