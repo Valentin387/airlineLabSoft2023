@@ -20,7 +20,8 @@
 
     <!-- Right Column - Passenger Form -->
     <div v-if="selectedFlightAndSeat" class="right-column">
-      <h2>Información del pasajero</h2>
+      <h2><strong> Información del Pasajero</strong></h2>
+      <br>
       <form @submit.prevent="submitPassengerForm" class="login-form">
         <!-- Add your form fields for passenger details -->
         <label for="dni">DNI:</label>
@@ -175,19 +176,18 @@ html {
 }
 
 .login-form{
-  align-items: right;
-  justify-content: right;
-  display: right;
+  align-items: left;
+  justify-content: left;
+  display: left;
+  font-size: 2rem;
   input{
-     
-      width: 80%;
-      margin-top: 10rem;
-      margin: 10px 0;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    
-}
+    margin-bottom: 2rem;
+  }
+  label{
+    margin-right: 2rem;
+  }
+
+
 }
 
 ul {

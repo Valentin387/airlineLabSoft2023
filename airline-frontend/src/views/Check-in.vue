@@ -191,7 +191,7 @@
     .texto {
         font-size: 1.5rem;
         font-weight: 400;
-        color: $azul;
+        color: $negro;
         margin-top: 2rem;
     }
 
@@ -234,7 +234,7 @@
   
 
     .input-passengerDNI:hover {
-        border: 1px solid $azul;
+        border: 1px solid $negro;
     }
 
     .input-orderCOD:hover {
