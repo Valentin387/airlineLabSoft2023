@@ -48,7 +48,6 @@
           </select>
         </div>
         <div class="action-buttons">
-          <button class="left-button" @click="orderNow">Ordenar ahora</button>
           <button class="right-button" @click="addToCart">Añadir al carrito</button>
         </div>
       </div>

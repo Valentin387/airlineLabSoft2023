@@ -398,7 +398,7 @@ export default {
             this.$router.push("/");
         },
         redirectToCheckIn() {
-            this.$router.push("/Check-In");
+            this.$router.push("/Checkin");
         },
         redirectToAyuda() {
             this.$router.push("/CentroAyuda");

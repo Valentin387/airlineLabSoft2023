@@ -22,8 +22,11 @@ import CrearVuelo from '../views/CrearVuelo.vue'
 import DatosPasajeros from '../views/DatosPasajeros.vue'
 import CrearOfertaAdmin from '../views/CrearOfertaAdmin.vue'
 import ListOfertasAdmin from '../views/ListOfertasAdmin.vue'
+import Purchase from '../views/Purchase.vue'
+
 import PromocionesUsuario from '../views/PromocionesUsuario.vue'
 
+import Checkin from '../views/Check-in.vue'
 const router = createRouter ({
 
     history: createWebHistory(),
@@ -36,6 +39,10 @@ const router = createRouter ({
         {
             path: '/Login',
             component: Login
+        },
+        {
+            path: '/Purchase',
+            component: Purchase
         },
         {
             path: '/SignUp',
@@ -156,6 +163,11 @@ const router = createRouter ({
             name: 'PromocionesUsuario',
             component: PromocionesUsuario,
             meta: { requiresAuth: true }
+        },
+        {
+            path: '/Checkin',
+            name: 'Checkin',
+            component: Checkin
         },
     ]
     

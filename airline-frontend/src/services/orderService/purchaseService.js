@@ -7,7 +7,6 @@ import axiosInstance from '../axiosInstance.js';
 const purchase = (
   userID,
   cardID,
-  userID,
   totalAmount,
   paymentDetails, 
   orderFlightInfoList
@@ -15,7 +14,6 @@ const purchase = (
   const credentials = { 
     userID,
     cardID,
-    userID,
     totalAmount,
     paymentDetails, 
     orderFlightInfoList
