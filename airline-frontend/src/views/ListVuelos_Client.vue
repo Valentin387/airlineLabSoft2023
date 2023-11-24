@@ -347,6 +347,7 @@ html {
 import errorModal from "@/components/errorModal.vue";
 import spinner from "@/components/spinner.vue";
 import Footer from '@/components/footer.vue';
+import router from "@/router";
 export default {
  name: "ListVuelosClient",
 
@@ -369,10 +370,6 @@ export default {
     // Carga los vuelos almacenados en el almacenamiento de la sesión
     const storedResults = sessionStorage.getItem("ListVuelosClient");
     console.log("Stored Results:", storedResults);
-
-   // Carga los vuelos almacenados en el almacenamiento de la sesión
-   const storedResults = sessionStorage.getItem("ListVuelosClient");
-   console.log("Stored Results:", storedResults);
 
    if (storedResults) {
      this.flights = JSON.parse(storedResults);
