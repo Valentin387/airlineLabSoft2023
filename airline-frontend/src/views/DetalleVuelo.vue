@@ -23,9 +23,8 @@
           <div class="class-input">
             <label for="class">Clase:</label>
             <select id="class" v-model="selectedClass">
-              <option value="Primera Clase">Primera Clase</option>
-              <option value="Clase Económica">Clase Económica</option>
-              <option value="Clase Ejecutiva">Clase Ejecutiva</option>
+              <option value="First Class">Primera Clase</option>
+              <option value="Economic Class">Clase Económica</option>
             </select>
           </div>
         </div>
