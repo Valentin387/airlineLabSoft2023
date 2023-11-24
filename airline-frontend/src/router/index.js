@@ -103,6 +103,7 @@ const router = createRouter ({
 
         {
             path: '/DetalleVuelo',
+            name: 'DetalleVuelo',
             component: DetalleVuelo,
             meta: { requiresAuth: true }
         },
