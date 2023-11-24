@@ -5,7 +5,7 @@
             <form action="" @submit.prevent="performOfferSearch">
                 <div class="inputBox">
                     <span>Origen</span><!--Origen del vuelo -->
-                    <select name="origin" placeholder="¿Desde dónde vuelas?" v-model="searchParams.origin">
+                    <select name="origin" placeholder="¿Desde dónde vuelas?" v-model="origin">
                         <option value="" disabled selected>¿Desde dónde vuela?</option>
                         <option value=""></option>
                         <option value="Madrid">Madrid</option>
@@ -23,7 +23,7 @@
 
                 <div class="inputBox">
                     <span>Destino</span><!--Destino del vuelo-->
-                    <select name="destination" placeholder="¿A dónde vuelas?" v-model="searchParams.destination">
+                    <select name="destination" placeholder="¿A dónde vuelas?" v-model="destination">
                         <option value="" disabled selected>¿A dónde vuela?</option>
                         <option value=""></option>
                         <option value="Madrid">Madrid</option>
@@ -41,13 +41,11 @@
                 <div class="inputBox">
                     <!--Fecha de salida del vuelo -->
                     <span>Fecha de Vencimiento</span>
-                    <input type="date" name="departureDate" v-model="searchParams.validDateRange" />
+                    <input type="date" name="departureDate" v-model="departureDate" />
                 </div>
 
                 <input type="submit" value="Buscar" class="btn_buscar" /><!--Botón de busqueda de vuelo -->
-                <form action="/CrearOfertasAdmin" method="get">
-                    <button type="submit" class="btn_buscar">Crear Oferta</button>
-                </form>
+               
 
             </form>
         </section> <!--Finaliza aquí la barra de búsqueda -->
@@ -61,7 +59,7 @@
                                 <!-- Muestra la descripción del vuelo -->
                                 <p><strong>Descripción:</strong> {{ offer.description }}</p>
                                 <!-- Muestra el rango de fechas válidas -->
-                                <p><strong>Fecha de Vencimiento:</strong> {{ formatDate(offer.validDateRange) }}</p>
+                                <p><strong>Fecha de Vencimiento:</strong></p>
                             </div>
                             <!-- Resto del contenido -->
                             <!-- ... -->
@@ -74,7 +72,6 @@
                             <p class="price"><strong>Descuento:</strong> <strong style="color: rgb(14, 14, 15);">{{
                                 offer.discount }}%</strong></p>
                             <!-- Botón "Ver Oferta" -->
-                            <button @click="cancelPromotion(offer)">Cancelar promoción</button>
                         </div>
                     </div>
                 </div>
@@ -423,138 +420,39 @@ html {
 }
 </style>
 <script>
-import flightService from "@/services/offerService/listOfferService.js";
+import userPromotionService from "@/services/FlightService/listActiveService";
 import deleteService from "@/services/offerService/deleteOfferService.js";
+
 import Footer from "@/components/footer.vue";
 import errorModal from "@/components/ErrorModal.vue";
 
 export default {
-    components: {
-        Footer,
-        errorModal,
-    },
-    data() {
-        return {
-            offers: [], // Almacena todas las ofertas obtenidas inicialmente
-            filteredOffers: [], // Ofertas filtradas según los parámetros de búsqueda
-            searchParams: {
-                origin: '',
-                destination: '',
-                validDateRange: '',
-            },
-            showConfirmationModal: false,
-            confirmationMessage: '¿Estás seguro de cancelar la promoción?',
-            offerToDelete: null
-        };
-    },
-    mounted() {
-        this.fetchOffers();
+  data() {
+    return {
+      activeFlightsWithCost: [] // Lista de vuelos activos con costByPersonOffer > 0 o nulo
+    };
+  },
+  mounted() {
+    this.fetchActiveFlightsWithCost();
+  },
+  methods: {
+    async fetchActiveFlightsWithCost() {
+      try {
+        const activeFlightsResponse = await userPromotionService.getActiveFlights();
+        const activeFlights = activeFlightsResponse.data; // Vuelos activos
 
-    },
-    methods: {
-        formatDate(dateString) {//Cambia el formato de la fecha de milisegundos a años, meses y dias 
-            const options = { year: 'numeric', month: 'long', day: 'numeric' };
-            const date = new Date(dateString);
-            return date.toLocaleDateString('es-ES', options);
-        },
-        fetchOffers() {
-            // Llama al servicio para obtener todas las ofertas
+        // Filtra los vuelos que tengan costByPersonOffer mayor que 0 o nulo
+        this.activeFlightsWithCost = activeFlights.filter(
+          flight => flight.costByPersonOffer === null || flight.costByPersonOffer > 0
+        );
 
-            flightService.getOffers()
-                .then(response => {
-                    if (response.status === 200) {
-                        this.offers = response.data;
-                        this.filteredOffers = this.offers;
-
-                    }
-                })
-                .catch(error => {
-                    console.error("Error al obtener ofertas:", error);
-                });
-
-        },
-        performOfferSearch() {
-            console.log('SearchParams:', this.searchParams);
-            console.log('All Offers:', this.offers);
-
-
-            // Filtra las ofertas de acuerdo a los parámetros de búsqueda ingresados
-            this.filteredOffers = this.offers.filter(offer => {
-                // Verifica si se ha proporcionado al menos un criterio de búsqueda
-                const offerDate = new Date(offer.validDateRange);
-                const year = offerDate.getFullYear();
-                const month = (offerDate.getMonth() + 1).toString().padStart(2, '0'); // Agrega 1 al mes porque en JavaScript los meses van de 0 a 11
-                const day = offerDate.getDate().toString().padStart(2, '0');
-
-                const formattedDate = `${year}-${month}-${day}`;
-
-                const hasOrigin = this.searchParams.origin !== '';
-                const hasDestination = this.searchParams.destination !== '';
-                const hasvalidDateRange = formattedDate !== '';
-                // Realiza la búsqueda en función de los criterios proporcionados
-
-                if (!hasOrigin && !hasDestination && !hasvalidDateRange) {
-                    this.filteredOffers = this.offers;
-                    return true;
-                }
-                if (hasOrigin && hasDestination && hasvalidDateRange) {//ORIGEN DESTINO Y FECHA
-                    return (
-                        offer.origin === this.searchParams.origin &&
-                        offer.destination === this.searchParams.destination &&
-                        formattedDate === this.searchParams.validDateRange
-                    );
-                }
-                else if (hasOrigin) {//ORIGEN
-                    return offer.origin === this.searchParams.origin;
-                }
-                else if (hasDestination) {//DESTINO
-                    return offer.destination === this.searchParams.destination;
-                }
-                else if (hasDestination && hasvalidDateRange) {//DESTINO Y FECHA
-                    return offer.destination === this.searchParams.destination &&
-                        formattedDate === this.searchParams.validDateRange
-                }
-                else if (hasOrigin && hasvalidDateRange) {///ORIGEN FECHA
-                    return offer.origin === this.searchParams.origin &&
-                        formattedDate === this.searchParams.validDateRange
-                }
-                else if (hasvalidDateRange) {//FEcHA 
-                    return formattedDate === this.searchParams.validDateRange;
-                }
-                else if (hasOrigin && hasDestination) {//ORIGEN DESTINO
-                    return offer.origin === this.searchParams.origin &&
-                        offer.destination === this.searchParams.destination
-                }
-                return true;
-
-
-            });
-        },
-        cancelPromotion(offer) {
-            const confirmation = window.confirm('¿Estás seguro de cancelar esta promoción?');
-
-            if (confirmation) {
-                deleteService.deleteOffer(offer.id)
-                    .then(response => {
-                        if (response.status === 200) {
-                            const index = this.offers.findIndex(o => o.id === offer.id);
-                            if (index !== -1) {
-                                this.offers.splice(index, 1);
-                                this.performOfferSearch();
-                            }
-                        }
-                    })
-                    .catch(error => {
-                        console.error("Error al eliminar la oferta:", error);
-                        // Aquí podrías mostrar un mensaje de error si ocurre un problema con la eliminación
-                    });
-            } else {
-                // Acción en caso de cancelar la eliminación (puede ser dejarlo vacío o mostrar un mensaje)
-            }
-        }
-
-        // Otros métodos necesarios
-        // ... offer.validDateRange === this.searchParams.validDateRange
-    },
+        // Imprime la lista de vuelos obtenida en la consola
+        console.log("Vuelos activos con costByPersonOffer > 0 o nulo:", this.activeFlightsWithCost);
+      } catch (error) {
+        console.error("Error al obtener vuelos activos:", error);
+      }
+    }
+  },
 };
 </script>
+
