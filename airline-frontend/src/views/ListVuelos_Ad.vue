@@ -216,33 +216,45 @@ html {
 </style>
 
 <script>
+  import listByStateService from '@/services/FlightService/listByStateService.js';
 import errorModal from "@/components/errorModal.vue";
 import spinner from "@/components/spinner.vue";
 import Footer from "@/components/footer.vue";
   export default {
     data() {
       return {
-        flights: [], // Aquí almacenamos los vuelos obtenidos del backend
+        flights: [], // Almacena los vuelos obtenidos del backend
         filter: 'activos', // Filtro inicial
       };
     },
     created() {
-      },
+      this.loadFlights();
+    },
     computed: {
       filteredFlights() {
-        // Filtrar los vuelos según el filtro seleccionado
+        // Filtra los vuelos según el filtro seleccionado
         return this.flights.filter(flight => flight.status === this.filter);
       },
     },
     methods: {
+      async loadFlights() {
+        try {
+          const response = await listByStateService.getFlightsByState(this.filter);
+          this.flights = response.data; // Asigna la lista de vuelos al arreglo flights
+        } catch (error) {
+          console.error("Error al cargar los vuelos:", error);
+        }
+      },
       showFlights(filter) {
         this.filter = filter;
+        this.loadFlights(); // Recarga la lista de vuelos cuando cambia el filtro
       },
       createFlight() {
         this.$router.push("/CrearVuelo");
       },
       removeFlight(id) {
-        // Eliminar el vuelo con el ID correspondiente
+        // Elimina el vuelo con el ID correspondiente
+        // Aquí podrías llamar a un servicio para eliminar el vuelo en el backend también
         this.flights = this.flights.filter(flight => flight.id !== id);
       },
     },

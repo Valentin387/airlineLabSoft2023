@@ -29,10 +29,10 @@
         </table>
       </div>
       <div class="cart-total">
-        <p>Total: ${{ total }}</p>
-        <button class="button-buy" @click="checkout">Comprar Ahora</button>
-      </div>
+      <p>Total: ${{ total }}</p>
+      <button class="button-buy" @click="checkout">Comprar Ahora</button>
     </div>
+  </div>
       <!------------------------------------------------FOOTER------------------------------------------->
   <Footer></Footer>
 </template>
@@ -154,40 +154,83 @@ html {
 import errorModal from "@/components/errorModal.vue";
 import spinner from "@/components/spinner.vue";
 import Footer from "@/components/footer.vue";
-    export default {
+  import dropService from '@/services/shoppingCartServices/dropService.js';
+  import listService from '@/services/shoppingCartServices/listService.js';
+  import checkoutService from '@/services/shoppingCartServices/checkoutService.js';
+
+  export default {
     data() {
-        return {
-        cartItems: [
-        ],
-        total: 0, // Inicializa la suma total en 0
-        };
+      return {
+        cartItems: [],
+        total: 0,
+      };
     },
     methods: {
-        updateTotalPrice(item) {
+      updateTotalPrice(item) {
         item.totalPrice = item.price * item.quantity;
         this.calculateTotal();
-        },
-        removeItem(index) {
-        this.cartItems.splice(index, 1);
-        this.calculateTotal();
-        },
-        calculateTotal() {
+      },
+      removeItem(index) {
+        const flightIDToRemove = this.cartItems[index].flightId;
+
+        // Utiliza el servicio para eliminar el vuelo del carrito
+        dropService.dropItem({ userID: tuUserID, flightID: flightIDToRemove })
+          .then(response => {
+            console.log('Vuelo eliminado del carrito exitosamente:', response.data);
+            // Elimina el vuelo localmente en el cliente después de confirmar que se ha eliminado en el servidor
+            this.cartItems.splice(index, 1);
+            this.calculateTotal();
+          })
+          .catch(error => {
+            console.error('Error al eliminar el vuelo del carrito:', error);
+          });
+      },
+      calculateTotal() {
         this.total = this.cartItems.reduce((total, item) => total + item.totalPrice, 0);
-        },
-        checkout() {
-        // Implementa la lógica para el proceso de compra
-        },
+      },
+      checkout() {
+        const token = window.sessionStorage.getItem('JWTtoken');
+        const tokenData = JSON.parse(atob(token.split('.')[1]));
+        const userID = tokenData.ID;
+
+        // Llama al servicio de checkout
+        checkoutService.checkoutShoppingCart({ userID: userID })
+          .then(response => {
+            console.log('Checkout del carrito exitoso:', response.data);
+
+            // Después de completar el checkout, puedes limpiar el carrito localmente.
+            this.cartItems = [];
+            this.total = 0;
+          })
+          .catch(error => {
+            console.error('Error en el checkout del carrito:', error);
+          });
+      },
     },
     mounted() {
-        // Calcula la suma total al inicio después de que los datos estén disponibles
-        this.calculateTotal();
+      
+      // Saca el user ID
+      const token = window.sessionStorage.getItem('JWTtoken');
+      const tokenData = JSON.parse(atob(token.split('.')[1]));
+      const userID = tokenData.ID;
+      
+      // Utiliza el servicio para obtener la lista de items del carrito
+      listService.listShoppingCartItems({ userID: userID })
+        .then(response => {
+          console.log('Items del carrito obtenidos exitosamente:', response.data);
+          this.cartItems = response.data; // Asigna la lista de items del carrito al array local
+          this.calculateTotal();
+        })
+        .catch(error => {
+          console.error('Error al obtener los items del carrito:', error);
+        });
     },
     components: {
         errorModal,
         spinner,
         Footer,
     },
-    };
+  };
 </script>
 
   

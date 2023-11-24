@@ -1,7 +1,25 @@
 <template>
-    <div class="cont-reservas">
-      <h1>Lista de reservas</h1>
-      <div class="reservas-container">
+  <div class="cont-reservas">
+    <h1>Lista de reservas</h1>
+    <div class="reservas-container">
+      <!-- Mostrar el esqueleto de la reserva incluso si no hay datos -->
+      <div v-if="reservas.length === 0">
+        <div v-for="index in 5" :key="index" class="reserva">
+          <div class="info">
+            <p><strong>Origen/Destino:</strong> Cargando...</p>
+            <p><strong>Fecha de despegue:</strong> Cargando...</p>
+            <p><strong>Clase:</strong> Cargando...</p>
+            <p><strong>Cantidad de tiquetes:</strong> Cargando...</p>
+            <p><strong>Precio total:</strong> Cargando...</p>
+          </div>
+          <div class="acciones">
+            <button class="delete-reserv" :disabled="true">Cancelar reserva</button>
+            <button class="move-reserv" :disabled="true">Mover al carrito</button>
+          </div>
+        </div>
+      </div>
+      <!-- Mostrar las reservas reales cuando están disponibles -->
+      <div v-else>
         <div v-for="reserva in reservas" :key="reserva.id" class="reserva">
           <div class="info">
             <p><strong>Origen/Destino:</strong> {{ reserva.origenDestino }}</p>
@@ -17,10 +35,12 @@
         </div>
       </div>
     </div>
+  </div>
         <!------------------------------------------------FOOTER------------------------------------------->
       <!-- Footer aquí -->
       <Footer></Footer>
 </template>
+
   
 <style lang="scss">
 
@@ -131,28 +151,71 @@ html {
 </style>
 
 <script>
+  import listReservationService from '@/services/reservationService/listReservationService.js';
+  import cancelReservationService from '@/services/reservationService/cancelReservationService.js';
+  import moveToCartService from '@/services/reservationService/moveToCartService.js';
+
 import errorModal from "@/components/errorModal.vue";
 import spinner from "@/components/spinner.vue";
 import Footer from "@/components/footer.vue";
-
 export default {
   data() {
     return {
       reservas: [] 
-    };
-  },
-  methods: {
-    cargarDatosSimulados() {
     },
-    cancelarReserva(reservaId) {
-      // Implementa la lógica para cancelar la reserva aquí
-      // Puedes eliminar la reserva del arreglo
-      this.reservas = this.reservas.filter(reserva => reserva.id !== reservaId);
+    methods: {
+      cargarReservas() {
+        // Saca el user ID
+        const token = window.sessionStorage.getItem('JWTtoken');
+        const tokenData = JSON.parse(atob(token.split('.')[1]));
+        const userID = tokenData.ID;
+
+        listReservationService.getReservations(userID)
+          .then(response => {
+            this.reservas = response.data;
+          })
+          .catch(error => {
+            console.error('Error al obtener las reservas:', error);
+          });
+      },
+      cancelarReserva(reservaId) {
+        // Saca el user ID
+        const token = window.sessionStorage.getItem('JWTtoken');
+        const tokenData = JSON.parse(atob(token.split('.')[1]));
+        const userID = tokenData.ID;
+
+        // Llama al servicio para cancelar la reserva
+        cancelReservationService.cancelReservation({ flightID: reservaId, userID: userID })
+          .then(response => {
+            // Actualiza la lista de reservas después de la cancelación
+            this.cargarReservas();
+            console.log('Reserva cancelada exitosamente:', response.data);
+          })
+          .catch(error => {
+            console.error('Error al cancelar la reserva:', error);
+          });
+      },
+      moverAlCarrito(reservaId) {
+        // Saca el user ID
+        const token = window.sessionStorage.getItem('JWTtoken');
+        const tokenData = JSON.parse(atob(token.split('.')[1]));
+        const userID = tokenData.ID;
+        
+        moveToCartService.moveToCart({ flightID: reservaId, userID:  userID})
+          .then(response => {
+            // Actualiza la lista de reservas después de moverla al carrito
+            this.cargarReservas();
+            console.log('Reserva movida al carrito exitosamente:', response.data);
+          })
+          .catch(error => {
+            console.error('Error al mover la reserva al carrito:', error);
+          });
+      }
     },
-    moverAlCarrito(reservaId) {
-      // Implementa la lógica para mover la reserva al carrito aquí
+    created() {
+      this.cargarReservas();
     }
-  },
+  };
   created() {
     this.cargarDatosSimulados(); // Llama al método de carga de datos simulados al iniciar el componente
   },
@@ -163,4 +226,5 @@ export default {
     },
 };
 </script>
+
   
