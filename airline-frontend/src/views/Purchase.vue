@@ -59,7 +59,7 @@ import purchaseService from "@/services/orderService/purchaseService.js";
         showSpinner: false, // Initialize as hidden
         selectedFlightAndSeat: null,
         orderObject: {
-          userID: 52,
+          userID: 0,
           cardID: 20,
           totalAmount: 7501.5,
           paymentDetails: "transferencia llevada a cabo por AirTravel LTDA",
@@ -83,6 +83,10 @@ import purchaseService from "@/services/orderService/purchaseService.js";
     },
     created() {
         this.cartItems =  JSON.parse(window.sessionStorage.getItem('cartItems'));
+
+        const token = window.sessionStorage.getItem('JWTtoken');
+        const tokenData = JSON.parse(atob(token.split('.')[1]));
+        this.orderObject.userID = tokenData.ID;
     },
   
     methods: {
