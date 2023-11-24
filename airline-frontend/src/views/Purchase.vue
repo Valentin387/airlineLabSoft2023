@@ -20,7 +20,8 @@
 
     <!-- Right Column - Passenger Form -->
     <div v-if="selectedFlightAndSeat" class="right-column">
-      <h2>Información del pasajero</h2>
+      <h2><strong> Información del Pasajero</strong></h2>
+      <br>
       <form @submit.prevent="submitPassengerForm" class="login-form">
         <!-- Add your form fields for passenger details -->
         <label for="dni">DNI:</label>
@@ -36,7 +37,14 @@
         <input v-model="passengerData.birthday" type="date" required />
         <br>
         <label for="gender">Genero:</label>
-        <input v-model="passengerData.gender" type="text" required />
+        
+        <select id="gender" placeholder="Género"  v-model="passengerData.gender" required>
+              <option value="" disabled selected>Seleccione el género</option>
+              <option value="Masculino">Masculino</option>
+              <option value="Femenino">Femenino</option>
+              <option value="Otro">Otro</option>
+        </select>
+
         <br>
         <label for="cellphoneNo">Número de teléfono:</label>
         <input v-model="passengerData.cellphoneNo" type="text" required />
@@ -175,19 +183,18 @@ html {
 }
 
 .login-form{
-  align-items: right;
-  justify-content: right;
-  display: right;
+  align-items: left;
+  justify-content: left;
+  display: left;
+  font-size: 2rem;
   input{
-     
-      width: 80%;
-      margin-top: 10rem;
-      margin: 10px 0;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    
-}
+    margin-bottom: 2rem;
+  }
+  label{
+    margin-right: 2rem;
+  }
+
+
 }
 
 ul {
