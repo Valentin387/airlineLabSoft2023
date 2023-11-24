@@ -7,7 +7,7 @@ import axiosInstance from '../axiosInstance.js';
 
 // elimina un vuelo del carrito de compras
 const dropItem = (params) => {
-  return axiosInstance.get(`shopping-cart/drop`, { params });
+  return axiosInstance.delete(`shopping-cart/drop`, { params });
 
 };
 

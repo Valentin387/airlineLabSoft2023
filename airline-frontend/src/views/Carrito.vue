@@ -249,7 +249,7 @@ export default {
       const tokenData = JSON.parse(atob(token.split('.')[1]));
       const userID = tokenData.ID;
 
-      dropService.dropItem(userID, this.cartItems[index].flightId)
+      dropService.dropItem({"userID" : userID, "flightID" :this.cartItems[index].flightId})
           .then(response => {
             if (response.status == 200){
               console.log(response.data);
@@ -258,7 +258,11 @@ export default {
           .catch(error => {
             console.error(error);
           });
+
+      listItems();
+      getTotal();
     },
+    /*
     updateSeatQuantity(item) {
       // use the service
       const token = window.sessionStorage.getItem('JWTtoken');
@@ -275,6 +279,7 @@ export default {
             console.error(error);
           });
     },
+    */
 
     formatDate(dateString) {
      //Cambia el formato de la fecha de milisegundos a años, meses y dias
