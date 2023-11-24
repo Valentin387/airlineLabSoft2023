@@ -45,7 +45,7 @@
                     </ul>
                     <ul v-else-if="userRole === 3">
                         <!-- Cliente -->
-                        <li><a href="#">Perfil</a></li>
+                        <li><a href="/Perfil">Perfil</a></li>
                         <li><a href="/M_Financiero">Módulo Financiero</a></li>
                         <li><a href="#">Mis Compras</a></li>
                         <li><a href="/List_Reservas">Mis Reservas</a></li>

@@ -8,19 +8,24 @@
           <thead>
             <tr>
               <th class="left-align">Vuelo</th>
-              <th class="left-align">Precio</th>
-              <th class="left-align">Cantidad</th>
-              <th class="left-align">Precio Total</th>
+              <th class="left-align">Origen</th>
+              <th class="left-align">Destino</th>
+              <th class="left-align">Fecha de despegue</th>
+              <th class="left-align">Estado</th>
+              <th class="left-align">Cantidad de asientos</th>
+              <th class="left-align">Costo por pasajero</th>
+              <th class="left-align"></th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(item, index) in cartItems" :key="index">
-              <td class="flight">{{ item.name }}</td>
-              <td class="left-align">${{ item.price }}</td>
-              <td class="left-align">
-                <input type="number" v-model="item.quantity" min="1" max="5" @input="updateTotalPrice(item)" />
-              </td>
-              <td class="left-align">${{ item.totalPrice }}</td>
+              <td class="flight">{{ item.flightId }}</td>
+              <td class="left-align">{{ item.origin }}</td>
+              <td class="left-align">{{ item.destination }}</td>
+              <td class="left-align">{{ formatDate(item.flightDate) }}</td>
+              <td class="left-align">{{ item.state }}</td>
+              <td class="left-align">{{ item.seats.length }}</td>
+              <td class="left-align">${{ item.costByPerson }}</td>
               <td>
                 <button class="button-delete" @click="removeItem(index)">X</button>
               </td>
@@ -30,7 +35,7 @@
       </div>
       <div class="cart-total">
         <p>Total: ${{ total }}</p>
-        <button class="button-buy" @click="checkout">Comprar Ahora</button>
+        <button class="button-buy" @click="purchase">Comprar Ahora</button>
       </div>
     </div>
       <!------------------------------------------------FOOTER------------------------------------------->
@@ -152,42 +157,135 @@ html {
 
 <script>
 import errorModal from "@/components/errorModal.vue";
+
 import spinner from "@/components/spinner.vue";
 import Footer from "@/components/footer.vue";
-    export default {
-    data() {
-        return {
-        cartItems: [
-        ],
-        total: 0, // Inicializa la suma total en 0
-        };
-    },
-    methods: {
-        updateTotalPrice(item) {
-        item.totalPrice = item.price * item.quantity;
-        this.calculateTotal();
-        },
-        removeItem(index) {
-        this.cartItems.splice(index, 1);
-        this.calculateTotal();
-        },
-        calculateTotal() {
-        this.total = this.cartItems.reduce((total, item) => total + item.totalPrice, 0);
-        },
-        checkout() {
-        // Implementa la lógica para el proceso de compra
-        },
-    },
-    mounted() {
-        // Calcula la suma total al inicio después de que los datos estén disponibles
-        this.calculateTotal();
-    },
-    components: {
-        errorModal,
-        spinner,
-        Footer,
-    },
+import successModal from "@/components/successModal.vue";
+import listService from "@/services/shoppingCartServices/listService.js";
+import checkoutService from "@/services/shoppingCartServices/checkoutService.js";
+import dropService from "@/services/shoppingCartServices/dropService.js";
+import modifyService from "@/services/shoppingCartServices/modifyItemService.js";
+
+export default {
+  data() {
+    return {
+      /*
+      cartItems: {
+        flightId: "",
+        origin: "",
+        destination: "",
+        flightDate: "",
+        state: "",
+        seats: [],
+        costByPerson: "",
+        costByPersonOffer: "",
+      }, */
+      cartItems: [],
+      total: 0, // You may need to initialize this based on your requirements
     };
+  },
+  components: {
+    errorModal,
+    spinner,
+    Footer,
+    successModal,
+  },
+  
+  mounted() {
+    // Call the listShoppingCartItems function when the component is created
+    this.listItems();
+    this.getTotal();
+
+    // You can also call other functions or perform additional logic here
+  },
+  methods: {
+    
+    async getTotal(){
+      const token = window.sessionStorage.getItem('JWTtoken');
+      const tokenData = JSON.parse(atob(token.split('.')[1]));
+      const userID = tokenData.ID;
+
+      // Llamar al servicio para obtener los items
+      checkoutService.checkoutShoppingCart({"userID" : userID})
+          .then(response => {
+            if (response.status == 200){
+              this.total = response.data.totalAmount;
+              console.log(response);
+            }
+          })
+          .catch(error => {
+            console.error(error);
+          });
+    },
+
+
+    async listItems() {
+      const token = window.sessionStorage.getItem('JWTtoken');
+      const tokenData = JSON.parse(atob(token.split('.')[1]));
+      const userID = tokenData.ID;
+
+      // Llamar al servicio para obtener los items
+      listService.listShoppingCartItems({"userID" : userID})
+          .then(response => {
+            if (response.status == 200){
+              this.cartItems = response.data;
+              console.log(response);
+            }
+
+          })
+          .catch(error => {
+            console.error(error);
+          });
+    },
+    
+
+    async purchase(){
+
+    },
+
+    removeItem(index) {
+      //use the service
+      const token = window.sessionStorage.getItem('JWTtoken');
+      const tokenData = JSON.parse(atob(token.split('.')[1]));
+      const userID = tokenData.ID;
+
+      dropService.dropItem(userID, this.cartItems[index].flightId)
+          .then(response => {
+            if (response.status == 200){
+              console.log(response.data);
+            }
+          })
+          .catch(error => {
+            console.error(error);
+          });
+    },
+    updateSeatQuantity(item) {
+      // use the service
+      const token = window.sessionStorage.getItem('JWTtoken');
+      const tokenData = JSON.parse(atob(token.split('.')[1]));
+      const userID = tokenData.ID;
+      
+      modifyService.modifyItemInCart(userID, flightID, seatQuantity, seatClass)
+          .then(response => {
+            if (response.status == 200){
+              console.log(response.data);
+            }
+          })
+          .catch(error => {
+            console.error(error);
+          });
+    },
+
+    formatDate(dateString) {
+     //Cambia el formato de la fecha de milisegundos a años, meses y dias
+     const options = { year: "numeric", month: "long", day: "numeric" };
+     const date = new Date(dateString);
+     return date.toLocaleDateString("es-ES", options);
+   },
+
+  },
+};
+
 </script>
 
   
