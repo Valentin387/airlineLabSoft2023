@@ -25,7 +25,7 @@
           <label for="lastName">lastName:</label>
           <input v-model="passengerData.lastName" type="text" required />
           <label for="birthday">birthday:</label>
-          <input v-model="passengerData.birthday" type="text" required />
+          <input v-model="passengerData.birthday" type="date" required />
           <label for="gender">gender:</label>
           <input v-model="passengerData.gender" type="text" required />
           <label for="cellphoneNo">cellphoneNo:</label>
@@ -112,7 +112,7 @@ import purchaseService from "@/services/orderService/purchaseService.js";
           if (response.status == 200){
             console.log(response.data);
             window.sessionStorage.removeItem('cartItems');
-            this.$router.push({ name: "Home" });
+            this.$router.push("/");
           }
         })
         .catch(error => {
