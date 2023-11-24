@@ -37,7 +37,7 @@
                         <td>{{ passenger.seatLetter }}{{ passenger.seatNumber }}</td>
                         <td>
                             <!-- Agrega el botón de check-in -->
-                            <button @click="performCheckIn(passenger.seatId)">Check-In</button>
+                            <button @click="performCheckIn(passenger.seatId)" >Check-In</button>
                         </td>
                     </tr>
                 </tbody>
@@ -375,12 +375,10 @@ export default {
     },
     consult() {
             this.showSpinner = true;
-            consultService.consult({"orderCOD":this.orderCOD , "passengerDNI":this.passengerDNI})
-            // Call the LoginService.login method
-                .then((response) => {
+            consultService.consult({"orderCOD":this.orderCOD , "passengerDNI":this.passengerDNI}).then((response) => {
                     this.showSpinner = false;
                 // Handle the successful response here
-                    if (response.status === 200) {
+                    if (response.status == 200) {
                         console.log("Se obtuvieron los datos de forma correcta:", response.data);
                         this.backendResponse = response.data;
                         console.log('backendResponse:', this.backendResponse);
@@ -389,13 +387,7 @@ export default {
                 .catch((error) => {
                     this.showSpinner = false;
                 // Handle login errors here
-                    if (error.response.status == 401){
-                        console.log("Error en obtener los datos:", error.response.status, error);
-                        this.errorMessage = error.response.data.message || "Error en obtener los datos";
-                        this.showErrorMessage = true;
-                        this.backendResponse = null;
-
-                    } 
+                   
                     if (error.response.status == 403){
                         console.log("Error en obtener los datos:", error.response.status, error);
                         this.errorMessage = error.response.data.message || "Error en obtener los datos";
