@@ -6,7 +6,7 @@
           <h3>{{ flight.origin }} to {{ flight.destination }}</h3>
           <ul>
             <li v-for="seat in flight.seats" :key="seat.seatID">
-              Seat {{ seat.seatID }}
+              Seat {{ seat.id }}
               <button @click="openPassengerForm(flight, seat)">Add Passenger</button>
             </li>
           </ul>
@@ -57,7 +57,16 @@
         },
         cartItems: [], // Populate this array from API or elsewhere
         passengerData: {
-          dni: "",
+            dni: "",
+            firstName:"",
+            lastName:"",
+            birthday:"",
+            gender:"",
+            cellphoneNo:"",
+            email:"",
+            contactName:"",
+            contactNo:"",
+            seatID:0
           // Add other fields for passenger details
         },
       };
@@ -70,7 +79,15 @@
       openPassengerForm(flight, seat) {
         this.selectedFlightAndSeat = { flight, seat };
         this.passengerData = {
-          dni: "",
+            dni: "",
+            firstName:"",
+            lastName:"",
+            birthday:"",
+            gender:"",
+            cellphoneNo:"",
+            email:"",
+            contactName:"",
+            contactNo:"",
           // Reset other fields for passenger details
         };
       },
@@ -78,7 +95,7 @@
       submitPassengerForm() {
         if (this.selectedFlightAndSeat) {
           const { flight, seat } = this.selectedFlightAndSeat;
-          const newPassenger = { ...this.passengerData, seatID: seat.seatID };
+          const newPassenger = { ...this.passengerData, seatID: seat.id };
   
           const existingFlight = this.orderObject.orderFlightInfoList.find(
             (info) => info.flightID === flight.flightId
@@ -107,6 +124,7 @@
             // Reset other fields for passenger details
           };
           console.log(this.orderObject);
+          console.log(this.cartItems);
         }
       },
     },
