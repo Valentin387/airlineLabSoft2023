@@ -37,7 +37,14 @@
         <input v-model="passengerData.birthday" type="date" required />
         <br>
         <label for="gender">Genero:</label>
-        <input v-model="passengerData.gender" type="text" required />
+        
+        <select id="gender" placeholder="Género"  v-model="passengerData.gender" required>
+              <option value="" disabled selected>Seleccione el género</option>
+              <option value="Masculino">Masculino</option>
+              <option value="Femenino">Femenino</option>
+              <option value="Otro">Otro</option>
+        </select>
+
         <br>
         <label for="cellphoneNo">Número de teléfono:</label>
         <input v-model="passengerData.cellphoneNo" type="text" required />
