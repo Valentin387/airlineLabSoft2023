@@ -343,7 +343,7 @@ export default {
         .then((response) => {
                     this.showSpinner = true;
                 // Handle the successful response here
-                    if (response.status === 200) {
+                    if (response.status == 200) {
                         this.successMessage =  "Check-in exitoso, email enviado";
                         this.showSuccessMessage = true;
                         this.showSpinner = false;
@@ -352,22 +352,22 @@ export default {
                 .catch((error) => {
                     this.showSpinner = false;
                 // Handle login errors here
-                    if (error.response.status == 401){
+                    if (error.response && error.response.status == 401){
                         console.log("Error en obtener los datos:", error.response.status, error);
                         this.errorMessage = error.response.data.message || "Error en obtener los datos";
                         this.showErrorMessage = true;
 
                     } 
-                    if (error.response.status == 403){
+                    if (error.response && error.response.status == 403){
                         console.log("Error en obtener los datos:", error.response.status, error);
                         this.errorMessage = error.response.data.message || "Error en obtener los datos";
                         this.showErrorMessage = true;
 
-                    }
+                    } 
                     else {
                         // You can redirect the user or perform other actions here.
                         console.error("Error en obtener los datos:", error);
-                        this.errorMessage = error.response.data.message || "Error en obtener los datos";
+                        this.errorMessage = "Error en obtener los datos";
                         this.showErrorMessage = true;
                     }
                     // Display an error message to the user or take appropriate action.
