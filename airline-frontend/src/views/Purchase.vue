@@ -40,10 +40,18 @@
           <button type="submit">Submit</button>
         </form>
       </div>
+      <div class="left-column">
+        <form @submit.prevent="purchase">
+            <button type="submit">Comprar Ahora</button>
+        </form>
+      </div>
     </div>
   </template>
   
   <script>
+
+import purchaseService from "@/services/orderService/purchaseService.js";
+
   export default {
     data() {
       return {
@@ -90,6 +98,26 @@
             contactNo:"",
           // Reset other fields for passenger details
         };
+      },
+
+      purchase(){
+        purchaseService.purchase(
+            this.orderObject.userID,
+            this.orderObject.cardID,
+            this.orderObject.totalAmount,
+            this.orderObject.paymentDetails,
+            this.orderObject.orderFlightInfoList
+            )
+        .then(response => {
+          if (response.status == 200){
+            console.log(response.data);
+            window.sessionStorage.removeItem('cartItems');
+            this.$router.push({ name: "Home" });
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        });
       },
   
       submitPassengerForm() {
