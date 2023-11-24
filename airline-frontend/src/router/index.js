@@ -20,6 +20,8 @@ import CentroAyuda from '../views/CentroAyuda.vue'
 import ListVuelosClient from '../views/ListVuelos_Client.vue'
 import CrearVuelo from '../views/CrearVuelo.vue'
 import DatosPasajeros from '../views/DatosPasajeros.vue'
+import OfertaAdmin from '../views/OfertaAdmin.vue'
+
 const router = createRouter ({
 
     history: createWebHistory(),
@@ -133,6 +135,12 @@ const router = createRouter ({
             path: '/DatosPasajeros',
             name: 'DatosPasajeros',
             component: DatosPasajeros
+        },
+        {
+            path: '/OfertasAdmin',
+            name: 'OfertaAdmin',
+            component: OfertaAdmin,
+            meta: { requiresAuth: true }
         },
     ]
     
