@@ -22,6 +22,8 @@ import CrearVuelo from '../views/CrearVuelo.vue'
 import DatosPasajeros from '../views/DatosPasajeros.vue'
 import CrearOfertaAdmin from '../views/CrearOfertaAdmin.vue'
 import ListOfertasAdmin from '../views/ListOfertasAdmin.vue'
+import Purchase from '../views/Purchase.vue'
+
 const router = createRouter ({
 
     history: createWebHistory(),
@@ -34,6 +36,10 @@ const router = createRouter ({
         {
             path: '/Login',
             component: Login
+        },
+        {
+            path: '/Purchase',
+            component: Purchase
         },
         {
             path: '/SignUp',

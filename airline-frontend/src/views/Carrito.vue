@@ -165,6 +165,7 @@ import listService from "@/services/shoppingCartServices/listService.js";
 import checkoutService from "@/services/shoppingCartServices/checkoutService.js";
 import dropService from "@/services/shoppingCartServices/dropService.js";
 import modifyService from "@/services/shoppingCartServices/modifyItemService.js";
+import { roundToNearestMinutes } from "date-fns";
 
 export default {
   data() {
@@ -210,6 +211,7 @@ export default {
           .then(response => {
             if (response.status == 200){
               this.total = response.data.totalAmount;
+              window.sessionStorage.setItem('total', JSON.stringify(this.total));
               console.log(response);
             }
           })
@@ -229,6 +231,7 @@ export default {
           .then(response => {
             if (response.status == 200){
               this.cartItems = response.data;
+              window.sessionStorage.setItem('cartItems', JSON.stringify(this.cartItems));
               console.log(response);
             }
 
@@ -240,7 +243,8 @@ export default {
     
 
     async purchase(){
-
+      //push to /Purchase
+      this.$router.push("/Purchase");
     },
 
     removeItem(index) {
