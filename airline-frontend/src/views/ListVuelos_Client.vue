@@ -46,8 +46,8 @@
                 </p>
                 </div>
                 <div class="flight-price">
-                <p class="price">${{ flight.costByPerson }}</p>
-                <button @click="verOferta(flight)">Ver Oferta</button>
+                  <p class="price">${{ flight.costByPerson }}</p>
+                  <button @click="verOferta(flight)">Ver Oferta</button>
                 </div>
             </div>
             </div>
@@ -331,6 +331,7 @@ html {
 </style>
   
 <script>
+import router from '@/router';
 
 export default {
   name: "ListVuelosClient",
@@ -363,10 +364,11 @@ export default {
 
   methods: {
     verOferta(flight) {
-      //Botón de ber oferta del vuelo
-      // Lógica para ver la oferta del vuelo
       console.log("Ver oferta para el vuelo:", flight);
-      // Puedes redirigir a una página de detalles de la oferta, por ejemplo.
+
+      sessionStorage.setItem("DetalleVuelo", JSON.stringify(flight));
+      // Realiza la redirección a la página de detalle de vuelo
+      router.push({ name: 'DetalleVuelo'});
     },
     formatDate(dateString) {
       //Cambia el formato de la fecha de milisegundos a años, meses y dias

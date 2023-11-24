@@ -113,7 +113,11 @@
     },
     methods: {
       cargarReservas() {
-        const userID = obtenerIdUsuario(); 
+        // Saca el user ID
+        const token = window.sessionStorage.getItem('JWTtoken');
+        const tokenData = JSON.parse(atob(token.split('.')[1]));
+        const userID = tokenData.ID;
+
         listReservationService.getReservations(userID)
           .then(response => {
             this.reservas = response.data;
@@ -123,8 +127,13 @@
           });
       },
       cancelarReserva(reservaId) {
+        // Saca el user ID
+        const token = window.sessionStorage.getItem('JWTtoken');
+        const tokenData = JSON.parse(atob(token.split('.')[1]));
+        const userID = tokenData.ID;
+
         // Llama al servicio para cancelar la reserva
-        cancelReservationService.cancelReservation({ reservationID: reservaId })
+        cancelReservationService.cancelReservation({ flightID: reservaId, userID: userID })
           .then(response => {
             // Actualiza la lista de reservas después de la cancelación
             this.cargarReservas();
@@ -135,8 +144,12 @@
           });
       },
       moverAlCarrito(reservaId) {
-        // Llama al servicio para mover la reserva al carrito
-        moveToCartService.moveToCart({ reservationID: reservaId, userID: obtenerIdUsuario() })
+        // Saca el user ID
+        const token = window.sessionStorage.getItem('JWTtoken');
+        const tokenData = JSON.parse(atob(token.split('.')[1]));
+        const userID = tokenData.ID;
+        
+        moveToCartService.moveToCart({ flightID: reservaId, userID:  userID})
           .then(response => {
             // Actualiza la lista de reservas después de moverla al carrito
             this.cargarReservas();
@@ -152,4 +165,5 @@
     }
   };
 </script>
+
   
