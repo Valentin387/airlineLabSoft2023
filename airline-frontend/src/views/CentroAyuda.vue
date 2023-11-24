@@ -1,6 +1,7 @@
 <template>
     <div class="centro-de-ayuda">
-      <h1>Acerca de la aplicación</h1>
+      <h1>Acerca De La Aplicación</h1>
+      <br>
       <div class="pestanas">
         <div v-for="(pestaña, index) in pestanas" :key="index" class="pestana">
           <button @click="togglePestana(index)">
@@ -13,9 +14,60 @@
         </div>
       </div>
     </div>
+        <!------------------------------------------------FOOTER------------------------------------------->
+        <Footer></Footer>
+
 </template>
   
 <style lang="scss">
+
+$light-color: #312c02;
+$degradado: rgba(39, 64, 153, 0.479);
+$bg: rgba(6, 31, 14, 0.873);
+$azul-claro: #cfe0eb;
+$gris: #f7f7f7;
+$gris2: #364265;
+$verde: #00bd8e;
+$azul: #0d629b;
+$blanco: #ffffff;
+$negro: #1a1320;
+$accent: #0b97f4;
+$accent3: #77797a;
+$blue: #54b2f1;
+$secondary: #ceeafd;
+$card: #0d629b17;
+
+
+html {
+  /* 
+        Estilo CSS para la vista Home.vue del proyecto Vue.js. 
+        La propiedad font-size establece el tamaño de fuente base en 10px, lo que equivale a 62.5% del tamaño de fuente predeterminado del navegador. 
+        La propiedad overflow-x:hidden oculta el desplazamiento horizontal de la página. 
+        La propiedad scroll-behavior: smooth agrega un efecto de desplazamiento suave al hacer clic en los enlaces internos de la página. 
+        La propiedad scroll-padding-top establece la cantidad de espacio de relleno en la parte superior de la página para compensar la barra de navegación fija. 
+        */
+  font-size: 62.5%;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  scroll-padding-top: 9rem;
+
+  /* 
+        Estilos para la barra de desplazamiento en la vista Home.vue.
+        Se utiliza el selector de pseudo-elemento &:: para aplicar estilos a la barra de desplazamiento.
+        */
+  &::-webkit-scrollbar {
+    width: 1rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $accent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $azul;
+  }
+}
+
   /* Estilos CSS aquí */
   .centro-de-ayuda {
     padding: 20px;
@@ -25,6 +77,7 @@
     margin: 0 auto;
     margin-top: 10rem;
     text-align: center;
+  
   }
   
   .pestanas {
@@ -34,8 +87,8 @@
   }
   
   .pestana button {
-    background-color: #bbbbbb;
-    color: white;
+    background-color: $secondary;
+    color: $negro;
     border: none;
     padding: 10px;
     border-radius: 5px;
@@ -50,6 +103,7 @@
   .flecha {
     font-size: 20px;
     transition: transform 0.3s;
+    color:$azul;
   }
   
   .flecha-abajo::before {
@@ -61,13 +115,16 @@
   }
   
   .pestana .contenido {
-    background-color: #f0f0f0;
+    background-color: $card;
     padding: 10px;
     border-radius: 5px;
   }
 </style>
    
 <script>
+import errorModal from "@/components/errorModal.vue";
+import spinner from "@/components/spinner.vue";
+import Footer from "@/components/footer.vue";
   export default {
     data() {
       return {
@@ -104,7 +161,7 @@
           {
             titulo: "Derechos del titular y cómo ejercerlos",
             contenido:
-              "Contenido: Conocer, actualizar, rectificar y/o eliminar sus datos personales, siempre que no medie un deber legal o contractual que lo impida. Para saber más detalles del procedimiento, ver la sección 4.1 de la Política de Privacidad.",
+              "Contenido: Conocer, actualizar, rectificar y/o eliminar sus datos personales, siempre que no medie un deber legal o contractual que lo impida. El canal oficial para ejercer estos derechos es el correo: habeasdata@avianca.com. Para saber más detalles del procedimiento, ver la sección 4.1 de la Política de Privacidad.",
             abierto: false
           },
           {
@@ -120,6 +177,11 @@
       togglePestana(index) {
         this.pestanas[index].abierto = !this.pestanas[index].abierto;
       }
-    }
+    },
+    components: {
+        errorModal,
+        spinner,
+        Footer,
+  },
   };
 </script>

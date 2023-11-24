@@ -1,7 +1,7 @@
 <template>
-    <div class="container light-style flex-grow-1 container-p-y">
+  
         <spinner :showSpinner="showSpinner"></spinner>
-        <div class="card card-large">
+        <div class="card card-large light-style flex-grow-1 container-p-y">
             <div class="row no-gutters row-bordered row-border-light">
                 <div class="col-md-2 pt-0">
                     <div class="list-group list-group-flush account-settings-links">
@@ -9,11 +9,9 @@
                             href="#account-general">Información Personal</a>
                         <a class="list-group-item list-group-item-action" data-toggle="list"
                             @click="redirectToUpdatePassword">Cambiar Contraseña</a>
-                        <a class="list-group-item list-group-item-action" data-toggle="list"
-                            @click="redirectToAdminManagement" v-if="hasCreateAdminPermission">Gestionar administradores</a>
                         <a class="list-group-item list-group-item-action" data-toggle="list" @click="redirectToRootIDChange"
-                            v-if="isRoot">Editar id del root</a>
-                        <button type="button" class="btn-cerrar" @click="logout">Cerrar sesión </button>&nbsp;
+                            v-if="isRoot">Editar ID del root</a>
+                       
 
                     </div>
                 </div>
@@ -97,8 +95,7 @@
         <!------------------------------------------------FOOTER------------------------------------------->
        
         <error-modal :show-error="showErrorMessage" :error-message="errorMessage" @close="showErrorMessage = false" />
-        <Footer/>
-    </div>
+        
     <!------------------------------------------------FOOTER------------------------------------------->
       <!-- Footer aquí -->
       <Footer></Footer>
@@ -149,10 +146,10 @@ html {
     }
 
 }
-
-.container light-style flex-grow-1 container-p-y {
-    background: #3B5998;
+.container, .footer {
+  width: 100%; /* Esto hace que el contenedor y el footer ocupen el ancho completo de su contenedor padre */
 }
+
 
 @mixin grid($val) {
     display: grid;
@@ -215,6 +212,26 @@ html {
     }
 }
 
+.d-flex {
+  display: flex;
+}
+.list-group-item.list-group-item-action.active {
+  color: black;
+  align-items: center;
+}
+list-group-item list-group-item-action {
+  color: black;
+  align-items: center;
+  align-content: center;
+}
+.align-items-center {
+  align-items: center;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
 .ui-w-80 {
     width: 8rem !important;
 }
@@ -264,7 +281,7 @@ label.btn {
 .card {
     background-clip: padding-box;
     box-shadow: 0 6px 6px rgba(6, 6, 6, 0.1);
-
+    background: #3B5998;
     background: $secondary; //FONDO DE LA CARD
     margin-top: 10rem;
     width: 90vw;

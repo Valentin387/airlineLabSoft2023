@@ -7,7 +7,7 @@
         <button class = "cancelados" @click="showFlights('cancelados')" :class="{ activeButton: filter === 'cancelados' }">Cancelados</button>
       </div>
       <div class="right-button">
-        <button  href= "/CrearVuelo" @click="createFlight">Crear Vuelo</button>
+        <button class="right" href= "/CrearVuelo" @click="createFlight">Crear Vuelo</button>
       </div>
     </div>
     <div class="flight-list">
@@ -35,6 +35,8 @@
       </div>
     </div>
   </div>
+  <!------------------------------------------------FOOTER------------------------------------------->
+  <Footer></Footer>
 </template>
 
 <style lang="scss">
@@ -91,12 +93,22 @@ html {
     height: 85vh;
     width: 90vw;
     margin: 0 auto; /* Centrar horizontalmente */
+    background: $secondary;
     margin-top: 10rem; /* Centrar verticalmente */
+    .right-button {
+      text-align: right;
+      background-color:  #f2f2f283;
+      background:  #f2f2f283;
+      border: 0.2rem solid #0f293a17;
+      color: white;
+
+  }
   }
 
   .buttons-container {
     display: flex;
     justify-content: space-between;
+    
   }
 
   .left-buttons {
@@ -128,17 +140,17 @@ html {
     margin: 1rem auto; //Centrado 
     display: inline-block;
   }
-  .right-button {
-    text-align: right;
-  }
+
 
   .tittle-container {
     border: 1px solid #0d629b17;
-    background: #0d629b17;
+    background:  #f2f2f283;
     border-radius: 5px;
     max-height: 300px; 
     overflow-y: auto;
     margin-top: 20px;
+    
+
 
   }
 
@@ -161,7 +173,7 @@ html {
   }
 
   .button-delete {
-    background: #0d629b17;
+    background:  #f2f2f283;
     color: white;
     border-radius: 5px;
     cursor: pointer;
@@ -177,7 +189,7 @@ html {
   }
   
   .left-buttons button {
-    background: #0d629b17;
+    background:  #f2f2f283;
     color: $azul;
     border: 3px solid #0d629b17;
     border-radius: 5px;
@@ -204,45 +216,40 @@ html {
 </style>
 
 <script>
-  import listByStateService from '@/services/FlightService/listByStateService.js';
-
+import errorModal from "@/components/errorModal.vue";
+import spinner from "@/components/spinner.vue";
+import Footer from "@/components/footer.vue";
   export default {
     data() {
       return {
-        flights: [], // Almacena los vuelos obtenidos del backend
+        flights: [], // Aquí almacenamos los vuelos obtenidos del backend
         filter: 'activos', // Filtro inicial
       };
     },
     created() {
-      this.loadFlights();
-    },
+      },
     computed: {
       filteredFlights() {
-        // Filtra los vuelos según el filtro seleccionado
+        // Filtrar los vuelos según el filtro seleccionado
         return this.flights.filter(flight => flight.status === this.filter);
       },
     },
     methods: {
-      async loadFlights() {
-        try {
-          const response = await listByStateService.getFlightsByState(this.filter);
-          this.flights = response.data; // Asigna la lista de vuelos al arreglo flights
-        } catch (error) {
-          console.error("Error al cargar los vuelos:", error);
-        }
-      },
       showFlights(filter) {
         this.filter = filter;
-        this.loadFlights(); // Recarga la lista de vuelos cuando cambia el filtro
       },
       createFlight() {
         this.$router.push("/CrearVuelo");
       },
       removeFlight(id) {
-        // Elimina el vuelo con el ID correspondiente
-        // Aquí podrías llamar a un servicio para eliminar el vuelo en el backend también
+        // Eliminar el vuelo con el ID correspondiente
         this.flights = this.flights.filter(flight => flight.id !== id);
       },
     },
+    components: {
+    errorModal,
+    spinner,
+    Footer,
+  },
   };
 </script>

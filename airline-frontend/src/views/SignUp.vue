@@ -276,18 +276,22 @@ html {
     margin: 10px 0;
     padding: 20px;
   }
-
+.registration-container {
   .title {
-    text-transform: capitalize;
-    font-size: 2.25rem;
-    font-weight: 600;
-    letter-spacing: 1px;
-    margin-top: 3rem;
-    margin-bottom: 1rem;
-    color: $negro;
-    font-weight: bolder;
+  
+    margin: 0;
+    color: $azul;
+    font-weight: bold;
+    font-size: 3rem; /* Aumenta el tamaño de la fuente */
+   
+    letter-spacing: 1px; /* Aumenta el espaciado entre las letras */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.456); /* Añade una sombra al texto */
+    font-family: 'Arial', sans-serif; /* Cambia la fuente (opcional) */
     text-align: center;
+    margin-top:3rem;
   }
+}
+ 
 
   label {
     display: block;

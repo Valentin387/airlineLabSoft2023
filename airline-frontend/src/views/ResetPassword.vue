@@ -121,11 +121,12 @@ $blue: #54b2f1;
 }
 
 .title {
-  text-transform: capitalize;
-  font-size: 2.25rem;
-  font-weight: 600;
-  letter-spacing: 1px;
-  color: $negro;
+  color: $azul;
+  font-weight: bold;
+  font-size: 3rem; /* Aumenta el tamaño de la fuente */
+  letter-spacing: 1px; /* Aumenta el espaciado entre las letras */
+  text-shadow: 2px 2px 2px rgba(0, 0, 0, 0.456); /* Añade una sombra al texto */
+  font-family: "Arial", sans-serif; /* Cambia la fuente (opcional) */
 }
 
 .social-login-element {

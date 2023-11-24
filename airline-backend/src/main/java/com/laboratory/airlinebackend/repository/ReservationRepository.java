@@ -1,6 +1,5 @@
 package com.laboratory.airlinebackend.repository;
 
-import com.laboratory.airlinebackend.controller.DTO.ReservationDetailsDTO;
 import com.laboratory.airlinebackend.model.Reservation;
 import com.laboratory.airlinebackend.model.Seat;
 import org.springframework.data.jpa.repository.JpaRepository;

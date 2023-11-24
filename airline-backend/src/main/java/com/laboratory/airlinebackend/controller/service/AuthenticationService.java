@@ -35,6 +35,8 @@ public class AuthenticationService {
             throw new EmailAlreadyTakenException("Email already exists");
         }
         var shoppingCart = ShoppingCart.builder()
+                .quantity(0)
+                .totalAmount(0.0)
                 .build();
         shoppingCartRepository.save(shoppingCart);
         Long shoppingCartID = shoppingCart.getID();

@@ -1,5 +1,5 @@
 package com.laboratory.airlinebackend.controller;
-import com.laboratory.airlinebackend.controller.DTO.ReservationDetailsDTO;
+
 import com.laboratory.airlinebackend.controller.DTO.ReserveFlightDTO;
 import com.laboratory.airlinebackend.controller.DTO.ShoppingCartSeatsDetailsDTO;
 import com.laboratory.airlinebackend.controller.service.AddShoppingCartItemService;
