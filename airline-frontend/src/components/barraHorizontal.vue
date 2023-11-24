@@ -49,7 +49,7 @@
                         <li><a href="/M_Financiero">Módulo Financiero</a></li>
                         <li><a href="#">Mis Compras</a></li>
                         <li><a href="/List_Reservas">Mis Reservas</a></li>
-                        <li><a href="#">Noticias</a></li>
+                        <li v-if="profile.subscribedToFeed === 1"><a href="/">Noticias</a></li>
                         <li> <div class="btn-cerrar" @click="logout">
                                 <span class="material-symbols-outlined">logout</span>Cerrar sesión
                             </div></li>
