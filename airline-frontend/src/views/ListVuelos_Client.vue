@@ -347,21 +347,29 @@ html {
 import errorModal from "@/components/errorModal.vue";
 import spinner from "@/components/spinner.vue";
 import Footer from '@/components/footer.vue';
+import router from "@/router";
 export default {
  name: "ListVuelosClient",
 
- data() {
-   return {
-     flights: [],
-     showNumberError: false,
-     numberErrorMessage: "",
-   };
- },
- mounted() {
-
-   // Carga los vuelos almacenados en el almacenamiento de la sesión
-   const storedResults = sessionStorage.getItem("ListVuelosClient");
-   console.log("Stored Results:", storedResults);
+  data() {
+    return {
+      flights: [],
+      searchParams: {
+        origin: "",
+        destination: "",
+        flightDate: "",
+        arrivalDate: "",
+        numPassengers: 1,
+      },
+      showNumberError: false,
+      numberErrorMessage: "",
+    };
+  },
+  mounted() {
+    console.log("Hello");
+    // Carga los vuelos almacenados en el almacenamiento de la sesión
+    const storedResults = sessionStorage.getItem("ListVuelosClient");
+    console.log("Stored Results:", storedResults);
 
    if (storedResults) {
      this.flights = JSON.parse(storedResults);
@@ -371,11 +379,12 @@ export default {
 
  methods: {
    verOferta(flight) {
-     //Botón de ber oferta del vuelo
-     // Lógica para ver la oferta del vuelo
-     console.log("Ver oferta para el vuelo:", flight);
-     // Puedes redirigir a una página de detalles de la oferta, por ejemplo.
-   },
+      console.log("Ver oferta para el vuelo:", flight);
+
+      sessionStorage.setItem("DetalleVuelo", JSON.stringify(flight));
+      // Realiza la redirección a la página de detalle de vuelo
+      router.push({ name: 'DetalleVuelo'});
+    },
    formatDate(dateString) {
      //Cambia el formato de la fecha de milisegundos a años, meses y dias
      const options = { year: "numeric", month: "long", day: "numeric" };
