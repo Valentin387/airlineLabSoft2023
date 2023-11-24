@@ -1,5 +1,6 @@
 <template>
     <div class="purchase-container">
+      <spinner :showSpinner="showSpinner"></spinner>
       <!-- Left Column - List of flights and seats -->
       <div class="left-column">
         <div v-for="flight in cartItems" :key="flight.flightId" class="flight-section">
@@ -55,6 +56,7 @@ import purchaseService from "@/services/orderService/purchaseService.js";
   export default {
     data() {
       return {
+        showSpinner: false, // Initialize as hidden
         selectedFlightAndSeat: null,
         orderObject: {
           userID: 52,
@@ -101,6 +103,7 @@ import purchaseService from "@/services/orderService/purchaseService.js";
       },
 
       purchase(){
+        this.showSpinner = true;
         purchaseService.purchase(
             this.orderObject.userID,
             this.orderObject.cardID,
@@ -110,12 +113,14 @@ import purchaseService from "@/services/orderService/purchaseService.js";
             )
         .then(response => {
           if (response.status == 200){
+            this.showSpinner = false;
             console.log(response.data);
             window.sessionStorage.removeItem('cartItems');
             this.$router.push("/");
           }
         })
         .catch(error => {
+          this.showSpinner = false;
           console.log(error);
         });
       },
