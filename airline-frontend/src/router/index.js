@@ -22,6 +22,8 @@ import CrearVuelo from '../views/CrearVuelo.vue'
 import DatosPasajeros from '../views/DatosPasajeros.vue'
 import CrearOfertaAdmin from '../views/CrearOfertaAdmin.vue'
 import ListOfertasAdmin from '../views/ListOfertasAdmin.vue'
+import PromocionesUsuario from '../views/PromocionesUsuario.vue'
+
 const router = createRouter ({
 
     history: createWebHistory(),
@@ -147,6 +149,12 @@ const router = createRouter ({
             path: '/ListOfertasAdmin',
             name: 'ListOfertasAdmin',
             component: ListOfertasAdmin,
+            meta: { requiresAuth: true }
+        },
+        {
+            path: '/PromocionesUsuario',
+            name: 'PromocionesUsuario',
+            component: PromocionesUsuario,
             meta: { requiresAuth: true }
         },
     ]

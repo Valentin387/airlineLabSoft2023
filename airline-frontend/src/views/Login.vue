@@ -9,7 +9,7 @@
         <hr />
         <div class="text-login">
           <p>
-            Somos tu pasaporte hacia el mundo de la aviación. Con una amplia
+            Somos tu pasaporte hacia el mundo. Con una amplia
             gama de destinos, ofertas irresistibles y un servicio excepcional,
             estamos aquí para hacer realidad tus sueños de viaje.
           </p>
