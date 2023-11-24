@@ -6,14 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="2e0abf07-9820-4643-9f68-1385b5e1c1a4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/airline-backend/src/main/java/com/laboratory/airlinebackend/controller/AuthenticationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/airline-backend/src/main/java/com/laboratory/airlinebackend/controller/AuthenticationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/airline-frontend/src/views/CambioIdRoot.vue" beforeDir="false" afterPath="$PROJECT_DIR$/airline-frontend/src/views/CambioIdRoot.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/airline-frontend/src/views/CrearAdmin.vue" beforeDir="false" afterPath="$PROJECT_DIR$/airline-frontend/src/views/CrearAdmin.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/airline-frontend/src/views/EditarPerfil.vue" beforeDir="false" afterPath="$PROJECT_DIR$/airline-frontend/src/views/EditarPerfil.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/airline-frontend/src/views/Login.vue" beforeDir="false" afterPath="$PROJECT_DIR$/airline-frontend/src/views/Login.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/airline-frontend/src/views/Perfil.vue" beforeDir="false" afterPath="$PROJECT_DIR$/airline-frontend/src/views/Perfil.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/airline-frontend/src/views/RecoverPassword.vue" beforeDir="false" afterPath="$PROJECT_DIR$/airline-frontend/src/views/RecoverPassword.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/airline-frontend/src/views/ResetPassword.vue" beforeDir="false" afterPath="$PROJECT_DIR$/airline-frontend/src/views/ResetPassword.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/airline-frontend/src/views/Check-in.vue" beforeDir="false" afterPath="$PROJECT_DIR$/airline-frontend/src/views/Check-in.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,21 +49,25 @@
   &quot;associatedIndex&quot;: 1
 }</component>
   <component name="ProjectId" id="2WSi2Ykc1gC1JxtYgWzQFQNH7sU" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;hotfix/ventanasEmergentes&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;develop&quot;,
     &quot;jdk.selected.JAVA_MODULE&quot;: &quot;21&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/torre/OneDrive/Documentos/airlineLabSoft2023&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.new.ui&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.keymap&quot;
   }
 }</component>
   <component name="RunManager" selected="Maven.spring-boot:run">
@@ -159,6 +156,27 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint type="java-exception">
+          <properties class="jakarta.servlet.ServletException" package="jakarta.servlet" />
+          <option name="timeStamp" value="2" />
+        </breakpoint>
+        <breakpoint type="java-exception">
+          <properties class="java.lang.IllegalStateException" package="java.lang" />
+          <option name="timeStamp" value="3" />
+        </breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="org.springframework.security.access.AccessDeniedException" package="org.springframework.security.access" />
+          <option name="timeStamp" value="5" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

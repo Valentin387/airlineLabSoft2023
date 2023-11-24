@@ -1,6 +1,6 @@
 import axiosInstance from '../axiosInstance.js';
 
-
+//suscribirse a la aplicación 
 const register = (dni,
                   email,
                   password,

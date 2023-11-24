@@ -10,7 +10,23 @@ import CambioIdRoot from '../views/CambioIdRoot.vue'
 import EditarPerfil from '../views/EditarPerfil.vue'
 import RecoverPassword from '../views/RecoverPassword.vue'
 import ResetPassword from '../views/ResetPassword.vue'
+import SearchResults from '../views/SearchResults.vue'; // Ajusta la ruta según sea necesario
+import M_Financiero from '../views/M_Financiero.vue'
+import ListVuelos_Ad from '../views/ListVuelos_Ad.vue'
+import DetalleVuelo from '../views/DetalleVuelo.vue'
+import Carrito from '../views/Carrito.vue'
+import List_Reservas from '../views/List_Reservas.vue'
+import CentroAyuda from '../views/CentroAyuda.vue'
+import ListVuelosClient from '../views/ListVuelos_Client.vue'
+import CrearVuelo from '../views/CrearVuelo.vue'
+import DatosPasajeros from '../views/DatosPasajeros.vue'
+import CrearOfertaAdmin from '../views/CrearOfertaAdmin.vue'
+import ListOfertasAdmin from '../views/ListOfertasAdmin.vue'
+import Purchase from '../views/Purchase.vue'
 
+import PromocionesUsuario from '../views/PromocionesUsuario.vue'
+
+import Checkin from '../views/Check-in.vue'
 const router = createRouter ({
 
     history: createWebHistory(),
@@ -19,13 +35,14 @@ const router = createRouter ({
           component: Home 
           
         },
-        {
-            path: '/Ayuda',
-            component: () => import('../views/Ayuda.vue')   
-        },
+   
         {
             path: '/Login',
             component: Login
+        },
+        {
+            path: '/Purchase',
+            component: Purchase
         },
         {
             path: '/SignUp',
@@ -74,8 +91,84 @@ const router = createRouter ({
             component:  EditarPerfil,
             meta: { requiresAuth: true }
            
-        }
+        },
+        {
+            path: '/search-results',
+            name: 'SearchResults',
+            component: SearchResults,
+        },
 
+        {
+            path: '/M_Financiero',
+            component: M_Financiero,
+            meta: { requiresAuth: true }
+        },
+
+        {
+            path: '/ListVuelos_Ad',
+            component: ListVuelos_Ad,
+            meta: { requiresAuth: true }
+        },
+
+        {
+            path: '/DetalleVuelo',
+            name: 'DetalleVuelo',
+            component: DetalleVuelo,
+            meta: { requiresAuth: true }
+        },
+
+        {
+            path: '/Carrito',
+            component: Carrito,
+            meta: { requiresAuth: true }
+        },
+        {
+            path: '/List_Reservas',
+            component: List_Reservas,
+            meta: { requiresAuth: true }
+        },
+        {
+            path: '/CentroAyuda',
+            component: CentroAyuda
+        },
+        {
+            path: '/ListVuelos_Client',
+            name: 'ListVuelosClient',
+            component: ListVuelosClient
+       },
+       {
+            path: '/CrearVuelo',
+            name: 'CrearVuelo',
+            component: CrearVuelo
+        },
+        {
+            path: '/DatosPasajeros',
+            name: 'DatosPasajeros',
+            component: DatosPasajeros
+        },
+        {
+            path: '/CrearOfertasAdmin',
+            name: 'CrearOfertaAdmin',
+            component: CrearOfertaAdmin,
+            meta: { requiresAuth: true }
+        },
+        {
+            path: '/ListOfertasAdmin',
+            name: 'ListOfertasAdmin',
+            component: ListOfertasAdmin,
+            meta: { requiresAuth: true }
+        },
+        {
+            path: '/PromocionesUsuario',
+            name: 'PromocionesUsuario',
+            component: PromocionesUsuario,
+            meta: { requiresAuth: true }
+        },
+        {
+            path: '/Checkin',
+            name: 'Checkin',
+            component: Checkin
+        },
     ]
     
 })

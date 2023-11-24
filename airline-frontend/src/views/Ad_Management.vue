@@ -3,19 +3,9 @@
   <div class="admin-panel">
     
     <div class="sidebar">
-      <a data-aos="zoom-in-left" data-aos-delay="150" href="#" class="logo">
-        <i class="fa-solid fa-paper-plane"></i>AirTravel
-      </a>
-      <div class="sidebar-item" @click="redirectToPerfil">
-        <span class="material-symbols-outlined">person</span>Perfil
-      </div>
+     
       <div class="sidebar-item" @click="selectTab('admins', $event)">
         <span class="material-symbols-outlined">lock</span>Gestionar administradores
-      </div>
-      <div class="logout-container">
-        <div class="sidebar-item" @click="logout">
-          <span class="material-symbols-outlined">logout</span>Cerrar sesión
-        </div>
       </div>
     </div>
     <div class="content">
@@ -23,7 +13,10 @@
         <h2>Perfil</h2>
       </div>
       <div v-else-if="selectedTab === 'admins'">
+        <br>
+
         <h2>Administradores</h2>
+        <br>
         <div class="admins-content">
           <ul>
             <li v-for="admin in admins" :key="admin.id">
@@ -44,9 +37,9 @@
                 </div>
                 <div class="card_containerAdmin" :class="{ active: cardContainerAdmin }">
                   <div class="cardAdmin">
-                    <img class="card_img" src="../assets/londres.jpg" alt="">
+                   
                     <div class="card_contentAdmin">
-                      <h1>Eliminar administrador</h1>
+                      <h1>Eliminar Administrador</h1>
                       <p>¿Está seguro de que desea eliminar este administrador?</p>
                       <div class="group_btns">
                         <button class="buttonAdmin" @click="cancelDelete">
@@ -92,7 +85,7 @@
 
 
 
-<style lang="scss">
+<style lang="scss" scoped>
     $light-color:#312c02;
     $degradado: rgba(149, 168, 238, 0.11);
     $bg:rgba(6, 31, 14, 0.947);
@@ -211,7 +204,9 @@
 
   .delete-button-container {
     flex: 0;
-    margin-left: 10px;
+ 
+ 
+    font-size:4vh;
     cursor: pointer;
     color: red;
   }
@@ -342,7 +337,7 @@
 import listAdminsService from "@/services/adminService/listAdminsService.js";
 import logoutService from "@/services/authenticationService/logoutService.js";
 import deleteAdminService from "@/services/adminService/deleteAdminService.js";
-import errorModal from "@/components/ErrorModal.vue";
+import errorModal from "@/components/errorModal.vue";
 import spinner from "@/components/spinner.vue";
 import successModal from "@/components/successModal.vue";
 import Footer from '@/components/footer.vue';
@@ -403,10 +398,7 @@ export default {
           });
   },
   methods: {
-    redirectToPerfil(){
-      this.$router.push('/Perfil');
-    },
-
+ 
     selectTab(tab, event) {
       this.selectedTab = tab;
       this.creatingAdmin = false; // Oculta el formulario al cambiar de pestaña
@@ -456,11 +448,23 @@ export default {
     },
    
       confirmDelete(adminId) {
+
+        const token = window.sessionStorage.getItem('JWTtoken');
+        const tokenData = JSON.parse(atob(token.split('.')[1]));
+        const permissions = tokenData.permissions;
+        if(!permissions.includes("delete_admin")){
+            this.errorMessage = "no tienes los permisos suficientes para borrar a un administrador";
+            this.showErrorMessage = true;
+            return;
+        }
+
         deleteAdminService.deleteAdmin(adminId)
           .then((response) => {
             if (response.status === 200) {
               console.log("Administrador eliminado:", adminId);
-              confirm("Administrador eliminado:", adminId);
+              //confirm("Administrador eliminado:", adminId);
+              this.successMessage = "Administrador eliminado";
+              this.showSuccessMessage = true;
               this.loadAdmins(); // Vuelve a cargar la lista de administradores
               this.toggleCardContainer(); // Oculta la ventana emergente
             }

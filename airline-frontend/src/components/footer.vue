@@ -1,15 +1,10 @@
 <template>
-<footer class="footer">
+    <footer class="footer">
         <div class="box-container">
             <div class="box"  >
                 <h3 href="/" class="logo"><i class="fas fa-paper-plane"></i>AirTravel</h3>
                 <p> Elige más que un tiquete; elige una experiencia de viaje excepcional con nosotros.</p>
-                <div class="compartir">
-                    <a href="#" class="fab fa-facebook-f"></a>
-                    <a href="#" class="fab fa-twitter"></a>
-                    <a href="#" class="fab fa-instagram"></a>
-                    <a href="#" class="fab fa-github"></a>
-                </div>
+               
             </div>
 
             <div class="box">
@@ -31,7 +26,7 @@
                 <p>Suscríbete para conocer las últimas actualizaciones</p>
                 <form action = "">
                     <input type="email" placeholder="Ingrese su correo" class="email" id="">
-                    <input type="submit" value="Suscribirse" class="btn">
+                    <input type="submit" value="Suscribirse" class="btn-email">
                 </form>
             </div>
         </div>
@@ -59,17 +54,20 @@
       text-decoration: none; 
       transition:all .2s;
   }
-      $light-color:#312c02;
-      $degradado: rgba(149, 168, 238, 0.11);
-      $bg:rgba(6, 31, 14, 0.947);
-      $azul-claro: #CFE0EB;
-      $gris:#F7F7F7;
-      $verde: #00BD8E;
-      $azul: #0D629B;
-      $blanco: #FFFFFF;
-      $negro:#1A1320;
-      $accent:#0B97F4;
-      $secondary:#ceeafd;
+    $light-color: #312c02;
+    $degradado: rgba(149, 168, 238, 0.11);
+    $bg: rgba(6, 31, 14, 0.947);
+    $azul-claro: #CFE0EB;
+    $gris: #F7F7F7;
+    $gris2: #364265;
+    $verde: #00BD8E;
+    $azul: #0D629B;
+    $blue: #54b2f1;
+    $blanco: #FFFFFF;
+    $negro: #1A1320;
+    $accent: #0B97F4;
+    $accent3: rgba(149, 168, 238, 0.11);
+    $secondary: #ceeafd;
 
       
   @mixin grid($val){
@@ -82,18 +80,45 @@
   .footer{  
       .box-container{
           @include grid(25rem);
-          background:$secondary;
+          background:  #364265;
           padding: 3rem 2rem;
+          border-radius: 2rem;
+          box-shadow: 1px 0.5px 6px 2px rgba(225, 227, 230, 0.7);
           
           .box{
               padding: 1rem 0;
-              background:$secondary;
+              background :  #364265;
+              
+             
               .logo{
-                  color:$negro;
+                i{//Figura de avión 
+                    padding-right: 1rem;
+                    color:$blanco;
+                    text-shadow: -1px 3px 3px rgba(1, 0.4, 0.3, 0.6);
+                }
+                  color:$negro;//Letra de la palabra AirTravel
               }
+              .btn{ //------Botón de buscar vuelo
+                    margin-top:1rem;
+                    display:inline-block;
+                    padding: 1rem 3rem; 
+                    font-size: 1.7rem;
+                    color: $blanco;
+                    border:$azul .2rem solid; 
+                    border-radius:5rem;
+                    cursor: pointer;
+                    background: $azul;
+
+                    &:hover{
+                        background: $accent;
+                        color: $blanco;
+                        text-decoration-line: none;
+                        
+                    }
+                }
               h3{
                   font-size: 2.2rem;
-                  color:$azul;
+                  color:$blanco;
                   font-weight: bolder;
                   padding:1rem 0;
                   text-transform: capitalize;
@@ -113,31 +138,6 @@
                   
               }
 
-              .compartir{ //Seccion de redes sociales 
-                  padding:1rem 0;
-
-                  a{
-                      
-                      height: 4.5rem;
-                      width: 4.5rem;
-                      line-height:4rem;
-                      font-size:2rem;
-                      border-radius:50%;
-                      font-size:1.7rem;
-                      border: $accent .2rem solid;
-                      color:$negro;
-                      margin-right:1rem;
-                      text-align:center ;
-
-                      &:hover{
-                          background:$azul;
-                          color:$blanco;
-                          border: $azul .2rem solid;
-                          text-decoration-line: none;
-                      }
-
-                  }
-              }
               .links{ //Links rapidos a secciones de la pagina
                   font-size: 1.4rem;
                   color: $negro;
@@ -173,23 +173,47 @@
 
 
               }
+              .btn-email{ //------Botón de suscribirse
+                    display:center;
+                    padding: 1rem 3rem; 
+                    font-size: 1.7rem;
+                    color: $blanco;
+                    border:$azul .2rem solid; 
+                    border-radius:5rem;
+                    cursor: pointer;
+                    background: $accent;
+                    margin: 1rem auto;
+                    align-items: center !important;
+                    display: flex !important;
+                    justify-content: center !important;
+
+                    &:hover{
+                        background: $accent;
+                        color: $blanco;
+                        text-decoration-line: none;
+                        
+                    }
+                }
           }
 
       }
   }
 
-  .credit{//Autores de la pagina
-      background: $secondary;
-      text-align: center;
-      font-size: 2rem;
-      padding: 2rem 1rem;
-      color: $verde;
-      font-weight: bolder;
-      margin-top: 5rem;
+  
+.credit {
+    //Autores de la pagina
+    background: $gris2;
+    box-shadow: 3px 3px 6px rgba(1, 0.2, 1, 0.2);
+    border-radius: 10px;
+    text-align: center;
+    font-size: 2rem;
+    padding: 2rem 1rem;
+    color: $accent;
+    font-weight: bolder;
+    margin-top: 5rem;
 
-      span{ 
-          color: $negro;
-      }
-  }
-
+    span {
+        color: $blanco;
+    }
+}
 </style>
