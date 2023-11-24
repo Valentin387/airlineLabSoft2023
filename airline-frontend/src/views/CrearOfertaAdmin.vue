@@ -49,7 +49,8 @@
                 <button class="create-account" type="submit">Crear Oferta</button>
             </form>
             <error-modal :show-error="showErrorMessage" :error-message="errorMessage" @close="showErrorMessage = false" />
-
+          
+            <success-modal :show-note="showSuccessMessage" :success-message="successMessage" @close="showSuccessMessage = false" />
         </div>
     </div>
     <!-- FOOTER -->
@@ -229,12 +230,14 @@ import offerService from "@/services/offerService/createOfferService.js"; // Ase
 import errorModal from "@/components/errorModal.vue";
 import spinner from "@/components/spinner.vue";
 import Footer from '@/components/footer.vue';
+import successModal from "@/components/successModal.vue";
 
 export default {
   components: {
     errorModal,
     spinner,
     Footer,
+    successModal,
   },
   data() {
     return {
@@ -246,6 +249,8 @@ export default {
       errorMessage: "",
       showErrorMessage: false,
       showSpinner: false,
+      successMessage: "",
+      showSuccessMessage: false,
     };
   },
   methods: {
@@ -262,6 +267,8 @@ export default {
 
         // Aquí podrías agregar lógica adicional, como mostrar un mensaje de éxito
         console.log('Oferta creada exitosamente!');
+        this.successMessage = "!Oferta creada exitosamente!";
+        this.showSuccessMessage = true;
       } catch (error) {
         // Manejo de errores, podrías mostrar un modal o mensaje de error
         console.error('Error al crear la oferta:', error.message);

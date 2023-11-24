@@ -38,7 +38,7 @@
                         <!-- Administrador -->
                         <li><a href="/Perfil">Perfil</a></li>
                         <li><a href="/ListVuelos_Ad">Gestionar Vuelos</a></li>
-                        <li><a href="/OfertasAdmin">Gestionar Promociones</a></li>
+                        <li><a href="/ListOfertasAdmin">Gestionar Promociones</a></li>
                         <li> <div class="btn-cerrar" @click="logout">
                                 <span class="material-symbols-outlined">logout</span>Cerrar sesión
                             </div></li>
