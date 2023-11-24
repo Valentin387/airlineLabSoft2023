@@ -38,14 +38,14 @@
                         <!-- Administrador -->
                         <li><a href="/Perfil">Perfil</a></li>
                         <li><a href="/ListVuelos_Ad">Gestionar Vuelos</a></li>
-                        <li><a href="/OfertasAdmin">Gestionar Promociones</a></li>
+                        <li><a href="/ListOfertasAdmin">Gestionar Promociones</a></li>
                         <li> <div class="btn-cerrar" @click="logout">
                                 <span class="material-symbols-outlined">logout</span>Cerrar sesión
                             </div></li>
                     </ul>
                     <ul v-else-if="userRole === 3">
                         <!-- Cliente -->
-                        <li><a href="#">Perfil</a></li>
+                        <li><a href="/Perfil">Perfil</a></li>
                         <li><a href="/M_Financiero">Módulo Financiero</a></li>
                         <li><a href="#">Mis Compras</a></li>
                         <li><a href="/List_Reservas">Mis Reservas</a></li>

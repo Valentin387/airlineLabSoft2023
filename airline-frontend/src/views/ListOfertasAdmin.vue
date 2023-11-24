@@ -5,8 +5,9 @@
             <form action="" @submit.prevent="performOfferSearch">
                 <div class="inputBox">
                     <span>Origen</span><!--Origen del vuelo -->
-                    <select name="origin" placeholder="¿Desde dónde vuelas?" v-model="searchParams.origin" >
-                        <option value="" disabled selected>¿Desde dónde vuelas?</option>
+                    <select name="origin" placeholder="¿Desde dónde vuelas?" v-model="searchParams.origin">
+                        <option value="" disabled selected>¿Desde dónde vuela?</option>
+                        <option value=""></option>
                         <option value="Madrid">Madrid</option>
                         <option value="Londres">Londres</option>
                         <option value="New York">New York</option>
@@ -22,8 +23,9 @@
 
                 <div class="inputBox">
                     <span>Destino</span><!--Destino del vuelo-->
-                    <select name="destination" placeholder="¿A dónde vuelas?" v-model="searchParams.destination" >
-                        <option value="" disabled selected>¿A dónde vuelas?</option>
+                    <select name="destination" placeholder="¿A dónde vuelas?" v-model="searchParams.destination">
+                        <option value="" disabled selected>¿A dónde vuela?</option>
+                        <option value=""></option>
                         <option value="Madrid">Madrid</option>
                         <option value="Londres">Londres</option>
                         <option value="New York">New York</option>
@@ -39,10 +41,14 @@
                 <div class="inputBox">
                     <!--Fecha de salida del vuelo -->
                     <span>Fecha de Vencimiento</span>
-                    <input type="date" name="departureDate" />
+                    <input type="date" name="departureDate" v-model="searchParams.validDateRange" />
                 </div>
 
                 <input type="submit" value="Buscar" class="btn_buscar" /><!--Botón de busqueda de vuelo -->
+                <form action="/CrearOfertasAdmin" method="get">
+                    <button type="submit" class="btn_buscar">Crear Oferta</button>
+                </form>
+
             </form>
         </section> <!--Finaliza aquí la barra de búsqueda -->
 
@@ -76,7 +82,9 @@
             <p v-else>No se encontraron ofertas con los criterios seleccionados.</p>
         </div>
         <!-- ... Tu pie de página u otros componentes ... -->
+   
         <Footer />
+
     </div>
 </template>
   
@@ -136,7 +144,7 @@ html {
     display: fixed;
     margin-top: 5%;
     margin-bottom: 3%;
-    background: $azul;
+    background: $secondary;
     border-radius: 3rem;
     padding: 3rem 2rem;
     box-shadow: 0 5px 8px rgba(1, 0, 1, 0.7);
@@ -154,7 +162,7 @@ html {
             span {
                 font-size: 1.4rem;
                 padding: 2rem;
-                color: $blanco;
+                color: $negro;
                 text-transform: capitalize;
             }
 
@@ -416,6 +424,7 @@ html {
 </style>
 <script>
 import flightService from "@/services/offerService/listOfferService.js";
+import deleteService from "@/services/offerService/deleteOfferService.js";
 import Footer from "@/components/footer.vue";
 import errorModal from "@/components/ErrorModal.vue";
 
@@ -433,10 +442,14 @@ export default {
                 destination: '',
                 validDateRange: '',
             },
+            showConfirmationModal: false,
+            confirmationMessage: '¿Estás seguro de cancelar la promoción?',
+            offerToDelete: null
         };
     },
     mounted() {
         this.fetchOffers();
+
     },
     methods: {
         formatDate(dateString) {//Cambia el formato de la fecha de milisegundos a años, meses y dias 
@@ -446,45 +459,92 @@ export default {
         },
         fetchOffers() {
             // Llama al servicio para obtener todas las ofertas
+
             flightService.getOffers()
                 .then(response => {
                     if (response.status === 200) {
                         this.offers = response.data;
+                        this.filteredOffers = this.offers;
+
                     }
                 })
                 .catch(error => {
                     console.error("Error al obtener ofertas:", error);
                 });
+
         },
         performOfferSearch() {
             console.log('SearchParams:', this.searchParams);
             console.log('All Offers:', this.offers);
 
+
             // Filtra las ofertas de acuerdo a los parámetros de búsqueda ingresados
             this.filteredOffers = this.offers.filter(offer => {
                 // Verifica si se ha proporcionado al menos un criterio de búsqueda
+                const offerDate = new Date(offer.validDateRange);
+                const year = offerDate.getFullYear();
+                const month = (offerDate.getMonth() + 1).toString().padStart(2, '0'); // Agrega 1 al mes porque en JavaScript los meses van de 0 a 11
+                const day = offerDate.getDate().toString().padStart(2, '0');
+
+                const formattedDate = `${year}-${month}-${day}`;
+
                 const hasOrigin = this.searchParams.origin !== '';
                 const hasDestination = this.searchParams.destination !== '';
-
+                const hasvalidDateRange = formattedDate !== '';
                 // Realiza la búsqueda en función de los criterios proporcionados
-                if (hasOrigin && hasDestination) {
+
+                if (!hasOrigin && !hasDestination && !hasvalidDateRange) {
+                    this.filteredOffers = this.offers;
+                    return true;
+                }
+                if (hasOrigin && hasDestination && hasvalidDateRange) {//ORIGEN DESTINO Y FECHA
                     return (
                         offer.origin === this.searchParams.origin &&
-                        offer.destination === this.searchParams.destination
+                        offer.destination === this.searchParams.destination &&
+                        formattedDate === this.searchParams.validDateRange
                     );
-                } else if (hasOrigin) {
+                }
+                else if (hasOrigin) {//ORIGEN
                     return offer.origin === this.searchParams.origin;
-                } else if (hasDestination) {
+                }
+                else if (hasDestination) {//DESTINO
                     return offer.destination === this.searchParams.destination;
                 }
-
-                // Si no se proporciona ningún criterio, devuelve todas las ofertas
+                else if (hasDestination && hasvalidDateRange) {//DESTINO Y FECHA
+                    return offer.destination === this.searchParams.destination &&
+                        formattedDate === this.searchParams.validDateRange
+                }
+                else if (hasOrigin && hasvalidDateRange) {///ORIGEN FECHA
+                    return offer.origin === this.searchParams.origin &&
+                        formattedDate === this.searchParams.validDateRange
+                }
+                else if (hasvalidDateRange) {//FEcHA 
+                    return formattedDate === this.searchParams.validDateRange;
+                }
+                else if (hasOrigin && hasDestination) {//ORIGEN DESTINO
+                    return offer.origin === this.searchParams.origin &&
+                        offer.destination === this.searchParams.destination
+                }
                 return true;
+
+
             });
         },
         cancelPromotion(offer) {
-            // Lógica para cancelar la promoción de la oferta seleccionada
-            // ...
+            deleteService.deleteOffer(offer.id) // Utiliza el servicio para eliminar la oferta
+                .then(response => {
+                    if (response.status === 200) {
+                        // Elimina la oferta de la lista local después de borrarla en el servidor
+                        const index = this.offers.findIndex(o => o.id === offer.id);
+                        if (index !== -1) {
+                            this.offers.splice(index, 1);
+                            this.performOfferSearch(); // Actualiza la lista de ofertas filtradas si es necesario
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error("Error al eliminar la oferta:", error);
+                });
         },
         // Otros métodos necesarios
         // ... offer.validDateRange === this.searchParams.validDateRange
