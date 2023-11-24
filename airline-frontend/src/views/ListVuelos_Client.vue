@@ -351,7 +351,7 @@ export default {
     };
   },
   mounted() {
- 
+    console.log("Hello");
     // Carga los vuelos almacenados en el almacenamiento de la sesión
     const storedResults = sessionStorage.getItem("ListVuelosClient");
     console.log("Stored Results:", storedResults);
