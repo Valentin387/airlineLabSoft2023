@@ -384,8 +384,6 @@ export default {
                 if (tokenData.role == "registeredUser") {
                     this.userRole = 3;
                 }
-            } else {
-                this.$router.push("/login");
             }
 
         },
