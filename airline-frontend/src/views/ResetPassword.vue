@@ -254,6 +254,14 @@ export default {
     };
   },
   methods: {
+
+     // Función para manejar errores de validación
+     handleValidationError(errorMessage) {
+      this.showSpinner = false;
+      this.errorMessage = errorMessage;
+      this.showErrorMessage = true;
+    },
+    
     UpdateP() {
       this.showSpinner = true;
 
@@ -266,7 +274,7 @@ export default {
         return;
       }
       // Validación de complejidad de contraseña (puedes personalizar la expresión regular según tus criterios)
-      if (this.profile.password && !/(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,30}/.test(this.profile.password)) {
+      if (this.password && !/(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,30}/.test(this.password)) {
                 this.handleValidationError("La contraseña no cumple con los criterios de complejidad");
                 return;
         }
