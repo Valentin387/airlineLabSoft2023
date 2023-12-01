@@ -237,12 +237,9 @@ public class ShoppingCartController {
             @RequestBody ReserveFlightDTO bookFlightDTO
     ){
         try {
-            System.out.println("before drop");
             //I call the service DropShoppingCartItemService and then, the service AddShoppingCartItemService
             dropShoppingCartItemService.drop_item_from_cart(bookFlightDTO.getUserID(), bookFlightDTO.getFlightID());
-            System.out.println("after drop");
             addShoppingCartItemService.add_item_to_cart(bookFlightDTO);
-            System.out.println("after add");
 
             return ResponseEntity.ok("Flight modified in user's cart successfully");
         }catch (Exception e) {
